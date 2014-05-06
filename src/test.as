@@ -48,6 +48,10 @@ package
 	import starling.display.MovieClip;
 	import starling.display.Quad;
 	import starling.events.Event;
+	import starling.events.Touch;
+	import starling.events.TouchPhase;
+	import starling.extensions.particles.ParticleSystem;
+	import starling.extensions.particles.PDParticleSystem;
 	import starling.text.BitmapFont;
 	import starling.text.TextField;
 	import starling.textures.Texture;
@@ -73,6 +77,45 @@ package
 	 */
 	public class test extends Sprite
 	{	
+		[Embed(source="../bin/assets/media/drugs.pex", mimeType="application/octet-stream")]
+        private static const DrugsConfig:Class;
+        
+        [Embed(source="../bin/assets/media/fire.pex", mimeType="application/octet-stream")]
+        private static const FireConfig:Class;
+        
+        [Embed(source="../bin/assets/media/sun.pex", mimeType="application/octet-stream")]
+        private static const SunConfig:Class;
+        
+        [Embed(source="../bin/assets/media/jellyfish.pex", mimeType="application/octet-stream")]
+        private static const JellyfishConfig:Class;
+		
+		[Embed(source = "../bin/assets/media/blue.pex", mimeType = "application/octet-stream")]
+		private static const BlueClass:Class;
+        
+        // particle textures
+        
+        [Embed(source = "../bin/assets/media/drugs_particle.png")]
+        private static const DrugsParticle:Class;
+        
+        [Embed(source = "../bin/assets/media/fire_particle.png")]
+        private static const FireParticle:Class;
+        
+        [Embed(source = "../bin/assets/media/sun_particle.png")]
+        private static const SunParticle:Class;
+        
+        [Embed(source = "../bin/assets/media/jellyfish_particle.png")]
+        private static const JellyfishParticle:Class;
+		
+		[Embed(source = "../bin/assets/media/blue.png")]
+		private static const BlueParticle:Class;
+        
+        // member variables
+        
+        private var mParticleSystems:Vector.<ParticleSystem>;
+        private var mParticleSystem:ParticleSystem;
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		[Embed(source = "../bin/assets/bitmapfonts/Arial.fnt", mimeType = "application/octet-stream")]
 		private static const FontXml : Class;
 		
@@ -164,6 +207,7 @@ package
 		{
 			(e.currentTarget as IAbstractButton).isEnabled  = false;
 			showThings();
+			particlesTest();
 		}
 		
 		private function showThings():void
@@ -188,12 +232,16 @@ package
 			x = _bridgeGraphics.requestXML("layerLayout");
 			
 			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
-			layersVO.addLayer("UI", 0);
-			layersVO.addLayer("Overground", 1);
-			layersVO.addLayer("Layer 3", 2, x);
-			layersVO.addLayer("Stuff with layout", 3);
+			layersVO.addLayer("UI", 0, null, true);
+			layersVO.addLayer("Overground", 1, null, true);
+			layersVO.addLayer("Layer 3", 2, x, true);
+			layersVO.addLayer("Stuff with layout", 3, null, true);
 						
 			layersVO.retrieveLayer("Layer 3").addNewChild(mc);
+			
+			var video:IAbstractVideo = new EngineVideo();
+			video.addVideoPath("../bin/assets/test.flv");
+			layersVO.retrieveLayer("Overground").addNewChild(video);
 						//
 			_bridgeGraphics.initLayers(layersVO.layers);
 			
@@ -212,36 +260,79 @@ package
 			outLayers.push(layersVO.retrieveLayer("Layer 3"));
 			
 			_bridgeGraphics.updateLayers(inLayers, outLayers, inTransition, outTransition);
-						//
-			//var transIn:IAbstractLayerTransitionIn = new EngineLayerTransitionIn();
-			//var transOut:IAbstractLayerTransitionOut = new EngineLayerTransitionOut();
-						//
+						
+			var transIn:IAbstractLayerTransitionIn = new EngineLayerTransitionIn();
+			var transOut:IAbstractLayerTransitionOut = new EngineLayerTransitionOut();
+						
 			//var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
 			//outLayers.push(layersVO.retrieveLayer("Layer 2"));
-						//
-			//var newLayer:IAbstractLayer = new EngineLayer("Tzeapa", 0);
-			//newLayer.addNewChild(_bridgeGraphics.requestImage("Preloader-Background"));
-						//
+						
+			var newLayer:IAbstractLayer = new EngineLayer("Tzeapa", 0);
+			newLayer.addNewChild(_bridgeGraphics.requestImage("Preloader-Background"));
+						
 			//var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
 			//inLayers.push(newLayer);
-						//
-			//_bridgeGraphics.updateLayers(inLayers, null, transIn, transOut);
-						//
-			//var state2:IAbstractState = _bridgeGraphics.requestState();
-			//var stateTransition:IAbstractStateTransition = new EngineStateTransition();
+						
+			_bridgeGraphics.updateLayers(inLayers, null, transIn, transOut);
+						
+			var state2:IAbstractState = _bridgeGraphics.requestState();
+			var stateTransition:IAbstractStateTransition = new EngineStateTransition();
 			//_bridgeGraphics.tranzitionToState(state2, stateTransition);
-				//
-			//var video:IAbstractVideo = new EngineVideo();
-			//video.addVideoPath("../bin/assets/test.flv");
-			//state2.addNewChild(video);
-			//
- //
+			
+ 
 			//var texture:Texture = Texture.fromBitmap(new TimesTexture());
 			//var xml:XML = XML(new TimesXml());
 			//TextField.registerBitmapFont(new BitmapFont(texture, xml))
-			//
-			/////////////////////////////////////////////////////
+			
+			///////////////////////////////////////////////////
 		}
+		
+		private function particlesTest():void
+		{
+			var drugsConfig:XML = XML(new DrugsConfig());
+            var drugsTexture:Texture = Texture.fromBitmap(new DrugsParticle());
+            
+            var fireConfig:XML = XML(new FireConfig());
+            var fireTexture:Texture = Texture.fromBitmap(new FireParticle());
+            
+            var sunConfig:XML = XML(new SunConfig());
+            var sunTexture:Texture = Texture.fromBitmap(new SunParticle());
+            
+            var jellyConfig:XML = XML(new JellyfishConfig());
+            var jellyTexture:Texture = Texture.fromBitmap(new JellyfishParticle());
+			
+			var blueConfig:XML = XML (new BlueClass());
+			var blueTexture:Texture = Texture.fromBitmap(new BlueParticle());
+            
+            mParticleSystems = new <ParticleSystem>[
+                new PDParticleSystem(drugsConfig, drugsTexture),
+                new PDParticleSystem(fireConfig, fireTexture),
+                new PDParticleSystem(sunConfig, sunTexture),
+                new PDParticleSystem(jellyConfig, jellyTexture),
+				new PDParticleSystem(blueConfig, blueTexture)]
+				
+				startNextParticleSystem();
+		}
+		
+		 private function startNextParticleSystem():void
+        {
+            if (mParticleSystem)
+            {
+                mParticleSystem.stop();
+                mParticleSystem.removeFromParent();
+               (_bridgeGraphics.defaultJuggler).remove(mParticleSystem);
+            }
+            
+            mParticleSystem = mParticleSystems.shift();
+            mParticleSystems.push(mParticleSystem);
+
+            mParticleSystem.emitterX = 320;
+            mParticleSystem.emitterY = 240;
+            mParticleSystem.start();
+            
+            _bridgeGraphics.addChild(mParticleSystem);
+            (_bridgeGraphics.defaultJuggler).add(mParticleSystem);
+        }
 		
 		private function buttonPressed(type:String, event:Object):void
 		{

@@ -360,6 +360,7 @@ package starlingEngine
 			{
 				if (_currentState.getChildByNameStr(orderedLayers[j].name) == null)
 				{
+					trace(orderedLayers[j].addToStage);
 					if (orderedLayers[j].addToStage)
 					{
 						_currentState.addNewChildAt(orderedLayers[j], j);

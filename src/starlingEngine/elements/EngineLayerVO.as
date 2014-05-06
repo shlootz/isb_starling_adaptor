@@ -23,7 +23,7 @@ package starlingEngine.elements
 		 */
 		public function addLayer(layerName:String, depth:uint = 0, xml:XML = null, addToStage:Boolean = true):void
 		{
-			_layers[layerName] = new EngineLayer(layerName, depth, xml);
+			_layers[layerName] = new EngineLayer(layerName, depth, xml, addToStage);
 		}
 		
 		/**
