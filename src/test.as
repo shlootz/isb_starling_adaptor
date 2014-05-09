@@ -19,6 +19,7 @@ package
 	import bridge.abstract.transitions.IAbstractLayerTransitionOut;
 	import bridge.abstract.transitions.IAbstractStateTransition;
 	import bridge.abstract.ui.IAbstractButton;
+	import bridge.abstract.ui.IAbstractLabel;
 	import bridge.abstract.ui.LabelProperties;
 	import bridge.BridgeGraphics;
 	import bridge.IBridgeGraphics;
@@ -196,7 +197,7 @@ package
 			t.autoScale = true;
 			t.hAlign = LabelProperties.ALIGN_CENTER;
 			
-			var label:EngineLabel = new EngineLabel(t);
+			var label:IAbstractLabel = new EngineLabel(t);
 			
 			button.addCustomLabel(label, LabelProperties.ALIGN_CENTER, new Point(100,100));
 			button.updateCustomLabel("Haha");
@@ -239,7 +240,7 @@ package
 						
 			layersVO.retrieveLayer("Layer 3").addNewChild(mc);
 			
-			var video:IAbstractVideo = new EngineVideo();
+			var video:IAbstractVideo = _bridgeGraphics.requestVideo();
 			video.addVideoPath("../bin/assets/test.flv");
 			layersVO.retrieveLayer("Overground").addNewChild(video);
 						//
@@ -253,25 +254,25 @@ package
 			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
 			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
 			
-			var outTransition:IAbstractLayerTransitionOut = new EngineLayerTransitionOut();
-			var inTransition:IAbstractLayerTransitionIn = new EngineLayerTransitionIn();
+			var outTransition:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT()
+			var inTransition:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN();
 			
 			inLayers.push(layersVO.retrieveLayer("TEST"));
 			outLayers.push(layersVO.retrieveLayer("Layer 3"));
 			
 			_bridgeGraphics.updateLayers(inLayers, outLayers, inTransition, outTransition);
 						
-			var transIn:IAbstractLayerTransitionIn = new EngineLayerTransitionIn();
-			var transOut:IAbstractLayerTransitionOut = new EngineLayerTransitionOut();
+			var transIn:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN()
+			var transOut:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT();
 						
 			//var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
 			//outLayers.push(layersVO.retrieveLayer("Layer 2"));
 						
-			var newLayer:IAbstractLayer = new EngineLayer("Tzeapa", 0);
-			newLayer.addNewChild(_bridgeGraphics.requestImage("Preloader-Background"));
+			var newLayer:IAbstractLayer = _bridgeGraphics.requestLayer("Tzeapa", 0, null, true);
+			newLayer.addNewChild(_bridgeGraphics.requestImage("Background"));
 						
 			//var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
-			//inLayers.push(newLayer);
+			inLayers.push(newLayer);
 						
 			_bridgeGraphics.updateLayers(inLayers, null, transIn, transOut);
 						
@@ -280,15 +281,18 @@ package
 			//_bridgeGraphics.tranzitionToState(state2, stateTransition);
 			
  
-			//var texture:Texture = Texture.fromBitmap(new TimesTexture());
-			//var xml:XML = XML(new TimesXml());
-			//TextField.registerBitmapFont(new BitmapFont(texture, xml))
+			var xml:XML = XML(new TimesXml());
+			_bridgeGraphics.registerBitmapFont(TimesTexture, xml);
+			var t:IAbstractTextField = _bridgeGraphics.requestTextField(500, 500, "Yaaaay", "Times", 150);
+			_bridgeGraphics.addChild(t);
 			
 			///////////////////////////////////////////////////
 		}
 		
 		private function particlesTest():void
 		{
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, CheckDirection);
+			
 			var drugsConfig:XML = XML(new DrugsConfig());
             var drugsTexture:Texture = Texture.fromBitmap(new DrugsParticle());
             
@@ -312,6 +316,15 @@ package
 				new PDParticleSystem(blueConfig, blueTexture)]
 				
 				startNextParticleSystem();
+		}
+		
+		private function CheckDirection(e:MouseEvent):void
+		{
+			if (mParticleSystem)
+			{
+				mParticleSystem.emitterX = stage.mouseX;
+				mParticleSystem.emitterY = stage.mouseY;
+			}
 		}
 		
 		 private function startNextParticleSystem():void

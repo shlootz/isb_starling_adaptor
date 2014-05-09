@@ -10,10 +10,12 @@ package starlingEngine
 	import bridge.abstract.IAbstractState;
 	import bridge.abstract.IAbstractTexture;
 	import bridge.abstract.IAbstractTextField;
+	import bridge.abstract.IAbstractVideo;
 	import bridge.abstract.transitions.IAbstractLayerTransitionIn;
 	import bridge.abstract.transitions.IAbstractLayerTransitionOut;
 	import bridge.abstract.transitions.IAbstractStateTransition;
 	import bridge.abstract.ui.IAbstractButton;
+	import bridge.abstract.ui.IAbstractLabel;
 	import bridge.BridgeGraphics;
 	import bridge.IEngine;
 	import citrus.core.IState;
@@ -37,10 +39,12 @@ package starlingEngine
 	import starling.display.MovieClip;
 	import starling.display.Quad;
 	import starling.display.Stage;
+	import starling.text.BitmapFont;
 	import starling.text.TextField;
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;
 	import starlingEngine.elements.EngineImage;
+	import starlingEngine.elements.EngineLabel;
 	import starlingEngine.elements.EngineLayer;
 	import starlingEngine.elements.EngineLayerLayoutElementVo;
 	import starlingEngine.elements.EngineLayerVO;
@@ -49,7 +53,10 @@ package starlingEngine
 	import starlingEngine.elements.EngineState;
 	import starlingEngine.elements.EngineTextField;
 	import starlingEngine.elements.EngineTexture;
+	import starlingEngine.elements.EngineVideo;
 	import starlingEngine.events.EngineEvent;
+	import starlingEngine.transitions.EngineLayerTransitionIn;
+	import starlingEngine.transitions.EngineLayerTransitionOut;
 	import starlingEngine.ui.EngineButton;
 	
 	/**
@@ -265,12 +272,25 @@ package starlingEngine
 		
 		/**
 		 * 
-		 * @return EngineLayer
+		 * @param	name
+		 * @param	depth
+		 * @param	layout
+		 * @param	addedToStage
+		 * @return
 		 */
-		public function requestLayer(name:String):EngineLayer
+		public function requestLayer (name:String, depth:Number, layout:XML, addedToStage:Boolean) : IAbstractLayer
 		{
-			return new EngineLayer(name);
+			return new EngineLayer(name, depth, layout, addedToStage) as IAbstractLayer;
 		}
+		
+		///**
+		 //* 
+		 //* @return EngineLayer
+		 //*/
+		//public function requestLayer(name:String):EngineLayer
+		//{
+			//return new EngineLayer(name);
+		//}
 		
 		/**
 		 * 
@@ -289,6 +309,59 @@ package starlingEngine
 		public function requestLayersVO():IAbstractEngineLayerVO
 		{
 			return new EngineLayerVO();
+		}
+		
+		/**
+		 * 
+		 * @param	text
+		 * @return IAbstractLabel
+		 * @see bridge.abstract.ui.IAbstractLabel
+		 */
+		public function requestLabelFromTextfield(text:IAbstractTextField):IAbstractLabel
+		{
+			var label:IAbstractLabel = new EngineLabel(text);
+			return label;
+		}
+		
+		/**
+		 * 
+		 * @param	textureClass
+		 * @param	xml
+		 */
+		public function registerBitmapFont(textureClass:Class, xml:XML):void
+		{
+			var texture:Texture = Texture.fromBitmap(new textureClass());
+			TextField.registerBitmapFont(new BitmapFont(texture, xml))
+		}
+		
+		/**
+		 * 
+		 * @return IAbstractLayerTransitionIn
+		 */
+		public function requestLayerTransitionIN():IAbstractLayerTransitionIn
+		{
+			var inTransition:IAbstractLayerTransitionIn = new EngineLayerTransitionIn();
+			return inTransition;
+		}
+		
+		/**
+		 * 
+		 * @return IAbstractLayerTransitionOut
+		 */
+		public function requestLayerTransitionOUT():IAbstractLayerTransitionOut
+		{
+			var outTransition:IAbstractLayerTransitionOut = new EngineLayerTransitionOut();
+			return outTransition;
+		}
+		
+		/**
+		 * 
+		 * @return IAbstractVideo
+		 */
+		public function requestVideo():IAbstractVideo
+		{
+			var video:IAbstractVideo = new EngineVideo();
+			return video
 		}
 		
 		/**
