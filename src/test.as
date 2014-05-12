@@ -42,6 +42,7 @@ package
 	import flash.utils.getDefinitionByName;
 	import nape.space.Space;
 	import org.osflash.signals.Signal;
+	import signals.ISignalsHub;
 	import signals.Signals;
 	import signals.SignalsHub;
 	import starling.animation.Juggler;
@@ -130,6 +131,7 @@ package
 		private static const TimesTexture : Class;
 		
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
+																		new Point(1200, 900),
 																		StarlingEngine,
 																		starling.utils.AssetManager,
 																		signals.SignalsHub,
@@ -140,21 +142,26 @@ package
 		
 		public function test() 
 		{	
-			var btn:Sprite = new Sprite();
-			btn.graphics.beginFill(0x000000);
-			btn.graphics.drawRect(10, 50, 20, 20);
-			btn.graphics.endFill();
-			addChild(btn);
-			btn.addEventListener(MouseEvent.CLICK, doStuff);
+			//var btn:Sprite = new Sprite();
+			//btn.graphics.beginFill(0x000000);
+			//btn.graphics.drawRect(10, 50, 20, 20);
+			//btn.graphics.endFill();
+			//addChild(btn);
+			//btn.addEventListener(MouseEvent.CLICK, doStuff);
 			addChild(_bridgeGraphics.engine as DisplayObject);
+			
+			//var dict:Dictionary = (_bridgeGraphics.signalsManager as ISignalsHub).getRegisteredSignals();
+			//trace(dict);
+			//
+			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
 		}
 		
-		private function doStuff(e:MouseEvent):void
-		{
-			loadAssets();
-		}
+		//private function doStuff(e:MouseEvent):void
+		//{
+			//loadAssets();
+		//}
 		
-		private function loadAssets():void
+		private function loadAssets(event:String, obj:Object):void
 		{
 			(_bridgeGraphics.assetsManager).enqueue("../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
 													"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",

@@ -16,6 +16,21 @@ package starlingEngine.elements
 			super(texture as Texture);
 		}
 		
+		public function get currentTexture () : Object
+		{
+			return super.texture as Object
+		}
+		
+		public function set newTexture (value:Object) : void
+		{
+			super.texture = value as Texture;
+		}
+		
+		override public function readjustSize () :void
+		{
+			super.readjustSize();
+		}
+		
 	}
 
 }

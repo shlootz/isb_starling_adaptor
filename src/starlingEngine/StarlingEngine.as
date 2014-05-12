@@ -111,6 +111,7 @@ package starlingEngine
 		public function injectSignalsHub(signalsHub:Object):void
 		{
 			_signalsHub = signalsHub as SignalsHub;
+			initSignals();
 		}
 		
 		/**
@@ -141,10 +142,10 @@ package starlingEngine
 			_currentState = requestState();
 			state = _currentState as IState;
 			
-			initSignals();
-			
 			_initCompleteCallback.call();
 			_engineStage = starling.stage;
+			
+			_signalsHub.dispatchSignal(Signals.STARLING_READY, "", "");
 		}
 		
 		/**
