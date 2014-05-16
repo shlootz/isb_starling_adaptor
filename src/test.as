@@ -1,7 +1,7 @@
 package  
 {
-	import abstract.AbstractPool;
 	import away3d.controllers.SpringController;
+	import bridge.abstract.AbstractPool;
 	import bridge.abstract.events.IAbstractEvent;
 	import bridge.abstract.IAbstractAnimatable;
 	import bridge.abstract.IAbstractDisplayObject;
@@ -135,7 +135,7 @@ package
 																		StarlingEngine,
 																		starling.utils.AssetManager,
 																		signals.SignalsHub,
-																		abstract.AbstractPool,
+																		AbstractPool,
 																		starling.animation.Juggler,
 																		nape.space.Space
 																		);

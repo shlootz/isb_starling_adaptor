@@ -1,6 +1,5 @@
 package starlingEngine
 {
-	import abstract.AbstractPool;
 	import bridge.abstract.IAbstractDisplayObject;
 	import bridge.abstract.IAbstractEngineLayerVO;
 	import bridge.abstract.IAbstractImage;

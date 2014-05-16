@@ -60,6 +60,17 @@ package starlingEngine.elements
 		{
 			super.setFrameTexture(frameID, texture as EngineTexture);
 		}
+		
+		public function get currentTexture () : Object
+		{
+			return super.texture as Object;
+		}
+
+		public function set newTexture (value:Object) : void
+		{
+			super.texture = value as Texture;
+		}
+
 	}
 
 }

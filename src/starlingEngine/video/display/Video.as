@@ -307,7 +307,7 @@
 			mNewFrameAvailable = false;
 			mLastFrame = mCurrentFrame;
 			++mStatsDrawnFrames;
-			dispatchEventWith(VideoEvent.DRAW_COMPLETE);
+			dispatchEventWith(starlingEngine.video.events.VideoEvent.DRAW_COMPLETE);
 		}
 		
 		private function netStatusHandler(event:NetStatusEvent):void {
@@ -742,7 +742,7 @@
 			while (mStatsUploadTime.length > STATS_PRECISION)
 				mStatsUploadTime.pop();
 			++mStatsUploadedFrames;
-			dispatchEventWith(VideoEvent.UPLOAD_COMPLETE);
+			dispatchEventWith(starlingEngine.video.events.VideoEvent.UPLOAD_COMPLETE);
 		}
 		
 		/**
@@ -764,7 +764,7 @@
 			mNewFrameAvailable = mLastFrame != mCurrentFrame;
 			
 			if (mNewFrameAvailable) {
-				dispatchEventWith(VideoEvent.VIDEO_FRAME);
+				dispatchEventWith(starlingEngine.video.events.VideoEvent.VIDEO_FRAME);
 				if (mRecording) {
 					draw();
 					upload();

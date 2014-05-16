@@ -53,7 +53,6 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\AssetsManager.swc" />
     <element path="lib\CEV3-1-9-ALL.swc" />
     <element path="lib\greensock.swc" />
     <element path="lib\LoaderManager.swc" />
