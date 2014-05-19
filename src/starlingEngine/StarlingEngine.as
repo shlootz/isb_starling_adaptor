@@ -41,6 +41,7 @@ package starlingEngine
 	import starling.text.BitmapFont;
 	import starling.text.TextField;
 	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
 	import starlingEngine.elements.EngineImage;
 	import starlingEngine.elements.EngineLabel;
@@ -698,6 +699,17 @@ package starlingEngine
 		public function swapLayers(layer1:IAbstractLayer, layer2:IAbstractLayer):void
 		{
 			_currentState.swapChildrenF(layer1 as IAbstractLayer, layer2 as IAbstractLayer);
+		}
+		
+		/**
+		 * 
+		 * @param	atlasXml
+		 * @param	atlasPng
+		 */
+		public function addTextureAtlas(name:String, atlasXml:XML, atlasPng:Class):void
+		{
+			var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(new atlasPng()), atlasXml);
+			_assetsManager.addTextureAtlas(name, atlas);
 		}
 		
 		/**
