@@ -78,6 +78,7 @@ package starlingEngine
 		private var _currentState:IAbstractState;
 		private var _assetsManager:starling.utils.AssetManager;
 		private var _signalsHub:SignalsHub;
+		private var _debugMode:Boolean = false;
 		/**
 		 * 
 		 * @param	initCompleteCallback
@@ -85,13 +86,13 @@ package starlingEngine
 		 * @param	baseHeight
 		 * @param	viewportMode
 		 */
-		public function StarlingEngine(initCompleteCallback:Function, baseWidth:int = 800, baseHeight:int = 600, viewportMode:String = ViewportMode.FULLSCREEN):void 
+		public function StarlingEngine(initCompleteCallback:Function, baseWidth:int = 800, baseHeight:int = 600, viewportMode:String = ViewportMode.FULLSCREEN, debugMode:Boolean = false):void 
 		{
 			_baseWidth = baseWidth;
 			_baseHeight = baseHeight;
 			_viewportMode = viewportMode;
 			_assetSizes = [1, 1.5, 2];
-			
+			_debugMode = debugMode;
 			_initCompleteCallback = initCompleteCallback;
 		}
 		
@@ -121,15 +122,15 @@ package starlingEngine
 		override protected function handleAddedToStage(e:Event):void
 		{
 			super.handleAddedToStage(e);
-			initEngine();
+			initEngine(_debugMode);
 		}		
 		
 		/**
 		 * 
 		 */
-		public function initEngine():void
+		public function initEngine(debugMode:Boolean = false):void
 		{
-			setUpStarling(true);
+			setUpStarling(debugMode);
 		}
 		
 		/**
