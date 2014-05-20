@@ -150,7 +150,6 @@ package starlingEngine.elements
 		{
 			super.swapChildrenAt(index1, index2);
 		}
-		
 	}
 
 }

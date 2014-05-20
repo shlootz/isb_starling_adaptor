@@ -1,5 +1,7 @@
 package starlingEngine
 {
+	import adobe.utils.CustomActions;
+	import bridge.abstract.AbstractPool;
 	import bridge.abstract.IAbstractDisplayObject;
 	import bridge.abstract.IAbstractEngineLayerVO;
 	import bridge.abstract.IAbstractImage;
@@ -21,6 +23,7 @@ package starlingEngine
 	import citrus.core.starling.StarlingCitrusEngine;
 	import citrus.core.starling.StarlingState;
 	import citrus.core.starling.ViewportMode;
+	import citrus.datastructures.PoolObject;
 	import flash.events.Event;
 	import flash.utils.Dictionary;
 	import nape.geom.Vec2;
@@ -79,6 +82,11 @@ package starlingEngine
 		private var _assetsManager:starling.utils.AssetManager;
 		private var _signalsHub:SignalsHub;
 		private var _debugMode:Boolean = false;
+		
+		private var _spritesPool:AbstractPool;
+		private var _imagesPool:AbstractPool;
+		private var _movieClipsPool:AbstractPool;
+		
 		/**
 		 * 
 		 * @param	initCompleteCallback
@@ -138,7 +146,11 @@ package starlingEngine
 		 */
 		override public function handleStarlingReady():void
 		{ 
-			//initNape();
+			_spritesPool = new AbstractPool("sprites", EngineSprite, 20);
+			_imagesPool = new AbstractPool("images", EngineImage, 20, Texture.fromColor(2, 2, 0x000000));
+			var defaultVector:Vector.<Texture> = new Vector.<Texture>;
+			defaultVector.push(Texture.fromColor(2, 2, 0x000000));
+			_movieClipsPool = new AbstractPool("movieClips", EngineMovie,10, defaultVector)
 			
 			_currentState = requestState();
 			state = _currentState as IState;
@@ -223,12 +235,16 @@ package starlingEngine
 		 */
 		public function requestImage(texture:Object):IAbstractImage
 		{
-			var i:IAbstractImage = new EngineImage(texture as Texture) as IAbstractImage;
+			//var i:IAbstractImage = new EngineImage(texture as Texture) as IAbstractImage;
+			var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
+			i.newTexture = texture;
+			i.readjustSize();
+			
 			return i;
 		}
 		
 		/**
-		 * 
+		 * @todo pool movieclips
 		 * @param	textures
 		 * @param	fps
 		 * @return IAbstractMovie
@@ -238,6 +254,20 @@ package starlingEngine
 		{
 			var textures:Vector.<Texture> =  _assetsManager.getTextures(prefix);
 			var m:IAbstractMovie = new EngineMovie(textures, fps) as IAbstractMovie;
+			//var m:IAbstractMovie = _movieClipsPool.getNewObject() as IAbstractMovie;
+			//
+			//while (m.numFrames > 1)
+			//{
+				//m.removeFrameAt(0);
+			//}
+			//
+			// add new frames
+			//for each (var texture:Texture in textures)
+			//{
+				//m.addNewFrame(texture as IAbstractTexture);
+			//}
+			//
+			//m.currentFrame = 1;
 			return m;
 		}
 		
@@ -248,7 +278,8 @@ package starlingEngine
 		 */
 		public function requestSprite():IAbstractSprite
 		{
-			var s:IAbstractSprite = new EngineSprite() as IAbstractSprite;
+			//var s:IAbstractSprite = new EngineSprite() as IAbstractSprite;
+			var s:IAbstractSprite = _spritesPool.getNewObject() as IAbstractSprite;
 			return s;
 		}
 		

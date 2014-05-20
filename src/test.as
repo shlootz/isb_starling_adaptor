@@ -24,6 +24,7 @@ package
 	import bridge.BridgeGraphics;
 	import bridge.IBridgeGraphics;
 	import citrus.core.starling.StarlingCitrusEngine;
+	import citrus.datastructures.PoolObject;
 	import com.greensock.TweenLite;
 	import feathers.controls.Button;
 	import feathers.controls.text.TextFieldTextRenderer;
@@ -137,8 +138,7 @@ package
 																		signals.SignalsHub,
 																		AbstractPool,
 																		starling.animation.Juggler,
-																		nape.space.Space,
-																		false
+																		nape.space.Space
 																		);
 		
 		public function test() 
@@ -213,14 +213,14 @@ package
 			sprite.addNewChild(img);
 			img.x = 150
 						//
-			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Bet", 30);
-			mc.x = 0;
-			mc.y = 0;
+			//var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Bet", 30);
+			//mc.x = 0;
+			//mc.y = 0;
 						
 			sprite.x = 150;
 			sprite.y = 150;
 			sprite.rotation = .1;
-			(_bridgeGraphics.defaultJuggler).add(mc as IAbstractAnimatable);
+			//(_bridgeGraphics.defaultJuggler).add(mc as IAbstractAnimatable);
 						//
 			var x:XML = new XML();
 			x = _bridgeGraphics.requestXML("layerLayout");
@@ -231,7 +231,7 @@ package
 			layersVO.addLayer("Layer 3", 2, x, true);
 			layersVO.addLayer("Stuff with layout", 3, null, true);
 						
-			layersVO.retrieveLayer("Layer 3").addNewChild(mc);
+			//layersVO.retrieveLayer("Layer 3").addNewChild(mc);
 			
 			var video:IAbstractVideo = _bridgeGraphics.requestVideo();
 			video.addVideoPath("../bin/assets/test.flv");
