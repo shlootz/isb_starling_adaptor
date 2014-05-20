@@ -137,7 +137,7 @@ package starlingEngine
 		 */
 		override public function handleStarlingReady():void
 		{ 
-			initNape();
+			//initNape();
 			
 			_currentState = requestState();
 			state = _currentState as IState;
@@ -169,8 +169,8 @@ package starlingEngine
 		 */
 		private function initNape():void
 		{
-			//_space = new Space(new Vec2(0, 5));
-			//addEventListener(Event.ENTER_FRAME, loop);
+			_space = new Space(new Vec2(0, 5));
+			addEventListener(Event.ENTER_FRAME, loop);
 		}
 		
 		/**
@@ -283,15 +283,6 @@ package starlingEngine
 		{
 			return new EngineLayer(name, depth, layout, addedToStage) as IAbstractLayer;
 		}
-		
-		///**
-		 //* 
-		 //* @return EngineLayer
-		 //*/
-		//public function requestLayer(name:String):EngineLayer
-		//{
-			//return new EngineLayer(name);
-		//}
 		
 		/**
 		 * 
