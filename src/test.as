@@ -132,13 +132,14 @@ package
 		private static const TimesTexture : Class;
 		
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
-																		new Point(1200, 900),
+																		new Point(800, 600),
 																		StarlingEngine,
 																		starling.utils.AssetManager,
 																		signals.SignalsHub,
 																		AbstractPool,
 																		starling.animation.Juggler,
-																		nape.space.Space
+																		nape.space.Space,
+																		true
 																		);
 		
 		public function test() 
@@ -271,7 +272,7 @@ package
 						
 			var state2:IAbstractState = _bridgeGraphics.requestState();
 			var stateTransition:IAbstractStateTransition = new EngineStateTransition();
-			//_bridgeGraphics.tranzitionToState(state2, stateTransition);
+			_bridgeGraphics.tranzitionToState(state2, stateTransition);
 			
  
 			var xml:XML = XML(new TimesXml());

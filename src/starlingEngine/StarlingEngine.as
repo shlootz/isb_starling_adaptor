@@ -411,10 +411,10 @@ package starlingEngine
 		
 		/**
 		 * 
-		 * @param	oldState
-		 * @param	newState
+		 * @param	o1
+		 * @param	o2
 		 */
-		private function tranzitionToStateComplete():void
+		private function tranzitionToStateComplete(o1:Object = null, o2:Object = null):void
 		{
 			_currentState = futureState as EngineState;
 			state = _currentState as IState;
