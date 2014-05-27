@@ -158,7 +158,6 @@ package
 													"../bin/assets/spritesheets/spriteSheetPayTable.xml",
 													"../bin/assets/layouts/layerLayout.xml"
 													);
-			
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
 					trace("Loading assets, progress:", ratio);

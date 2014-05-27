@@ -24,6 +24,8 @@ package starlingEngine
 	import citrus.core.starling.StarlingState;
 	import citrus.core.starling.ViewportMode;
 	import citrus.datastructures.PoolObject;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.utils.Dictionary;
 	import nape.geom.Vec2;
@@ -651,8 +653,8 @@ package starlingEngine
 						layer.addNewChildAt(img, i);
 						img.x = Number(sortedElements[i].x);
 						img.y = Number(sortedElements[i].y);
-						//img.width = Number(sortedElements[i].width);
-						//img.height = Number(sortedElements[i].height);
+						img.width = Number(sortedElements[i].width);
+						img.height = Number(sortedElements[i].height);
 						break;
 						
 					case ENGINE_BUTTON:
@@ -665,8 +667,8 @@ package starlingEngine
 						layer.addNewChildAt(btn, i);
 						btn.x = Number(sortedElements[i].x);
 						btn.y = Number(sortedElements[i].y);
-						//btn.width = Number(sortedElements[i].width);
-						//btn.height = Number(sortedElements[i].height);
+						btn.width = Number(sortedElements[i].width);
+						btn.height = Number(sortedElements[i].height);
 						(btn as IAbstractButton).addEventListener(EngineEvent.TRIGGERED, button_triggeredHandler);
 						
 						break;
@@ -731,7 +733,9 @@ package starlingEngine
 		 */
 		public function addTextureAtlas(name:String, atlasXml:XML, atlasPng:Class):void
 		{
-			var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(new atlasPng()), atlasXml);
+			var atlasBitmapData:BitmapData = new atlasPng();
+			var atlasBitmap:Bitmap = new Bitmap(atlasBitmapData);
+			var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(atlasBitmap), atlasXml);
 			_assetsManager.addTextureAtlas(name, atlas);
 		}
 		
