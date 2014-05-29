@@ -1,6 +1,9 @@
 package starlingEngine
 {
 	import adobe.utils.CustomActions;
+	import bridge.abstract.ui.LabelProperties;
+	import flash.geom.Point;
+	
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.IAbstractDisplayObject;
 	import bridge.abstract.IAbstractEngineLayerVO;
@@ -19,22 +22,28 @@ package starlingEngine
 	import bridge.abstract.ui.IAbstractLabel;
 	import bridge.BridgeGraphics;
 	import bridge.IEngine;
+	
 	import citrus.core.IState;
 	import citrus.core.starling.StarlingCitrusEngine;
 	import citrus.core.starling.StarlingState;
 	import citrus.core.starling.ViewportMode;
 	import citrus.datastructures.PoolObject;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.utils.Dictionary;
+	
 	import nape.geom.Vec2;
 	import nape.space.Space;
 	import nape.util.ShapeDebug;
+	
 	import org.osflash.signals.Signal;
+	
 	import signals.ISignalsHub;
 	import signals.Signals;
 	import signals.SignalsHub;
+	
 	import starling.animation.IAnimatable;
 	import starling.animation.Juggler;
 	import starling.core.Starling;
@@ -48,6 +57,7 @@ package starlingEngine
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
+	
 	import starlingEngine.elements.EngineImage;
 	import starlingEngine.elements.EngineLabel;
 	import starlingEngine.elements.EngineLayer;
@@ -450,7 +460,10 @@ package starlingEngine
 			for (var k:Object in _layers) 
 			{
 				var child:EngineLayer = _layers[k] as EngineLayer;
-				orderedLayers.push(child);
+				if (child.addToStage)
+				{
+					orderedLayers.push(child);
+				}
 			}
 			
 			orderedLayers.sort(sortDepths);
@@ -659,8 +672,8 @@ package starlingEngine
 						
 					case ENGINE_BUTTON:
 						var btn:IAbstractButton = requestButton();
-						//var upSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].name));
 						var upSkin:IAbstractMovie = requestMovie(sortedElements[i].resource, sortedElements[i].fps);
+						
 						btn.idName = sortedElements[i].name;
 						btn.upSkin_ = upSkin;
 						
@@ -669,6 +682,21 @@ package starlingEngine
 						btn.y = Number(sortedElements[i].y);
 						btn.width = Number(sortedElements[i].width);
 						btn.height = Number(sortedElements[i].height);
+						
+						if (sortedElements[i].label != "")
+						{
+							var labelText:IAbstractTextField = requestTextField(int(sortedElements[i].labelWidth), 
+																				int(sortedElements[i].labelHeight), 
+																				sortedElements[i].label, 
+																				sortedElements[i].font, 
+																				30);
+							var label:IAbstractLabel = requestLabelFromTextfield(labelText);
+							
+							labelText.autoScale = true;
+							labelText.hAlign = LabelProperties.ALIGN_CENTER;
+							btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
+						}
+						
 						(btn as IAbstractButton).addEventListener(EngineEvent.TRIGGERED, button_triggeredHandler);
 						
 						break;
@@ -679,7 +707,9 @@ package starlingEngine
 						juggler.add(mc as IAnimatable);
 						(mc as IAbstractMovie).name = sortedElements[i].name;
 						(mc as IAbstractMovie).loop = sortedElements[i].loop;
-						(mc as IAbstractMovie).addEventListener(EngineEvent.COMPLETE, movieClip_Completed)
+						(mc as IAbstractMovie).addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
+						mc.width = Number(sortedElements[i].width);
+						mc.height = Number(sortedElements[i].height);
 						break;
 						
 					case ENGINE_FLV:
@@ -728,16 +758,17 @@ package starlingEngine
 		
 		/**
 		 * 
+		 * @param	name
 		 * @param	atlasXml
 		 * @param	atlasPng
 		 */
-		public function addTextureAtlas(name:String, atlasXml:XML, atlasPng:Class):void
-		{
-			var atlasBitmapData:BitmapData = new atlasPng();
-			var atlasBitmap:Bitmap = new Bitmap(atlasBitmapData);
-			var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(atlasBitmap), atlasXml);
-			_assetsManager.addTextureAtlas(name, atlas);
-		}
+		 public function addTextureAtlas(name:String, atlasXml:XML, atlasPng:Class):void
+		 {
+		   var atlasBitmapData:BitmapData = new atlasPng();
+		   var atlasBitmap:Bitmap = new Bitmap(atlasBitmapData);
+		   var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(atlasBitmap), atlasXml);
+		   _assetsManager.addTextureAtlas(name, atlas);
+		 }
 		
 		/**
 		 * 

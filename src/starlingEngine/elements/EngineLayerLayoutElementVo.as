@@ -24,6 +24,11 @@ package starlingEngine.elements
 		public var layerDepth:Number;
 		
 		public var loop:Boolean = false;
+		
+		public var labelWidth:Number;
+		public var labelHeight:Number;
+		public var label:String;
+		public var font:String;
 					
 		public function EngineLayerLayoutElementVo() 
 		{

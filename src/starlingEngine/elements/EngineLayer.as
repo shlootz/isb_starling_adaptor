@@ -113,6 +113,10 @@ package starlingEngine.elements
 				var depth:String = _layout.child("Element")[i].attribute("depth");
 				var resource:String = _layout.child("Element")[i].attribute("resource");
 				var loop:String = _layout.child("Element")[i].attribute("loop");
+				var labelWidth:String = _layout.child("Element")[i].attribute("labelWidth");
+				var labelHeight:String = _layout.child("Element")[i].attribute("labelHeight");
+				var font:String = _layout.child("Element")[i].attribute("font");
+				var label:String = _layout.child("Element")[i].attribute("label");
 				
 				var o:EngineLayerLayoutElementVo = new EngineLayerLayoutElementVo();
 				o.name = name;
@@ -125,6 +129,10 @@ package starlingEngine.elements
 				o.height = Number(h);
 				o.fps = fps;
 				o.layerDepth = Number(depth)
+				o.labelWidth = Number(labelWidth);
+				o.labelHeight = Number(labelHeight);
+				o.font = font;
+				o.label = label;
 				
 				if (loop == "true")
 				{
