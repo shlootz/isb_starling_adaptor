@@ -98,6 +98,7 @@ package starlingEngine
 		private var _spritesPool:AbstractPool;
 		private var _imagesPool:AbstractPool;
 		private var _movieClipsPool:AbstractPool;
+		private var _buttonsPool:AbstractPool;
 		
 		/**
 		 * 
@@ -158,11 +159,19 @@ package starlingEngine
 		 */
 		override public function handleStarlingReady():void
 		{ 
+			//creates a new pool for sprites
 			_spritesPool = new AbstractPool("sprites", EngineSprite, 20);
+			
+			//creates a new pool for images
 			_imagesPool = new AbstractPool("images", EngineImage, 20, Texture.fromColor(2, 2, 0x000000));
+			
+			//creates a new pool for movieclips
 			var defaultVector:Vector.<Texture> = new Vector.<Texture>;
 			defaultVector.push(Texture.fromColor(2, 2, 0x000000));
-			_movieClipsPool = new AbstractPool("movieClips", EngineMovie,10, defaultVector)
+			_movieClipsPool = new AbstractPool("movieClips", EngineMovie, 50, defaultVector)
+			
+			//creates a new pool for buttons
+			_buttonsPool = new AbstractPool("buttons", EngineButton, 20);
 			
 			_currentState = requestState();
 			state = _currentState as IState;
@@ -247,7 +256,6 @@ package starlingEngine
 		 */
 		public function requestImage(texture:Object):IAbstractImage
 		{
-			//var i:IAbstractImage = new EngineImage(texture as Texture) as IAbstractImage;
 			var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
 			i.newTexture = texture;
 			i.readjustSize();
@@ -256,7 +264,6 @@ package starlingEngine
 		}
 		
 		/**
-		 * @todo pool movieclips
 		 * @param	textures
 		 * @param	fps
 		 * @return IAbstractMovie
@@ -266,21 +273,22 @@ package starlingEngine
 		{
 			var textures:Vector.<Texture> =  _assetsManager.getTextures(prefix);
 			var m:IAbstractMovie = new EngineMovie(textures, fps) as IAbstractMovie;
-			//var m:IAbstractMovie = _movieClipsPool.getNewObject() as IAbstractMovie;
-			//
-			//while (m.numFrames > 1)
-			//{
-				//m.removeFrameAt(0);
-			//}
-			//
-			// add new frames
-			//for each (var texture:Texture in textures)
-			//{
-				//m.addNewFrame(texture as IAbstractTexture);
-			//}
-			//
-			//m.currentFrame = 1;
-			return m;
+
+			var n:EngineMovie = _movieClipsPool.getNewObject() as EngineMovie;
+			
+			while (n.numFrames > 1)
+			{
+				n.removeFrameAt(0);
+			}
+			
+			for (var i:uint = 0; i < textures.length; i++ )
+			{
+				(n as MovieClip).addFrame(textures[i] as Texture);
+			}
+			
+			n.currentFrame = 0;
+			
+			return n;
 		}
 		
 		/**
@@ -290,7 +298,6 @@ package starlingEngine
 		 */
 		public function requestSprite():IAbstractSprite
 		{
-			//var s:IAbstractSprite = new EngineSprite() as IAbstractSprite;
 			var s:IAbstractSprite = _spritesPool.getNewObject() as IAbstractSprite;
 			return s;
 		}
@@ -302,7 +309,7 @@ package starlingEngine
 		 */
 		public function requestButton():IAbstractButton
 		{
-			var b:IAbstractButton = new EngineButton();
+			var b:IAbstractButton = _buttonsPool.getNewObject() as IAbstractButton;
 			return b;
 		}
 		
@@ -472,7 +479,6 @@ package starlingEngine
 			{
 				if (_currentState.getChildByNameStr(orderedLayers[j].name) == null)
 				{
-					trace(orderedLayers[j].addToStage);
 					if (orderedLayers[j].addToStage)
 					{
 						_currentState.addNewChildAt(orderedLayers[j], j);
@@ -650,8 +656,7 @@ package starlingEngine
 			}
 		}
 		
-		/** @TODO width and height from layout. Currently it is commented below.
-		 * 
+		/** 
 		 * @param	layer
 		 * @param	sortedElements
 		 */

@@ -212,6 +212,7 @@ package
 			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
 			sprite.addNewChild(img);
 			img.x = 150
+			
 						//
 			//var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Bet", 30);
 			//mc.x = 0;
@@ -223,7 +224,7 @@ package
 			//(_bridgeGraphics.defaultJuggler).add(mc as IAbstractAnimatable);
 						//
 			var x:XML = new XML();
-			x = _bridgeGraphics.requestXML("layerLayout");
+			x = _bridgeGraphics.getXMLFromAssetsManager("layerLayout");
 			
 			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
 			layersVO.addLayer("UI", 0, null, true);
@@ -312,9 +313,9 @@ package
 						
 			_bridgeGraphics.updateLayers(inLayers, null, transIn, transOut);
 						
-			var state2:IAbstractState = _bridgeGraphics.requestState();
-			var stateTransition:IAbstractStateTransition = new EngineStateTransition();
-			_bridgeGraphics.tranzitionToState(state2, stateTransition);
+			//var state2:IAbstractState = _bridgeGraphics.requestState();
+			//var stateTransition:IAbstractStateTransition = new EngineStateTransition();
+			//_bridgeGraphics.tranzitionToState(state2, stateTransition);
 			
  
 			var xml:XML = XML(new TimesXml());
