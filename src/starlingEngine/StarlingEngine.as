@@ -271,6 +271,20 @@ package starlingEngine
 		}
 		
 		/**
+		 * 
+		 * @param	bitmapData
+		 * @return
+		 */
+		public function requestImageFromBitmapData(bitmapData:BitmapData):IAbstractImage
+		{
+			var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
+			i.newTexture = Texture.fromBitmapData(bitmapData);
+			i.readjustSize();
+			
+			return i;
+		}
+		
+		/**
 		 * @param	textures
 		 * @param	fps
 		 * @return IAbstractMovie
@@ -377,7 +391,6 @@ package starlingEngine
 			myCustomDisplayObject.addNewChild(maskedObject);
 			myCustomMaskDisplayObject.addNewChild(mask);
 			 
-			//var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject();
 			mM.addNewChild(myCustomDisplayObject);
 			mM.newMask = myCustomMaskDisplayObject;
 			

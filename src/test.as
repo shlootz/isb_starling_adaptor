@@ -30,6 +30,7 @@ package
 	import com.greensock.TweenLite;
 	import feathers.controls.Button;
 	import feathers.controls.text.TextFieldTextRenderer;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.AsyncErrorEvent;
@@ -160,7 +161,10 @@ package
 													"../bin/assets/spritesheets/spriteSheetElements.xml",
 													"../bin/assets/spritesheets/spriteSheetElements.xml",
 													"../bin/assets/spritesheets/spriteSheetPayTable.xml",
-													"../bin/assets/layouts/layerLayout.xml"
+													"../bin/assets/spritesheets/preloader1x.png",
+													"../bin/assets/spritesheets/preloader1x.xml",
+													"../bin/assets/layouts/layerLayout.xml",
+													"../bin/assets/layouts/preloader1xLayout.xml"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
@@ -208,39 +212,59 @@ package
 			(e.currentTarget as IAbstractButton).isEnabled  = false;
 			//showThings();
 			//particlesTest();
-			showMaskedThings2();
+			//showMaskedThings2();
+			//testPreloader();
+			testShape();
+		}
+		
+		private function testShape():void
+		{
+			var s2:flash.display.Shape = new flash.display.Shape();
+			s2.graphics.beginFill(0xff0000, 1);
+			s2.graphics.drawCircle(40, 40, 40);
+			s2.graphics.endFill();
+
+			var bmpData:BitmapData = new BitmapData(100,100, true, 0x000000);
+			bmpData.draw(s2);
+			
+			_bridgeGraphics.addChild(_bridgeGraphics.requestImageFromBitmapData(bmpData));
+		}
+		
+		private function testPreloader():void
+		{
+			var x:XML = new XML();
+			x = _bridgeGraphics.getXMLFromAssetsManager("preloader1xLayout");
+			
+			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
+			layersVO.addLayer("UI", 0, x, true);
+			_bridgeGraphics.initLayers(layersVO.layers);
+			
+			var m:IAbstractMask = _bridgeGraphics.requestMask(
+																									layersVO.retrieveLayer("UI").getChildByNameStr("Preloader-Background"), 
+																									_bridgeGraphics.requestImage("Loader-Over")
+																									);
+			layersVO.retrieveLayer("UI").addNewChild(m);
 		}
 		
 		private function showMaskedThings2():void
 		{
-			var m:IAbstractMask = _bridgeGraphics.requestMask(_bridgeGraphics.requestImage("Background"), _bridgeGraphics.requestImage("Auto-Spin-Button-Down"));
-			m.name = "masca";
-			_bridgeGraphics.addChild(m);
-		}
-		
-		private function showMaskedThings():void
-		{
-			// myCustomDisplayObject and myCustomMaskDisplayObject can be any Starling display object:
-			var myCustomDisplayObject:IAbstractSprite =_bridgeGraphics.requestSprite();
-			var myCustomMaskDisplayObject:IAbstractSprite = _bridgeGraphics.requestSprite();
+			var video:IAbstractVideo = _bridgeGraphics.requestVideo();
+			video.addVideoPath("../bin/assets/test.flv");
+			_bridgeGraphics.addChild(video);
 			
-			myCustomDisplayObject.addNewChild(_bridgeGraphics.requestImage("Background"));
-			myCustomMaskDisplayObject.addNewChild(_bridgeGraphics.requestImage("Auto-Spin-Button-Down"));
-			 
-			// for masks with animation:
-			//var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject();
-			//maskedDisplayObject.addChild(myCustomDisplayObject);
-			 
-			// for masks with no animation (note, MUCH better performance!)
-			var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject();
-			maskedDisplayObject.addChild(myCustomDisplayObject as starling.display.DisplayObject);
-			 
-			// Apply the masking as you would in classic flash.display style.
-			// Note: the mask display object should not be added to the display list.
-			 
-			maskedDisplayObject.mask = myCustomMaskDisplayObject as starling.display.DisplayObject;
-
-			_bridgeGraphics.addChild(maskedDisplayObject);
+			var sprite:IAbstractSprite = _bridgeGraphics.requestSprite();
+			_bridgeGraphics.addChild(sprite)
+						
+			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
+			sprite.addNewChild(img);
+			
+			_bridgeGraphics.addChild(sprite);
+			
+			var m:IAbstractMask = _bridgeGraphics.requestMask(video, _bridgeGraphics.requestImage("Auto-Spin-Button-Down"));
+			sprite.addNewChild(m);
+			
+			m.x = 250;
+			m.y = 250;
 		}
 		
 		private function showThings():void
