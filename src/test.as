@@ -173,7 +173,7 @@ package
 			var uiHolder:IAbstractSprite = _bridgeGraphics.requestSprite();
 			_bridgeGraphics.addChild(uiHolder);
 			
-			var button:IAbstractButton = _bridgeGraphics.requestButton();
+			var button:IAbstractButton = _bridgeGraphics.requestButton("startBtn");
 			button.downSkin_ = _bridgeGraphics.requestImage("Spin-Button-Down") as IAbstractDisplayObject;
 			button.upSkin_ = _bridgeGraphics.requestImage("Spin-Button") as IAbstractDisplayObject;
 			button.hoverSkin_ = _bridgeGraphics.requestImage("Spin-Button-Hover") as IAbstractDisplayObject;
@@ -185,6 +185,8 @@ package
 			button.addEventListener(Event.TRIGGERED, button_triggeredHandler);
 			
 			uiHolder.addNewChild(button as IAbstractDisplayObject);
+			
+			TweenLite.to(uiHolder.getChildByNameStr("startBtn"), 2, { x:400 } );
 			
 			var t:IAbstractTextField = _bridgeGraphics.requestTextField(150, 30, "Yaaaay", "Times", 30);
 			t.autoScale = true;
@@ -201,16 +203,16 @@ package
 		{
 			(e.currentTarget as IAbstractButton).isEnabled  = false;
 			showThings();
-			particlesTest();
+			//particlesTest();
 		}
 		
 		private function showThings():void
 		{
 			var sprite:IAbstractSprite = _bridgeGraphics.requestSprite();
-			_bridgeGraphics.addChild(sprite)
+			//_bridgeGraphics.addChild(sprite)
 						
 			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
-			sprite.addNewChild(img);
+			//sprite.addNewChild(img);
 			img.x = 150
 			
 						//
@@ -229,7 +231,7 @@ package
 			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
 			layersVO.addLayer("UI", 0, null, true);
 			layersVO.addLayer("Overground", 1, null, true);
-			layersVO.addLayer("Layer 3", 2, x, true);
+			layersVO.addLayer("Layer 3", 2,null, true);
 			layersVO.addLayer("Stuff with layout", 3, null, true);
 			layersVO.addLayer("Stuff with layouta", 3, null, true);
 			layersVO.addLayer("Stuff with layoutb", 4, null, true);
@@ -264,29 +266,29 @@ package
 			layersVO.addLayer("Stuff with layoutuf", 11, null, true);
 			layersVO.addLayer("Stuff with layoutug", 12, null, true);
 			layersVO.addLayer("Stuff with layoutuh", 13, null, true);
-			layersVO.addLayer("Stuff with layoutuj", 14, x, true);
+			layersVO.addLayer("Stuff with layoutuj", 14, null, true);
 			layersVO.addLayer("Stuff with layoutuk", 15, null, true);
 			layersVO.addLayer("Stuff with layoutul", 16, null, true);
 			layersVO.addLayer("Stuff with layoutujg", 17, null, true);
 			layersVO.addLayer("Stuff with layoutu1", 18, null, true);
 			layersVO.addLayer("Stuff with layoutu2", 19, null, true);
 			layersVO.addLayer("Stuff with layoutu3", 20, null, true);
-			layersVO.addLayer("Stuff with layoutu4", 21, x, true);
+			layersVO.addLayer("Stuff with layoutu4", 21, null, true);
 			layersVO.addLayer("Stuff with layoutu5", 22, null, true);
 			layersVO.addLayer("Stuff with layoutu6", 23, null, true);
 						
 			//layersVO.retrieveLayer("Layer 3").addNewChild(mc);
 			
-			var video:IAbstractVideo = _bridgeGraphics.requestVideo();
-			video.addVideoPath("../bin/assets/test.flv");
-			layersVO.retrieveLayer("Overground").addNewChild(video);
+			//var video:IAbstractVideo = _bridgeGraphics.requestVideo();
+			//video.addVideoPath("../bin/assets/test.flv");
+			//layersVO.retrieveLayer("Overground").addNewChild(video);
 						//
 			_bridgeGraphics.initLayers(layersVO.layers);
 			
 			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
 			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, movieclipEnded);
 			
-			layersVO.addLayer("TEST", 4, x);
+			layersVO.addLayer("TEST", 4, null);
 			
 			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
 			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
@@ -294,10 +296,10 @@ package
 			var outTransition:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT()
 			var inTransition:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN();
 			
-			inLayers.push(layersVO.retrieveLayer("TEST"));
-			outLayers.push(layersVO.retrieveLayer("Layer 3"));
-			
-			_bridgeGraphics.updateLayers(inLayers, outLayers, inTransition, outTransition);
+			//inLayers.push(layersVO.retrieveLayer("TEST"));
+			//outLayers.push(layersVO.retrieveLayer("Layer 3"));
+			//
+			//_bridgeGraphics.updateLayers(inLayers, outLayers, inTransition, outTransition);
 						
 			var transIn:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN()
 			var transOut:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT();
@@ -305,23 +307,21 @@ package
 			//var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
 			//outLayers.push(layersVO.retrieveLayer("Layer 2"));
 						
-			var newLayer:IAbstractLayer = _bridgeGraphics.requestLayer("Tzeapa", 0, null, true);
-			newLayer.addNewChild(_bridgeGraphics.requestImage("Background"));
-						
-			//var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
+			var newLayer:IAbstractLayer = _bridgeGraphics.requestLayer("Tzeapa", 0, x, true);
+			//newLayer.addNewChild(_bridgeGraphics.requestImage("Background"));
 			inLayers.push(newLayer);
-						
-			_bridgeGraphics.updateLayers(inLayers, null, transIn, transOut);
+			_bridgeGraphics.updateLayers(inLayers, null, null, null);
+			TweenLite.to(newLayer.getChildByNameStr("badass"), 2, { x:400 } );
 						
 			//var state2:IAbstractState = _bridgeGraphics.requestState();
 			//var stateTransition:IAbstractStateTransition = new EngineStateTransition();
 			//_bridgeGraphics.tranzitionToState(state2, stateTransition);
 			
  
-			var xml:XML = XML(new TimesXml());
-			_bridgeGraphics.registerBitmapFont(TimesTexture, xml);
-			var t:IAbstractTextField = _bridgeGraphics.requestTextField(500, 500, "Yaaaay", "Times", 150);
-			_bridgeGraphics.addChild(t);
+			//var xml:XML = XML(new TimesXml());
+			//_bridgeGraphics.registerBitmapFont(TimesTexture, xml);
+			//var t:IAbstractTextField = _bridgeGraphics.requestTextField(500, 500, "Yaaaay", "Times", 150);
+			//_bridgeGraphics.addChild(t);
 			
 			///////////////////////////////////////////////////
 		}
@@ -346,11 +346,11 @@ package
 			var blueTexture:Texture = Texture.fromBitmap(new BlueParticle());
             
             mParticleSystems = new <ParticleSystem>[
-                new PDParticleSystem(drugsConfig, drugsTexture),
-                new PDParticleSystem(fireConfig, fireTexture),
-                new PDParticleSystem(sunConfig, sunTexture),
-                new PDParticleSystem(jellyConfig, jellyTexture),
-				new PDParticleSystem(blueConfig, blueTexture)]
+                //new PDParticleSystem(drugsConfig, drugsTexture),
+                //new PDParticleSystem(fireConfig, fireTexture),
+                //new PDParticleSystem(sunConfig, sunTexture),
+                //new PDParticleSystem(jellyConfig, jellyTexture),
+				new PDParticleSystem(blueConfig, drugsTexture)]
 				
 				startNextParticleSystem();
 		}

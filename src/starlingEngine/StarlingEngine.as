@@ -254,11 +254,16 @@ package starlingEngine
 		 * @return IAbstractImage
 		 * @see bridge.abstract.IAbstractImage
 		 */
-		public function requestImage(texture:Object):IAbstractImage
+		public function requestImage(texture:Object, name:String = ""):IAbstractImage
 		{
 			var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
 			i.newTexture = texture;
 			i.readjustSize();
+			
+			if (name != "")
+			{
+				i.name = name;
+			}
 			
 			return i;
 		}
@@ -286,6 +291,7 @@ package starlingEngine
 				(n as MovieClip).addFrame(textures[i] as Texture);
 			}
 			
+			n.name = prefix;
 			n.currentFrame = 0;
 			
 			return n;
@@ -296,9 +302,13 @@ package starlingEngine
 		 * @return IAbstractSprite
 		 * @see bridge.abstract.IAbstractSprite
 		 */
-		public function requestSprite():IAbstractSprite
+		public function requestSprite(name:String = ""):IAbstractSprite
 		{
 			var s:IAbstractSprite = _spritesPool.getNewObject() as IAbstractSprite;
+			if (name != "")
+			{
+				s.name = name;
+			}
 			return s;
 		}
 		
@@ -307,9 +317,13 @@ package starlingEngine
 		 * @return IAbstractButton
 		 * @see bridge.abstract.IAbstractButton
 		 */
-		public function requestButton():IAbstractButton
+		public function requestButton(name:String = ""):IAbstractButton
 		{
 			var b:IAbstractButton = _buttonsPool.getNewObject() as IAbstractButton;
+			if (name != "")
+			{
+				b.name = name;
+			}
 			return b;
 		}
 		
@@ -524,7 +538,6 @@ package starlingEngine
 		}
 		
 		/**
-		 * 
 		 * @param	inLayers
 		 * @param	outLayers
 		 */
@@ -673,6 +686,7 @@ package starlingEngine
 						img.y = Number(sortedElements[i].y);
 						img.width = Number(sortedElements[i].width);
 						img.height = Number(sortedElements[i].height);
+						img.name = sortedElements[i].name;
 						break;
 						
 					case ENGINE_BUTTON:
@@ -687,7 +701,8 @@ package starlingEngine
 						btn.y = Number(sortedElements[i].y);
 						btn.width = Number(sortedElements[i].width);
 						btn.height = Number(sortedElements[i].height);
-						
+						btn.name = sortedElements[i].name;
+							
 						if (sortedElements[i].label != "")
 						{
 							var labelText:IAbstractTextField = requestTextField(int(sortedElements[i].labelWidth), 
@@ -715,6 +730,7 @@ package starlingEngine
 						(mc as IAbstractMovie).addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
 						mc.width = Number(sortedElements[i].width);
 						mc.height = Number(sortedElements[i].height);
+						mc.name = sortedElements[i].name;
 						break;
 						
 					case ENGINE_FLV:
