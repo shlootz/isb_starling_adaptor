@@ -1,5 +1,6 @@
 package  
 {
+	import adobe.utils.CustomActions;
 	import away3d.controllers.SpringController;
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.events.IAbstractEvent;
@@ -9,6 +10,7 @@ package
 	import bridge.abstract.IAbstractImage;
 	import bridge.abstract.IAbstractJuggler;
 	import bridge.abstract.IAbstractLayer;
+	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.IAbstractMovie;
 	import bridge.abstract.IAbstractSprite;
 	import bridge.abstract.IAbstractState;
@@ -63,9 +65,11 @@ package
 	import starlingEngine.elements.EngineLabel;
 	import starlingEngine.elements.EngineLayer;
 	import starlingEngine.elements.EngineLayerVO;
+	import starlingEngine.elements.EngineMask;
 	import starlingEngine.elements.EngineTexture;
 	import starlingEngine.elements.EngineVideo;
 	import starlingEngine.events.EngineEvent;
+	import starlingEngine.extensions.pixelmask.PixelMaskDisplayObject;
 	import starlingEngine.StarlingEngine;
 	import starlingEngine.transitions.EngineLayerTransitionIn;
 	import starlingEngine.transitions.EngineLayerTransitionOut;
@@ -202,28 +206,61 @@ package
 		private function button_triggeredHandler(e:Event):void
 		{
 			(e.currentTarget as IAbstractButton).isEnabled  = false;
-			showThings();
+			//showThings();
 			//particlesTest();
+			showMaskedThings2();
+		}
+		
+		private function showMaskedThings2():void
+		{
+			var m:IAbstractMask = _bridgeGraphics.requestMask(_bridgeGraphics.requestImage("Background"), _bridgeGraphics.requestImage("Auto-Spin-Button-Down"));
+			m.name = "masca";
+			_bridgeGraphics.addChild(m);
+		}
+		
+		private function showMaskedThings():void
+		{
+			// myCustomDisplayObject and myCustomMaskDisplayObject can be any Starling display object:
+			var myCustomDisplayObject:IAbstractSprite =_bridgeGraphics.requestSprite();
+			var myCustomMaskDisplayObject:IAbstractSprite = _bridgeGraphics.requestSprite();
+			
+			myCustomDisplayObject.addNewChild(_bridgeGraphics.requestImage("Background"));
+			myCustomMaskDisplayObject.addNewChild(_bridgeGraphics.requestImage("Auto-Spin-Button-Down"));
+			 
+			// for masks with animation:
+			//var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject();
+			//maskedDisplayObject.addChild(myCustomDisplayObject);
+			 
+			// for masks with no animation (note, MUCH better performance!)
+			var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject();
+			maskedDisplayObject.addChild(myCustomDisplayObject as starling.display.DisplayObject);
+			 
+			// Apply the masking as you would in classic flash.display style.
+			// Note: the mask display object should not be added to the display list.
+			 
+			maskedDisplayObject.mask = myCustomMaskDisplayObject as starling.display.DisplayObject;
+
+			_bridgeGraphics.addChild(maskedDisplayObject);
 		}
 		
 		private function showThings():void
-		{
+		{			
 			var sprite:IAbstractSprite = _bridgeGraphics.requestSprite();
-			//_bridgeGraphics.addChild(sprite)
+			_bridgeGraphics.addChild(sprite)
 						
 			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
-			//sprite.addNewChild(img);
+			sprite.addNewChild(img);
 			img.x = 150
 			
 						//
-			//var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Bet", 30);
-			//mc.x = 0;
-			//mc.y = 0;
+			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Bet", 30);
+			mc.x = 0;
+			mc.y = 0;
 						
 			sprite.x = 150;
 			sprite.y = 150;
 			sprite.rotation = .1;
-			//(_bridgeGraphics.defaultJuggler).add(mc as IAbstractAnimatable);
+			(_bridgeGraphics.defaultJuggler).add(mc as IAbstractAnimatable);
 						//
 			var x:XML = new XML();
 			x = _bridgeGraphics.getXMLFromAssetsManager("layerLayout");
@@ -270,18 +307,18 @@ package
 			layersVO.addLayer("Stuff with layoutuk", 15, null, true);
 			layersVO.addLayer("Stuff with layoutul", 16, null, true);
 			layersVO.addLayer("Stuff with layoutujg", 17, null, true);
-			layersVO.addLayer("Stuff with layoutu1", 18, null, true);
+			layersVO.addLayer("Stuff with layoutu1", 18, x, true);
 			layersVO.addLayer("Stuff with layoutu2", 19, null, true);
 			layersVO.addLayer("Stuff with layoutu3", 20, null, true);
 			layersVO.addLayer("Stuff with layoutu4", 21, null, true);
 			layersVO.addLayer("Stuff with layoutu5", 22, null, true);
 			layersVO.addLayer("Stuff with layoutu6", 23, null, true);
 						
-			//layersVO.retrieveLayer("Layer 3").addNewChild(mc);
+			layersVO.retrieveLayer("Layer 3").addNewChild(mc);
 			
-			//var video:IAbstractVideo = _bridgeGraphics.requestVideo();
-			//video.addVideoPath("../bin/assets/test.flv");
-			//layersVO.retrieveLayer("Overground").addNewChild(video);
+			var video:IAbstractVideo = _bridgeGraphics.requestVideo();
+			video.addVideoPath("../bin/assets/test.flv");
+			layersVO.retrieveLayer("Overground").addNewChild(video);
 						//
 			_bridgeGraphics.initLayers(layersVO.layers);
 			
@@ -308,9 +345,10 @@ package
 			//outLayers.push(layersVO.retrieveLayer("Layer 2"));
 						
 			var newLayer:IAbstractLayer = _bridgeGraphics.requestLayer("Tzeapa", 0, x, true);
-			//newLayer.addNewChild(_bridgeGraphics.requestImage("Background"));
 			inLayers.push(newLayer);
 			_bridgeGraphics.updateLayers(inLayers, null, null, null);
+			newLayer.addNewChild(_bridgeGraphics.requestImage("Background"));
+				
 			TweenLite.to(newLayer.getChildByNameStr("badass"), 2, { x:400 } );
 						
 			//var state2:IAbstractState = _bridgeGraphics.requestState();

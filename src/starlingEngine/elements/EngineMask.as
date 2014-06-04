@@ -1,23 +1,27 @@
 package starlingEngine.elements 
 {
 	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.IAbstractSprite;
+	import bridge.abstract.IAbstractMask;
 	import flash.geom.Rectangle;
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Sprite;
+	import starlingEngine.extensions.pixelmask.PixelMaskDisplayObject;
 	/**
 	 * ...
-	 * @author Alex Popescu
+	 * @author ...
 	 */
-	public class EngineSprite extends Sprite implements IAbstractSprite
+	public class EngineMask extends PixelMaskDisplayObject implements IAbstractMask
 	{
-		/**
-		 * 
-		 */
-		public function EngineSprite() 
+		
+		public function EngineMask() 
 		{
-			super();
+			
+		}
+		
+		public function set newMask(newMask:IAbstractDisplayObject):void
+		{
+			super.mask = newMask as DisplayObject;
 		}
 		
 		/**
@@ -151,6 +155,7 @@ package starlingEngine.elements
 		{
 			super.swapChildrenAt(index1, index2);
 		}
+		
 	}
 
 }

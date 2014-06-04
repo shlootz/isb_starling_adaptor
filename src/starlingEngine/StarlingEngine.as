@@ -1,8 +1,10 @@
 package starlingEngine
 {
 	import adobe.utils.CustomActions;
+	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.ui.LabelProperties;
 	import flash.geom.Point;
+	import starlingEngine.elements.EngineMask;
 	
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.IAbstractDisplayObject;
@@ -357,6 +359,29 @@ package starlingEngine
 		{
 			var t:IAbstractTextField = new EngineTextField(width, height, text, fontName, fontSize, color, bold) as IAbstractTextField;
 			return t;
+		}
+		
+		/**
+		 * 
+		 * @param	maskedObject
+		 * @param	mask
+		 * @return
+		 */
+		public function requestMask(maskedObject:IAbstractDisplayObject, mask:IAbstractDisplayObject, isAnimated:Boolean=false):IAbstractMask
+		{
+			var mM:IAbstractMask = new EngineMask();
+			
+			var myCustomDisplayObject:IAbstractSprite = requestSprite();
+			var myCustomMaskDisplayObject:IAbstractSprite = requestSprite();
+			
+			myCustomDisplayObject.addNewChild(maskedObject);
+			myCustomMaskDisplayObject.addNewChild(mask);
+			 
+			//var maskedDisplayObject:PixelMaskDisplayObject = new PixelMaskDisplayObject();
+			mM.addNewChild(myCustomDisplayObject);
+			mM.newMask = myCustomMaskDisplayObject;
+			
+			return (mM as IAbstractMask);
 		}
 		
 		/**
