@@ -188,6 +188,8 @@ package starlingEngine
 			_engineStage = starling.stage;
 			
 			_signalsHub.dispatchSignal(Signals.STARLING_READY, "", "");
+			
+			initNape();
 		}
 		
 		/**
@@ -211,8 +213,8 @@ package starlingEngine
 		 */
 		private function initNape():void
 		{
-			_space = new Space(new Vec2(0, 5));
-			addEventListener(Event.ENTER_FRAME, loop);
+			//_space = new Space(new Vec2(0, 5));
+			//addEventListener(Event.ENTER_FRAME, loop);
 		}
 		
 		/**

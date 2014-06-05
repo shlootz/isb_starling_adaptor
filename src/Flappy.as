@@ -87,7 +87,7 @@ package
 	 * ...
 	 * @author Alex Popescu
 	 */
-	public class test extends Sprite
+	public class Flappy extends Sprite
 	{	
 		[Embed(source="../bin/assets/media/drugs.pex", mimeType="application/octet-stream")]
         private static const DrugsConfig:Class;
@@ -151,7 +151,7 @@ package
 																		true
 																		);
 		
-		public function test() 
+		public function Flappy() 
 		{	
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
@@ -219,7 +219,14 @@ package
 			//showMaskedThings2();
 			//testPreloader();
 			//testShape();
-			testScrollingImage();
+			//testScrollingImage();
+			makeBird();
+		}
+		
+		private function makeBird():void
+		{
+			var flappyState:IAbstractState = new FlappyState(_bridgeGraphics);
+			_bridgeGraphics.tranzitionToState(flappyState);
 		}
 		
 		private var scroll:IAbstractBlitMask;
@@ -230,7 +237,7 @@ package
 			var scrollingImg:IAbstractImage = _bridgeGraphics.requestImage("Numbers");
 			 
 			scroll = _bridgeGraphics.requestBlitMask(scrollingImg, 800, 600, 300, 300);
-			scroll.x = 50;
+			
 			_bridgeGraphics.addChild(scroll);
 			
 			addEventListener(flash.events.Event.ENTER_FRAME, onUpdate);
