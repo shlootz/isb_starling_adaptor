@@ -5,6 +5,7 @@ package
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.events.IAbstractEvent;
 	import bridge.abstract.IAbstractAnimatable;
+	import bridge.abstract.IAbstractBlitMask;
 	import bridge.abstract.IAbstractDisplayObject;
 	import bridge.abstract.IAbstractEngineLayerVO;
 	import bridge.abstract.IAbstractImage;
@@ -53,6 +54,7 @@ package
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Quad;
+	import starling.events.EnterFrameEvent;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchPhase;
@@ -70,6 +72,8 @@ package
 	import starlingEngine.elements.EngineTexture;
 	import starlingEngine.elements.EngineVideo;
 	import starlingEngine.events.EngineEvent;
+	import starlingEngine.extensions.krecha.ScrollImage;
+	import starlingEngine.extensions.krecha.ScrollTile;
 	import starlingEngine.extensions.pixelmask.PixelMaskDisplayObject;
 	import starlingEngine.StarlingEngine;
 	import starlingEngine.transitions.EngineLayerTransitionIn;
@@ -212,9 +216,30 @@ package
 			(e.currentTarget as IAbstractButton).isEnabled  = false;
 			//showThings();
 			//particlesTest();
-			showMaskedThings2();
+			//showMaskedThings2();
 			//testPreloader();
-			testShape();
+			//testShape();
+			testScrollingImage();
+		}
+		
+		private var scroll:IAbstractBlitMask;
+		
+		private function testScrollingImage():void
+		{
+			
+			var scrollingImg:IAbstractImage = _bridgeGraphics.requestImage("Numbers");
+			 
+			scroll = _bridgeGraphics.requestBlitMask(scrollingImg, 600, 600, 300, 300);
+			
+			_bridgeGraphics.addChild(scroll);
+			
+			addEventListener(flash.events.Event.ENTER_FRAME, onUpdate);
+		}
+		
+		private function onUpdate(e:flash.events.Event):void
+		{
+			scroll.tilesOffsetY --;
+			scroll.tilesOffsetX ++;
 		}
 		
 		private function testShape():void
@@ -255,16 +280,13 @@ package
 			var sprite:IAbstractSprite = _bridgeGraphics.requestSprite();
 			_bridgeGraphics.addChild(sprite)
 						
-			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
+			var img:IAbstractImage = _bridgeGraphics.requestImage("Auto-Spin-Button-Down");
 			sprite.addNewChild(img);
-			
+	
 			_bridgeGraphics.addChild(sprite);
 			
-			var m:IAbstractMask = _bridgeGraphics.requestMask(video, _bridgeGraphics.requestImage("Auto-Spin-Button-Down"));
+			var m:IAbstractMask = _bridgeGraphics.requestMask(video, img);
 			sprite.addNewChild(m);
-			
-			m.x = 250;
-			m.y = 250;
 		}
 		
 		private function showThings():void

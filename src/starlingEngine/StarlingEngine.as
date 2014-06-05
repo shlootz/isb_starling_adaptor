@@ -1,10 +1,16 @@
 package starlingEngine
 {
 	import adobe.utils.CustomActions;
+	import bridge.abstract.IAbstractBlitMask;
 	import bridge.abstract.IAbstractMask;
+	import bridge.abstract.IAbstractScrollTile;
 	import bridge.abstract.ui.LabelProperties;
 	import flash.geom.Point;
+	import starlingEngine.elements.EngineBlitMask;
 	import starlingEngine.elements.EngineMask;
+	import starlingEngine.elements.EngineScrollTile;
+	import starlingEngine.extensions.krecha.ScrollImage;
+	import starlingEngine.extensions.krecha.ScrollTile;
 	
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.IAbstractDisplayObject;
@@ -268,6 +274,27 @@ package starlingEngine
 			}
 			
 			return i;
+		}
+		
+		/**
+		 * 
+		 * @param	scrollImage
+		 * @param	width
+		 * @param	height
+		 * @param	centerX
+		 * @param	centerY
+		 * @param	useBaseTexture
+		 * @return
+		 */
+		public function requestBlitMask(scrollImage:IAbstractImage, width:Number, height:Number, centerX:Number, centerY:Number, useBaseTexture:Boolean  = false):IAbstractBlitMask
+		{
+			var scroller:IAbstractBlitMask = new EngineBlitMask ( width, height, useBaseTexture );
+			var scrollTile:IAbstractScrollTile;
+			scrollTile = scroller.addLayerOnTop (  new EngineScrollTile ( scrollImage) );
+			scroller.tilesPivotX = centerX;
+			scroller.tilesPivotY = centerY;
+			
+			return scroller as IAbstractBlitMask;
 		}
 		
 		/**
