@@ -112,15 +112,25 @@ package starlingEngine.elements
 				var fps:uint = uint(_layout.child("Element")[i].attribute("fps"));
 				var depth:String = _layout.child("Element")[i].attribute("depth");
 				var resource:String = _layout.child("Element")[i].attribute("resource");
+				var upState:String = _layout.child("Element")[i].attribute("upState");
+				var overState:String = _layout.child("Element")[i].attribute("overState");
+				var pressedState:String = _layout.child("Element")[i].attribute("pressedState");
+				var disabledState:String = _layout.child("Element")[i].attribute("disabledState");
 				var loop:String = _layout.child("Element")[i].attribute("loop");
 				var labelWidth:String = _layout.child("Element")[i].attribute("labelWidth");
 				var labelHeight:String = _layout.child("Element")[i].attribute("labelHeight");
 				var font:String = _layout.child("Element")[i].attribute("font");
 				var label:String = _layout.child("Element")[i].attribute("label");
+				var labelFontSize:String = _layout.child("Element")[i].attribute("labelFontSize");
+				var labelFontColor:String = _layout.child("Element")[i].attribute("labelFontColor");
 				
 				var o:EngineLayerLayoutElementVo = new EngineLayerLayoutElementVo();
 				o.name = name;
 				o.resource = resource;
+				o.upState = upState;
+				o.overState = overState;
+				o.pressedState = pressedState;
+				o.disabledState = disabledState;
 				o.type = type;
 				o.onStage = onStage;
 				o.x = Number(x);
@@ -133,6 +143,8 @@ package starlingEngine.elements
 				o.labelHeight = Number(labelHeight);
 				o.font = font;
 				o.label = label;
+				o.labelFontSize = Number(labelFontSize);
+				o.labelFontColor = uint(labelFontColor);
 				
 				if (loop == "true")
 				{

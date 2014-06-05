@@ -9,8 +9,12 @@ package starlingEngine.elements
 		
 		public var name:String;
 		public var type:String;
-		
+
 		public var resource:String
+		public var upState:String
+		public var overState:String
+		public var pressedState:String
+		public var disabledState:String
 		
 		public var onStage:String;
 		
@@ -29,6 +33,8 @@ package starlingEngine.elements
 		public var labelHeight:Number;
 		public var label:String;
 		public var font:String;
+		public var labelFontSize:Number;
+		public var labelFontColor:uint;
 					
 		public function EngineLayerLayoutElementVo() 
 		{

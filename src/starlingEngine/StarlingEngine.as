@@ -761,25 +761,30 @@ package starlingEngine
 						
 					case ENGINE_BUTTON:
 						var btn:IAbstractButton = requestButton();
-						var upSkin:IAbstractMovie = requestMovie(sortedElements[i].resource, sortedElements[i].fps);
+						var upSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].resource));
+						var upStateSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].upState));
+						var overStateSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].overState));
+						var pressedStateSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].pressedState));
+						var disabledStateSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].disabledState));
 						
 						btn.idName = sortedElements[i].name;
-						btn.upSkin_ = upSkin;
 						
-						layer.addNewChildAt(btn, i);
+						btn.upSkin_ = upSkin;
+						btn.hoverSkin_ = overStateSkin;
+						btn.downSkin_ = pressedStateSkin;
+						btn.disabledSkin_ = disabledStateSkin;
+						
 						btn.x = Number(sortedElements[i].x);
 						btn.y = Number(sortedElements[i].y);
+						
 						btn.width = Number(sortedElements[i].width);
 						btn.height = Number(sortedElements[i].height);
+						
 						btn.name = sortedElements[i].name;
 							
 						if (sortedElements[i].label != "")
 						{
-							var labelText:IAbstractTextField = requestTextField(int(sortedElements[i].labelWidth), 
-																				int(sortedElements[i].labelHeight), 
-																				sortedElements[i].label, 
-																				sortedElements[i].font, 
-																				30);
+							var labelText:IAbstractTextField = requestTextField(int(sortedElements[i].labelWidth), int(sortedElements[i].labelHeight),sortedElements[i].label, 	sortedElements[i].font, sortedElements[i].labelFontSize, sortedElements[i].labelFontColor);
 							var label:IAbstractLabel = requestLabelFromTextfield(labelText);
 							
 							labelText.autoScale = true;
@@ -788,6 +793,7 @@ package starlingEngine
 						}
 						
 						(btn as IAbstractButton).addEventListener(EngineEvent.TRIGGERED, button_triggeredHandler);
+						layer.addNewChildAt(btn, i);
 						
 						break;
 						

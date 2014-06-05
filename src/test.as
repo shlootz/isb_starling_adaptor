@@ -168,7 +168,8 @@ package
 													"../bin/assets/spritesheets/preloader1x.png",
 													"../bin/assets/spritesheets/preloader1x.xml",
 													"../bin/assets/layouts/layerLayout.xml",
-													"../bin/assets/layouts/preloader1xLayout.xml"
+													"../bin/assets/layouts/preloader1xLayout.xml",
+													"../bin/assets/layouts/buttonLayout.xml"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
@@ -219,7 +220,18 @@ package
 			//showMaskedThings2();
 			//testPreloader();
 			//testShape();
-			testScrollingImage();
+			//testScrollingImage();
+			testLayouts();
+		}
+		
+		private function testLayouts():void
+		{
+			var x:XML = new XML();
+			x = _bridgeGraphics.getXMLFromAssetsManager("buttonLayout");
+			
+			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
+			layersVO.addLayer("UI", 0, x, true);
+			_bridgeGraphics.initLayers(layersVO.layers);
 		}
 		
 		private var scroll:IAbstractBlitMask;
@@ -230,7 +242,6 @@ package
 			var scrollingImg:IAbstractImage = _bridgeGraphics.requestImage("Numbers");
 			 
 			scroll = _bridgeGraphics.requestBlitMask(scrollingImg, 800, 600, 300, 300);
-			scroll.x = 50;
 			_bridgeGraphics.addChild(scroll);
 			
 			addEventListener(flash.events.Event.ENTER_FRAME, onUpdate);
@@ -314,88 +325,44 @@ package
 			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
 			layersVO.addLayer("UI", 0, null, true);
 			layersVO.addLayer("Overground", 1, null, true);
-			layersVO.addLayer("Layer 3", 2,null, true);
-			layersVO.addLayer("Stuff with layout", 3, null, true);
-			layersVO.addLayer("Stuff with layouta", 3, null, true);
-			layersVO.addLayer("Stuff with layoutb", 4, null, true);
-			layersVO.addLayer("Stuff with layoutc", 5, null, true);
-			layersVO.addLayer("Stuff with layouta", 6, null, true);
-			layersVO.addLayer("Stuff with layoutd", 7, null, true);
-			layersVO.addLayer("Stuff with layoute", 8, null, true);
-			layersVO.addLayer("Stuff with layoutt", 9, null, true);
-			layersVO.addLayer("Stuff with layouty", 10, null, true);
-			layersVO.addLayer("Stuff with layoutuf", 11, null, true);
-			layersVO.addLayer("Stuff with layoutug", 12, null, true);
-			layersVO.addLayer("Stuff with layoutuh", 13, null, true);
-			layersVO.addLayer("Stuff with layoutuj", 14, null, true);
-			layersVO.addLayer("Stuff with layoutuk", 15, null, true);
-			layersVO.addLayer("Stuff with layoutul", 16, null, true);
-			layersVO.addLayer("Stuff with layoutujg", 17, null, true);
-			layersVO.addLayer("Stuff with layoutu1", 18, null, true);
-			layersVO.addLayer("Stuff with layoutu2", 19, null, true);
-			layersVO.addLayer("Stuff with layoutu3", 20, null, true);
-			layersVO.addLayer("Stuff with layoutu4", 21, null, true);
-			layersVO.addLayer("Stuff with layoutu5", 22, null, true);
-			layersVO.addLayer("Stuff with layoutu6", 23, null, true);
-			layersVO.addLayer("Stuff with layout", 3, null, true);
-			layersVO.addLayer("Stuff with layouta", 3, null, true);
-			layersVO.addLayer("Stuff with layoutb", 4, null, true);
-			layersVO.addLayer("Stuff with layoutc", 5, null, true);
-			layersVO.addLayer("Stuff with layouta", 6, null, true);
-			layersVO.addLayer("Stuff with layoutd", 7, null, true);
-			layersVO.addLayer("Stuff with layoute", 8, null, true);
-			layersVO.addLayer("Stuff with layoutt", 9, null, true);
-			layersVO.addLayer("Stuff with layouty", 10, null, true);
-			layersVO.addLayer("Stuff with layoutuf", 11, null, true);
-			layersVO.addLayer("Stuff with layoutug", 12, null, true);
-			layersVO.addLayer("Stuff with layoutuh", 13, null, true);
-			layersVO.addLayer("Stuff with layoutuj", 14, null, true);
-			layersVO.addLayer("Stuff with layoutuk", 15, null, true);
-			layersVO.addLayer("Stuff with layoutul", 16, null, true);
-			layersVO.addLayer("Stuff with layoutujg", 17, null, true);
-			layersVO.addLayer("Stuff with layoutu1", 18, x, true);
-			layersVO.addLayer("Stuff with layoutu2", 19, null, true);
-			layersVO.addLayer("Stuff with layoutu3", 20, null, true);
-			layersVO.addLayer("Stuff with layoutu4", 21, null, true);
-			layersVO.addLayer("Stuff with layoutu5", 22, null, true);
-			layersVO.addLayer("Stuff with layoutu6", 23, null, true);
+			layersVO.addLayer("Layer 3", 2,x, true);
 						
-			layersVO.retrieveLayer("Layer 3").addNewChild(mc);
+			//layersVO.retrieveLayer("Layer 3").addNewChild(mc);
 			
-			var video:IAbstractVideo = _bridgeGraphics.requestVideo();
-			video.addVideoPath("../bin/assets/test.flv");
-			layersVO.retrieveLayer("Overground").addNewChild(video);
+			//var video:IAbstractVideo = _bridgeGraphics.requestVideo();
+			//video.addVideoPath("../bin/assets/test.flv");
+			//layersVO.retrieveLayer("Overground").addNewChild(video);
 						//
 			_bridgeGraphics.initLayers(layersVO.layers);
 			
 			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
 			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, movieclipEnded);
 			
-			layersVO.addLayer("TEST", 4, null);
+			//layersVO.addLayer("TEST", 4, null);
 			
-			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
-			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
-			
-			var outTransition:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT()
-			var inTransition:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN();
+			//var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
+			//var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
+			//
+			//var outTransition:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT()
+			//var inTransition:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN();
 			
 			//inLayers.push(layersVO.retrieveLayer("TEST"));
 			//outLayers.push(layersVO.retrieveLayer("Layer 3"));
 			//
 			//_bridgeGraphics.updateLayers(inLayers, outLayers, inTransition, outTransition);
 						
-			var transIn:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN()
-			var transOut:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT();
+			//var transIn:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN()
+			//var transOut:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT();
 						
 			//var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
 			//outLayers.push(layersVO.retrieveLayer("Layer 2"));
 						
-			var newLayer:IAbstractLayer = _bridgeGraphics.requestLayer("Tzeapa", 0, x, true);
-			inLayers.push(newLayer);
-			_bridgeGraphics.updateLayers(inLayers, null, null, null);
-			newLayer.addNewChild(_bridgeGraphics.requestImage("Background"));
+			//var newLayer:IAbstractLayer = _bridgeGraphics.requestLayer("Tzeapa", 0, x, true);
+			//inLayers.push(newLayer);
+			//_bridgeGraphics.updateLayers(inLayers, null, null, null);
+			//newLayer.addNewChild(_bridgeGraphics.requestImage("Background"));
 				
-			TweenLite.to(newLayer.getChildByNameStr("badass"), 2, { x:400 } );
+			//TweenLite.to(newLayer.getChildByNameStr("badass"), 2, { x:400 } );
 						
 			//var state2:IAbstractState = _bridgeGraphics.requestState();
 			//var stateTransition:IAbstractStateTransition = new EngineStateTransition();
