@@ -212,7 +212,7 @@ package
 			(e.currentTarget as IAbstractButton).isEnabled  = false;
 			//showThings();
 			//particlesTest();
-			//showMaskedThings2();
+			showMaskedThings2();
 			//testPreloader();
 			testShape();
 		}

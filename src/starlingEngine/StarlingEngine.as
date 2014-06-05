@@ -388,6 +388,9 @@ package starlingEngine
 			var myCustomDisplayObject:IAbstractSprite = requestSprite();
 			var myCustomMaskDisplayObject:IAbstractSprite = requestSprite();
 			
+			myCustomDisplayObject.name = maskedObject.name;
+			myCustomMaskDisplayObject.name = maskedObject.name + "mask";
+			
 			myCustomDisplayObject.addNewChild(maskedObject);
 			myCustomMaskDisplayObject.addNewChild(mask);
 			 
