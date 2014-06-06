@@ -34,6 +34,16 @@ package starlingEngine.ui
 			return _idName;
 		}
 		
+		override public function get width():Number
+		{
+			return upSkin_.width;
+		}
+		
+		override public function get height():Number
+		{
+			return upSkin_.height;
+		}
+		
 		override public function get autoFlatten () : Boolean
 		{
 			return super.autoFlatten;

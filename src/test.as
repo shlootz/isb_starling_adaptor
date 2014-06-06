@@ -210,6 +210,8 @@ package
 			button.addCustomLabel(label, LabelProperties.ALIGN_CENTER, new Point(100,100));
 			button.updateCustomLabel("Haha");
 			
+			trace(button.width)
+			trace(button.height)
 		}
 		
 		private function button_triggeredHandler(e:Event):void
