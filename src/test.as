@@ -205,7 +205,7 @@ package
 			t.autoScale = true;
 			t.hAlign = LabelProperties.ALIGN_CENTER;
 			
-			var label:IAbstractLabel = new EngineLabel(t);
+			var label:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(t,"tt");
 			
 			button.addCustomLabel(label, LabelProperties.ALIGN_CENTER, new Point(100,100));
 			button.updateCustomLabel("Haha");
@@ -232,6 +232,8 @@ package
 			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
 			layersVO.addLayer("UI", 0, x, true);
 			_bridgeGraphics.initLayers(layersVO.layers);
+			
+			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
 		}
 		
 		private var scroll:IAbstractBlitMask;
@@ -437,7 +439,9 @@ package
 		
 		private function buttonPressed(type:String, event:Object):void
 		{
-			trace("Caught "+type+" "+event)
+			trace("Caught " + type + " " + event)
+			trace("Target "+event.currentTarget);
+			(event.currentTarget as IAbstractButton).isEnabled = false;
 		}
 		
 		private function movieclipEnded(type:String, event:Object):void

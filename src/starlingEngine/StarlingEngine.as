@@ -444,9 +444,10 @@ package starlingEngine
 		 * @return IAbstractLabel
 		 * @see bridge.abstract.ui.IAbstractLabel
 		 */
-		public function requestLabelFromTextfield(text:IAbstractTextField):IAbstractLabel
+		public function requestLabelFromTextfield(text:IAbstractTextField, name:String = ""):IAbstractLabel
 		{
 			var label:IAbstractLabel = new EngineLabel(text);
+			label.name = name;
 			return label;
 		}
 		
