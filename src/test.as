@@ -3,7 +3,9 @@ package
 	import adobe.utils.CustomActions;
 	import away3d.controllers.SpringController;
 	import bridge.abstract.AbstractPool;
+	import bridge.abstract.events.BridgeEvents;
 	import bridge.abstract.events.IAbstractEvent;
+	import bridge.abstract.events.IAbstractEventDispatcher;
 	import bridge.abstract.IAbstractAnimatable;
 	import bridge.abstract.IAbstractBlitMask;
 	import bridge.abstract.IAbstractDisplayObject;
@@ -34,6 +36,8 @@ package
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.AsyncErrorEvent;
 	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
@@ -195,7 +199,7 @@ package
 			button.x = 50;
 			button.y = 50;
 			
-			button.addEventListener(Event.TRIGGERED, button_triggeredHandler);
+			button.addEventListener(BridgeEvents.TRIGGERED, button_triggeredHandler);
 			
 			uiHolder.addNewChild(button as IAbstractDisplayObject);
 			
@@ -214,9 +218,10 @@ package
 			trace(button.height)
 		}
 		
-		private function button_triggeredHandler(e:Event):void
+		private function button_triggeredHandler(e:Object):void
 		{
-			(e.currentTarget as IAbstractButton).isEnabled  = false;
+			//(e.currentTarget).isEnabled  = false;
+			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).isEnabled  = false;
 			//showThings();
 			//particlesTest();
 			//showMaskedThings2();
@@ -228,6 +233,12 @@ package
 		
 		private function testLayouts():void
 		{
+			//var xml:XML = XML(new TimesXml());
+			//_bridgeGraphics.registerBitmapFont(TimesTexture, xml);
+			var t:IAbstractTextField = _bridgeGraphics.requestTextField(1000, 1000, "Yaaaay", "Times", 350);
+			t.color = 0xffffff;
+			_bridgeGraphics.addChild(t);
+			
 			var x:XML = new XML();
 			x = _bridgeGraphics.getXMLFromAssetsManager("buttonLayout");
 			
