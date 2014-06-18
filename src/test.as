@@ -234,9 +234,9 @@ package
 			//showMaskedThings2();
 			//testPreloader();
 			//testShape();
-			//testScrollingImage();
+			testScrollingImage();
 			//testLayouts();
-			showMainMenu();
+			//showMainMenu();
 		}
 		
 		private function showMainMenu():void
@@ -273,13 +273,18 @@ package
 		
 		private function testScrollingImage():void
 		{
+			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
+			layersVO.addLayer("UI", 0, null, true);
+			_bridgeGraphics.initLayers(layersVO.layers);
 			
 			var scrollingImg:IAbstractImage = _bridgeGraphics.requestImage("Numbers");
 			 
 			scroll = _bridgeGraphics.requestBlitMask(scrollingImg, 800, 600, 300, 300);
-			_bridgeGraphics.addChild(scroll);
+			layersVO.retrieveLayer("UI").addNewChild(scroll);
 			
-			addEventListener(flash.events.Event.ENTER_FRAME, onUpdate);
+			layersVO.retrieveLayer("UI").destroyAll();
+			
+			//addEventListener(flash.events.Event.ENTER_FRAME, onUpdate);
 		}
 		
 		private function onUpdate(e:flash.events.Event):void
