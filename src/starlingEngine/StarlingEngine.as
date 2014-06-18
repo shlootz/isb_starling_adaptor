@@ -93,6 +93,7 @@ package starlingEngine
 		public static const ENGINE_MOVIE_CLIP:String = "movie";
 		public static const ENGINE_FLV:String = "flv";
 		public static const ENGINE_BUTTON:String = "button";
+		public static const ENGINE_TEXT_FIELD:String = "textField";
 		
 		private var _initCompleteCallback:Function;
 		private var _engineStage:Stage;
@@ -819,6 +820,14 @@ package starlingEngine
 						mc.height = Number(sortedElements[i].height);
 						mc.name = sortedElements[i].name;
 						break;
+						
+					case ENGINE_TEXT_FIELD:
+						var tField:IAbstractTextField = requestTextField(sortedElements[i].width, sortedElements[i].height, sortedElements[i].label, sortedElements[i].font, sortedElements[i].labelFontSize, sortedElements[i].labelFontColor);
+						var tLabel:IAbstractLabel = requestLabelFromTextfield(tField, sortedElements[i].name);
+						layer.addNewChildAt(tLabel, i);
+						tLabel.x = sortedElements[i].x;
+						tLabel.y = sortedElements[i].y;
+						break
 						
 					case ENGINE_FLV:
 						break;
