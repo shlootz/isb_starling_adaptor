@@ -168,7 +168,7 @@ package starlingEngine
 		override public function handleStarlingReady():void
 		{ 
 			//creates a new pool for sprites
-			_spritesPool = new AbstractPool("sprites", EngineSprite, 20);
+			_spritesPool = new AbstractPool("sprites", EngineSprite, 10);
 			
 			//creates a new pool for images
 			_imagesPool = new AbstractPool("images", EngineImage, 20, Texture.fromColor(2, 2, 0x000000));
@@ -790,8 +790,17 @@ package starlingEngine
 							var label:IAbstractLabel = requestLabelFromTextfield(labelText);
 							
 							labelText.autoScale = true;
+							
 							labelText.hAlign = LabelProperties.ALIGN_CENTER;
-							btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
+						
+							if (sortedElements[i].labelX != 0 || sortedElements[i].labelY != 0)
+							{
+								btn.addCustomLabel(label, LabelProperties.ALIGN_CUSTOM, new Point(sortedElements[i].labelX, sortedElements[i].labelY));
+							}
+							else
+							{
+								btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
+							}
 						}
 						
 						(btn as IAbstractButton).addEventListener(EngineEvent.TRIGGERED, button_triggeredHandler);

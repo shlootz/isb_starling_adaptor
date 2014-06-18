@@ -119,10 +119,12 @@ package starlingEngine.elements
 				var loop:String = _layout.child("Element")[i].attribute("loop");
 				var labelWidth:String = _layout.child("Element")[i].attribute("labelWidth");
 				var labelHeight:String = _layout.child("Element")[i].attribute("labelHeight");
-				var font:String = _layout.child("Element")[i].attribute("font");
+				var font:String = _layout.child("Element")[i].attribute("labelFont");
 				var label:String = _layout.child("Element")[i].attribute("label");
 				var labelFontSize:String = _layout.child("Element")[i].attribute("labelFontSize");
 				var labelFontColor:String = _layout.child("Element")[i].attribute("labelFontColor");
+				var labelX:String = _layout.child("Element")[i].attribute("labelX");
+				var labelY:String = _layout.child("Element")[i].attribute("labelY");
 				
 				var o:EngineLayerLayoutElementVo = new EngineLayerLayoutElementVo();
 				o.name = name;
@@ -145,6 +147,8 @@ package starlingEngine.elements
 				o.label = label;
 				o.labelFontSize = Number(labelFontSize);
 				o.labelFontColor = uint(labelFontColor);
+				o.labelX = Number(labelX)
+				o.labelY = Number(labelY)
 				
 				if (loop == "true")
 				{

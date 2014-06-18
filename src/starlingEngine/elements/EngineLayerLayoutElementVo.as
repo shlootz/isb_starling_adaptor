@@ -35,6 +35,8 @@ package starlingEngine.elements
 		public var font:String;
 		public var labelFontSize:Number;
 		public var labelFontColor:uint;
+		public var labelX:Number;
+		public var labelY:Number;
 					
 		public function EngineLayerLayoutElementVo() 
 		{

@@ -144,6 +144,12 @@ package
 		[Embed(source = "../bin/assets/bitmapfonts/Times_0.png")]
 		private static const TimesTexture : Class;
 		
+		[Embed(source = "../bin/assets/bitmapfonts/Lcd.fnt", mimeType = "application/octet-stream")]
+		private static const LcdXml : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/Lcd_0.png")]
+		private static const LcdTexture : Class;
+		
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
 																		new Point(800, 600),
 																		StarlingEngine,
@@ -173,7 +179,8 @@ package
 													"../bin/assets/spritesheets/preloader1x.xml",
 													"../bin/assets/layouts/layerLayout.xml",
 													"../bin/assets/layouts/preloader1xLayout.xml",
-													"../bin/assets/layouts/buttonLayout.xml"
+													"../bin/assets/layouts/buttonLayout.xml",
+													"../bin/assets/layouts/UserInterface.xml"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
@@ -191,10 +198,10 @@ package
 			_bridgeGraphics.addChild(uiHolder);
 			
 			var button:IAbstractButton = _bridgeGraphics.requestButton("startBtn");
-			button.downSkin_ = _bridgeGraphics.requestImage("Spin-Button-Down") as IAbstractDisplayObject;
-			button.upSkin_ = _bridgeGraphics.requestImage("Spin-Button") as IAbstractDisplayObject;
-			button.hoverSkin_ = _bridgeGraphics.requestImage("Spin-Button-Hover") as IAbstractDisplayObject;
-			button.disabledSkin_ = _bridgeGraphics.requestImage("Spin-Button-Hover") as IAbstractDisplayObject;
+			button.downSkin_ = _bridgeGraphics.requestImage("Spin-Button-Down");
+			button.upSkin_ = _bridgeGraphics.requestImage("Spin-Button");
+			button.hoverSkin_ = _bridgeGraphics.requestImage("Spin-Button-Hover");
+			button.disabledSkin_ = _bridgeGraphics.requestImage("Spin-Button-Hover");
 			
 			button.x = 50;
 			button.y = 50;
@@ -220,15 +227,30 @@ package
 		
 		private function button_triggeredHandler(e:Object):void
 		{
-			//(e.currentTarget).isEnabled  = false;
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).isEnabled  = false;
+			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).visible  = false;
 			//showThings();
 			//particlesTest();
 			//showMaskedThings2();
 			//testPreloader();
 			//testShape();
 			//testScrollingImage();
-			testLayouts();
+			//testLayouts();
+			showMainMenu();
+		}
+		
+		private function showMainMenu():void
+		{
+			_bridgeGraphics.registerBitmapFont(LcdTexture, new LcdXml() as XML);
+			
+			var mainUIxml:XML = new XML();
+			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
+			
+			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
+			layersVO.addLayer("UI", 0, mainUIxml, true);
+			_bridgeGraphics.initLayers(layersVO.layers);
+			
+			layersVO.retrieveLayer("UI").y = 450;
 		}
 		
 		private function testLayouts():void
