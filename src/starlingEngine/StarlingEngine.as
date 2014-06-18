@@ -93,6 +93,7 @@ package starlingEngine
 	public class StarlingEngine extends StarlingCitrusEngine implements IEngine
 	{		
 		
+		public static const ENGINE_LAYER_PROPERTIES:String = "layerProperties";
 		public static const ENGINE_IMAGE:String = "image";
 		public static const ENGINE_MOVIE_CLIP:String = "movie";
 		public static const ENGINE_FLV:String = "flv";
@@ -548,6 +549,9 @@ package starlingEngine
 		
 		/**
 		 * 
+		 * @param	inputLayers
+		 * @param	inTransition
+		 * @param	outTransition
 		 */
 		public function initLayers(inputLayers:Dictionary, inTransition:IAbstractLayerTransitionIn = null, outTransition:IAbstractLayerTransitionOut = null):void
 		{
@@ -651,6 +655,8 @@ package starlingEngine
 		
 		/**
 		 * 
+		 * @param	target1
+		 * @param	target2
 		 */
 		public function tranzitionToLayerInComplete(target1:Object = null, target2:Object = null):void
 		{
@@ -667,6 +673,8 @@ package starlingEngine
 		
 		/**
 		 * 
+		 * @param	target1
+		 * @param	target2
 		 */
 		public function tranzitionToLayerOutComplete(target1:Object = null, target2:Object = null):void
 		{
@@ -746,7 +754,8 @@ package starlingEngine
 			}
 		}
 		
-		/** 
+		/**
+		 * 
 		 * @param	layer
 		 * @param	sortedElements
 		 */
@@ -756,6 +765,11 @@ package starlingEngine
 			{
 				switch (sortedElements[i].type) 
 				{
+					case ENGINE_LAYER_PROPERTIES:
+						layer.x = sortedElements[i].layerX;
+						layer.y = sortedElements[i].layerY;
+						break;
+					
 					case ENGINE_IMAGE:
 						layer.addNewChildAt(LayoutImageValidator.validate(this, _assetsManager, sortedElements[i]), i);
 						break;

@@ -249,8 +249,6 @@ package
 			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
 			layersVO.addLayer("UI", 0, mainUIxml, true);
 			_bridgeGraphics.initLayers(layersVO.layers);
-			
-			layersVO.retrieveLayer("UI").y = 450;
 		}
 		
 		private function testLayouts():void

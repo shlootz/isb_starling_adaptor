@@ -102,6 +102,8 @@ package starlingEngine.elements
 		{
 			for (var i:uint = 0; i < _layout.children().length(); i++)
 			{
+				var layerX:String = String(_layout.child("Element")[i].attribute("layerX"));
+				var layerY:String = String(_layout.child("Element")[i].attribute("layerY"));
 				var name:String = String(_layout.child("Element")[i].attribute("name"));
 				var type:String = _layout.child("Element")[i].attribute("type");
 				var onStage:String = _layout.child("Element")[i].attribute("onStage");
@@ -127,6 +129,8 @@ package starlingEngine.elements
 				var labelY:String = _layout.child("Element")[i].attribute("labelY");
 				
 				var o:EngineLayerLayoutElementVo = new EngineLayerLayoutElementVo();
+				o.layerX = Number(layerX);
+				o.layerY = Number(layerY);
 				o.name = name;
 				o.resource = resource;
 				o.upState = upState;

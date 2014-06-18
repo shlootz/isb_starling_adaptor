@@ -7,6 +7,9 @@ package starlingEngine.elements
 	public class EngineLayerLayoutElementVo 
 	{
 		
+		public var layerX:Number;
+		public var layerY:Number;
+		
 		public var name:String;
 		public var type:String;
 
