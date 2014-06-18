@@ -11,6 +11,10 @@ package starlingEngine
 	import starlingEngine.elements.EngineScrollTile;
 	import starlingEngine.extensions.krecha.ScrollImage;
 	import starlingEngine.extensions.krecha.ScrollTile;
+	import starlingEngine.validators.LayoutButtonValidator;
+	import starlingEngine.validators.LayoutImageValidator;
+	import starlingEngine.validators.LayoutMovieClipValidator;
+	import starlingEngine.validators.LayoutTextFieldValidator;
 	
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.IAbstractDisplayObject;
@@ -753,80 +757,24 @@ package starlingEngine
 				switch (sortedElements[i].type) 
 				{
 					case ENGINE_IMAGE:
-						var img:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].resource));
-						layer.addNewChildAt(img, i);
-						img.x = Number(sortedElements[i].x);
-						img.y = Number(sortedElements[i].y);
-						img.width = Number(sortedElements[i].width);
-						img.height = Number(sortedElements[i].height);
-						img.name = sortedElements[i].name;
+						layer.addNewChildAt(LayoutImageValidator.validate(this, _assetsManager, sortedElements[i]), i);
 						break;
 						
 					case ENGINE_BUTTON:
-						var btn:IAbstractButton = requestButton();
-						var upSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].resource));
-						var upStateSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].upState));
-						var overStateSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].overState));
-						var pressedStateSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].pressedState));
-						var disabledStateSkin:IAbstractImage = requestImage(_assetsManager.getTexture(sortedElements[i].disabledState));
-						
-						btn.idName = sortedElements[i].name;
-						
-						btn.upSkin_ = upSkin;
-						btn.hoverSkin_ = overStateSkin;
-						btn.downSkin_ = pressedStateSkin;
-						btn.disabledSkin_ = disabledStateSkin;
-						
-						btn.x = Number(sortedElements[i].x);
-						btn.y = Number(sortedElements[i].y);
-						
-						btn.width = Number(sortedElements[i].width);
-						btn.height = Number(sortedElements[i].height);
-						
-						btn.name = sortedElements[i].name;
-							
-						if (sortedElements[i].label != "")
-						{
-							var labelText:IAbstractTextField = requestTextField(int(sortedElements[i].labelWidth), int(sortedElements[i].labelHeight),sortedElements[i].label, 	sortedElements[i].font, sortedElements[i].labelFontSize, sortedElements[i].labelFontColor);
-							var label:IAbstractLabel = requestLabelFromTextfield(labelText);
-							
-							labelText.autoScale = true;
-							
-							labelText.hAlign = LabelProperties.ALIGN_CENTER;
-						
-							if (sortedElements[i].labelX != 0 || sortedElements[i].labelY != 0)
-							{
-								btn.addCustomLabel(label, LabelProperties.ALIGN_CUSTOM, new Point(sortedElements[i].labelX, sortedElements[i].labelY));
-							}
-							else
-							{
-								btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
-							}
-						}
-						
+						var btn:IAbstractButton = LayoutButtonValidator.validate(this, _assetsManager, sortedElements[i]);
 						(btn as IAbstractButton).addEventListener(EngineEvent.TRIGGERED, button_triggeredHandler);
 						layer.addNewChildAt(btn, i);
-						
 						break;
 						
 					case ENGINE_MOVIE_CLIP:
-						var mc:IAbstractMovie = requestMovie(sortedElements[i].resource, sortedElements[i].fps);
+						var mc:IAbstractMovie = LayoutMovieClipValidator.validate(this, _assetsManager, sortedElements[i]);
+						mc.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
 						layer.addNewChildAt(mc, i);
 						juggler.add(mc as IAnimatable);
-						(mc as IAbstractMovie).name = sortedElements[i].name;
-						(mc as IAbstractMovie).loop = sortedElements[i].loop;
-						(mc as IAbstractMovie).addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
-						mc.width = Number(sortedElements[i].width);
-						mc.height = Number(sortedElements[i].height);
-						mc.name = sortedElements[i].name;
 						break;
 						
 					case ENGINE_TEXT_FIELD:
-						var tField:IAbstractTextField = requestTextField(sortedElements[i].width, sortedElements[i].height, sortedElements[i].label, sortedElements[i].font, sortedElements[i].labelFontSize, sortedElements[i].labelFontColor);
-						var tLabel:IAbstractLabel = requestLabelFromTextfield(tField, sortedElements[i].name);
-						layer.addNewChildAt(tLabel, i);
-						tLabel.x = sortedElements[i].x;
-						tLabel.y = sortedElements[i].y;
+							layer.addNewChildAt(LayoutTextFieldValidator.validate(this, _assetsManager, sortedElements[i]), i);
 						break
 						
 					case ENGINE_FLV:
