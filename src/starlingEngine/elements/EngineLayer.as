@@ -4,6 +4,7 @@ package starlingEngine.elements
 	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractLayer;
 	import flash.utils.Dictionary;
+	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 	/**
 	 * ...
@@ -15,6 +16,7 @@ package starlingEngine.elements
 		private var _layerDepth:uint = 0;
 		private var _layout:XML;
 		private var _layoutDictionary:Dictionary = new Dictionary(true);
+		private var _layoutElements:Dictionary = new Dictionary(true);
 		private var _addToStage:Boolean = false;
 		
 		/**
@@ -37,7 +39,30 @@ package starlingEngine.elements
 		
 		/**
 		 * 
+		 * @param	child
+		 * @return
 		 */
+		override public function addNewChild(child:Object):IAbstractDisplayObject
+		{
+			_layoutElements[(child as IAbstractDisplayObject).name] = child as IAbstractDisplayObject;
+			return super.addNewChild(child);
+		}
+		
+		/**
+		 * 
+		 * @param	child
+		 * @param	index
+		 * @return
+		 */
+		override public function addNewChildAt(child:IAbstractDisplayObject, index:int):IAbstractDisplayObject
+		{
+			_layoutElements[(child as IAbstractDisplayObject).name] = child as IAbstractDisplayObject;
+			return super.addChildAt(child as DisplayObject, index) as IAbstractDisplayObject;
+		}
+		
+	/**
+	 * 
+	 */
 		public function set layerName(name:String):void
 		{
 			_layerName = name;
@@ -95,6 +120,16 @@ package starlingEngine.elements
 		public function get layout():Dictionary
 		{
 			return _layoutDictionary;
+		}
+		
+		/**
+		 * 
+		 * @param	name
+		 * @return
+		 */
+		public function getElement(name:String):IAbstractDisplayObject
+		{
+			return _layoutElements[name] as IAbstractDisplayObject
 		}
 		
 		/**

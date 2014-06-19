@@ -132,28 +132,10 @@ package
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		//[Embed(source = "../bin/assets/bitmapfonts/Arial.fnt", mimeType = "application/octet-stream")]
-		//private static const FontXml : Class;
-		//
-		//[Embed(source = "../bin/assets/bitmapfonts/Arial_0.png")]
-		//private static const FontTexture : Class;
-		//
-		//[Embed(source = "../bin/assets/bitmapfonts/Times.fnt", mimeType = "application/octet-stream")]
-		//private static const TimesXml : Class;
-		//
-		//[Embed(source = "../bin/assets/bitmapfonts/Times_0.png")]
-		//private static const TimesTexture : Class;
-		//
-		//[Embed(source = "../bin/assets/bitmapfonts/Lcd.fnt", mimeType = "application/octet-stream")]
-		//private static const LcdXml : Class;
-		//
-		//[Embed(source = "../bin/assets/bitmapfonts/Lcd_0.png")]
-		//private static const LcdTexture : Class;
-		
-		[Embed(source = "../bin/assets/bitmapfonts/desyrel.fnt", mimeType = "application/octet-stream")]
+		[Embed(source = "../bin/assets/bitmapfonts/Lcd.fnt", mimeType = "application/octet-stream")]
 		private static const defaultFontClass : Class;
 		
-		[Embed(source = "../bin/assets/bitmapfonts/desyrel.png")]
+		[Embed(source = "../bin/assets/bitmapfonts/Lcd_0.png")]
 		private static const defaultFontPng : Class;
 		
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
@@ -242,9 +224,8 @@ package
 			//testShape();
 			//testScrollingImage();
 			//testLayouts();
-			//showMainMenu();
-			//testDefaultFonts();
-			testEngineFonts();
+			showMainMenu();
+			//testEngineFonts();
 		}
 		
 		private function testEngineFonts():void
@@ -255,21 +236,9 @@ package
 			_bridgeGraphics.addChild(tt);
 		}
 		
-		private function testDefaultFonts():void
-		{
-			//var fontTexture:Texture = Texture.fromBitmap(new FontTexture);
-			//var fontXML:XML = XML(new FontXml());
-			//var bitmapFont:BitmapFont = new BitmapFont(fontTexture, fontXML);
-			//
-			//var fontName:String = TextField.registerBitmapFont(bitmapFont);
-			//
-			//var tt:TextField = new TextField(200, 200, "TEST", fontName, 50, 0xffffff);
-			//_bridgeGraphics.addChild(tt);
-		}
-		
 		private function showMainMenu():void
 		{
-			_bridgeGraphics.registerBitmapFont(defaultFontPng, XML(new defaultFontClass()));
+			 _bridgeGraphics.registerBitmapFont(defaultFontPng, XML(new defaultFontClass()));
 			
 			var mainUIxml:XML = new XML();
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
@@ -279,6 +248,8 @@ package
 			_bridgeGraphics.initLayers(layersVO.layers);
 			
 			(layersVO.retrieveLayer("UI").getChildByNameStr("betHeadline") as IAbstractLabel).updateLabel("TRANSLATED BET MULTILINE WOOT WOOT");
+			var layer:IAbstractLayer = layersVO.retrieveLayer("UI");
+			var element:IAbstractDisplayObject = layer.getElement("spin_btn");
 		}
 		
 		private function testLayouts():void
