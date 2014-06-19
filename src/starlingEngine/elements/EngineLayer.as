@@ -1,5 +1,7 @@
 package starlingEngine.elements 
 {
+	import bridge.abstract.IAbstractDisplayObject;
+	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractLayer;
 	import flash.utils.Dictionary;
 	import starling.display.Sprite;
@@ -182,7 +184,10 @@ package starlingEngine.elements
 		{
 			while (this.numChildren > 0)
 			{
-				this.removeChildAndDispose(this.getChildAtIndex(0));
+				var c:IAbstractDisplayObject;
+				c = this.removeChildAndDispose(this.getChildAtIndex(0), true);
+				c.removeFromParent(true);
+				c.dispose();
 			}
 			
 			super.dispose();

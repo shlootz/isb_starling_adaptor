@@ -463,10 +463,14 @@ package starlingEngine
 		 * @param	textureClass
 		 * @param	xml
 		 */
-		public function registerBitmapFont(textureClass:Class, xml:XML):void
+		public function registerBitmapFont(textureClass:Class, xml:XML):String
 		{
-			var texture:Texture = Texture.fromBitmap(new textureClass());
-			TextField.registerBitmapFont(new BitmapFont(texture, xml))
+			var fontTexture:Texture = Texture.fromBitmap(new textureClass);
+			var fontXML:XML = xml;
+			var bitmapFont:BitmapFont = new BitmapFont(fontTexture, fontXML);
+			var fontName:String = TextField.registerBitmapFont(bitmapFont);
+			
+			return fontName
 		}
 		
 		/**
