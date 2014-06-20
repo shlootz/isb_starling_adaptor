@@ -218,7 +218,7 @@ package
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).isEnabled  = false;
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).visible  = false;
 			//showThings();
-			//particlesTest();
+			particlesTest();
 			//showMaskedThings2();
 			//testPreloader();
 			//testShape();
@@ -248,8 +248,8 @@ package
 			_bridgeGraphics.initLayers(layersVO.layers);
 			
 			(layersVO.retrieveLayer("UI").getChildByNameStr("betHeadline") as IAbstractLabel).updateLabel("TRANSLATED BET MULTILINE WOOT WOOT");
-			var layer:IAbstractLayer = layersVO.retrieveLayer("UI");
-			var element:IAbstractDisplayObject = layer.getElement("spin_btn");
+			//var layer:IAbstractLayer = layersVO.retrieveLayer("UI");
+			//var element:IAbstractDisplayObject = layer.getElement("spin_btn");
 		}
 		
 		private function testLayouts():void
