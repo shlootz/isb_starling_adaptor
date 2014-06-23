@@ -6,7 +6,7 @@ package starlingEngine.elements
 	import starlingEngine.extensions.krecha.ScrollTile;
 	/**
 	 * ...
-	 * @author Eu
+	 * @author Alex Popescu
 	 */
 	public class EngineScrollTile extends ScrollTile implements IAbstractScrollTile
 	{

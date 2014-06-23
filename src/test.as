@@ -138,6 +138,12 @@ package
 		[Embed(source = "../bin/assets/bitmapfonts/Lcd_0.png")]
 		private static const defaultFontPng : Class;
 		
+		[Embed(source = "../bin/assets/bitmapfonts/Zrnic.fnt", mimeType = "application/octet-stream")]
+		private static const ZrnicFontClass : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/Zrnic_0.png")]
+		private static const ZrnicFontPng : Class;
+		
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
 																		new Point(800, 600),
 																		StarlingEngine,
@@ -218,7 +224,7 @@ package
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).isEnabled  = false;
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).visible  = false;
 			//showThings();
-			particlesTest();
+			//particlesTest();
 			//showMaskedThings2();
 			//testPreloader();
 			//testShape();
@@ -239,6 +245,7 @@ package
 		private function showMainMenu():void
 		{
 			 _bridgeGraphics.registerBitmapFont(defaultFontPng, XML(new defaultFontClass()));
+			 _bridgeGraphics.registerBitmapFont(ZrnicFontPng, XML(new ZrnicFontClass()));
 			
 			var mainUIxml:XML = new XML();
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
@@ -247,9 +254,10 @@ package
 			layersVO.addLayer("UI", 0, mainUIxml, true);
 			_bridgeGraphics.initLayers(layersVO.layers);
 			
-			(layersVO.retrieveLayer("UI").getChildByNameStr("betHeadline") as IAbstractLabel).updateLabel("TRANSLATED BET MULTILINE WOOT WOOT");
-			//var layer:IAbstractLayer = layersVO.retrieveLayer("UI");
-			//var element:IAbstractDisplayObject = layer.getElement("spin_btn");
+			//(layersVO.retrieveLayer("UI").getChildByNameStr("betHeadline") as IAbstractLabel).updateLabel("TRANSLATED BET MULTILINE WOOT WOOT");
+			var layer:IAbstractLayer = layersVO.retrieveLayer("UI");
+			var element:IAbstractDisplayObject = layer.getElement("spin_btn");
+			//element.visible = false;
 		}
 		
 		private function testLayouts():void
