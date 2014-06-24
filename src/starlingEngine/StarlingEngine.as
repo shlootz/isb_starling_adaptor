@@ -441,6 +441,8 @@ package starlingEngine
 			mM.addNewChild(myCustomDisplayObject);
 			mM.newMask = myCustomMaskDisplayObject;
 			
+			mM.touchable = false;
+			
 			return (mM as IAbstractMask);
 		}
 		

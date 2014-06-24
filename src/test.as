@@ -234,13 +234,13 @@ package
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).visible  = false;
 			//showThings();
 			//particlesTest();
-			//showMaskedThings2();
+			showMaskedThings2();
 			//testPreloader();
 			//testShape();
 			//testScrollingImage();
 			//testLayouts();
 			showMainMenu();
-			//testEngineFonts();
+			testEngineFonts();
 		}
 		
 		private function testEngineFonts():void
@@ -249,8 +249,10 @@ package
 			
 			var tt:TextField = new TextField(200, 200, "TEST", fName, 50, 0xffffff);
 			var tt2:TextField = new TextField(200, 300, "TEST 2", fName, 50, 0xffffff);
+			var tt3:TextField = new TextField(200, 400, "TEST 3", fName, 50, 0xffffff);
 			_bridgeGraphics.addChild(tt);
 			_bridgeGraphics.addChild(tt2);
+			_bridgeGraphics.addChild(tt3);
 		}
 		
 		private var _layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
@@ -375,6 +377,8 @@ package
 			
 			var m:IAbstractMask = _bridgeGraphics.requestMask(video, img);
 			sprite.addNewChild(m);
+			
+			m.y = 250;
 		}
 		
 		private function showThings():void
