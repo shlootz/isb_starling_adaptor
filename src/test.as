@@ -248,7 +248,9 @@ package
 			var fName:String = _bridgeGraphics.registerBitmapFont(defaultFontPng, XML(new defaultFontClass()));
 			
 			var tt:TextField = new TextField(200, 200, "TEST", fName, 50, 0xffffff);
+			var tt2:TextField = new TextField(200, 300, "TEST 2", fName, 50, 0xffffff);
 			_bridgeGraphics.addChild(tt);
+			_bridgeGraphics.addChild(tt2);
 		}
 		
 		private var _layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
@@ -271,11 +273,10 @@ package
 			var label:IAbstractLabel = ((element as IAbstractButton).customLabel);
 			
 			var shadow:IAbstractDropShadowFilter = _bridgeGraphics.requestDropShadowFilter();
-			shadow.alpha = 1;
+			shadow.alpha = 2;
+			shadow.distance = 0;
+			shadow.blur = 10;
 			_bridgeGraphics.addDropShadowFilter(label, shadow);
-			//var subElement:IAbstractDisplayObject =	(element as IAbstractDisplayObjectContainer).getChildByNameStr("label" + "spin_btn");
-			//trace(subElement);
-			//element.visible = false;
 			addEventListener(Event.ENTER_FRAME, updateStuff);
 		}
 		
