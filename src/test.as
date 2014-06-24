@@ -6,9 +6,11 @@ package
 	import bridge.abstract.events.BridgeEvents;
 	import bridge.abstract.events.IAbstractEvent;
 	import bridge.abstract.events.IAbstractEventDispatcher;
+	import bridge.abstract.filters.IAbstractDropShadowFilter;
 	import bridge.abstract.IAbstractAnimatable;
 	import bridge.abstract.IAbstractBlitMask;
 	import bridge.abstract.IAbstractDisplayObject;
+	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractEngineLayerVO;
 	import bridge.abstract.IAbstractImage;
 	import bridge.abstract.IAbstractJuggler;
@@ -64,6 +66,7 @@ package
 	import starling.events.TouchPhase;
 	import starling.extensions.particles.ParticleSystem;
 	import starling.extensions.particles.PDParticleSystem;
+	import starling.filters.BlurFilter;
 	import starling.text.BitmapFont;
 	import starling.text.TextField;
 	import starling.textures.Texture;
@@ -143,6 +146,12 @@ package
 		
 		[Embed(source = "../bin/assets/bitmapfonts/Zrnic_0.png")]
 		private static const ZrnicFontPng : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/ZrnicBig.fnt", mimeType = "application/octet-stream")]
+		private static const ZrnicBigFontClass : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/ZrnicBig_0.png")]
+		private static const ZrnicBigFontPng : Class;
 		
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
 																		new Point(800, 600),
@@ -242,22 +251,40 @@ package
 			_bridgeGraphics.addChild(tt);
 		}
 		
+		private var _layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
+		
 		private function showMainMenu():void
 		{
 			 _bridgeGraphics.registerBitmapFont(defaultFontPng, XML(new defaultFontClass()));
 			 _bridgeGraphics.registerBitmapFont(ZrnicFontPng, XML(new ZrnicFontClass()));
+			 _bridgeGraphics.registerBitmapFont(ZrnicBigFontPng, XML(new ZrnicBigFontClass()));
 			
 			var mainUIxml:XML = new XML();
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
 			
-			var layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
-			layersVO.addLayer("UI", 0, mainUIxml, true);
-			_bridgeGraphics.initLayers(layersVO.layers);
 			
-			//(layersVO.retrieveLayer("UI").getChildByNameStr("betHeadline") as IAbstractLabel).updateLabel("TRANSLATED BET MULTILINE WOOT WOOT");
-			var layer:IAbstractLayer = layersVO.retrieveLayer("UI");
+			_layersVO.addLayer("UI", 0, mainUIxml, true);
+			_bridgeGraphics.initLayers(_layersVO.layers);
+			
+			var layer:IAbstractLayer = _layersVO.retrieveLayer("UI");
 			var element:IAbstractDisplayObject = layer.getElement("spin_btn");
+			var label:IAbstractLabel = ((element as IAbstractButton).customLabel);
+			
+			var shadow:IAbstractDropShadowFilter = _bridgeGraphics.requestDropShadowFilter();
+			shadow.alpha = 1;
+			_bridgeGraphics.addDropShadowFilter(label, shadow);
+			//var subElement:IAbstractDisplayObject =	(element as IAbstractDisplayObjectContainer).getChildByNameStr("label" + "spin_btn");
+			//trace(subElement);
 			//element.visible = false;
+			addEventListener(Event.ENTER_FRAME, updateStuff);
+		}
+		
+		private var _winAmount:Number = 0;
+		
+		private function updateStuff(e:flash.events.Event):void
+		{
+			_winAmount++;
+				(_layersVO.retrieveLayer("UI").getChildByNameStr("win_text") as IAbstractLabel).updateLabel(String(Number(_winAmount).toFixed(2)));
 		}
 		
 		private function testLayouts():void

@@ -623,6 +623,11 @@ package starlingEngine.ui
 			alignLabel(align, customAlign);
 		}
 		
+		public function get customLabel():IAbstractLabel
+		{
+			return _customLabel;
+		}
+		
 		public function updateCustomLabel(labelText:String):void
 		{
 			_customLabel.updateLabel(labelText);

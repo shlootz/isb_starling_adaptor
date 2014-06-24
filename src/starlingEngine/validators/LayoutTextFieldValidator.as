@@ -7,7 +7,7 @@ package starlingEngine.validators
 	import starlingEngine.elements.EngineLayerLayoutElementVo;
 	/**
 	 * ...
-	 * @author Eu
+	 * @author Alex Popescu
 	 */
 	public class LayoutTextFieldValidator 
 	{

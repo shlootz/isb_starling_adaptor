@@ -1,16 +1,23 @@
 package starlingEngine
 {
 	import adobe.utils.CustomActions;
+	import bridge.abstract.filters.IAbstractBlurFilter;
+	import bridge.abstract.filters.IAbstractDropShadowFilter;
+	import bridge.abstract.filters.IAbstractGlowFilter;
 	import bridge.abstract.IAbstractBlitMask;
 	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.IAbstractScrollTile;
 	import bridge.abstract.ui.LabelProperties;
 	import flash.geom.Point;
+	import starling.filters.BlurFilter;
 	import starlingEngine.elements.EngineBlitMask;
 	import starlingEngine.elements.EngineMask;
 	import starlingEngine.elements.EngineScrollTile;
 	import starlingEngine.extensions.krecha.ScrollImage;
 	import starlingEngine.extensions.krecha.ScrollTile;
+	import starlingEngine.filters.BlurFilterVO;
+	import starlingEngine.filters.DropShadowFilterVO;
+	import starlingEngine.filters.GlowFilterVO;
 	import starlingEngine.validators.LayoutButtonValidator;
 	import starlingEngine.validators.LayoutImageValidator;
 	import starlingEngine.validators.LayoutMovieClipValidator;
@@ -853,6 +860,63 @@ package starlingEngine
 		   var atlasBitmap:Bitmap = new Bitmap(atlasBitmapData);
 		   var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(atlasBitmap), atlasXml);
 		   _assetsManager.addTextureAtlas(name, atlas);
+		 }
+		 
+		 /**
+		 * 
+		 * @return
+		 */
+		 public function requestDropShadowFilter():IAbstractDropShadowFilter
+		 {
+			  return new DropShadowFilterVO();
+		 }
+		
+		/**
+		 * 
+		 * @return
+		 */
+		 public function requestGlowFilter():IAbstractGlowFilter
+		 {
+			  return new GlowFilterVO();
+		 }
+		
+		/**
+		 * 
+		 * @return
+		 */
+		 public function requestBlurFilter():IAbstractBlurFilter
+		 {
+			 return new BlurFilterVO();
+		 }
+		 
+		 /**
+		  * 
+		  * @param	target
+		  * @param	vo
+		  */
+		 public function addDropShadowFilter(target:IAbstractDisplayObject, vo:IAbstractDropShadowFilter):void
+		 {
+			 (target as DisplayObject).filter = BlurFilter.createDropShadow(vo.distance, vo.angle, vo.color, vo.alpha, vo.blur, vo.resolution);
+		 }
+		 
+		 	 /**
+		  * 
+		  * @param	target
+		  * @param	vo
+		  */
+		 public function addGlowFilter(target:IAbstractDisplayObject, vo:IAbstractGlowFilter):void
+		 {
+			 (target as DisplayObject).filter = BlurFilter.createGlow(vo.color, vo.alpha, vo.blur, vo.resolution);
+		 }
+		 
+		 /**
+		  * 
+		  * @param	target
+		  * @param	vo
+		  */
+		 public function addBlurFilter(target:IAbstractDisplayObject, vo:IAbstractBlurFilter):void
+		 {
+			  (target as DisplayObject).filter = new BlurFilter(vo.blurX, vo.blurY, vo.resolution);
 		 }
 		
 		/**

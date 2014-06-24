@@ -11,11 +11,22 @@ package starlingEngine.elements
 	public class EngineBlitMask extends ScrollImage implements IAbstractBlitMask
 	{
 		
+		/**
+		 * 
+		 * @param	width
+		 * @param	height
+		 * @param	useBaseTexture
+		 */
 		public function EngineBlitMask( width:Number, height:Number, useBaseTexture:Boolean = false) 
 		{
 			super(width, height, useBaseTexture);
 		}
 		
+		/**
+		 * 
+		 * @param	layer
+		 * @return
+		 */
 		public function addLayerOnTop(layer:IAbstractScrollTile):IAbstractScrollTile
 		{
 			return super.addLayer(layer as ScrollTile) as IAbstractScrollTile;

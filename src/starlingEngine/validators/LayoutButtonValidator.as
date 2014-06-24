@@ -49,7 +49,9 @@ package starlingEngine.validators
 				{
 					var labelText:IAbstractTextField = engine.requestTextField(int(element.labelWidth), int(element.labelHeight),element.label, element.font, element.labelFontSize, element.labelFontColor);
 					var label:IAbstractLabel = engine.requestLabelFromTextfield(labelText);
-							
+					
+					label.name = "label"+element.name;
+					
 					labelText.autoScale = true;
 							
 					labelText.hAlign = LabelProperties.ALIGN_CENTER;
