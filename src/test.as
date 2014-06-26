@@ -35,6 +35,7 @@ package
 	import com.greensock.TweenLite;
 	import feathers.controls.Button;
 	import feathers.controls.text.TextFieldTextRenderer;
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -223,9 +224,6 @@ package
 			
 			button.addCustomLabel(label, LabelProperties.ALIGN_CENTER, new Point(100,100));
 			button.updateCustomLabel("Haha");
-			
-			trace(button.width)
-			trace(button.height)
 		}
 		
 		private function button_triggeredHandler(e:Object):void
@@ -234,13 +232,13 @@ package
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).visible  = false;
 			//showThings();
 			//particlesTest();
-			showMaskedThings2();
+			//showMaskedThings2();
 			//testPreloader();
 			//testShape();
 			//testScrollingImage();
 			//testLayouts();
 			showMainMenu();
-			testEngineFonts();
+			//testEngineFonts();
 		}
 		
 		private function testEngineFonts():void

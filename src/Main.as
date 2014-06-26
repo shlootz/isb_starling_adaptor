@@ -1,6 +1,7 @@
 package  
 {
-	import flash.display.Sprite;
+	import starling.display.Quad;
+	import starling.display.Sprite;
 	/**
 	 * ...
 	 * @author Alex Popescu
@@ -10,7 +11,8 @@ package
 		
 		public function Main() 
 		{
-			
+			addChild(new Quad(500, 500));
+			trace("cucu")
 		}
 		
 	}
