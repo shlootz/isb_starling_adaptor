@@ -413,10 +413,39 @@ package starlingEngine
 		 */
 		public function requestTextField(width:int, height:int, text:String, fontName:String="Verdana", fontSize:Number=12, color:uint=0, bold:Boolean=false):IAbstractTextField
 		{
-			var t:IAbstractTextField = new EngineTextField(width, height, text, fontName, fontSize, color, bold) as IAbstractTextField;
+			text = text.replace("\\n", "\n");
+			
+			var rows:int = 1;
+			rows += (text.match(new RegExp("\n", "g")).length);
+			
+			var finalH:Number = height;
+			var dynamicH:Number =  fontSize * rows;
+			
+			if (dynamicH <= height)
+			{
+				finalH = dynamicH;
+			}
+			
+			var t:IAbstractTextField = new EngineTextField(width, finalH, text, fontName, fontSize, color, bold) as IAbstractTextField;
 			t.batchable = true;
 			t.autoScale = true;
+			
 			return t;
+		}
+		
+		/**
+		 * 
+		 * @param	text
+		 * @return IAbstractLabel
+		 * @see bridge.abstract.ui.IAbstractLabel
+		 */
+		public function requestLabelFromTextfield(text:IAbstractTextField, name:String = ""):IAbstractLabel
+		{	
+			var label:IAbstractLabel = new EngineLabel(text);
+			label.name = name;
+			label.touchable = false;
+			
+			return label;
 		}
 		
 		/**
@@ -457,31 +486,26 @@ package starlingEngine
 		
 		/**
 		 * 
-		 * @param	text
-		 * @return IAbstractLabel
-		 * @see bridge.abstract.ui.IAbstractLabel
-		 */
-		public function requestLabelFromTextfield(text:IAbstractTextField, name:String = ""):IAbstractLabel
-		{
-			var label:IAbstractLabel = new EngineLabel(text);
-			label.name = name;
-			label.touchable = false;
-			return label;
-		}
-		
-		/**
-		 * 
 		 * @param	textureClass
 		 * @param	xml
 		 */
-		public function registerBitmapFont(textureClass:Class, xml:XML):String
+		public function registerBitmapFont(textureClass:Class, xml:XML, fontName:String = ""):String
 		{
 			var fontTexture:Texture = Texture.fromBitmap(new textureClass);
 			var fontXML:XML = xml;
 			var bitmapFont:BitmapFont = new BitmapFont(fontTexture, fontXML);
-			var fontName:String = TextField.registerBitmapFont(bitmapFont);
+			var fontName_:String;
 			
-			return fontName
+			if (fontName != "")
+			{
+				fontName_ = TextField.registerBitmapFont(bitmapFont, fontName);
+			}
+			else
+			{
+				fontName_ = TextField.registerBitmapFont(bitmapFont);
+			}
+			
+			return fontName_
 		}
 		
 		/**

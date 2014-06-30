@@ -46,7 +46,7 @@ package starlingEngine.validators
 			btn.name =element.name;
 							
 			if (element.label != "")
-				{
+			{
 					var labelText:IAbstractTextField = engine.requestTextField(int(element.labelWidth), int(element.labelHeight),element.label, element.font, element.labelFontSize, element.labelFontColor);
 					var label:IAbstractLabel = engine.requestLabelFromTextfield(labelText);
 					
@@ -57,14 +57,17 @@ package starlingEngine.validators
 					labelText.hAlign = LabelProperties.ALIGN_CENTER;
 						
 					if (element.labelX != 0 || element.labelY != 0)
-						{
-							btn.addCustomLabel(label, LabelProperties.ALIGN_CUSTOM, new Point(element.labelX, element.labelY));
-						}
-						else
-						{
-							btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
-						}
+					{
+						//btn.addCustomLabel(label, LabelProperties.ALIGN_CUSTOM, new Point(element.labelX, element.labelY));
+						btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
+						label.x += element.labelX;
+						label.y += element.labelY;
 					}
+					else
+					{
+						btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
+					}
+			}
 						
 			return btn
 		}

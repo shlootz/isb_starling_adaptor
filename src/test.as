@@ -223,7 +223,7 @@ package
 			var label:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(t,"tt");
 			
 			button.addCustomLabel(label, LabelProperties.ALIGN_CENTER, new Point(100,100));
-			button.updateCustomLabel("Haha");
+			button.updateCustomLabel("Ha\nha");
 		}
 		
 		private function button_triggeredHandler(e:Object):void
@@ -231,14 +231,14 @@ package
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).isEnabled  = false;
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).visible  = false;
 			//showThings();
-			//particlesTest();
+			particlesTest();
 			//showMaskedThings2();
 			//testPreloader();
 			//testShape();
 			//testScrollingImage();
 			//testLayouts();
 			showMainMenu();
-			//testEngineFonts();
+			testEngineFonts();
 		}
 		
 		private function testEngineFonts():void
@@ -251,6 +251,8 @@ package
 			_bridgeGraphics.addChild(tt);
 			_bridgeGraphics.addChild(tt2);
 			_bridgeGraphics.addChild(tt3);
+			
+			tt.fontName = "Zrnic";
 		}
 		
 		private var _layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
@@ -284,7 +286,7 @@ package
 		
 		private function updateStuff(e:flash.events.Event):void
 		{
-			_winAmount++;
+			_winAmount+=100;
 				(_layersVO.retrieveLayer("UI").getChildByNameStr("win_text") as IAbstractLabel).updateLabel(String(Number(_winAmount).toFixed(2)));
 		}
 		
