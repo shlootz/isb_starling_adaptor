@@ -231,7 +231,7 @@ package
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).isEnabled  = false;
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).visible  = false;
 			//showThings();
-			particlesTest();
+			//particlesTest();
 			//showMaskedThings2();
 			//testPreloader();
 			//testShape();
@@ -239,6 +239,12 @@ package
 			//testLayouts();
 			showMainMenu();
 			testEngineFonts();
+			testConsole();
+		}
+		
+		private function testConsole():void
+		{
+			
 		}
 		
 		private function testEngineFonts():void

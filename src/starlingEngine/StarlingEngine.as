@@ -413,7 +413,10 @@ package starlingEngine
 		 */
 		public function requestTextField(width:int, height:int, text:String, fontName:String="Verdana", fontSize:Number=12, color:uint=0, bold:Boolean=false):IAbstractTextField
 		{
-			text = text.replace("\\n", "\n");
+			while (text.indexOf("\\n") != -1)
+			{
+				text = text.replace("\\n", "\n");
+			}
 			
 			var rows:int = 1;
 			rows += (text.match(new RegExp("\n", "g")).length);
