@@ -25,6 +25,12 @@ package starlingEngine.validators
 			img.height = Number(element.height);
 			img.name = element.name;
 			
+			if (element.flipped)
+			{
+				img.pivotX = img.width;
+				img.scaleX = -1;
+			}
+			
 			return img;
 		}
 		

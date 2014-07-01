@@ -503,9 +503,9 @@ package starlingEngine
 		 * @param	textureClass
 		 * @param	xml
 		 */
-		public function registerBitmapFont(textureClass:Class, xml:XML, fontName:String = ""):String
+		public function registerBitmapFont(textureBitmap:Bitmap, xml:XML, fontName:String = ""):String
 		{
-			var fontTexture:Texture = Texture.fromBitmap(new textureClass);
+			var fontTexture:Texture = Texture.fromBitmap(textureBitmap);
 			var fontXML:XML = xml;
 			var bitmapFont:BitmapFont = new BitmapFont(fontTexture, fontXML);
 			var fontName_:String;

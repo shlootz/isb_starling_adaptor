@@ -185,7 +185,8 @@ package
 													"../bin/assets/layouts/layerLayout.xml",
 													"../bin/assets/layouts/preloader1xLayout.xml",
 													"../bin/assets/layouts/buttonLayout.xml",
-													"../bin/assets/layouts/UserInterface.xml"
+													"../bin/assets/layouts/UserInterface.xml",
+													"../bin/assets/layouts/Paytable.xml"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
@@ -238,11 +239,12 @@ package
 			//testShape();
 			//testScrollingImage();
 			//testLayouts();
-			//showMainMenu();
+			showMainMenu();
 			//showMainMenuContained();
+			//showPaytable();
 			//testEngineFonts();
 			//testConsole();
-			testPhysics();
+			//testPhysics();
 		}
 		
 		private function testPhysics():void
@@ -257,7 +259,7 @@ package
 		
 		private function testEngineFonts():void
 		{
-			var fName:String = _bridgeGraphics.registerBitmapFont(defaultFontPng, XML(new defaultFontClass()));
+			var fName:String = _bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
 			
 			var tt:TextField = new TextField(200, 200, "TEST", fName, 50, 0xffffff);
 			var tt2:TextField = new TextField(200, 300, "TEST 2", fName, 50, 0xffffff);
@@ -273,9 +275,9 @@ package
 		
 		private function showMainMenu():void
 		{
-			 _bridgeGraphics.registerBitmapFont(defaultFontPng, XML(new defaultFontClass()));
-			 _bridgeGraphics.registerBitmapFont(ZrnicFontPng, XML(new ZrnicFontClass()));
-			 _bridgeGraphics.registerBitmapFont(ZrnicBigFontPng, XML(new ZrnicBigFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ZrnicFontPng(), XML(new ZrnicFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
 			
 			var mainUIxml:XML = new XML();
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
@@ -296,6 +298,20 @@ package
 			addEventListener(Event.ENTER_FRAME, updateStuff);
 		}
 		
+		private function showPaytable():void
+		{
+			_bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ZrnicFontPng(), XML(new ZrnicFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
+			
+			var mainUIxml:XML = new XML();
+			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("Paytable");
+			
+			
+			_layersVO.addLayer("Paytable", 0, mainUIxml, true);
+			_bridgeGraphics.initLayers(_layersVO.layers);
+		}
+		
 		private function showMainMenuContained():void
 		{
 			
@@ -304,9 +320,9 @@ package
 			var someContainer:starling.display.Sprite = new starling.display.Sprite();
 			_bridgeGraphics.addChild(someContainer);
 			
-			 _bridgeGraphics.registerBitmapFont(defaultFontPng, XML(new defaultFontClass()));
-			 _bridgeGraphics.registerBitmapFont(ZrnicFontPng, XML(new ZrnicFontClass()));
-			 _bridgeGraphics.registerBitmapFont(ZrnicBigFontPng, XML(new ZrnicBigFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ZrnicFontPng(), XML(new ZrnicFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
 			
 			var mainUIxml:XML = new XML();
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");

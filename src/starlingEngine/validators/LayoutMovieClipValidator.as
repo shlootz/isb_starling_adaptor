@@ -25,6 +25,12 @@ package starlingEngine.validators
 			mc.height = Number(element.height);
 			mc.name = element.name;
 			
+			if (element.flipped)
+			{
+				mc.pivotX = mc.width;
+				mc.scaleX = -1;
+			}
+			
 			return mc;
 		}
 	}

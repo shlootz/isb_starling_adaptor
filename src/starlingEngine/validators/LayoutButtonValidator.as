@@ -31,7 +31,25 @@ package starlingEngine.validators
 			var disabledStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.disabledState));
 						
 			btn.idName = element.name;
-						
+			
+			if (element.flipped)
+			{
+				upSkin.pivotX = upSkin.width;
+				upSkin.scaleX = -1;
+				
+				upStateSkin.pivotX = upStateSkin.width;
+				upStateSkin.scaleX = -1;
+				
+				overStateSkin.pivotX = overStateSkin.width;
+				overStateSkin.scaleX = -1;
+				
+				pressedStateSkin.pivotX = pressedStateSkin.width;
+				pressedStateSkin.scaleX = -1;
+				
+				disabledStateSkin.pivotX = disabledStateSkin.width;
+				disabledStateSkin.scaleX = -1;
+			}
+			
 			btn.upSkin_ = upSkin;
 			btn.hoverSkin_ = overStateSkin;
 			btn.downSkin_ = pressedStateSkin;
@@ -43,8 +61,8 @@ package starlingEngine.validators
 			btn.width = Number(element.width);
 			btn.height = Number(element.height);
 						
-			btn.name =element.name;
-							
+			btn.name = element.name;
+			
 			if (element.label != "")
 			{
 					var labelText:IAbstractTextField = engine.requestTextField(int(element.labelWidth), int(element.labelHeight),element.label, element.font, element.labelFontSize, element.labelFontColor);

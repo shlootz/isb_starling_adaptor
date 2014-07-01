@@ -41,7 +41,7 @@ package
 			for (var i:uint = 0; i < 300; i++ )
 			{
 				var w:Number = Math.random() * 50;
-				add(new DraggableCube("cube", { view:new Quad(w,w, Math.random()*0xffffff), width:w, height:w, x:Math.random()*800, y:Math.random()*600 } ));
+				add(new DraggableCube("cube"+i, { view:new Quad(w,w, Math.random()*0xffffff), width:w, height:w, x:Math.random()*800, y:Math.random()*600 } ));
 			}
 			add(new DraggableCube("cube", { view:new Quad(200,200, Math.random()*0xffffff), width:200, height:200, x:50, y:50} ));
 			stage.addEventListener(TouchEvent.TOUCH, _handleTouch);
