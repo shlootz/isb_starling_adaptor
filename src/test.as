@@ -239,10 +239,10 @@ package
 			//testScrollingImage();
 			//testLayouts();
 			//showMainMenu();
-			showMainMenuContained();
+			//showMainMenuContained();
 			//testEngineFonts();
 			//testConsole();
-			//testPhysics();
+			testPhysics();
 		}
 		
 		private function testPhysics():void
@@ -298,6 +298,9 @@ package
 		
 		private function showMainMenuContained():void
 		{
+			
+			var someTranzition:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT();
+			
 			var someContainer:starling.display.Sprite = new starling.display.Sprite();
 			_bridgeGraphics.addChild(someContainer);
 			
@@ -316,7 +319,9 @@ package
 			
 			someContainer.addChild(layer as starling.display.DisplayObject);
 			_bridgeGraphics.drawLayerLayout(layer);
-			someContainer.width = 100;
+			//someContainer.width = 100;
+			
+			someTranzition.doTransition(layer, null);
 			
 			var element:IAbstractDisplayObject = layer.getElement("spin_btn");
 			var label:IAbstractLabel = ((element as IAbstractButton).customLabel);

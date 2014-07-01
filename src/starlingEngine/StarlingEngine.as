@@ -202,7 +202,18 @@ package starlingEngine
 			
 			_signalsHub.dispatchSignal(Signals.STARLING_READY, "", "");
 			
-			initNape();
+			configureConsole();
+		}
+		
+		private function configureConsole():void
+		{
+			console.addCommand("output", output)
+		}
+		
+		private function output(input:String):void
+		{
+			var tf:IAbstractTextField = requestTextField(500, 500, input, "Verdana", 200, 0xffffff);
+			_currentState.addNewChild(tf);
 		}
 		
 		/**

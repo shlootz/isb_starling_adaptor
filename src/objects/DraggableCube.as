@@ -22,17 +22,18 @@ package objects {
 		{
 			super(name, params);
 			this.touchable = true;
+			this.updateCallEnabled = true;
 		}
  
 		override protected function createConstraint():void {
  
 			super.createConstraint();
  
-			_hand = new PivotJoint(_nape.space.world, _body, new Vec2(), new Vec2());
+			_hand = new PivotJoint(_nape.space.world, _body,  Vec2.weak(),  Vec2.weak());
 			_hand.active = false;
 			_hand.stiff = false;
 			_hand.space = _nape.space;
-			_hand.maxForce = 50;
+			_hand.maxForce = 5000;
 		}
  
 		override public function destroy():void {
@@ -57,7 +58,7 @@ package objects {
  
 			var mp:Vec2 = new Vec2(x, y);
  
-            _hand.anchor2 = _body.worldPointToLocal(mp);
+            _hand.anchor2.set(_body.worldPointToLocal(mp, true));
             _hand.active = true;
 		}
  
