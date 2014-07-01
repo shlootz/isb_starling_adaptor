@@ -32,6 +32,7 @@ package
 	import bridge.IBridgeGraphics;
 	import citrus.core.starling.StarlingCitrusEngine;
 	import citrus.datastructures.PoolObject;
+	import citrus.objects.NapePhysicsObject;
 	import com.greensock.TweenLite;
 	import feathers.controls.Button;
 	import feathers.controls.text.TextFieldTextRenderer;
@@ -237,9 +238,16 @@ package
 			//testShape();
 			//testScrollingImage();
 			//testLayouts();
-			showMainMenu();
-			testEngineFonts();
-			testConsole();
+			//showMainMenu();
+			showMainMenuContained();
+			//testEngineFonts();
+			//testConsole();
+			//testPhysics();
+		}
+		
+		private function testPhysics():void
+		{
+			_bridgeGraphics.tranzitionToState(new PhysicsState());
 		}
 		
 		private function testConsole():void
@@ -288,12 +296,52 @@ package
 			addEventListener(Event.ENTER_FRAME, updateStuff);
 		}
 		
+		private function showMainMenuContained():void
+		{
+			var someContainer:starling.display.Sprite = new starling.display.Sprite();
+			_bridgeGraphics.addChild(someContainer);
+			
+			 _bridgeGraphics.registerBitmapFont(defaultFontPng, XML(new defaultFontClass()));
+			 _bridgeGraphics.registerBitmapFont(ZrnicFontPng, XML(new ZrnicFontClass()));
+			 _bridgeGraphics.registerBitmapFont(ZrnicBigFontPng, XML(new ZrnicBigFontClass()));
+			
+			var mainUIxml:XML = new XML();
+			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
+			
+			
+			_layersVO.addLayer("UI", 0, mainUIxml, true);
+			
+			
+			var layer:IAbstractLayer = _layersVO.retrieveLayer("UI");
+			
+			someContainer.addChild(layer as starling.display.DisplayObject);
+			_bridgeGraphics.drawLayerLayout(layer);
+			someContainer.width = 100;
+			
+			var element:IAbstractDisplayObject = layer.getElement("spin_btn");
+			var label:IAbstractLabel = ((element as IAbstractButton).customLabel);
+			
+			var shadow:IAbstractDropShadowFilter = _bridgeGraphics.requestDropShadowFilter();
+			shadow.alpha = 2;
+			shadow.distance = 0;
+			shadow.blur = 10;
+			_bridgeGraphics.addDropShadowFilter(label, shadow);
+			addEventListener(Event.ENTER_FRAME, updateStuff);
+		}
+		
 		private var _winAmount:Number = 0;
+		private var _smallWin:Number = 0;
 		
 		private function updateStuff(e:flash.events.Event):void
 		{
-			_winAmount+=100;
+			_winAmount += 100000;
+			_smallWin += 1;
 				(_layersVO.retrieveLayer("UI").getChildByNameStr("win_text") as IAbstractLabel).updateLabel(String(Number(_winAmount).toFixed(2)));
+				
+				if (_winAmount > 100000000)
+				{
+					(_layersVO.retrieveLayer("UI").getChildByNameStr("win_text") as IAbstractLabel).updateLabel(String(Number(_smallWin).toFixed(2)));
+				}
 		}
 		
 		private function testLayouts():void

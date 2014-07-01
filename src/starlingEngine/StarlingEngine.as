@@ -558,7 +558,7 @@ package starlingEngine
 			{
 				_currentState = newState as EngineState;
 				state = _currentState as IState;
-				(state as StarlingState).initialize();
+				//(state as StarlingState).initialize();
 			}
 		}
 		
@@ -778,7 +778,7 @@ package starlingEngine
 		 * 
 		 * @param	layer
 		 */
-		private function drawLayerLayout(layer:IAbstractLayer):void
+		public function drawLayerLayout(layer:IAbstractLayer):void
 		{
 			var layoutDict:Dictionary = layer.layout;
 			var layerElements:Vector.<EngineLayerLayoutElementVo> = new Vector.<EngineLayerLayoutElementVo>();
