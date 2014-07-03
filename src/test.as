@@ -36,6 +36,7 @@ package
 	import com.greensock.TweenLite;
 	import feathers.controls.Button;
 	import feathers.controls.text.TextFieldTextRenderer;
+	import flappybird.FlappyBirdGameState;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -174,6 +175,7 @@ package
 		
 		private function loadAssets(event:String, obj:Object):void
 		{
+			//testFlappy();
 			(_bridgeGraphics.assetsManager).enqueue("../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
 													"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
 													"../bin/assets/spritesheets/spriteSheetElements.png",
@@ -199,13 +201,15 @@ package
 					trace("Loading assets, progress:", ratio);
 					if (ratio == 1)
 					{	
-						buildUI();
+						testStuff();
+						//buildUI();
 					}
 				});
 		}
 		
 		private function buildUI():void
 		{
+			
 			var uiHolder:IAbstractSprite = _bridgeGraphics.requestSprite();
 			_bridgeGraphics.addChild(uiHolder);
 			
@@ -238,6 +242,11 @@ package
 		{
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).isEnabled  = false;
 			(BridgeEvents.extractCurrentTarget(e) as IAbstractButton).visible  = false;
+			
+		}
+		
+		private function testStuff():void
+		{
 			//showThings();
 			//particlesTest();
 			//showMaskedThings2();
@@ -251,6 +260,12 @@ package
 			//testEngineFonts();
 			//testConsole();
 			//testPhysics();
+			//testFlappy();
+		}
+		
+		private function testFlappy():void
+		{
+			_bridgeGraphics.tranzitionToState(new FlappyBirdGameState());
 		}
 		
 		private function testPhysics():void
@@ -289,7 +304,7 @@ package
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
 			
 			
-			_layersVO.addLayer("UI", 0, mainUIxml, true);
+			_layersVO.addLayer("UI", 1, mainUIxml, true);
 			_bridgeGraphics.initLayers(_layersVO.layers);
 			
 			var layer:IAbstractLayer = _layersVO.retrieveLayer("UI");
@@ -369,6 +384,22 @@ package
 			
 			//Adding a listener to the signal from paytable
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
+			
+			var mainUIxml:XML = new XML();
+			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
+			_layersVO.addLayer("UI", 1, mainUIxml, false);
+			
+			var layer:IAbstractLayer = _layersVO.retrieveLayer("UI");
+			_bridgeGraphics.drawLayerLayout(layer);
+			
+			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
+			
+			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
+			
+			inLayers.push(layer);
+			outLayers.push(_layersVO.retrieveLayer("Paytable"));
+			
+			_bridgeGraphics.updateLayers(inLayers, outLayers);
 		}
 		
 		private function buttonPressed(type:String, event:Object):void
@@ -592,7 +623,7 @@ package
 			layersVO.addLayer("Overground", 1, null, true);
 			layersVO.addLayer("Layer 3", 2,x, true);
 						
-			//layersVO.retrieveLayer("Layer 3").addNewChild(mc);
+			layersVO.retrieveLayer("Layer 3").addNewChild(mc);
 			
 			//var video:IAbstractVideo = _bridgeGraphics.requestVideo();
 			//video.addVideoPath("../bin/assets/test.flv");
@@ -603,35 +634,35 @@ package
 			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
 			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, movieclipEnded);
 			
-			//layersVO.addLayer("TEST", 4, null);
+			layersVO.addLayer("TEST", 4, null);
 			
-			//var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
-			//var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
-			//
-			//var outTransition:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT()
-			//var inTransition:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN();
+			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
+			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
 			
-			//inLayers.push(layersVO.retrieveLayer("TEST"));
-			//outLayers.push(layersVO.retrieveLayer("Layer 3"));
-			//
-			//_bridgeGraphics.updateLayers(inLayers, outLayers, inTransition, outTransition);
+			var outTransition:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT()
+			var inTransition:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN();
+			
+			inLayers.push(layersVO.retrieveLayer("TEST"));
+			outLayers.push(layersVO.retrieveLayer("Layer 3"));
+			
+			_bridgeGraphics.updateLayers(inLayers, outLayers, inTransition, outTransition);
 						
-			//var transIn:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN()
-			//var transOut:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT();
+			var transIn:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN()
+			var transOut:IAbstractLayerTransitionOut = _bridgeGraphics.requestLayerTransitionOUT();
 						
 			//var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
 			//outLayers.push(layersVO.retrieveLayer("Layer 2"));
 						
-			//var newLayer:IAbstractLayer = _bridgeGraphics.requestLayer("Tzeapa", 0, x, true);
-			//inLayers.push(newLayer);
-			//_bridgeGraphics.updateLayers(inLayers, null, null, null);
-			//newLayer.addNewChild(_bridgeGraphics.requestImage("Background"));
+			var newLayer:IAbstractLayer = _bridgeGraphics.requestLayer("Tzeapa", 0, x, true);
+			inLayers.push(newLayer);
+			_bridgeGraphics.updateLayers(inLayers, null, null, null);
+			newLayer.addNewChild(_bridgeGraphics.requestImage("Background"));
 				
-			//TweenLite.to(newLayer.getChildByNameStr("badass"), 2, { x:400 } );
+			TweenLite.to(newLayer.getChildByNameStr("badass"), 2, { x:400 } );
 						
-			//var state2:IAbstractState = _bridgeGraphics.requestState();
-			//var stateTransition:IAbstractStateTransition = new EngineStateTransition();
-			//_bridgeGraphics.tranzitionToState(state2, stateTransition);
+			var state2:IAbstractState = _bridgeGraphics.requestState();
+			var stateTransition:IAbstractStateTransition = new EngineStateTransition();
+			_bridgeGraphics.tranzitionToState(state2, stateTransition);
 			
  
 			//var xml:XML = XML(new TimesXml());

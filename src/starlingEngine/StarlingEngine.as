@@ -794,6 +794,12 @@ package starlingEngine
 			var layoutDict:Dictionary = layer.layout;
 			var layerElements:Vector.<EngineLayerLayoutElementVo> = new Vector.<EngineLayerLayoutElementVo>();
 			
+			if (!layer.addToStage)
+			{
+				_currentState.addNewChildAt(layer, layer.layerDepth);
+				layer.addToStage = true;
+			}
+			
 			for (var key:String in layoutDict)
 			{
 				layerElements.push(layoutDict[key] as EngineLayerLayoutElementVo);

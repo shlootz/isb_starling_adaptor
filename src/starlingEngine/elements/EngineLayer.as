@@ -225,6 +225,14 @@ package starlingEngine.elements
 		/**
 		 * 
 		 */
+		public function set addToStage(val:Boolean):void
+		{
+			 _addToStage = val;
+		}
+		
+		/**
+		 * 
+		 */
 		override public function destroyAll():void
 		{
 			while (this.numChildren > 0)
