@@ -387,7 +387,7 @@ package
 			
 			var mainUIxml:XML = new XML();
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
-			_layersVO.addLayer("UI", 10, mainUIxml, false);
+			_layersVO.addLayer("UI", 102514 , mainUIxml, false);
 		}
 		
 		private function buttonPressed(type:String, event:Object):void
