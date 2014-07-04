@@ -569,7 +569,6 @@ package starlingEngine
 			{
 				_currentState = newState as EngineState;
 				state = _currentState as IState;
-				//(state as StarlingState).initialize();
 			}
 		}
 		
@@ -796,8 +795,30 @@ package starlingEngine
 			
 			if (!layer.addToStage)
 			{
-				_currentState.addNewChildAt(layer, layer.layerDepth);
+				var orderedLayers:Vector.<EngineLayer> = new Vector.<EngineLayer>();
 				layer.addToStage = true;
+			
+				for (var k:Object in _layers) 
+				{
+					var child:EngineLayer = _layers[k] as EngineLayer;
+					if (child.addToStage)
+					{
+						orderedLayers.push(child);
+					}
+				}
+			
+				orderedLayers.sort(sortDepths);
+				
+				var realDepth:uint = 0;
+				for (var m:uint = 0; m < orderedLayers.length; m++ )
+				{
+					if (orderedLayers[m] == layer)
+					{
+						realDepth = m;
+						break;
+					}
+				}
+				//_currentState.addNewChildAt(layer, realDepth);
 			}
 			
 			for (var key:String in layoutDict)

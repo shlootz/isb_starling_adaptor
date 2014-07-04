@@ -387,8 +387,11 @@ package
 			
 			var mainUIxml:XML = new XML();
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
-			_layersVO.addLayer("UI", 1, mainUIxml, false);
-			
+			_layersVO.addLayer("UI", 10, mainUIxml, false);
+		}
+		
+		private function buttonPressed(type:String, event:Object):void
+		{	
 			var layer:IAbstractLayer = _layersVO.retrieveLayer("UI");
 			_bridgeGraphics.drawLayerLayout(layer);
 			
@@ -399,11 +402,8 @@ package
 			inLayers.push(layer);
 			outLayers.push(_layersVO.retrieveLayer("Paytable"));
 			
-			_bridgeGraphics.updateLayers(inLayers, outLayers);
-		}
-		
-		private function buttonPressed(type:String, event:Object):void
-		{
+			_bridgeGraphics.updateLayers(inLayers);
+			
 			trace("Caught " + type + " " + event)
 			trace("Target "+event.currentTarget);
 			
