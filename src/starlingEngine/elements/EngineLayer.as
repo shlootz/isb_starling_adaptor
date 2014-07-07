@@ -137,34 +137,36 @@ package starlingEngine.elements
 		 */
 		private function parseLayout():void
 		{
-			for (var i:uint = 0; i < _layout.children().length(); i++)
+			var _mainXML:XML = _layout.children()[0];
+		
+			for (var i:uint = 0; i < _mainXML.children().length(); i++)
 			{
-				var layerX:String = String(_layout.child("Element")[i].attribute("layerX"));
-				var layerY:String = String(_layout.child("Element")[i].attribute("layerY"));
-				var name:String = String(_layout.child("Element")[i].attribute("name"));
-				var type:String = _layout.child("Element")[i].attribute("type");
-				var onStage:String = _layout.child("Element")[i].attribute("onStage");
-				var x:String = _layout.child("Element")[i].attribute("x");
-				var y:String = _layout.child("Element")[i].attribute("y");
-				var w:String = _layout.child("Element")[i].attribute("width");
-				var h:String = _layout.child("Element")[i].attribute("height");
-				var fps:uint = uint(_layout.child("Element")[i].attribute("fps"));
-				var depth:String = _layout.child("Element")[i].attribute("depth");
-				var resource:String = _layout.child("Element")[i].attribute("resource");
-				var upState:String = _layout.child("Element")[i].attribute("upState");
-				var overState:String = _layout.child("Element")[i].attribute("overState");
-				var pressedState:String = _layout.child("Element")[i].attribute("pressedState");
-				var disabledState:String = _layout.child("Element")[i].attribute("disabledState");
-				var loop:String = _layout.child("Element")[i].attribute("loop");
-				var labelWidth:String = _layout.child("Element")[i].attribute("labelWidth");
-				var labelHeight:String = _layout.child("Element")[i].attribute("labelHeight");
-				var font:String = _layout.child("Element")[i].attribute("labelFont");
-				var label:String = _layout.child("Element")[i].attribute("label");
-				var labelFontSize:String = _layout.child("Element")[i].attribute("labelFontSize");
-				var labelFontColor:String = _layout.child("Element")[i].attribute("labelFontColor");
-				var labelX:String = _layout.child("Element")[i].attribute("labelX");
-				var labelY:String = _layout.child("Element")[i].attribute("labelY");
-				var flipped:String = _layout.child("Element")[i].attribute("flipped");
+				var layerX:String = String(_mainXML.child("Element")[i].attribute("layerX"));
+				var layerY:String = String(_mainXML.child("Element")[i].attribute("layerY"));
+				var name:String = String(_mainXML.child("Element")[i].attribute("name"));
+				var type:String = _mainXML.child("Element")[i].attribute("type");
+				var onStage:String = _mainXML.child("Element")[i].attribute("onStage");
+				var x:String = _mainXML.child("Element")[i].attribute("x");
+				var y:String = _mainXML.child("Element")[i].attribute("y");
+				var w:String = _mainXML.child("Element")[i].attribute("width");
+				var h:String = _mainXML.child("Element")[i].attribute("height");
+				var fps:uint = uint(_mainXML.child("Element")[i].attribute("fps"));
+				var depth:String = _mainXML.child("Element")[i].attribute("depth");
+				var resource:String = _mainXML.child("Element")[i].attribute("resource");
+				var upState:String = _mainXML.child("Element")[i].attribute("upState");
+				var overState:String = _mainXML.child("Element")[i].attribute("overState");
+				var pressedState:String = _mainXML.child("Element")[i].attribute("pressedState");
+				var disabledState:String = _mainXML.child("Element")[i].attribute("disabledState");
+				var loop:String = _mainXML.child("Element")[i].attribute("loop");
+				var labelWidth:String = _mainXML.child("Element")[i].attribute("labelWidth");
+				var labelHeight:String = _mainXML.child("Element")[i].attribute("labelHeight");
+				var font:String = _mainXML.child("Element")[i].attribute("labelFont");
+				var label:String = _mainXML.child("Element")[i].attribute("label");
+				var labelFontSize:String = _mainXML.child("Element")[i].attribute("labelFontSize");
+				var labelFontColor:String = _mainXML.child("Element")[i].attribute("labelFontColor");
+				var labelX:String = _mainXML.child("Element")[i].attribute("labelX");
+				var labelY:String = _mainXML.child("Element")[i].attribute("labelY");
+				var flipped:String = _mainXML.child("Element")[i].attribute("flipped");
 				
 				var o:EngineLayerLayoutElementVo = new EngineLayerLayoutElementVo();
 				o.layerX = Number(layerX);
