@@ -355,6 +355,7 @@ package
 			var page5Xml:XML = new XML();
 			page5Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage5");
 			var page6Xml:XML = new XML();
+			page6Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage6");
 			
 			//Adding the layers to the custom layersVO 
 			_paytablePagesLayersVO.addLayer("Overview", 0, page1Xml);
