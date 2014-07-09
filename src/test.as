@@ -391,56 +391,54 @@ package
 			_layersVO.addLayer("UI", 102514 , mainUIxml, false);
 		}
 		
+		private	var tranzitionIn:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN();
+		private	var tranzitionOut:IAbstractLayerTransitionOut= _bridgeGraphics.requestLayerTransitionOUT();
+		
 		private function buttonPressed(type:String, event:Object):void
-		{	
-			var layer:IAbstractLayer = _layersVO.retrieveLayer("UI");
-			_bridgeGraphics.drawLayerLayout(layer);
-			
-			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
-			
-			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
-			
-			inLayers.push(layer);
-			outLayers.push(_layersVO.retrieveLayer("Paytable"));
-			
-			_bridgeGraphics.updateLayers(inLayers);
-			
-			trace("Caught " + type + " " + event)
-			trace("Target "+event.currentTarget);
-			
-			var tranzitionIn:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN();
-			var tranzitionOut:IAbstractLayerTransitionOut= _bridgeGraphics.requestLayerTransitionOUT();
-			
+		{		
+			tranzitionOut.injectAnimation(tranzitionAnimationOut);
+			tranzitionOut.injectOnTransitionComplete(cleanPage);
 			tranzitionOut.doTransition(_currentPage, null);
-			tranzitionOut.injectOnTransitionComplete(cleanPage)
 			
 			var inLayer:IAbstractLayer;
 			
 			switch(type)
 			{
 				case "OverviewButton":
-					inLayer = _paytablePagesLayersVO.retrieveLayer("Overview")
+					inLayer = _paytablePagesLayersVO.retrieveLayer("Overview");
 					break;
 				case "ScatterButton":
-						inLayer = _paytablePagesLayersVO.retrieveLayer("Scatter")
+						inLayer = _paytablePagesLayersVO.retrieveLayer("Scatter");
 					break;
 				case "StickyWildButton":
-						inLayer = _paytablePagesLayersVO.retrieveLayer("Wild")
+						inLayer = _paytablePagesLayersVO.retrieveLayer("Wild");
 					break;
 				case "BonusButton":
-						inLayer = _paytablePagesLayersVO.retrieveLayer("Bonus")
+						inLayer = _paytablePagesLayersVO.retrieveLayer("Bonus");
 					break;
 				case "LinesRulesButton":
-						inLayer = _paytablePagesLayersVO.retrieveLayer("Rules")
+						inLayer = _paytablePagesLayersVO.retrieveLayer("Rules");
 					break;
 				case "ShortcutsButton":
-						inLayer = _paytablePagesLayersVO.retrieveLayer("Shortcuts")
+						inLayer = _paytablePagesLayersVO.retrieveLayer("Shortcuts");
 					break;
 			}
 			
 			_paytablePagesHolder.addNewChild(inLayer);
+			
+			tranzitionIn.injectAnimation(tranzitionAnimationIn);
+			tranzitionIn.injectOnTransitionComplete(updateCurrentPage);
 			tranzitionIn.doTransition(inLayer, null);
-			tranzitionIn.injectOnTransitionComplete(updateCurrentPage)
+		}
+		
+		private function tranzitionAnimationIn(layer1:IAbstractDisplayObject, layer2:IAbstractDisplayObject):void
+		{
+			TweenLite.to(layer1, 1, { x:Math.random() * 250 , onComplete:  tranzitionIn.onTransitionComplete, onCompleteParams:[layer1, layer2]});
+		}
+		
+		private function tranzitionAnimationOut(layer1:IAbstractDisplayObject, layer2:IAbstractDisplayObject):void
+		{
+			TweenLite.to(layer1, 1, { x:Math.random() * 250 , onComplete:  tranzitionOut.onTransitionComplete, onCompleteParams:[layer1, layer2]});
 		}
 		
 		private function cleanPage(target:IAbstractDisplayObject, target2:IAbstractDisplayObject):void

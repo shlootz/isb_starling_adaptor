@@ -22,7 +22,7 @@ package starlingEngine.transitions
 		 */
 		override public function doTransition(object1:IAbstractDisplayObject, object2:IAbstractDisplayObject):void
 		{
-			TweenLite.to(object1, 1, { x:0,  onComplete: onTransitionComplete, onCompleteParams:[object1, object2] } );
+			super.doTransition(object1, object2);
 		}
 		
 		/**

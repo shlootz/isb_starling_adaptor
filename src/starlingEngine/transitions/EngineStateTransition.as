@@ -12,6 +12,7 @@ package starlingEngine.transitions
 	{
 		
 		private var _onTransitionComplete:Function = null;
+		private var _animationFunction:Function = null;
 		
 		/**
 		 * 
@@ -28,6 +29,16 @@ package starlingEngine.transitions
 		{
 			_onTransitionComplete = fct;
 		}
+		
+		/**
+		 * 
+		 * @param	func
+		 */
+		public function injectAnimation(func:Function):void
+		{
+			_animationFunction = func;
+		}
+		
 		/**
 		 * 
 		 * @param	object1
@@ -35,9 +46,14 @@ package starlingEngine.transitions
 		 */
 		public function doTransition(object1:IAbstractDisplayObject, object2:IAbstractDisplayObject):void
 		{
-			TweenLite.to(object1, 1, { alpha:.5 } );
-			
-			TweenLite.to(object2, 1, { x:30, onComplete: onTransitionComplete, onCompleteParams:[object1, object2]})
+			if (_animationFunction != null)
+			{
+				_animationFunction.apply(null, [object1, object2]);
+			}
+			else
+			{
+				onTransitionComplete(object1, object2);
+			}
 		}
 		
 		/**
