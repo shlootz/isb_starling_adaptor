@@ -11,6 +11,7 @@ package starlingEngine.elements
 	{
 		
 		private var _layers:Dictionary = new Dictionary(true);
+		private var _layersRecycle:Dictionary = new Dictionary(true);
 		
 		public function EngineLayerVO() 
 		{
@@ -24,6 +25,7 @@ package starlingEngine.elements
 		public function addLayer(layerName:String, depth:uint = 0, xml:XML = null, addToStage:Boolean = true):void
 		{
 			_layers[layerName] = new EngineLayer(layerName, depth, xml, addToStage);
+			_layersRecycle[layerName] = new EngineLayer(layerName, depth, xml, addToStage);
 		}
 		
 		/**
@@ -33,6 +35,16 @@ package starlingEngine.elements
 		 */
 		public function retrieveLayer(layerName:String):IAbstractLayer
 		{
+			var layer:IAbstractLayer;
+			if (_layers[layerName])
+			{
+				layer = _layers[layerName]
+			}
+			else
+			{
+				layer = _layersRecycle[layerName];
+				_layers[layerName] = _layersRecycle[layerName];
+			}
 			return _layers[layerName] as IAbstractLayer;
 		}
 		

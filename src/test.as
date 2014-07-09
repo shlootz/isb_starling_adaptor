@@ -166,6 +166,8 @@ package
 																		nape.space.Space,
 																		true
 																		);
+																		
+		private var _layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
 		
 		public function test() 
 		{	
@@ -292,8 +294,6 @@ package
 			tt.fontName = "Zrnic";
 		}
 		
-		private var _layersVO:IAbstractEngineLayerVO = _bridgeGraphics.requestLayersVO();
-		
 		private function showMainMenu():void
 		{
 			 _bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
@@ -323,8 +323,10 @@ package
 		private var _currentPage:IAbstractLayer;
 		private var _paytablePagesHolder:IAbstractSprite
 		
+		private var _toggle:Boolean = true;
+		
 		private function showPaytable():void
-		{
+		{	
 			 _bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
 			 _bridgeGraphics.registerBitmapFont(new ZrnicFontPng(), XML(new ZrnicFontClass()));
 			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
@@ -394,8 +396,34 @@ package
 		private	var tranzitionIn:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN();
 		private	var tranzitionOut:IAbstractLayerTransitionOut= _bridgeGraphics.requestLayerTransitionOUT();
 		
+		private var _created:Boolean = false;
+		
 		private function buttonPressed(type:String, event:Object):void
 		{		
+			
+			if (_toggle)
+			{
+				if (!_created)
+				{
+					showMainMenu();
+					_created = true;
+				}
+				else
+				{
+					var inL:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+					var l:IAbstractLayer = _layersVO.retrieveLayer("UI");
+					inL.push(l);
+					_bridgeGraphics.updateLayers(inL, null);
+				}
+			}
+			else
+			{
+				var outL:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+				outL.push(_layersVO.retrieveLayer("UI"));
+				_bridgeGraphics.updateLayers(null, outL);
+			}
+			_toggle = !_toggle;
+			
 			tranzitionOut.injectAnimation(tranzitionAnimationOut);
 			tranzitionOut.injectOnTransitionComplete(cleanPage);
 			tranzitionOut.doTransition(_currentPage, null);
@@ -431,12 +459,12 @@ package
 			tranzitionIn.doTransition(inLayer, null);
 		}
 		
-		private function tranzitionAnimationIn(layer1:IAbstractDisplayObject, layer2:IAbstractDisplayObject):void
+		private function tranzitionAnimationIn(layer1:IAbstractDisplayObject, layer2:IAbstractDisplayObject = null):void
 		{
 			TweenLite.to(layer1, 1, { x:Math.random() * 250 , onComplete:  tranzitionIn.onTransitionComplete, onCompleteParams:[layer1, layer2]});
 		}
 		
-		private function tranzitionAnimationOut(layer1:IAbstractDisplayObject, layer2:IAbstractDisplayObject):void
+		private function tranzitionAnimationOut(layer1:IAbstractDisplayObject, layer2:IAbstractDisplayObject = null):void
 		{
 			TweenLite.to(layer1, 1, { x:Math.random() * 250 , onComplete:  tranzitionOut.onTransitionComplete, onCompleteParams:[layer1, layer2]});
 		}
@@ -494,14 +522,14 @@ package
 		
 		private function updateStuff(e:flash.events.Event):void
 		{
-			_winAmount += 100000;
-			_smallWin += 1;
-				(_layersVO.retrieveLayer("UI").getChildByNameStr("win_text") as IAbstractLabel).updateLabel(String(Number(_winAmount).toFixed(2)));
-				
-				if (_winAmount > 100000000)
-				{
-					(_layersVO.retrieveLayer("UI").getChildByNameStr("win_text") as IAbstractLabel).updateLabel(String(Number(_smallWin).toFixed(2)));
-				}
+			//_winAmount += 100000;
+			//_smallWin += 1;
+				//(_layersVO.retrieveLayer("UI").getChildByNameStr("win_text") as IAbstractLabel).updateLabel(String(Number(_winAmount).toFixed(2)));
+				//
+				//if (_winAmount > 100000000)
+				//{
+					//(_layersVO.retrieveLayer("UI").getChildByNameStr("win_text") as IAbstractLabel).updateLabel(String(Number(_smallWin).toFixed(2)));
+				//}
 		}
 		
 		private function testLayouts():void
