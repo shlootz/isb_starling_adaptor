@@ -172,6 +172,7 @@ package starlingEngine
 		 */
 		public function initEngine(debugMode:Boolean = false):void
 		{
+			Starling.handleLostContext = true;
 			setUpStarling(debugMode);
 		}
 		

@@ -400,6 +400,9 @@ package
 		
 		private function buttonPressed(type:String, event:Object):void
 		{		
+			var menuTransitionIn:IAbstractLayerTransitionIn = _bridgeGraphics.requestLayerTransitionIN();
+			menuTransitionIn.injectAnimation(tranzitionAnimationIn);
+			menuTransitionIn.injectOnTransitionComplete(menuOnTransitionComplete);
 			
 			if (_toggle)
 			{
@@ -413,7 +416,7 @@ package
 					var inL:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
 					var l:IAbstractLayer = _layersVO.retrieveLayer("UI");
 					inL.push(l);
-					_bridgeGraphics.updateLayers(inL, null);
+					_bridgeGraphics.updateLayers(inL, null, menuTransitionIn);
 				}
 			}
 			else
@@ -477,6 +480,12 @@ package
 		private function updateCurrentPage(target:IAbstractDisplayObject, target2:IAbstractDisplayObject):void
 		{
 			_currentPage = target as IAbstractLayer;
+		}
+		
+		private function menuOnTransitionComplete(target:IAbstractDisplayObject, target2:IAbstractDisplayObject):void
+		{
+			var m:uint = 1;
+			m++;
 		}
 		
 		private function showMainMenuContained():void
