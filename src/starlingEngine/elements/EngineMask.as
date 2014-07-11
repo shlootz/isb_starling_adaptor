@@ -57,11 +57,11 @@ package starlingEngine.elements
 			
 			if (_onClick || _onHover || _onEnded || _onMoved || _onStationary)
 			{
-				this.addEventListener(TouchEvent.TOUCH, layerTouched);
+				this.addEventListener(TouchEvent.TOUCH, maskTouched);
 			}
 			else
 			{
-				this.removeEventListener(TouchEvent.TOUCH, layerTouched);
+				this.removeEventListener(TouchEvent.TOUCH, maskTouched);
 			}
 		}
 		
@@ -69,7 +69,7 @@ package starlingEngine.elements
 		 * 
 		 * @param	event
 		 */
-		private function layerTouched(event:TouchEvent):void
+		private function maskTouched(event:TouchEvent):void
 		{
 			var touchBegan:Touch = event.getTouch(this, TouchPhase.BEGAN);
 			var touchHover:Touch = event.getTouch(this, TouchPhase.HOVER);
@@ -78,35 +78,56 @@ package starlingEngine.elements
 			var touchStationary:Touch = event.getTouch(this, TouchPhase.STATIONARY);
 			
 			var localPos:Point;
+			var obj:Object = new Object();
 			
 			if (touchBegan && _onClick )
 			{
 				localPos = touchBegan.getLocation(this);
-				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.BEGAN, event);
+				obj = {
+					phase:TouchPhase.BEGAN,
+					event:event
+				}
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.BEGAN, obj);
 			}
 			
 			if (touchHover && _onHover)
 			{
+				obj = {
+					phase:TouchPhase.HOVER,
+					event:event
+				}
 				localPos = touchHover.getLocation(this);
-				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.HOVER, event);
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.HOVER, obj);
 			}
 			
 			if (touchEnded && _onEnded)
 			{
+				obj = {
+					phase:TouchPhase.ENDED,
+					event:event
+				}
 				localPos = touchEnded.getLocation(this);
-				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.ENDED, event);
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.ENDED, obj);
 			}
 			
 			if (touchMoved && _onMoved)
 			{
+				obj = {
+					phase:TouchPhase.MOVED,
+					event:event
+				}
 				 localPos = touchMoved.getLocation(this);
-				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.MOVED, event);
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.MOVED, obj);
 			}
 			
 			if (touchStationary && _onStationary)
 			{
+				obj = {
+					phase:TouchPhase.STATIONARY,
+					event:event
+				}
 				 localPos = touchStationary.getLocation(this);
-				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.STATIONARY, event);
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.STATIONARY, obj);
 			}
 		}
 		

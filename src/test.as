@@ -467,9 +467,9 @@ package
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.DISPLAY_OBJECT_TOUCHED, testNativeSignal);
 		}
 		
-		private function testNativeSignal(type:String, event:Object):void
+		private function testNativeSignal(type:String, obj:Object):void
 		{
-			trace("!!!!!!!!!!!!!!!!!!!")
+			trace("!!!!!!!!!!!!!!!!!!! type: " + type+" event " + obj.phase+" target "+obj.event.target.name);
 		}
 		
 		private function tranzitionAnimationIn(layer1:IAbstractDisplayObject, layer2:IAbstractDisplayObject = null):void
