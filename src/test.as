@@ -44,6 +44,7 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.AsyncErrorEvent;
+	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
 	import flash.geom.Point;
@@ -55,6 +56,7 @@ package
 	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
 	import nape.space.Space;
+	import org.osflash.signals.natives.NativeSignal;
 	import org.osflash.signals.Signal;
 	import signals.ISignalsHub;
 	import signals.Signals;
@@ -377,7 +379,7 @@ package
 			
 			//Adding the first page of the paytable
 			_currentPage = _paytablePagesLayersVO.retrieveLayer("Overview");
-			_paytablePagesHolder.addNewChild(_currentPage as IAbstractDisplayObject);
+			//_paytablePagesHolder.addNewChild(_currentPage as IAbstractDisplayObject);
 			
 			//Moving the container a bit
 			_paytablePagesHolder.x = 200;
@@ -460,6 +462,14 @@ package
 			tranzitionIn.injectAnimation(tranzitionAnimationIn);
 			tranzitionIn.injectOnTransitionComplete(updateCurrentPage);
 			tranzitionIn.doTransition(inLayer, null);
+			
+			inLayer.updateMouseGestures(_bridgeGraphics.signalsManager, true);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.DISPLAY_OBJECT_TOUCHED, testNativeSignal);
+		}
+		
+		private function testNativeSignal(type:String, event:Object):void
+		{
+			trace("!!!!!!!!!!!!!!!!!!!")
 		}
 		
 		private function tranzitionAnimationIn(layer1:IAbstractDisplayObject, layer2:IAbstractDisplayObject = null):void

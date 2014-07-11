@@ -8,6 +8,7 @@ package starlingEngine
 	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.IAbstractScrollTile;
 	import bridge.abstract.ui.LabelProperties;
+	import flash.display3D.Context3DProfile;
 	import flash.geom.Point;
 	import starling.filters.BlurFilter;
 	import starlingEngine.elements.EngineBlitMask;
@@ -231,6 +232,8 @@ package starlingEngine
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.MOVIE_CLIP_ENDED, new Signal(), new Vector.<Function>);
+			
+			(_signalsHub as SignalsHub).addSignal(Signals.DISPLAY_OBJECT_TOUCHED, new Signal(), new Vector.<Function>);
 		}
 		
 		/**

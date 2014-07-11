@@ -2,10 +2,16 @@ package starlingEngine.elements
 {
 	import bridge.abstract.IAbstractDisplayObject;
 	import bridge.abstract.IAbstractMask;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import signals.Signals;
+	import signals.SignalsHub;
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Sprite;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starlingEngine.extensions.pixelmask.PixelMaskDisplayObject;
 	/**
 	 * ...
@@ -13,10 +19,95 @@ package starlingEngine.elements
 	 */
 	public class EngineMask extends PixelMaskDisplayObject implements IAbstractMask
 	{
+		private var _onClick:Boolean = false;
+		private var _onHover:Boolean = false;
+		private var _onEnded:Boolean = false;
+		private var _onMoved:Boolean = false;
+		private var _onStationary:Boolean = false;
+		
+		private var _signalsHub:SignalsHub;
 		
 		public function EngineMask() 
 		{
 			
+		}
+		
+		/**
+		 * 
+		 * @param	onClick
+		 * @param	onHover
+		 * @param	onEnded
+		 * @param	onMoved
+		 * @param	onStationary
+		 * @return
+		 */
+		public function updateMouseGestures(signalsManager:Object = null, 
+																		onClick:Boolean = false, 	
+																		onHover:Boolean = false, 
+																		onEnded:Boolean = false, 
+																		onMoved:Boolean = false, 
+																		onStationary:Boolean = false):void
+		{
+			_signalsHub = signalsManager as SignalsHub;
+			_onClick = onClick;
+			_onHover = onHover;
+			_onEnded = onEnded;
+			_onMoved = onMoved;
+			_onStationary = onStationary;
+			
+			if (_onClick || _onHover || _onEnded || _onMoved || _onStationary)
+			{
+				this.addEventListener(TouchEvent.TOUCH, layerTouched);
+			}
+			else
+			{
+				this.removeEventListener(TouchEvent.TOUCH, layerTouched);
+			}
+		}
+		
+		/**
+		 * 
+		 * @param	event
+		 */
+		private function layerTouched(event:TouchEvent):void
+		{
+			var touchBegan:Touch = event.getTouch(this, TouchPhase.BEGAN);
+			var touchHover:Touch = event.getTouch(this, TouchPhase.HOVER);
+			var touchEnded:Touch = event.getTouch(this, TouchPhase.ENDED);
+			var touchMoved:Touch = event.getTouch(this, TouchPhase.MOVED);
+			var touchStationary:Touch = event.getTouch(this, TouchPhase.STATIONARY);
+			
+			var localPos:Point;
+			
+			if (touchBegan && _onClick )
+			{
+				localPos = touchBegan.getLocation(this);
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.BEGAN, event);
+			}
+			
+			if (touchHover && _onHover)
+			{
+				localPos = touchHover.getLocation(this);
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.HOVER, event);
+			}
+			
+			if (touchEnded && _onEnded)
+			{
+				localPos = touchEnded.getLocation(this);
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.ENDED, event);
+			}
+			
+			if (touchMoved && _onMoved)
+			{
+				 localPos = touchMoved.getLocation(this);
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.MOVED, event);
+			}
+			
+			if (touchStationary && _onStationary)
+			{
+				 localPos = touchStationary.getLocation(this);
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.STATIONARY, event);
+			}
 		}
 		
 		public function set newMask(newMask:IAbstractDisplayObject):void
