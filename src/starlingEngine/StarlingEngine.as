@@ -794,26 +794,29 @@ package starlingEngine
 		 */
 		public function drawLayerLayout(layer:IAbstractLayer):void
 		{
-			var layoutDict:Dictionary = layer.layout;
-			var layerElements:Vector.<EngineLayerLayoutElementVo> = new Vector.<EngineLayerLayoutElementVo>();
-			
-			if (!layer.addToStage)
+			if (layer.redrawEnabled)
 			{
-				var orderedLayers:Vector.<EngineLayer> = new Vector.<EngineLayer>();
-				layer.addToStage = true;
-			}
-			
-			for (var key:String in layoutDict)
-			{
-				layerElements.push(layoutDict[key] as EngineLayerLayoutElementVo);
-			}
-			
-			layerElements.sort(sortDepths);
-			
-			if (layerElements.length > 0)
-			{
-				autoAddItems(layer, layerElements);
-			}
+				var layoutDict:Dictionary = layer.layout;
+				var layerElements:Vector.<EngineLayerLayoutElementVo> = new Vector.<EngineLayerLayoutElementVo>();
+				
+				if (!layer.addToStage)
+				{
+					var orderedLayers:Vector.<EngineLayer> = new Vector.<EngineLayer>();
+					layer.addToStage = true;
+				}
+				
+				for (var key:String in layoutDict)
+				{
+					layerElements.push(layoutDict[key] as EngineLayerLayoutElementVo);
+				}
+				
+				layerElements.sort(sortDepths);
+				
+				if (layerElements.length > 0)
+				{
+					autoAddItems(layer, layerElements);
+				}
+			}	
 		}
 		
 		/**

@@ -23,6 +23,7 @@ package starlingEngine.elements
 		private var _layoutDictionary:Dictionary = new Dictionary(true);
 		private var _layoutElements:Dictionary = new Dictionary(true);
 		private var _addToStage:Boolean = false;
+		private var _redrawEnabled:Boolean = true;
 		
 		/**
 		 * 
@@ -40,6 +41,22 @@ package starlingEngine.elements
 				_layout = layout;
 				parseLayout();
 			}
+		}
+		
+		/**
+		 * This will keep the layer redrawing the layout at each retrieval
+		 */
+		public function set redrawEnabled(val:Boolean):void
+		{
+			_redrawEnabled = val;
+		}
+		
+		/**
+		 * 
+		 */
+		public function get redrawEnabled():Boolean
+		{
+			return _redrawEnabled;
 		}
 		
 		/**
@@ -242,16 +259,19 @@ package starlingEngine.elements
 		 */
 		override public function destroyAll():void
 		{
-			while (this.numChildren > 0)
+			if (_redrawEnabled)
 			{
-				var c:IAbstractDisplayObject;
-				c = this.removeChildAndDispose(this.getChildAtIndex(0), true);
-				c.removeFromParent(true);
-				c.dispose();
+				while (this.numChildren > 0)
+				{
+					var c:IAbstractDisplayObject;
+					c = this.removeChildAndDispose(this.getChildAtIndex(0), true);
+					c.removeFromParent(true);
+					c.dispose();
+				}
+				
+				super.dispose();
+				super.killAllObjects();
 			}
-			
-			super.dispose();
-			super.killAllObjects();
 		}
 	}
 	

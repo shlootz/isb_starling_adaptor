@@ -308,6 +308,7 @@ package
 			
 			_layersVO.addLayer("UI", 1, mainUIxml, true);
 			_bridgeGraphics.initLayers(_layersVO.layers);
+			_layersVO.retrieveLayer("UI").redrawEnabled = false;
 			
 			var layer:IAbstractLayer = _layersVO.retrieveLayer("UI");
 			var element:IAbstractDisplayObject = layer.getElement("spin_btn");
