@@ -41,6 +41,8 @@ package starlingEngine.elements
 		public var labelX:Number;
 		public var labelY:Number;
 		
+		public var icon:String;
+		
 		public var flipped:Boolean = false;
 					
 		public function EngineLayerLayoutElementVo() 

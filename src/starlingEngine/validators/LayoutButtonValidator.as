@@ -29,6 +29,7 @@ package starlingEngine.validators
 			var overStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.overState));
 			var pressedStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.pressedState));
 			var disabledStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.disabledState));
+			var icon:IAbstractImage;
 						
 			btn.idName = element.name;
 			
@@ -63,8 +64,27 @@ package starlingEngine.validators
 						
 			btn.name = element.name;
 			
+			var hasIcon:Boolean = false;
+			
+			if (element.icon != "")
+			{
+				hasIcon = true;
+				icon = engine.requestImage(assetsManager.getTexture(element.icon));
+				btn.iconOffsetX = -btn.width / 2 + icon.width/2;
+				btn.upIcon_ = icon;
+				btn.hoverIcon_ = icon;
+				btn.downIcon_ = icon;
+			}
+			
 			if (element.label != "")
 			{
+					var labelOffsetX:uint = 0;
+					
+					if (hasIcon)
+					{
+						labelOffsetX = btn.upIcon_.width;
+					}
+					
 					var labelText:IAbstractTextField = engine.requestTextField(int(element.labelWidth), int(element.labelHeight),element.label, element.font, element.labelFontSize, element.labelFontColor);
 					var label:IAbstractLabel = engine.requestLabelFromTextfield(labelText);
 					
@@ -78,12 +98,13 @@ package starlingEngine.validators
 					{
 						//btn.addCustomLabel(label, LabelProperties.ALIGN_CUSTOM, new Point(element.labelX, element.labelY));
 						btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
-						label.x += element.labelX;
+						label.x += element.labelX + labelOffsetX;
 						label.y += element.labelY;
 					}
 					else
 					{
 						btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
+						label.x += labelOffsetX / 4;
 					}
 			}
 						

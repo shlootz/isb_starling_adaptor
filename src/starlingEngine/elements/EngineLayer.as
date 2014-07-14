@@ -189,6 +189,7 @@ package starlingEngine.elements
 				var labelX:String = _mainXML.child("Element")[i].attribute("labelX");
 				var labelY:String = _mainXML.child("Element")[i].attribute("labelY");
 				var flipped:String = _mainXML.child("Element")[i].attribute("flipped");
+				var icon:String = _mainXML.child("Element")[i].attribute("icon");
 				
 				var o:EngineLayerLayoutElementVo = new EngineLayerLayoutElementVo();
 				o.layerX = Number(layerX);
@@ -215,6 +216,7 @@ package starlingEngine.elements
 				o.labelFontColor = uint(labelFontColor);
 				o.labelX = Number(labelX)
 				o.labelY = Number(labelY)
+				o.icon = String(icon);
 				
 				if (flipped == "true")
 				{
