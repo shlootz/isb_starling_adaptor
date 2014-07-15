@@ -56,16 +56,24 @@ package starlingEngine.transitions
 			}
 		}
 		
-		/**
-		 * 
-		 * @param	object1
-		 * @param	object2
-		 */
-		public function onTransitionComplete(object1:IAbstractDisplayObject, object2:IAbstractDisplayObject):void
+	/**
+	 * 
+	 * @param	object1
+	 * @param	object2
+	 * @param	customParams
+	 */
+		public function onTransitionComplete(object1:IAbstractDisplayObject, object2:IAbstractDisplayObject, customParams:Object = null):void
 		{	
 			if (_onTransitionComplete != null)
 			{
-				_onTransitionComplete.apply(null, [object1, object2]);
+				if (customParams)
+				{
+					_onTransitionComplete.apply(null, [object1, object2, customParams]);
+				}
+				else
+				{
+					_onTransitionComplete.apply(null, [object1, object2]);
+				}
 			}
 		}
 		

@@ -29,10 +29,11 @@ package starlingEngine.transitions
 		 * 
 		 * @param	object1
 		 * @param	object2
+		 * @param	customParams
 		 */
-		override public function onTransitionComplete(object1:IAbstractDisplayObject, object2:IAbstractDisplayObject):void
+		override public function onTransitionComplete(object1:IAbstractDisplayObject, object2:IAbstractDisplayObject,customParams:Object = null):void
 		{	
-			super.onTransitionComplete(object1, object2);
+			super.onTransitionComplete(object1, object2, customParams);
 		}
 		
 	}
