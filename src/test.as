@@ -390,6 +390,7 @@ package
 			
 			//Adding a listener to the signal from paytable
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
+			//(_bridgeGraphics.signalsManager as ISignalsHub).removeListenerFromSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
 			
 			var mainUIxml:XML = new XML();
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
@@ -678,7 +679,7 @@ package
 						//
 			_bridgeGraphics.initLayers(layersVO.layers);
 			
-			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
+			//(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
 			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, movieclipEnded);
 			
 			layersVO.addLayer("TEST", 4, null);
