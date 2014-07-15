@@ -42,6 +42,8 @@ package starlingEngine.elements
 		public var labelY:Number;
 		
 		public var icon:String;
+		public var iconOffsetX:Number;
+		public var iconOffsetY:Number;
 		
 		public var flipped:Boolean = false;
 					
