@@ -163,37 +163,56 @@ package starlingEngine.elements
 		
 			for (var i:uint = 0; i < _mainXML.children().length(); i++)
 			{
+				var name:String = String(_mainXML.child("Element")[i].attribute("name"));
+				
+				var type:String = _mainXML.child("Element")[i].attribute("type");
+				
+				var onStage:String = _mainXML.child("Element")[i].attribute("onStage");
+				
 				var layerX:String = String(_mainXML.child("Element")[i].attribute("layerX"));
 				var layerY:String = String(_mainXML.child("Element")[i].attribute("layerY"));
-				var name:String = String(_mainXML.child("Element")[i].attribute("name"));
-				var type:String = _mainXML.child("Element")[i].attribute("type");
-				var onStage:String = _mainXML.child("Element")[i].attribute("onStage");
+				
 				var x:String = _mainXML.child("Element")[i].attribute("x");
 				var y:String = _mainXML.child("Element")[i].attribute("y");
 				var w:String = _mainXML.child("Element")[i].attribute("width");
 				var h:String = _mainXML.child("Element")[i].attribute("height");
-				var fps:uint = uint(_mainXML.child("Element")[i].attribute("fps"));
 				var depth:String = _mainXML.child("Element")[i].attribute("depth");
+				
+				var fps:uint = uint(_mainXML.child("Element")[i].attribute("fps"));
+				
 				var resource:String = _mainXML.child("Element")[i].attribute("resource");
+				
 				var upState:String = _mainXML.child("Element")[i].attribute("upState");
 				var overState:String = _mainXML.child("Element")[i].attribute("overState");
 				var pressedState:String = _mainXML.child("Element")[i].attribute("pressedState");
 				var disabledState:String = _mainXML.child("Element")[i].attribute("disabledState");
+				
 				var loop:String = _mainXML.child("Element")[i].attribute("loop");
+				
+				var font:String = _mainXML.child("Element")[i].attribute("labelFont");
+				
+				var label:String = _mainXML.child("Element")[i].attribute("label");
 				var labelWidth:String = _mainXML.child("Element")[i].attribute("labelWidth");
 				var labelHeight:String = _mainXML.child("Element")[i].attribute("labelHeight");
-				var font:String = _mainXML.child("Element")[i].attribute("labelFont");
-				var label:String = _mainXML.child("Element")[i].attribute("label");
 				var labelFontSize:String = _mainXML.child("Element")[i].attribute("labelFontSize");
 				var labelFontColor:String = _mainXML.child("Element")[i].attribute("labelFontColor");
 				var labelX:String = _mainXML.child("Element")[i].attribute("labelX");
 				var labelY:String = _mainXML.child("Element")[i].attribute("labelY");
 				var flipped:String = _mainXML.child("Element")[i].attribute("flipped");
+				
 				var icon:String = _mainXML.child("Element")[i].attribute("icon");
 				var iconOffsetX:String = _mainXML.child("Element")[i].attribute("iconOffsetX");
 				var iconOffsetY:String = _mainXML.child("Element")[i].attribute("iconOffsetY");
 				var iconOn:String = _mainXML.child("Element")[i].attribute("iconOn");
 				var iconOff:String = _mainXML.child("Element")[i].attribute("iconOff");
+				
+				var thumbUpSkin:String = _mainXML.child("Element")[i].attribute("thumbUpSkin");
+				var thumbDownSkin:String = _mainXML.child("Element")[i].attribute("thumbDownSkin");
+				var trackUpSkin:String = _mainXML.child("Element")[i].attribute("trackUpSkin");
+				var trackDownSkin:String = _mainXML.child("Element")[i].attribute("trackDownSkin");
+				var background:String = _mainXML.child("Element")[i].attribute("background");
+				var sliderX:String = _mainXML.child("Element")[i].attribute("sliderX");
+				var sliderY:String = _mainXML.child("Element")[i].attribute("sliderY");
 				
 				var o:EngineLayerLayoutElementVo = new EngineLayerLayoutElementVo();
 				o.layerX = Number(layerX);
@@ -225,6 +244,13 @@ package starlingEngine.elements
 				o.iconOffsetY = Number(iconOffsetY);
 				o.iconOn = iconOn;
 				o.iconOff = iconOff;
+				o.thumbUpSkin = thumbUpSkin;
+				o.thumbDownSkin = thumbDownSkin;
+				o.trackUpSkin = trackUpSkin;
+				o.trackDownSkin = trackDownSkin;
+				o.background = background;
+				o.sliderX = Number(sliderX);
+				o.sliderY = Number(sliderY);
 				
 				if (flipped == "true")
 				{

@@ -8,6 +8,7 @@ package starlingEngine
 	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.IAbstractScrollTile;
+	import bridge.abstract.ui.IAbstractSlider;
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
 	import flash.display3D.Context3DProfile;
@@ -21,10 +22,12 @@ package starlingEngine
 	import starlingEngine.filters.BlurFilterVO;
 	import starlingEngine.filters.DropShadowFilterVO;
 	import starlingEngine.filters.GlowFilterVO;
+	import starlingEngine.ui.EngineSlider;
 	import starlingEngine.ui.EngineToggleButton;
 	import starlingEngine.validators.LayoutButtonValidator;
 	import starlingEngine.validators.LayoutImageValidator;
 	import starlingEngine.validators.LayoutMovieClipValidator;
+	import starlingEngine.validators.LayoutSliderValidator;
 	import starlingEngine.validators.LayoutTextFieldValidator;
 	import starlingEngine.validators.LayoutToggleButtonValidator;
 	
@@ -111,6 +114,7 @@ package starlingEngine
 		public static const ENGINE_FLV:String = "flv";
 		public static const ENGINE_BUTTON:String = "button";
 		public static const ENGINE_TOGGLE_BUTTON:String = "toggleButton";
+		public static const ENGINE_SLIDER:String = "slider";
 		public static const ENGINE_TEXT_FIELD:String = "textField";
 		
 		private var _initCompleteCallback:Function;
@@ -239,6 +243,9 @@ package starlingEngine
 			(_signalsHub as SignalsHub).addSignal(Signals.MOVIE_CLIP_ENDED, new Signal(), new Vector.<Function>);
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.DISPLAY_OBJECT_TOUCHED, new Signal(), new Vector.<Function>);
+			
+			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_SLIDER_CHANGE, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
 		}
 		
 		/**
@@ -418,6 +425,26 @@ package starlingEngine
 				b.name = name;
 			}
 			return b;
+		}
+		
+		public function requestSlider( 
+														thumbUpSkin:IAbstractImage,
+														thumbDownSkin:IAbstractImage, 
+														trackUpSkin:IAbstractImage, 
+														trackDownSkin:IAbstractImage,
+														backgroundSkin:IAbstractImage,
+														label:IAbstractLabel,
+														name:String = ""):IAbstractSlider
+		{
+			var s:IAbstractSlider = new EngineSlider(thumbUpSkin, thumbDownSkin, trackUpSkin, trackDownSkin, backgroundSkin, label)
+			{
+				if (name != "")
+				{
+					s.name = name
+				}
+			}
+			
+			return s;
 		}
 		
 		/**
@@ -872,6 +899,12 @@ package starlingEngine
 						layer.addNewChildAt(toggleBtn, i);
 						break;	
 						
+					case ENGINE_SLIDER:
+						var slider:IAbstractSlider = LayoutSliderValidator.validate(this, _assetsManager, sortedElements[i]);
+						slider.anchor = slider_component_changed;
+						layer.addNewChildAt(slider, i);
+						break;
+						
 					case ENGINE_MOVIE_CLIP:
 						var mc:IAbstractMovie = LayoutMovieClipValidator.validate(this, _assetsManager, sortedElements[i]);
 						mc.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
@@ -907,6 +940,16 @@ package starlingEngine
 		private function button_triggeredHandler(e:Object):void
 		{
 			_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_PRESSED, (e.currentTarget as IAbstractButton).idName, e);
+		}
+		
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function slider_component_changed(e:Object):void
+		{
+			trace(e["name"]+" "+e["amount"]);
+			_signalsHub.dispatchSignal(Signals.GENERIC_SLIDER_CHANGE, e["name"], e);
 		}
 		
 		/**

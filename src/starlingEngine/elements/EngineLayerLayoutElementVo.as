@@ -48,6 +48,14 @@ package starlingEngine.elements
 		public var iconOff:String;
 		public var iconOn:String;
 		
+		public var thumbUpSkin:String;
+		public var thumbDownSkin:String;
+		public var trackUpSkin:String;
+		public var trackDownSkin:String;
+		public var background:String;
+		public var sliderX:Number;
+		public var sliderY:Number;
+		
 		public var flipped:Boolean = false;
 					
 		public function EngineLayerLayoutElementVo() 

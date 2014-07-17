@@ -5,11 +5,17 @@ package
 	import bridge.abstract.IAbstractEngineLayerVO;
 	import bridge.abstract.IAbstractLayer;
 	import bridge.abstract.IAbstractSprite;
+	import bridge.abstract.IAbstractTextField;
 	import bridge.abstract.transitions.IAbstractLayerTransitionIn;
 	import bridge.abstract.transitions.IAbstractLayerTransitionOut;
+	import bridge.abstract.ui.IAbstractButton;
+	import bridge.abstract.ui.IAbstractLabel;
+	import bridge.abstract.ui.IAbstractSlider;
 	import bridge.BridgeGraphics;
 	import bridge.IBridgeGraphics;
 	import com.greensock.TweenLite;
+	import feathers.controls.Slider;
+	import feathers.controls.TextInput;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
@@ -18,8 +24,12 @@ package
 	import signals.Signals;
 	import signals.SignalsHub;
 	import starling.animation.Juggler;
+	import starling.display.Button;
+	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.utils.AssetManager;
 	import starlingEngine.StarlingEngine;
+	import starlingEngine.ui.EngineSlider;
 	import starlingEngine.ui.EngineToggleButton;
 	/**
 	 * ...
@@ -81,9 +91,27 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						showPaytable();
 						//makeUILayer();
-						//makeToggleButton();
+						//makeSlider();
 					}
 				});
+		}
+		
+		private function makeSlider():void
+		{
+			var sliderTextField:IAbstractTextField = _bridgeGraphics.requestTextField(140, 50, "Test", "Verdana", 20, 0xFFFFFF);
+			var sliderLabel:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(sliderTextField, "label");
+			var slider:IAbstractSlider = _bridgeGraphics.requestSlider(_bridgeGraphics.requestImage("Slider-Dragger"), 
+																					_bridgeGraphics.requestImage("Slider-Dragger"),
+																					_bridgeGraphics.requestImage("Slider-Track-Full"),
+																					_bridgeGraphics.requestImage("Slider-Track-Full"),
+																					_bridgeGraphics.requestImage("Slider-Slot"),
+																					sliderLabel,
+																					"test"
+																					);
+			
+			slider.x = 250;
+			slider.y = 250;
+			_bridgeGraphics.addChild(slider);
 		}
 		
 		private var _paytablePagesLayersVO:IAbstractEngineLayerVO;
