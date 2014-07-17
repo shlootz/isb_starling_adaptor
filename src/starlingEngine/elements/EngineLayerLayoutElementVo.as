@@ -45,6 +45,9 @@ package starlingEngine.elements
 		public var iconOffsetX:Number;
 		public var iconOffsetY:Number;
 		
+		public var iconOff:String;
+		public var iconOn:String;
+		
 		public var flipped:Boolean = false;
 					
 		public function EngineLayerLayoutElementVo() 

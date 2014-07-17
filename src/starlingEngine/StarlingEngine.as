@@ -8,6 +8,7 @@ package starlingEngine
 	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.IAbstractScrollTile;
+	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
 	import flash.display3D.Context3DProfile;
 	import flash.geom.Point;
@@ -20,10 +21,12 @@ package starlingEngine
 	import starlingEngine.filters.BlurFilterVO;
 	import starlingEngine.filters.DropShadowFilterVO;
 	import starlingEngine.filters.GlowFilterVO;
+	import starlingEngine.ui.EngineToggleButton;
 	import starlingEngine.validators.LayoutButtonValidator;
 	import starlingEngine.validators.LayoutImageValidator;
 	import starlingEngine.validators.LayoutMovieClipValidator;
 	import starlingEngine.validators.LayoutTextFieldValidator;
+	import starlingEngine.validators.LayoutToggleButtonValidator;
 	
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.IAbstractDisplayObject;
@@ -107,6 +110,7 @@ package starlingEngine
 		public static const ENGINE_MOVIE_CLIP:String = "movie";
 		public static const ENGINE_FLV:String = "flv";
 		public static const ENGINE_BUTTON:String = "button";
+		public static const ENGINE_TOGGLE_BUTTON:String = "toggleButton";
 		public static const ENGINE_TEXT_FIELD:String = "textField";
 		
 		private var _initCompleteCallback:Function;
@@ -394,6 +398,21 @@ package starlingEngine
 		public function requestButton(name:String = ""):IAbstractButton
 		{
 			var b:IAbstractButton = _buttonsPool.getNewObject() as IAbstractButton;
+			if (name != "")
+			{
+				b.name = name;
+			}
+			return b;
+		}
+		
+		/**
+		 * TODO build pool?
+		 * @param	name
+		 * @return
+		 */
+		public function requestToggleButton(name:String = ""):IAbstractToggle
+		{
+			var b:IAbstractToggle = new EngineToggleButton();
 			if (name != "")
 			{
 				b.name = name;
@@ -720,7 +739,7 @@ package starlingEngine
 			{
 				var o:Object = {
 					type:"LayerTransitionInComplete",
-					layer:target1,
+					caller:target1,
 					params:params
 				}
 				
@@ -847,6 +866,12 @@ package starlingEngine
 						layer.addNewChildAt(btn, i);
 						break;
 						
+					case ENGINE_TOGGLE_BUTTON:
+						var toggleBtn:IAbstractToggle = LayoutToggleButtonValidator.validate(this, _assetsManager, sortedElements[i]);
+						(toggleBtn as IAbstractToggle).addEventListener(EngineEvent.TRIGGERED, toggle_button_triggeredHandler);
+						layer.addNewChildAt(toggleBtn, i);
+						break;	
+						
 					case ENGINE_MOVIE_CLIP:
 						var mc:IAbstractMovie = LayoutMovieClipValidator.validate(this, _assetsManager, sortedElements[i]);
 						mc.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
@@ -882,6 +907,15 @@ package starlingEngine
 		private function button_triggeredHandler(e:Object):void
 		{
 			_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_PRESSED, (e.currentTarget as IAbstractButton).idName, e);
+		}
+		
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function toggle_button_triggeredHandler(e:Object):void
+		{
+			_signalsHub.dispatchSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, (e.currentTarget as IAbstractButton).idName, e);
 		}
 		
 		/**

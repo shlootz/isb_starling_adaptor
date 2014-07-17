@@ -20,13 +20,13 @@ package
 	import starling.animation.Juggler;
 	import starling.utils.AssetManager;
 	import starlingEngine.StarlingEngine;
+	import starlingEngine.ui.EngineToggleButton;
 	/**
 	 * ...
 	 * @author Eu
 	 */
 	public class testLayers extends Sprite
 	{
-		
 			private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
 																		new Point(800, 600),
 																		StarlingEngine,
@@ -77,9 +77,11 @@ package
 					{	
 						_transIn.injectAnimation(animIn);
 						
-						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete)
+						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
+						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						showPaytable();
-						makeUILayer();
+						//makeUILayer();
+						//makeToggleButton();
 					}
 				});
 		}
@@ -179,7 +181,16 @@ package
 			//Adding new layer pages to the paytable container
 			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
 			inLayers.push(inLayer);
-			_bridgeGraphics.updateLayers(_paytablePagesHolder, inLayers, null, _transIn);
+			//_bridgeGraphics.updateLayers(_paytablePagesHolder, inLayers, null, _transIn);
+			
+			//var inLayersMain:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			//inLayersMain.push(_layersVO.retrieveLayer("UI"));
+			//(_layersVO.retrieveLayer("UI") as IAbstractLayer).addToStage = true;
+			//_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayersMain, null, _transIn);
+			
+			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			outLayers.push(_layersVO.retrieveLayer("UI"));
+			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers, outLayers);
 		}
 		
 		private function makeUILayer():void
@@ -201,12 +212,12 @@ package
 		
 		private function transInComplete(type:String, obj:Object):void
 		{
-			trace("Caught Transition " + type+" & " + obj["layer"]+ obj["params"]);
+			trace("IN Caught Transition " + type+" & " + obj["layer"]["name"]+" "+ obj["params"]);
 		}
 		
 		private function transOutComplete(type:String, obj:Object):void
 		{
-			trace("Caught Transition " + type+" & " + obj["layer"]);
+			trace("OUT Caught Transition " + type+" & " + obj["layer"]);
 		}
 		
 	}

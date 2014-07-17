@@ -192,6 +192,8 @@ package starlingEngine.elements
 				var icon:String = _mainXML.child("Element")[i].attribute("icon");
 				var iconOffsetX:String = _mainXML.child("Element")[i].attribute("iconOffsetX");
 				var iconOffsetY:String = _mainXML.child("Element")[i].attribute("iconOffsetY");
+				var iconOn:String = _mainXML.child("Element")[i].attribute("iconOn");
+				var iconOff:String = _mainXML.child("Element")[i].attribute("iconOff");
 				
 				var o:EngineLayerLayoutElementVo = new EngineLayerLayoutElementVo();
 				o.layerX = Number(layerX);
@@ -221,6 +223,8 @@ package starlingEngine.elements
 				o.icon = String(icon);
 				o.iconOffsetX = Number(iconOffsetX);
 				o.iconOffsetY = Number(iconOffsetY);
+				o.iconOn = iconOn;
+				o.iconOff = iconOff;
 				
 				if (flipped == "true")
 				{

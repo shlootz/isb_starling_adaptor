@@ -4,6 +4,7 @@ package starlingEngine.validators
 	import bridge.abstract.IAbstractTextField;
 	import bridge.abstract.ui.IAbstractButton;
 	import bridge.abstract.ui.IAbstractLabel;
+	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
 	import bridge.IEngine;
 	import flash.geom.Point;
@@ -13,24 +14,25 @@ package starlingEngine.validators
 	 * ...
 	 * @author Alex Popescu
 	 */
-	public class LayoutButtonValidator 
+	public class LayoutToggleButtonValidator 
 	{
 		
-		public function LayoutButtonValidator() 
+		public function LayoutToggleButtonValidator() 
 		{
 			
 		}
 		
-		public static function validate(engine:IEngine, assetsManager:AssetManager, element:EngineLayerLayoutElementVo):IAbstractButton
+		public static function validate(engine:IEngine, assetsManager:AssetManager, element:EngineLayerLayoutElementVo):IAbstractToggle
 		{
-			var btn:IAbstractButton = engine.requestButton();
+			var btn:IAbstractToggle = engine.requestToggleButton();
 			var upSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.resource));
 			var upStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.upState));
 			var overStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.overState));
 			var pressedStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.pressedState));
 			var disabledStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.disabledState));
 			var hasIcon:Boolean = false;
-			var icon:IAbstractImage;
+			var iconOn:IAbstractImage;
+			var iconOff:IAbstractImage;
 						
 			btn.idName = element.name;
 			
@@ -65,16 +67,15 @@ package starlingEngine.validators
 						
 			btn.name = element.name;
 			
-			if (element.icon != "")
-			{
-				hasIcon = true;
-				icon = engine.requestImage(assetsManager.getTexture(element.icon));
-				btn.upIcon_ = icon;
-				btn.hoverIcon_ = icon;
-				btn.downIcon_ = icon;
-				btn.iconOffsetX = element.iconOffsetX;
-				btn.iconOffsetY = element.iconOffsetY;
-			}
+			hasIcon = true;
+			iconOn = engine.requestImage(assetsManager.getTexture(element.iconOn));
+			btn.toggleTrueImage = iconOn;
+			
+			iconOff = engine.requestImage(assetsManager.getTexture(element.iconOff));
+			btn.toggleFalseImage = iconOff;
+			
+			btn.iconOffsetX = element.iconOffsetX;
+			btn.iconOffsetY = element.iconOffsetY;
 			
 			if (element.label != "")
 			{
