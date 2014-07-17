@@ -56,6 +56,11 @@ package starlingEngine.elements
 			return _layers
 		}
 		
+		public function set layers(val:Dictionary):void
+		{
+			_layers = val;
+		}
+		
 	}
 
 }

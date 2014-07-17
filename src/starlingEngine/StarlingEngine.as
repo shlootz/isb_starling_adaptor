@@ -5,6 +5,7 @@ package starlingEngine
 	import bridge.abstract.filters.IAbstractDropShadowFilter;
 	import bridge.abstract.filters.IAbstractGlowFilter;
 	import bridge.abstract.IAbstractBlitMask;
+	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.IAbstractScrollTile;
 	import bridge.abstract.ui.LabelProperties;
@@ -609,17 +610,16 @@ package starlingEngine
 		 * @param	inTransition
 		 * @param	outTransition
 		 */
-		public function initLayers(inputLayers:Dictionary, inTransition:IAbstractLayerTransitionIn = null, outTransition:IAbstractLayerTransitionOut = null):void
+		public function initLayers(container:IAbstractDisplayObjectContainer, inputLayers:Dictionary, inTransition:IAbstractLayerTransitionIn = null, outTransition:IAbstractLayerTransitionOut = null):void
 		{
-			_layers = inputLayers;
-			
 			var orderedLayers:Vector.<EngineLayer> = new Vector.<EngineLayer>();
 			
-			for (var k:Object in _layers) 
+			for (var k:Object in inputLayers) 
 			{
-				var child:EngineLayer = _layers[k] as EngineLayer;
+				var child:EngineLayer = inputLayers[k] as EngineLayer;
 				if (child.addToStage)
 				{
+					container.layers[child.name] = child;
 					orderedLayers.push(child);
 				}
 			}
@@ -628,11 +628,11 @@ package starlingEngine
 			
 			for (var j:uint = 0; j < orderedLayers.length; j++ )
 			{
-				if (_currentState.getChildByNameStr(orderedLayers[j].name) == null)
+				if (container.getChildByNameStr(orderedLayers[j].name) == null)
 				{
 					if (orderedLayers[j].addToStage)
 					{
-						_currentState.addNewChildAt(orderedLayers[j], j);
+						container.addNewChildAt(orderedLayers[j], j);
 						drawLayerLayout(orderedLayers[j]);
 						
 						if (inTransition != null)
@@ -678,13 +678,13 @@ package starlingEngine
 		 * @param	inLayers
 		 * @param	outLayers
 		 */
-		public function updateLayers(inLayers:Vector.<IAbstractLayer> = null, outLayers:Vector.<IAbstractLayer> = null, inTransition:IAbstractLayerTransitionIn = null, outTransition:IAbstractLayerTransitionOut = null ):void
+		public function updateLayers(container:IAbstractDisplayObjectContainer, inLayers:Vector.<IAbstractLayer> = null, outLayers:Vector.<IAbstractLayer> = null, inTransition:IAbstractLayerTransitionIn = null, outTransition:IAbstractLayerTransitionOut = null ):void
 		{
 			if (inLayers != null)
 			{
 				for (var i:uint = 0; i < inLayers.length; i++ )
 				{
-					insertLayerInDictionary(inLayers[i]);
+					insertLayerInDictionary(inLayers[i], container.layers);
 				}
 			}
 			
@@ -692,7 +692,7 @@ package starlingEngine
 			{
 				for (var j:uint = 0; j < outLayers.length; j++ )
 				{
-					removeLayerFromDictionary(outLayers[j]);
+					removeLayerFromDictionary(outLayers[j], container.layers);
 					
 					if (outTransition != null)
 					{
@@ -706,7 +706,7 @@ package starlingEngine
 				}
 			}
 			
-			initLayers(_layers, inTransition, outTransition);
+			initLayers(container, container.layers, inTransition);
 		}
 		
 		/**
@@ -714,13 +714,14 @@ package starlingEngine
 		 * @param	target1
 		 * @param	target2
 		 */
-		public function tranzitionToLayerInComplete(target1:Object = null, target2:Object = null):void
+		public function tranzitionToLayerInComplete(target1:Object = null, target2:Object = null, params:Object = null):void
 		{
 			if(target1)
 			{
 				var o:Object = {
 					type:"LayerTransitionInComplete",
-					layer:target1
+					layer:target1,
+					params:params
 				}
 				
 				_signalsHub.dispatchSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, Signals.LAYER_TRANSITION_IN_COMPLETE, o);
@@ -732,7 +733,7 @@ package starlingEngine
 		 * @param	target1
 		 * @param	target2
 		 */
-		public function tranzitionToLayerOutComplete(target1:Object = null, target2:Object = null):void
+		public function tranzitionToLayerOutComplete(target1:Object = null, target2:Object = null, params:Object = null):void
 		{
 			if (target1)
 			{
@@ -742,7 +743,8 @@ package starlingEngine
 					
 				var o:Object = {
 					type:"LayerTransitionOutComplete",
-					layer:target1
+					layer:target1,
+					params:params
 				}
 				
 				_signalsHub.dispatchSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, Signals.LAYER_TRANSITION_OUT_COMPLETE, o);
@@ -753,13 +755,13 @@ package starlingEngine
 		 * 
 		 * @param	layer
 		 */
-		private function insertLayerInDictionary(layer:IAbstractLayer):void
+		private function insertLayerInDictionary(layer:IAbstractLayer, elementsDictionary:Dictionary):void
 		{
 			var alreadyExisting:Boolean = false;
 			
-			for (var k:Object in _layers) 
+			for (var k:Object in elementsDictionary) 
 			{
-				var child:IAbstractLayer = _layers[k] as IAbstractLayer;
+				var child:IAbstractLayer = elementsDictionary[k] as IAbstractLayer;
 				if (child.layerName == layer.layerName)
 				{
 					alreadyExisting = true;
@@ -768,7 +770,7 @@ package starlingEngine
 			
 			if (!alreadyExisting)
 			{
-				_layers[layer.layerName] = layer;
+				elementsDictionary[layer.layerName] = layer;
 			}
 		}
 		
@@ -776,14 +778,14 @@ package starlingEngine
 		 * 
 		 * @param	layer
 		 */
-		private function removeLayerFromDictionary(layer:IAbstractLayer):void
+		private function removeLayerFromDictionary(layer:IAbstractLayer, dict:Dictionary):void
 		{
-			for (var k:Object in _layers) 
+			for (var k:Object in dict) 
 			{
-				var child:IAbstractLayer = _layers[k] as IAbstractLayer;
+				var child:IAbstractLayer = dict[k] as IAbstractLayer;
 				if (child.layerName == layer.layerName)
 				{
-					delete _layers[layer.layerName];
+					delete dict[layer.layerName];
 				}
 			}
 		}
@@ -892,6 +894,14 @@ package starlingEngine
 		
 		/**
 		 * 
+		 */
+		public function set layers(val:Dictionary):void
+		{
+			_layers = val;
+		}
+		
+		/**
+		 * 
 		 * @param	layer1
 		 * @param	layer2
 		 */
@@ -969,6 +979,11 @@ package starlingEngine
 		 public function addBlurFilter(target:IAbstractDisplayObject, vo:IAbstractBlurFilter):void
 		 {
 			  (target as DisplayObject).filter = new BlurFilter(vo.blurX, vo.blurY, vo.resolution);
+		 }
+		 
+		 public function get currentContainer():IAbstractState
+		 {
+			 return _currentState;
 		 }
 		
 		/**

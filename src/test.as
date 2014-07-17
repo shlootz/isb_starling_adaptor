@@ -390,7 +390,6 @@ package
 			
 			//Adding a listener to the signal from paytable
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
-			//(_bridgeGraphics.signalsManager as ISignalsHub).removeListenerFromSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
 			
 			var mainUIxml:XML = new XML();
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
@@ -431,9 +430,9 @@ package
 			}
 			_toggle = !_toggle;
 			
-			tranzitionOut.injectAnimation(tranzitionAnimationOut);
-			tranzitionOut.injectOnTransitionComplete(cleanPage);
-			tranzitionOut.doTransition(_currentPage, null);
+			//tranzitionOut.injectAnimation(tranzitionAnimationOut);
+			//tranzitionOut.injectOnTransitionComplete(cleanPage);
+			//tranzitionOut.doTransition(_currentPage, null);
 			
 			var inLayer:IAbstractLayer;
 			
@@ -461,9 +460,9 @@ package
 			
 			_paytablePagesHolder.addNewChild(inLayer);
 			
-			tranzitionIn.injectAnimation(tranzitionAnimationIn);
-			tranzitionIn.injectOnTransitionComplete(updateCurrentPage);
-			tranzitionIn.doTransition(inLayer, null);
+			//tranzitionIn.injectAnimation(tranzitionAnimationIn);
+			//tranzitionIn.injectOnTransitionComplete(updateCurrentPage);
+			//tranzitionIn.doTransition(inLayer, null);
 			
 			inLayer.updateMouseGestures(_bridgeGraphics.signalsManager, true);
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.DISPLAY_OBJECT_TOUCHED, testNativeSignal);
@@ -496,8 +495,7 @@ package
 		
 		private function menuOnTransitionComplete(target:IAbstractDisplayObject, target2:IAbstractDisplayObject):void
 		{
-			var m:uint = 1;
-			m++;
+			trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 		}
 		
 		private function showMainMenuContained():void

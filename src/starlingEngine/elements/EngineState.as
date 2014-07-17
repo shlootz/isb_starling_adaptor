@@ -6,6 +6,7 @@ package starlingEngine.elements
 	import bridge.abstract.IAbstractSprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
 	import signals.Signals;
 	import signals.SignalsHub;
 	import starling.display.DisplayObject;
@@ -26,6 +27,8 @@ package starlingEngine.elements
 		private var _onStationary:Boolean = false;
 		
 		private var _signalsHub:SignalsHub;
+		
+		private var _layers:Dictionary = new Dictionary(true);
 		
 		public function EngineState() 
 		{
@@ -261,6 +264,22 @@ package starlingEngine.elements
 		public function swapChildrenAtIndex (index1:int, index2:int) : void
 		{
 			super.swapChildrenAt(index1, index2);
+		}
+		
+		/**
+		 * 
+		 */
+		public function get layers():Dictionary
+		{
+			return _layers;
+		}
+		
+		/**
+		 * 
+		 */
+		public function set layers(val:Dictionary):void
+		{
+			 _layers = val;
 		}
 		
 		/**
