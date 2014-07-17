@@ -25,7 +25,7 @@ package starlingEngine.validators
 		
 		public static function validate(engine:IEngine, assetsManager:AssetManager, element:EngineLayerLayoutElementVo):IAbstractSlider
 		{
-			var sliderTextField:IAbstractTextField = engine.requestTextField(140, 50, "Test", "Verdana", 20, 0xFFFFFF);
+			var sliderTextField:IAbstractTextField = engine.requestTextField(element.labelWidth, element.labelHeight, element.label, element.font, element.labelFontSize, element.labelFontColor);
 			var sliderLabel:IAbstractLabel = engine.requestLabelFromTextfield(sliderTextField, "label");
 			var slider:IAbstractSlider = engine.requestSlider(
 																					engine.requestImage(assetsManager.getTexture(element.thumbUpSkin)), 
