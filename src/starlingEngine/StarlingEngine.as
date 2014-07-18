@@ -17,6 +17,7 @@ package starlingEngine
 	import starlingEngine.elements.EngineBlitMask;
 	import starlingEngine.elements.EngineMask;
 	import starlingEngine.elements.EngineScrollTile;
+	import starlingEngine.events.GESignalEvent;
 	import starlingEngine.extensions.krecha.ScrollImage;
 	import starlingEngine.extensions.krecha.ScrollTile;
 	import starlingEngine.filters.BlurFilterVO;
@@ -764,13 +765,12 @@ package starlingEngine
 		{
 			if(target1)
 			{
-				var o:Object = {
-					type:"LayerTransitionInComplete",
-					caller:target1,
-					params:params
-				}
+					var o:GESignalEvent = new GESignalEvent()
+					o.eventName = Signals.LAYER_TRANSITION_IN_COMPLETE;
+					o.engineEvent = null;
+					o.params = params
 				
-				_signalsHub.dispatchSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, Signals.LAYER_TRANSITION_IN_COMPLETE, o);
+				_signalsHub.dispatchSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, (target1 as IAbstractDisplayObject).name, o);
 			}
 		}
 		
@@ -786,14 +786,13 @@ package starlingEngine
 				_currentState.removeChildAndDispose(target1 as EngineLayer);
 				
 				(target1 as EngineLayer).destroyAll();
-					
-				var o:Object = {
-					type:"LayerTransitionOutComplete",
-					caller:target1,
-					params:params
-				}
+			
+				var o:GESignalEvent = new GESignalEvent()
+					o.eventName = Signals.LAYER_TRANSITION_OUT_COMPLETE;
+					o.engineEvent = null;
+					o.params = params
 				
-				_signalsHub.dispatchSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, Signals.LAYER_TRANSITION_OUT_COMPLETE, o);
+				_signalsHub.dispatchSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, (target1 as IAbstractDisplayObject).name, o);
 			}
 		}
 		
@@ -930,7 +929,13 @@ package starlingEngine
 		 */
 		private function movieClip_Completed(e:Object):void
 		{
-			_signalsHub.dispatchSignal(Signals.MOVIE_CLIP_ENDED, (e.currentTarget as IAbstractMovie).name, e);
+			
+				var o:GESignalEvent = new GESignalEvent()
+				o.eventName = Signals.MOVIE_CLIP_ENDED;
+				o.engineEvent = e;
+				o.params = null
+					
+			_signalsHub.dispatchSignal(Signals.MOVIE_CLIP_ENDED, (e.currentTarget as IAbstractMovie).name, o);
 		}
 		
 		/**
@@ -939,7 +944,11 @@ package starlingEngine
 		 */
 		private function button_triggeredHandler(e:Object):void
 		{
-			_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_PRESSED, (e.currentTarget as IAbstractButton).idName, e);
+				var o:GESignalEvent = new GESignalEvent()
+				o.eventName = Signals.GENERIC_BUTTON_PRESSED;
+				o.engineEvent = e;
+				o.params = null
+			_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_PRESSED, (e.currentTarget as IAbstractButton).name, o);
 		}
 		
 		/**
@@ -948,7 +957,14 @@ package starlingEngine
 		 */
 		private function slider_component_changed(e:Object):void
 		{
-			_signalsHub.dispatchSignal(Signals.GENERIC_SLIDER_CHANGE, e["name"], e);
+			var o:GESignalEvent = new GESignalEvent()
+			o.eventName = Signals.GENERIC_SLIDER_CHANGE;
+			o.engineEvent = e["event"];
+			o.params = {
+				amount:e["amount"]
+			}
+			
+			_signalsHub.dispatchSignal(Signals.GENERIC_SLIDER_CHANGE, e["name"], o);
 		}
 		
 		/**
@@ -957,7 +973,14 @@ package starlingEngine
 		 */
 		private function toggle_button_triggeredHandler(e:Object):void
 		{
-			_signalsHub.dispatchSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, (e.currentTarget as IAbstractButton).idName, e);
+			var o:GESignalEvent = new GESignalEvent()
+			o.eventName = Signals.GENERIC_TOGGLE_BUTTON_PRESSED;
+			o.engineEvent = e;
+			o.params = {
+				state:e["currentTarget"]["state"]
+			}
+			
+			_signalsHub.dispatchSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, (e.currentTarget as IAbstractButton).name, o);
 		}
 		
 		/**

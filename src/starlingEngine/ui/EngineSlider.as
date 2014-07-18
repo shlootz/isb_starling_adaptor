@@ -95,9 +95,8 @@ package starlingEngine.ui
 		{
 			var o:Object = {
 				name:this.name,
-				amount:slider.value,
-				target:e.currentTarget,
-				event:e
+				event:e,
+				amount:slider.value
 			}
 			_anchor.apply(null, [o]);
 		}

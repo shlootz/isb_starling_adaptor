@@ -1,6 +1,7 @@
 package  
 {
 	import bridge.abstract.AbstractPool;
+	import bridge.abstract.events.IAbstractSignalEvent;
 	import bridge.abstract.IAbstractDisplayObject;
 	import bridge.abstract.IAbstractEngineLayerVO;
 	import bridge.abstract.IAbstractLayer;
@@ -89,6 +90,7 @@ package
 						
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
+						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						showPaytable();
 						makeUILayer();
 						//makeSlider();
@@ -180,7 +182,7 @@ package
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
 		}
 		
-		private function buttonPressed(type:String, event:Object):void
+		private function buttonPressed(type:String, event:IAbstractSignalEvent):void
 		{		
 			var inLayer:IAbstractLayer;
 			
@@ -216,9 +218,9 @@ package
 			//(_layersVO.retrieveLayer("UI") as IAbstractLayer).addToStage = true;
 			//_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayersMain, null, _transIn);
 			
-			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
-			outLayers.push(_layersVO.retrieveLayer("UI"));
-			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers, outLayers);
+			//var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			//outLayers.push(_layersVO.retrieveLayer("UI"));
+			//_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers, outLayers);
 		}
 		
 		private function makeUILayer():void
@@ -238,14 +240,19 @@ package
 			TweenLite.to(obj1, 1, { x:Math.random() * 250, onComplete:  _transIn.onTransitionComplete, onCompleteParams:[obj1, obj2]} );
 		}
 		
-		private function transInComplete(type:String, obj:Object):void
+		private function transInComplete(type:String, obj:IAbstractSignalEvent):void
 		{
-			trace("IN Caught Transition " + type+" & " + obj["caller"]["name"]+" "+ obj["params"]);
+			trace("IN Caught Transition " + type+" & " + obj);
 		}
 		
-		private function transOutComplete(type:String, obj:Object):void
+		private function transOutComplete(type:String, obj:IAbstractSignalEvent):void
 		{
-			trace("OUT Caught Transition " + type+" & " + obj["caller"]);
+			trace("OUT Caught Transition " + type+" & " + obj);
+		}
+		
+		private function onSlider(type:String, obj:IAbstractSignalEvent):void
+		{
+			trace("Caught Slider " + type+" & " + obj);
 		}
 		
 	}
