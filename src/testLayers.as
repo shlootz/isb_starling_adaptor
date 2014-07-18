@@ -90,7 +90,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						showPaytable();
-						//makeUILayer();
+						makeUILayer();
 						//makeSlider();
 					}
 				});
@@ -240,12 +240,12 @@ package
 		
 		private function transInComplete(type:String, obj:Object):void
 		{
-			trace("IN Caught Transition " + type+" & " + obj["layer"]["name"]+" "+ obj["params"]);
+			trace("IN Caught Transition " + type+" & " + obj["caller"]["name"]+" "+ obj["params"]);
 		}
 		
 		private function transOutComplete(type:String, obj:Object):void
 		{
-			trace("OUT Caught Transition " + type+" & " + obj["layer"]);
+			trace("OUT Caught Transition " + type+" & " + obj["caller"]);
 		}
 		
 	}

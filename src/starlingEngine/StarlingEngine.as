@@ -789,7 +789,7 @@ package starlingEngine
 					
 				var o:Object = {
 					type:"LayerTransitionOutComplete",
-					layer:target1,
+					caller:target1,
 					params:params
 				}
 				
@@ -948,7 +948,6 @@ package starlingEngine
 		 */
 		private function slider_component_changed(e:Object):void
 		{
-			trace(e["name"]+" "+e["amount"]);
 			_signalsHub.dispatchSignal(Signals.GENERIC_SLIDER_CHANGE, e["name"], e);
 		}
 		
