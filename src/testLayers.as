@@ -20,6 +20,7 @@ package
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.text.TextField;
 	import nape.space.Space;
 	import signals.ISignalsHub;
 	import signals.Signals;
@@ -92,7 +93,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						showPaytable();
-						makeUILayer();
+						//makeUILayer();
 						//makeSlider();
 					}
 				});
@@ -210,20 +211,28 @@ package
 			
 			//Adding new layer pages to the paytable container
 			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			
 			inLayers.push(inLayer);
-			//_bridgeGraphics.updateLayers(_paytablePagesHolder, inLayers, null, _transIn);
+			if (_currentPage)
+			{
+				outLayers.push(_currentPage);
+			}
+			
+			_bridgeGraphics.updateLayers(_paytablePagesHolder, inLayers, outLayers, _transIn);
+			_currentPage = inLayer;
 			
 			//var inLayersMain:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
 			//inLayersMain.push(_layersVO.retrieveLayer("UI"));
 			//(_layersVO.retrieveLayer("UI") as IAbstractLayer).addToStage = true;
 			//_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayersMain, null, _transIn);
 			
-			//var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			var mc:TextField;
 			//outLayers.push(_layersVO.retrieveLayer("UI"));
 			//_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers, outLayers);
 		}
 		
-		private function makeUILayer():void
+		private function makeUIoLayer():void
 		{
 			var mainUIxml:XML = new XML();
 			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");

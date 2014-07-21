@@ -744,11 +744,11 @@ package starlingEngine
 					if (outTransition != null)
 					{
 						outTransition.injectOnTransitionComplete(tranzitionToLayerOutComplete);
-						outTransition.doTransition(outLayers[j] as EngineLayer, null);
+						outTransition.doTransition(outLayers[j] as EngineLayer, container);
 					}
 					else
 					{
-						tranzitionToLayerOutComplete(outLayers[j], null);
+						tranzitionToLayerOutComplete(outLayers[j], container);
 					}
 				}
 			}
@@ -783,7 +783,7 @@ package starlingEngine
 		{
 			if (target1)
 			{
-				_currentState.removeChildAndDispose(target1 as EngineLayer);
+				target2.removeChildAndDispose(target1 as EngineLayer);
 				
 				(target1 as EngineLayer).destroyAll();
 			

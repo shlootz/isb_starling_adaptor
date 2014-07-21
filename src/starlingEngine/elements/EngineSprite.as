@@ -220,6 +220,7 @@ package starlingEngine.elements
 		{
 			return super.removeChildAt(index, dispose) as IAbstractDisplayObject;
 		}
+		
 		/**
 		 * 
 		 * @param	beginIndex
