@@ -1,4 +1,4 @@
-package starlingEngine
+﻿package starlingEngine
 {
 	import adobe.utils.CustomActions;
 	import bridge.abstract.filters.IAbstractBlurFilter;
@@ -11,7 +11,6 @@ package starlingEngine
 	import bridge.abstract.ui.IAbstractSlider;
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
-	import flash.display3D.Context3DProfile;
 	import flash.geom.Point;
 	import starling.filters.BlurFilter;
 	import starlingEngine.elements.EngineBlitMask;

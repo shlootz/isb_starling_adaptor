@@ -16,7 +16,6 @@ package
 	import bridge.IBridgeGraphics;
 	import com.greensock.TweenLite;
 	import feathers.controls.Slider;
-	import feathers.controls.TextInput;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
@@ -26,7 +25,6 @@ package
 	import signals.Signals;
 	import signals.SignalsHub;
 	import starling.animation.Juggler;
-	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.utils.AssetManager;
