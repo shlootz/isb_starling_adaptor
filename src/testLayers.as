@@ -86,6 +86,7 @@ package
 					if (ratio == 1)
 					{	
 						_transIn.injectAnimation(animIn);
+						_transOut.injectAnimation(animIn);
 						
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
@@ -207,44 +208,22 @@ package
 					break;
 			}
 			
-			//Adding new layer pages to the paytable container
 			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
 			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
 			
 			inLayers.push(inLayer);
 			if (_currentPage)
 			{
-				outLayers.push(_currentPage);
+				outLayers.push(_currentPage); 
 			}
 			
-			_bridgeGraphics.updateLayers(_paytablePagesHolder, inLayers, outLayers, _transIn);
+			_bridgeGraphics.updateLayers(_paytablePagesHolder, inLayers, outLayers, _transIn, _transOut);
 			_currentPage = inLayer;
-			
-			//var inLayersMain:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
-			//inLayersMain.push(_layersVO.retrieveLayer("UI"));
-			//(_layersVO.retrieveLayer("UI") as IAbstractLayer).addToStage = true;
-			//_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayersMain, null, _transIn);
-			
-			var mc:TextField;
-			//outLayers.push(_layersVO.retrieveLayer("UI"));
-			//_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers, outLayers);
-		}
-		
-		private function makeUIoLayer():void
-		{
-			var mainUIxml:XML = new XML();
-			mainUIxml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
-			
-			_layersVO.addLayer("UI", 1, mainUIxml, true);
-			
-			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
-			inLayers.push(_layersVO.retrieveLayer("UI"));
-			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers, null, _transIn);
 		}
 		
 		private function animIn(obj1:IAbstractDisplayObject, obj2:IAbstractDisplayObject):void
 		{
-			TweenLite.to(obj1, 1, { x:Math.random() * 250, onComplete:  _transIn.onTransitionComplete, onCompleteParams:[obj1, obj2]} );
+			TweenLite.to(obj1, Math.random()*2, { x:Math.random() * 250, onComplete:  _transIn.onTransitionComplete, onCompleteParams:[obj1, obj2]} );
 		}
 		
 		private function transInComplete(type:String, obj:IAbstractSignalEvent):void
