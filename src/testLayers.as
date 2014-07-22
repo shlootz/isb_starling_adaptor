@@ -180,6 +180,14 @@ package
 			
 			//Adding a listener to the signal from paytable
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
+			
+			_layersVO.retrieveLayer("Paytable").updateMouseGestures((_bridgeGraphics.signalsManager as ISignalsHub), true);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.DISPLAY_OBJECT_TOUCHED, doTouched);
+		}
+		
+		private function doTouched(type:String, event:IAbstractSignalEvent):void
+		{
+			trace(type);
 		}
 		
 		private function buttonPressed(type:String, event:IAbstractSignalEvent):void

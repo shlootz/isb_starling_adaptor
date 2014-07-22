@@ -14,6 +14,7 @@ package starlingEngine.elements
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starlingEngine.events.GESignalEvent;
 	/**
 	 * ...
 	 * @author Alex Popescu
@@ -83,54 +84,70 @@ package starlingEngine.elements
 			var localPos:Point;
 			var obj:Object = new Object();
 			
+			var o:GESignalEvent = new GESignalEvent()
+			o.eventName = Signals.DISPLAY_OBJECT_TOUCHED;
+			o.engineEvent = event;
+			o.params = null
+			
 			if (touchBegan && _onClick )
 			{
 				localPos = touchBegan.getLocation(this);
-				obj = {
+				o.eventName = (event.currentTarget as IAbstractSprite).name;
+				o.engineEvent = event;
+				o.params = {
 					phase:TouchPhase.BEGAN,
-					event:event
+					pos:localPos
 				}
-				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.BEGAN, obj);
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, (event.currentTarget as IAbstractSprite).name, o);
 			}
 			
 			if (touchHover && _onHover)
 			{
-				obj = {
-					phase:TouchPhase.HOVER,
-					event:event
-				}
+				
 				localPos = touchHover.getLocation(this);
-				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.HOVER, obj);
+				o.eventName = (event.currentTarget as IAbstractSprite).name;
+				o.engineEvent = event;
+				o.params = {
+					phase:TouchPhase.HOVER,
+					pos:localPos
+				}
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, (event.currentTarget as IAbstractSprite).name, o);
 			}
 			
 			if (touchEnded && _onEnded)
 			{
-				obj = {
-					phase:TouchPhase.ENDED,
-					event:event
-				}
 				localPos = touchEnded.getLocation(this);
-				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.ENDED, obj);
+				o.eventName = (event.currentTarget as IAbstractSprite).name;
+				o.engineEvent = event;
+				o.params = {
+					phase:TouchPhase.ENDED,
+					pos:localPos
+				}
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, (event.currentTarget as IAbstractSprite).name, o);
 			}
 			
 			if (touchMoved && _onMoved)
 			{
-				obj = {
-					phase:TouchPhase.MOVED,
-					event:event
-				}
 				 localPos = touchMoved.getLocation(this);
-				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.MOVED, obj);
+				 o.eventName = (event.currentTarget as IAbstractSprite).name;
+				 o.engineEvent = event;
+				 o.params = {
+					phase:TouchPhase.MOVED,
+					pos:localPos
+				}
+				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, (event.currentTarget as IAbstractSprite).name, o);
 			}
 			
 			if (touchStationary && _onStationary)
 			{
-				obj = {
+				localPos = touchStationary.getLocation(this);
+				 o.eventName = (event.currentTarget as IAbstractSprite).name;
+				 o.engineEvent = event;
+				 o.params = {
 					phase:TouchPhase.STATIONARY,
-					event:event
+					pos:localPos
 				}
-				 localPos = touchStationary.getLocation(this);
-				_signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, TouchPhase.STATIONARY, obj);
+				 _signalsHub.dispatchSignal(Signals.DISPLAY_OBJECT_TOUCHED, (event.currentTarget as IAbstractSprite).name, o);
 			}
 		}
 		
