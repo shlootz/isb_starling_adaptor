@@ -1,6 +1,7 @@
 package starlingEngine.elements 
 {
 	import bridge.abstract.IAbstractDisplayObject;
+	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractSprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -18,7 +19,7 @@ package starlingEngine.elements
 	 * ...
 	 * @author Alex Popescu
 	 */
-	public class EngineSprite extends Sprite implements IAbstractSprite
+	public class EngineSprite extends Sprite implements IAbstractSprite, IAbstractDisplayObjectContainer
 	{
 		private var _onClick:Boolean = false;
 		private var _onHover:Boolean = false;
