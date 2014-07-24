@@ -242,6 +242,11 @@ package starlingEngine.ui
 		{
 			super.isEnabled = value;
 		}
+		
+		override public function get isEnabled():Boolean
+		{
+			return super._isEnabled;
+		}
 
 		override public function get isLongPressEnabled () : Boolean
 		{
