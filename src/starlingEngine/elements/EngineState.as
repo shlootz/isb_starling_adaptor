@@ -92,7 +92,7 @@ package starlingEngine.elements
 			if (touchBegan && _onClick )
 			{
 				localPos = touchBegan.getLocation(this);
-				o.eventName = (event.currentTarget as IAbstractSprite).name;
+				o.eventName = Signals.DISPLAY_OBJECT_TOUCHED;
 				o.engineEvent = event;
 				o.params = {
 					phase:TouchPhase.BEGAN,
@@ -105,7 +105,7 @@ package starlingEngine.elements
 			{
 				
 				localPos = touchHover.getLocation(this);
-				o.eventName = (event.currentTarget as IAbstractSprite).name;
+				o.eventName = Signals.DISPLAY_OBJECT_TOUCHED;
 				o.engineEvent = event;
 				o.params = {
 					phase:TouchPhase.HOVER,
@@ -117,7 +117,7 @@ package starlingEngine.elements
 			if (touchEnded && _onEnded)
 			{
 				localPos = touchEnded.getLocation(this);
-				o.eventName = (event.currentTarget as IAbstractSprite).name;
+				o.eventName = Signals.DISPLAY_OBJECT_TOUCHED;
 				o.engineEvent = event;
 				o.params = {
 					phase:TouchPhase.ENDED,
@@ -129,7 +129,7 @@ package starlingEngine.elements
 			if (touchMoved && _onMoved)
 			{
 				 localPos = touchMoved.getLocation(this);
-				 o.eventName = (event.currentTarget as IAbstractSprite).name;
+				 o.eventName = Signals.DISPLAY_OBJECT_TOUCHED;
 				 o.engineEvent = event;
 				 o.params = {
 					phase:TouchPhase.MOVED,
@@ -141,7 +141,7 @@ package starlingEngine.elements
 			if (touchStationary && _onStationary)
 			{
 				localPos = touchStationary.getLocation(this);
-				 o.eventName = (event.currentTarget as IAbstractSprite).name;
+				 o.eventName = Signals.DISPLAY_OBJECT_TOUCHED;
 				 o.engineEvent = event;
 				 o.params = {
 					phase:TouchPhase.STATIONARY,

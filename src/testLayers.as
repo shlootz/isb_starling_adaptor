@@ -123,8 +123,9 @@ package
 		private function showPaytable():void
 		{	
 			var testSprite:IAbstractSprite = _bridgeGraphics.requestSprite("test");
-			//testSprite.name = "gigel";
-			trace("}{}{}{}{}{}{}}{}{}{}{}}{}{} "+testSprite.name)
+			testSprite.addNewChild(_bridgeGraphics.requestImage("Background"));
+			testSprite.updateMouseGestures(_bridgeGraphics.signalsManager, true);
+			_bridgeGraphics.addChild(testSprite);
 			 //Retrievieng the XML layout for the paytable main menu
 			var paytableXml:XML = new XML();
 			paytableXml = _bridgeGraphics.getXMLFromAssetsManager("Paytable");
