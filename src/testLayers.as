@@ -4,6 +4,7 @@ package
 	import bridge.abstract.events.IAbstractSignalEvent;
 	import bridge.abstract.IAbstractDisplayObject;
 	import bridge.abstract.IAbstractEngineLayerVO;
+	import bridge.abstract.IAbstractImage;
 	import bridge.abstract.IAbstractLayer;
 	import bridge.abstract.IAbstractSprite;
 	import bridge.abstract.IAbstractTextField;
@@ -124,6 +125,19 @@ package
 		{	
 			var testSprite:IAbstractSprite = _bridgeGraphics.requestSprite("test");
 			testSprite.addNewChild(_bridgeGraphics.requestImage("Background"));
+			testSprite.updateMouseGestures(_bridgeGraphics.signalsManager, true);
+			_bridgeGraphics.addChild(testSprite);
+			
+			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
+			var img2:IAbstractImage = _bridgeGraphics.requestImage("Background");
+			
+			var testas:IAbstractLayer = _bridgeGraphics.requestLayer("asd", 2, null, false);
+			_bridgeGraphics.returnToPool(img);
+			_bridgeGraphics.returnToPool(img2);
+			_bridgeGraphics.returnToPool(testSprite);
+			
+			testSprite = _bridgeGraphics.requestSprite("test");
+			testSprite.addNewChild(_bridgeGraphics.requestImage("Bonus-Background"));
 			testSprite.updateMouseGestures(_bridgeGraphics.signalsManager, true);
 			_bridgeGraphics.addChild(testSprite);
 			 //Retrievieng the XML layout for the paytable main menu
