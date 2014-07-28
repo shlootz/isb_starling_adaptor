@@ -108,10 +108,10 @@ package
 		
 		private function testMovieClips():void
 		{
-			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("s", 24);
+			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("User", 1);
 			_bridgeGraphics.currentContainer.addNewChild(mc);
-			mc.x = mc.y = 250;
 			mc.play();
+			mc.x = mc.y = 250;
 		}
 		
 		private function makeSlider():void
