@@ -188,6 +188,78 @@
 		
 		/**
 		 * 
+		 * @param	obj
+		 */
+		public function returnToPool(obj:Object):void
+		{
+			var poolSucces:Boolean = false;
+			
+			if (obj as EngineSprite != null)
+			{
+				poolSucces = true;
+				
+				while ((obj as EngineSprite).numChildren > 0)
+				{
+					var c:IAbstractDisplayObject;
+					c = (obj as EngineSprite)..removeChildAndDispose((obj as EngineSprite)..getChildAtIndex(0), true);
+					c.removeFromParent(true);
+					c.dispose();
+				}
+				
+				(obj as EngineSprite).removeFromParent();
+				
+				obj = new EngineSprite();
+				
+				_spritesPool.returnToPool(obj as EngineSprite);
+			}
+			
+			if (obj as EngineImage != null)
+			{
+				poolSucces = true;
+				
+				(obj as EngineImage).removeFromParent();
+				
+				obj = new EngineImage(Texture.fromColor(2, 2, 0x000000));
+				
+				_imagesPool.returnToPool(obj as EngineImage);
+			}
+			
+			if (obj as EngineMovie != null)
+			{
+				poolSucces = true;
+				
+				(obj as EngineMovie).removeFromParent();
+				
+				var defaultVector:Vector.<Texture> = new Vector.<Texture>;
+				defaultVector.push(Texture.fromColor(2, 2, 0x000000));
+				obj = new EngineMovie(defaultVector);
+				
+				_movieClipsPool.returnToPool(obj as EngineMovie);
+			}
+			
+			if (obj as EngineButton != null)
+			{
+				poolSucces = true;
+				
+				(obj as EngineButton).removeFromParent();
+				
+				obj = new EngineButton();
+				
+				_buttonsPool.returnToPool(obj as EngineButton);
+			}
+			
+			if (!poolSucces)
+			{
+				trace("AssetsManager :: cannot return to pool object " + obj + " - pool not defined for this type");
+			}
+			else
+			{
+					trace("AssetsManager :: recycled " + obj + " succesfuly");
+			}
+		}
+		
+		/**
+		 * 
 		 */
 		override public function handleStarlingReady():void
 		{ 
@@ -364,22 +436,24 @@
 			var textures:Vector.<Texture> =  _assetsManager.getTextures(prefix);
 			var m:IAbstractMovie = new EngineMovie(textures, fps) as IAbstractMovie;
 
-			var n:EngineMovie = _movieClipsPool.getNewObject() as EngineMovie;
+			//var n:EngineMovie = _movieClipsPool.getNewObject() as EngineMovie;
+			//
+			//while (n.numFrames > 1)
+			//{
+				//n.removeFrameAt(0);
+			//}
+			//
+			//for (var i:uint = 0; i < textures.length; i++ )
+			//{
+				//(n as MovieClip).addFrame(textures[i] as Texture);
+			//}
+			//
+			//n.name = prefix;
+			//n.currentFrame = 0;
 			
-			while (n.numFrames > 1)
-			{
-				n.removeFrameAt(0);
-			}
+			(juggler as Juggler).add(m as IAnimatable);
 			
-			for (var i:uint = 0; i < textures.length; i++ )
-			{
-				(n as MovieClip).addFrame(textures[i] as Texture);
-			}
-			
-			n.name = prefix;
-			n.currentFrame = 0;
-			
-			return n;
+			return m;
 		}
 		
 		/**

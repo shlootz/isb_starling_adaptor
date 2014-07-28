@@ -6,6 +6,7 @@ package
 	import bridge.abstract.IAbstractEngineLayerVO;
 	import bridge.abstract.IAbstractImage;
 	import bridge.abstract.IAbstractLayer;
+	import bridge.abstract.IAbstractMovie;
 	import bridge.abstract.IAbstractSprite;
 	import bridge.abstract.IAbstractTextField;
 	import bridge.abstract.transitions.IAbstractLayerTransitionIn;
@@ -13,6 +14,7 @@ package
 	import bridge.abstract.ui.IAbstractButton;
 	import bridge.abstract.ui.IAbstractLabel;
 	import bridge.abstract.ui.IAbstractSlider;
+	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.BridgeGraphics;
 	import bridge.IBridgeGraphics;
 	import com.greensock.TweenLite;
@@ -21,14 +23,18 @@ package
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.text.TextField;
+	import flash.utils.getDefinitionByName;
+	import flash.utils.getQualifiedClassName;
 	import nape.space.Space;
 	import signals.ISignalsHub;
 	import signals.Signals;
 	import signals.SignalsHub;
+	import starling.animation.IAnimatable;
 	import starling.animation.Juggler;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.utils.AssetManager;
+	import starlingEngine.elements.EngineLabel;
 	import starlingEngine.StarlingEngine;
 	import starlingEngine.ui.EngineSlider;
 	import starlingEngine.ui.EngineToggleButton;
@@ -92,11 +98,20 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						showPaytable();
+						//showPaytable();
 						//makeUILayer();
 						//makeSlider();
+						testMovieClips();
 					}
 				});
+		}
+		
+		private function testMovieClips():void
+		{
+			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("s", 24);
+			_bridgeGraphics.currentContainer.addNewChild(mc);
+			mc.x = mc.y = 250;
+			mc.play();
 		}
 		
 		private function makeSlider():void
@@ -123,6 +138,9 @@ package
 		
 		private function showPaytable():void
 		{	
+			getQualifiedClassName(_bridgeGraphics.requestSprite())
+			var aPool:AbstractPool = new AbstractPool("Test", 	getDefinitionByName(getQualifiedClassName(_bridgeGraphics.requestSprite())) as Class, 20);
+			
 			var testSprite:IAbstractSprite = _bridgeGraphics.requestSprite("test");
 			testSprite.addNewChild(_bridgeGraphics.requestImage("Background"));
 			testSprite.updateMouseGestures(_bridgeGraphics.signalsManager, true);
