@@ -108,7 +108,7 @@ package
 		
 		private function testMovieClips():void
 		{
-			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("User", 1);
+			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("s", 60);
 			_bridgeGraphics.currentContainer.addNewChild(mc);
 			mc.play();
 			mc.x = mc.y = 250;

@@ -434,26 +434,28 @@
 		public function requestMovie(prefix:String, fps:uint = 24):IAbstractMovie
 		{
 			var textures:Vector.<Texture> =  _assetsManager.getTextures(prefix);
-			var m:IAbstractMovie = new EngineMovie(textures, fps) as IAbstractMovie;
 
-			//var n:EngineMovie = _movieClipsPool.getNewObject() as EngineMovie;
-			//
-			//while (n.numFrames > 1)
-			//{
-				//n.removeFrameAt(0);
-			//}
-			//
-			//for (var i:uint = 0; i < textures.length; i++ )
-			//{
-				//(n as MovieClip).addFrame(textures[i] as Texture);
-			//}
-			//
-			//n.name = prefix;
-			//n.currentFrame = 0;
+			var n:EngineMovie = _movieClipsPool.getNewObject() as EngineMovie;
 			
-			(juggler as Juggler).add(m as IAnimatable);
+			while (n.numFrames > 1)
+			{
+				n.removeFrameAt(0);
+			}
 			
-			return m;
+			for (var i:uint = 0; i < textures.length; i++ )
+			{
+				(n as MovieClip).addFrame(textures[i] as Texture);
+			}
+			
+			n.removeFrameAt(0);
+			
+			n.name = prefix;
+			n.currentFrame = 0;
+
+			n.readjustSize();
+			
+			(juggler as Juggler).add(n as IAnimatable);
+			return n;
 		}
 		
 		/**
