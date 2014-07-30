@@ -6,7 +6,7 @@ package starlingEngine.elements
 	import starling.display.Graphics;
 	/**
 	 * ...
-	 * @author Eu
+	 * @author Alex Popescu
 	 */
 	public class EngineGraphics extends Graphics implements IAbstractGraphics
 	{
