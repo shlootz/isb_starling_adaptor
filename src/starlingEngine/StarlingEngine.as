@@ -6,6 +6,7 @@
 	import bridge.abstract.filters.IAbstractGlowFilter;
 	import bridge.abstract.IAbstractBlitMask;
 	import bridge.abstract.IAbstractDisplayObjectContainer;
+	import bridge.abstract.IAbstractGraphics;
 	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.IAbstractScrollTile;
 	import bridge.abstract.ui.IAbstractSlider;
@@ -14,6 +15,7 @@
 	import flash.geom.Point;
 	import starling.filters.BlurFilter;
 	import starlingEngine.elements.EngineBlitMask;
+	import starlingEngine.elements.EngineGraphics;
 	import starlingEngine.elements.EngineMask;
 	import starlingEngine.elements.EngineScrollTile;
 	import starlingEngine.events.GESignalEvent;
@@ -471,6 +473,16 @@
 				s.name = name;
 			}
 			return s;
+		}
+		
+		/**
+		 * 
+		 * @return
+		 */
+		public function requestGraphics(target:IAbstractDisplayObjectContainer):IAbstractGraphics
+		{
+			var g:IAbstractGraphics = new EngineGraphics(target);
+			return g;
 		}
 		
 		/**

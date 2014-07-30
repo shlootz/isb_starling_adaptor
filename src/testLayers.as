@@ -3,7 +3,9 @@ package
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.events.IAbstractSignalEvent;
 	import bridge.abstract.IAbstractDisplayObject;
+	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractEngineLayerVO;
+	import bridge.abstract.IAbstractGraphics;
 	import bridge.abstract.IAbstractImage;
 	import bridge.abstract.IAbstractLayer;
 	import bridge.abstract.IAbstractMovie;
@@ -31,6 +33,8 @@ package
 	import signals.SignalsHub;
 	import starling.animation.IAnimatable;
 	import starling.animation.Juggler;
+	import starling.display.DisplayObjectContainer;
+	import starling.display.Graphics;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.utils.AssetManager;
@@ -112,6 +116,16 @@ package
 			_bridgeGraphics.currentContainer.addNewChild(mc);
 			mc.play();
 			mc.x = mc.y = 250;
+			
+			var holder:IAbstractSprite = _bridgeGraphics.requestSprite("tete");
+			
+			var graphics:IAbstractGraphics = _bridgeGraphics.requestGraphics(holder);
+			
+			graphics.beginFill(0x000000);
+			graphics.drawCircle(50, 50, 50);
+			graphics.endFill();
+			
+			_bridgeGraphics.currentContainer.addNewChild(holder);
 		}
 		
 		private function makeSlider():void
