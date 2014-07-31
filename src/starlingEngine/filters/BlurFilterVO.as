@@ -46,7 +46,7 @@ package starlingEngine.filters
 		
 		public function get resolution():Number
 		{
-			return resolution
+			return _resolution
 		}
 		
 	}

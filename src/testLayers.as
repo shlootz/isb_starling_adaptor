@@ -2,6 +2,7 @@ package
 {
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.events.IAbstractSignalEvent;
+	import bridge.abstract.filters.IAbstractBlurFilter;
 	import bridge.abstract.IAbstractDisplayObject;
 	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractEngineLayerVO;
@@ -117,13 +118,17 @@ package
 			mc.play();
 			mc.x = mc.y = 250;
 			
-			var holder:IAbstractSprite = _bridgeGraphics.requestSprite("tete");
+			var holder:IAbstractSprite = _bridgeGraphics.requestSprite("asd");
 			
 			var graphics:IAbstractGraphics = _bridgeGraphics.requestGraphics(holder);
 			
 			graphics.beginFill(0x000000);
 			graphics.drawCircle(50, 50, 50);
 			graphics.endFill();
+			
+			var blurFilter:IAbstractBlurFilter = _bridgeGraphics.requestBlurFilter();
+			
+			_bridgeGraphics.addBlurFilter(holder, blurFilter);
 			
 			_bridgeGraphics.currentContainer.addNewChild(holder);
 		}
