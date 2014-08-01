@@ -110,9 +110,18 @@ package
 						//showPaytable();
 						//makeUILayer();
 						//makeSlider();
-						testMovieClips();
+						//testMovieClips();
+						testImages();
 					}
 				});
+		}
+		
+		private function testImages():void
+		{
+			var img:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100, 100, false, 0x000000));
+			_bridgeGraphics.addChild(img);
+			
+			img.newTextureFromBitmapData = new BitmapData(100, 100, false, 0xFF0000)
 		}
 		
 		private function testMovieClips():void

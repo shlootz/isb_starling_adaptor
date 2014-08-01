@@ -3,6 +3,7 @@ package starlingEngine.elements
 	import bridge.abstract.IAbstractAnimatable;
 	import bridge.abstract.IAbstractMovie;
 	import bridge.abstract.IAbstractTexture;
+	import flash.display.BitmapData;
 	import flash.media.Sound;
 	import starling.display.MovieClip;
 	import starling.textures.Texture;
@@ -69,6 +70,11 @@ package starlingEngine.elements
 		public function set newTexture (value:Object) : void
 		{
 			super.texture = value as Texture;
+		}
+		
+		public function set newTextureFromBitmapData(value:BitmapData):void
+		{
+			super.texture = Texture.fromBitmapData(value);
 		}
 
 	}
