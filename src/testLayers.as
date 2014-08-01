@@ -22,9 +22,12 @@ package
 	import bridge.IBridgeGraphics;
 	import com.greensock.TweenLite;
 	import feathers.controls.Slider;
+	import flappybird.Assets;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.media.Sound;
 	import flash.text.TextField;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -90,7 +93,8 @@ package
 													"../bin/assets/layouts/PaytablePage3.xml",
 													"../bin/assets/layouts/PaytablePage4.xml",
 													"../bin/assets/layouts/PaytablePage5.xml",
-													"../bin/assets/layouts/PaytablePage6.xml"
+													"../bin/assets/layouts/PaytablePage6.xml",
+													"../bin/assets/sounds/track.mp3"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
@@ -113,6 +117,9 @@ package
 		
 		private function testMovieClips():void
 		{
+			var snd:Sound = (_bridgeGraphics.assetsManager as starling.utils.AssetManager).getSound("track");
+			snd.play();
+			
 			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("s", 60);
 			_bridgeGraphics.currentContainer.addNewChild(mc);
 			mc.play();

@@ -2,6 +2,7 @@ package starlingEngine.elements
 {
 	import bridge.abstract.IAbstractImage;
 	import bridge.abstract.IAbstractTexture;
+	import flash.display.BitmapData;
 	import starling.display.Image;
 	import starling.textures.Texture;
 	/**
@@ -24,6 +25,11 @@ package starlingEngine.elements
 		public function set newTexture (value:Object) : void
 		{
 			super.texture = value as Texture;
+		}
+		
+		public function set newTextureFromBitmapData(value:BitmapData):void
+		{
+			super.texture = Texture.fromBitmapData(value);
 		}
 		
 		override public function readjustSize () :void
