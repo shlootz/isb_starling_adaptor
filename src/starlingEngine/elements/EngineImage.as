@@ -29,6 +29,7 @@ package starlingEngine.elements
 		
 		public function set newTextureFromBitmapData(value:BitmapData):void
 		{
+			super.texture.dispose();
 			super.texture = Texture.fromBitmapData(value);
 		}
 		

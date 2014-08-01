@@ -26,6 +26,7 @@ package
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.media.Sound;
 	import flash.text.TextField;
@@ -116,12 +117,22 @@ package
 				});
 		}
 		
+		private var _img:IAbstractImage
+		
 		private function testImages():void
 		{
-			var img:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100, 100, false, 0x000000));
-			_bridgeGraphics.addChild(img);
+			_img = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(400, 400, false, 0x000000));
+			_bridgeGraphics.addChild(_img);
 			
-			img.newTextureFromBitmapData = new BitmapData(100, 100, false, 0xFF0000)
+			addEventListener(Event.ENTER_FRAME, drawStuff);
+			
+			_img.x = 250;
+			_img.y = 250;
+		}
+		
+		private function drawStuff(e:Event):void
+		{
+			_img.newTextureFromBitmapData = new BitmapData(100, 100, false, Math.random() * 0xFFFFFF)
 		}
 		
 		private function testMovieClips():void
