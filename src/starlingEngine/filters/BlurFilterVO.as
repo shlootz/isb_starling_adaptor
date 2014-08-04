@@ -41,7 +41,7 @@ package starlingEngine.filters
 		
 		public function set resolution(val:Number):void
 		{
-			resolution = val;
+			_resolution = val;
 		}
 		
 		public function get resolution():Number
