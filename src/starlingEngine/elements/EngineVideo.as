@@ -33,7 +33,7 @@ package starlingEngine.elements
 			_netConnection.client.onMetaData = function ():void { };
 			_netStream = new NetStream(_netConnection);
 			_netStream.play(path);
-			_video = new Video(_netStream); 
+			_video = new Video(_netStream, null, true, true);
 			
 			this.addChild(_video);
 		}
