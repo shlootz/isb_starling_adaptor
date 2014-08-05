@@ -274,6 +274,7 @@
 			super.dispose();
 		}
 		
+				
 		private function disposeVideo():void 
 		{
 			if (mVideo) {
@@ -286,6 +287,9 @@
 		 * Drawing the video image to the BitmapData.
 		 * @see Video
 		 */
+		 
+		private var fRect:Rectangle = new Rectangle(0,0,2,2); 
+		 
 		public function draw():void
 		{
 			if (!contextStatus)
@@ -298,6 +302,9 @@
 			
 			mTime = getTimer();
 			
+			fRect.width = mBitmapData.width;
+			fRect.height = mBitmapData.height;
+			mBitmapData.fillRect(fRect, 0x000000)
 			mBitmapData.draw(mVideo, mFrameMatrix);
 			mStatsDrawTime.unshift(getTimer() - mTime);
 			
