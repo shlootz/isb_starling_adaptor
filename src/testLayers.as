@@ -112,12 +112,37 @@ package
 						//makeUILayer();
 						//makeSlider();
 						//testMovieClips();
-						testImages();
+						//testImages();
+						//testSounds();
+						testMovieClipsFromFrames();
 					}
 				});
 		}
 		
 		private var _img:IAbstractImage
+		
+		private function testMovieClipsFromFrames():void
+		{
+			var images:Vector.<IAbstractImage> = new Vector.<IAbstractImage>;
+			for (var i:uint = 0; i < 100; i++ )
+			{
+				images.push(_bridgeGraphics.requestImageFromBitmapData(new BitmapData(120, 120, false, Math.random() * 0xFFFFFF)));
+			}
+			
+			for (var j:uint = 0; j < 100; j++ )
+			{
+				var mc:IAbstractMovie = _bridgeGraphics.requestMovieFromFrames(images, 24);
+				mc.x = Math.random()*800;
+				mc.y = Math.random()*600;
+				mc.play();
+				_bridgeGraphics.addChild(mc);
+			}
+		}
+		
+		private function testSounds():void
+		{
+			_bridgeGraphics.retrieveSound("track").play();
+		}
 		
 		private function testImages():void
 		{

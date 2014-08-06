@@ -462,6 +462,27 @@
 		
 		/**
 		 * 
+		 * @param	frames
+		 * @param	fps
+		 */
+		public function requestMovieFromFrames(frames:Vector.<IAbstractImage>, fps:uint = 24):IAbstractMovie
+		{
+			var textures:Vector.<Texture> = new Vector.<Texture>();
+			
+			var i:uint = 0;
+			for (i = 0; i < frames.length; i++ )
+			{
+				textures.push(frames[i].currentTexture as Texture);
+			}
+			
+			var n:EngineMovie = new EngineMovie(textures, 24);
+			(juggler as Juggler).add(n as IAnimatable);
+			
+			return n;
+		}
+		
+		/**
+		 * 
 		 * @return IAbstractSprite
 		 * @see bridge.abstract.IAbstractSprite
 		 */
