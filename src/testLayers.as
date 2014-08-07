@@ -124,7 +124,7 @@ package
 		private function testMovieClipsFromFrames():void
 		{
 			var images:Vector.<IAbstractImage> = new Vector.<IAbstractImage>;
-			for (var i:uint = 0; i < 100; i++ )
+			for (var i:uint = 0; i < 10; i++ )
 			{
 				images.push(_bridgeGraphics.requestImageFromBitmapData(new BitmapData(120, 120, false, Math.random() * 0xFFFFFF)));
 			}
@@ -133,10 +133,18 @@ package
 			{
 				var mc:IAbstractMovie = _bridgeGraphics.requestMovieFromFrames(images, 24);
 				mc.x = Math.random()*800;
-				mc.y = Math.random()*600;
+				mc.y = Math.random() * 600;
+				mc.name = "mc" + j;
 				mc.play();
 				_bridgeGraphics.addChild(mc);
 			}
+			
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, onMovieClipEnded);
+		}
+		
+		private function onMovieClipEnded(type:String, event:IAbstractSignalEvent):void
+		{
+			trace(type+" - " + event);
 		}
 		
 		private function testSounds():void

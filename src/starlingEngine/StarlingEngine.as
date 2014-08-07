@@ -457,6 +457,9 @@
 			n.readjustSize();
 			
 			(juggler as Juggler).add(n as IAnimatable);
+			
+			n.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
+			
 			return n;
 		}
 		
@@ -477,6 +480,8 @@
 			
 			var n:EngineMovie = new EngineMovie(textures, 24);
 			(juggler as Juggler).add(n as IAnimatable);
+			
+			n.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
 			
 			return n;
 		}
