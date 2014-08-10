@@ -956,6 +956,8 @@
 		{
 			if (layer.redrawEnabled)
 			{
+				layer.destroyAll();
+			
 				var layoutDict:Dictionary = layer.layout;
 				var layerElements:Vector.<EngineLayerLayoutElementVo> = new Vector.<EngineLayerLayoutElementVo>();
 			

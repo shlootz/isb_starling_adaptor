@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="CEV3-1-9-ALL" type="flex">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../lib/CEV3-1-9-ALL.swc!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

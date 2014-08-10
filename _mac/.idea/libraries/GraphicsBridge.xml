@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="GraphicsBridge" type="flex">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../lib/GraphicsBridge.swc!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SignalsManager" type="flex">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../lib/SignalsManager.swc!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
