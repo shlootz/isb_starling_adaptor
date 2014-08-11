@@ -558,6 +558,8 @@
 				}
 			}
 			
+			s.anchor = slider_component_changed;
+			
 			return s;
 		}
 		

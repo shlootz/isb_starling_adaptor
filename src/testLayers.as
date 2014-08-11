@@ -95,7 +95,8 @@ package
 													"../bin/assets/layouts/PaytablePage4.xml",
 													"../bin/assets/layouts/PaytablePage5.xml",
 													"../bin/assets/layouts/PaytablePage6.xml",
-													"../bin/assets/sounds/track.mp3"
+													"../bin/assets/sounds/track.mp3",
+													"../bin/assets/layouts/freeSpinsLayout.xml"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
@@ -110,13 +111,63 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						//showPaytable();
 						//makeUILayer();
-						//makeSlider();
+						makeSlider();
 						//testMovieClips();
 						//testImages();
 						//testSounds();
-						testMovieClipsFromFrames();
+						//testMovieClipsFromFrames();
+						//testToggle();
+						//testFreeSpins();
 					}
 				});
+		}
+		
+		private function testFreeSpins():void
+		{
+			var fsXML:XML = new XML();
+			fsXML = _bridgeGraphics.getXMLFromAssetsManager("freeSpinsLayout");
+			
+			_layersVO.addLayer("fsUI", 0, fsXML, true);
+			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			
+			inLayers.push(_layersVO.retrieveLayer("fsUI"));
+			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers);
+			
+			addEventListener(Event.ENTER_FRAME, updateValues);
+		}
+		
+		private function updateValues(e:Event):void
+		{
+			var display:IAbstractLayer = _layersVO.retrieveLayer("fsUI");
+			
+			var value1:IAbstractLabel = display.getChildByNameStr("remainingSpinsValue") as IAbstractLabel;
+			(value1 as IAbstractLabel).updateLabel(String(Math.random() * 9999999));
+			
+			var value2:IAbstractDisplayObject = display.getChildByNameStr("totalWinValue");
+			(value2 as IAbstractLabel).updateLabel(String(Math.random() * 9999999));
+			
+			var value3:IAbstractDisplayObject = display.getChildByNameStr("currentWinValue");
+			(value3 as IAbstractLabel).updateLabel(String(Math.random() * 9999999));
+		}
+		
+		private var toggleBTN:IAbstractToggle
+		private function testToggle():void
+		{
+			toggleBTN = _bridgeGraphics.requestToggleButton("gigi");
+			toggleBTN.upSkin_ = toggleBTN.downSkin_ = toggleBTN.hoverSkin_ = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(200, 50, false, 0xFF0000));
+			toggleBTN.toggleTrueImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(20, 20, false, 0xFFFFFF));
+			toggleBTN.toggleFalseImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(20, 20, false, 0x000000));
+			
+			toggleBTN.x = toggleBTN.y = 200;
+			_bridgeGraphics.addChild(toggleBTN);
+			
+				((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, onToggle);
+		}
+		
+		private function onToggle(type:String, e:Object):void
+		{
+			trace("asd");
+			trace(e);
 		}
 		
 		private var _img:IAbstractImage
