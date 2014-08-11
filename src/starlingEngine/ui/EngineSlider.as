@@ -101,6 +101,11 @@ package starlingEngine.ui
 			_anchor.apply(null, [o]);
 		}
 		
+		public function get sliderCurrentValue():Number
+		{
+			return slider.value;
+		}
+		
 	}
 
 }

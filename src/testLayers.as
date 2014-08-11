@@ -244,11 +244,12 @@ package
 			_bridgeGraphics.currentContainer.addNewChild(holder);
 		}
 		
+		private var slider:IAbstractSlider;
 		private function makeSlider():void
 		{
 			var sliderTextField:IAbstractTextField = _bridgeGraphics.requestTextField(140, 50, "Test", "Verdana", 20, 0xFFFFFF);
 			var sliderLabel:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(sliderTextField, "label");
-			var slider:IAbstractSlider = _bridgeGraphics.requestSlider(_bridgeGraphics.requestImage("Slider-Dragger"), 
+			slider = _bridgeGraphics.requestSlider(_bridgeGraphics.requestImage("Slider-Dragger"), 
 																					_bridgeGraphics.requestImage("Slider-Dragger"),
 																					_bridgeGraphics.requestImage("Slider-Track-Full"),
 																					_bridgeGraphics.requestImage("Slider-Track-Full"),
@@ -413,6 +414,7 @@ package
 		private function onSlider(type:String, obj:IAbstractSignalEvent):void
 		{
 			trace("Caught Slider " + type+" & " + obj);
+			trace("!!!!!!!!!!!!!!!! " + slider.sliderCurrentValue);
 		}
 		
 	}
