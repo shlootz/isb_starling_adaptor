@@ -106,6 +106,11 @@ package starlingEngine.ui
 			return slider.value;
 		}
 		
+		public function set sliderCurrentValue(val:Number):void
+		{
+			 slider.value = val;
+		}
+		
 	}
 
 }

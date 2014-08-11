@@ -261,6 +261,7 @@ package
 			slider.x = 250;
 			slider.y = 250;
 			_bridgeGraphics.addChild(slider);
+			slider.sliderCurrentValue = 50;
 		}
 		
 		private var _paytablePagesLayersVO:IAbstractEngineLayerVO;
