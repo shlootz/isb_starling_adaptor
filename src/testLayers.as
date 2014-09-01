@@ -15,6 +15,7 @@ package
 	import bridge.abstract.transitions.IAbstractLayerTransitionIn;
 	import bridge.abstract.transitions.IAbstractLayerTransitionOut;
 	import bridge.abstract.ui.IAbstractButton;
+	import bridge.abstract.ui.IAbstractInputText;
 	import bridge.abstract.ui.IAbstractLabel;
 	import bridge.abstract.ui.IAbstractSlider;
 	import bridge.abstract.ui.IAbstractToggle;
@@ -22,6 +23,7 @@ package
 	import bridge.IBridgeGraphics;
 	import com.greensock.TweenLite;
 	import feathers.controls.Slider;
+	import feathers.controls.TextInput;
 	import flappybird.Assets;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -45,6 +47,7 @@ package
 	import starling.utils.AssetManager;
 	import starlingEngine.elements.EngineLabel;
 	import starlingEngine.StarlingEngine;
+	import starlingEngine.ui.EngineInputText;
 	import starlingEngine.ui.EngineSlider;
 	import starlingEngine.ui.EngineToggleButton;
 	/**
@@ -111,15 +114,24 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						//showPaytable();
 						//makeUILayer();
-						makeSlider();
+						//makeSlider();
 						//testMovieClips();
 						//testImages();
 						//testSounds();
 						//testMovieClipsFromFrames();
 						//testToggle();
 						//testFreeSpins();
+						testInputText();
 					}
 				});
+		}
+		
+		private function testInputText():void
+		{
+			var input:IAbstractInputText = _bridgeGraphics.requestInputTextField(400, 50, "AAAAAAAAAAAAAAAAAAA", "Verdana", 50, 0xffffff);
+			input.x = 50;
+			input.y = 50;
+			_bridgeGraphics.addChild(input);
 		}
 		
 		private function testFreeSpins():void
@@ -175,16 +187,17 @@ package
 		private function testMovieClipsFromFrames():void
 		{
 			var images:Vector.<IAbstractImage> = new Vector.<IAbstractImage>;
-			for (var i:uint = 0; i < 10; i++ )
+			
+			for (var i:uint = 0; i < 1000; i++ )
 			{
 				images.push(_bridgeGraphics.requestImageFromBitmapData(new BitmapData(120, 120, false, Math.random() * 0xFFFFFF)));
 			}
 			
-			for (var j:uint = 0; j < 100; j++ )
+			for (var j:uint = 0; j < 1000; j++ )
 			{
-				var mc:IAbstractMovie = _bridgeGraphics.requestMovieFromFrames(images, 24);
-				mc.x = Math.random()*800;
-				mc.y = Math.random() * 600;
+				var mc:IAbstractMovie = _bridgeGraphics.requestMovieFromFrames(images, Math.random()*60);
+				mc.x = 100 + Math.random()*700;
+				mc.y = 100 + Math.random() * 500;
 				mc.name = "mc" + j;
 				mc.play();
 				_bridgeGraphics.addChild(mc);

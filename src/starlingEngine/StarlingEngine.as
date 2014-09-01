@@ -9,6 +9,7 @@
 	import bridge.abstract.IAbstractGraphics;
 	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.IAbstractScrollTile;
+	import bridge.abstract.ui.IAbstractInputText;
 	import bridge.abstract.ui.IAbstractSlider;
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
@@ -24,6 +25,7 @@
 	import starlingEngine.filters.BlurFilterVO;
 	import starlingEngine.filters.DropShadowFilterVO;
 	import starlingEngine.filters.GlowFilterVO;
+	import starlingEngine.ui.EngineInputText;
 	import starlingEngine.ui.EngineSlider;
 	import starlingEngine.ui.EngineToggleButton;
 	import starlingEngine.validators.LayoutButtonValidator;
@@ -612,6 +614,21 @@
 			t.autoScale = true;
 			
 			return t;
+		}
+		
+		/**
+		 * 
+		 * @param	width
+		 * @param	height
+		 * @param	text
+		 * @param	fontName
+		 * @param	fontSize
+		 * @param	color
+		 * @return
+		 */
+		public function requestInputTextField(width:int, height:int, text:String = "", fontName:String = "Verdana", fontSize:Number = 12, color:uint = 0):IAbstractInputText
+		{
+			return new EngineInputText(width, height, text, fontName, fontSize, color);
 		}
 		
 		/**

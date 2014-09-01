@@ -4,14 +4,21 @@ package starlingEngine.ui
 	import feathers.controls.TextInput;
 	/**
 	 * ...
-	 * @author Eu
+	 * @author Alex Popescu
 	 */
-	public class EngineInputText extends TextInput impements IAbstractInputText
+	public class EngineInputText extends TextInput implements IAbstractInputText
 	{
 		
-		public function EngineInputText() 
+		public function EngineInputText(width:int, height:int, text:String = "", fontName:String="Verdana", fontSize:Number=12, color:uint=0) 
 		{
 			super();
+			
+			this.width = width;
+			this.height = height;
+			this.text = text;
+			this.textEditorProperties.fontFamily = fontName;
+			this.textEditorProperties.fontSize = fontSize;
+			this.textEditorProperties.color = color;
 		}
 		
 	}
