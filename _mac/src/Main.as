@@ -116,9 +116,9 @@ public class Main extends Sprite
                 //showPaytable();
                 //makeUILayer();
                 //makeSlider();
-                //testMovieClips();
+                testMovieClips();
                 //testFLV();
-                testLabel();
+                //testLabel();
             }
 
         });

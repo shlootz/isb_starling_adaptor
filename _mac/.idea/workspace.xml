@@ -26,8 +26,8 @@
       <file leaf-file-name="Main.as" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="6.628959" vertical-offset="0" max-vertical-offset="4980">
-              <caret line="341" column="8" selection-start-line="341" selection-start-column="8" selection-end-line="341" selection-end-column="8" />
+            <state vertical-scroll-proportion="-0.81447965" vertical-offset="1590" max-vertical-offset="4980">
+              <caret line="118" column="16" selection-start-line="118" selection-start-column="16" selection-end-line="118" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -56,9 +56,11 @@
       <file leaf-file-name="StarlingEngine.as" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/starlingEngine/StarlingEngine.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="14355" max-vertical-offset="18540">
-              <caret line="957" column="9" selection-start-line="954" selection-start-column="24" selection-end-line="954" selection-end-column="25" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="11492" max-vertical-offset="18540">
+              <caret line="728" column="41" selection-start-line="728" selection-start-column="41" selection-end-line="728" selection-end-column="41" />
+              <folding>
+                <element signature="e#26#59#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -114,8 +116,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -272,6 +272,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -549,15 +551,17 @@
       <workItem from="1407503012310" duration="835000" />
       <workItem from="1407596170902" duration="284000" />
       <workItem from="1407836083806" duration="76000" />
+      <workItem from="1407929828421" duration="297000" />
+      <workItem from="1408007485457" duration="196000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10240000" />
+    <option name="totallyTimeSpent" value="10733000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -577,7 +581,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -623,7 +627,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="6720" max-vertical-offset="18480">
           <caret line="448" column="54" selection-start-line="448" selection-start-column="54" selection-end-line="448" selection-end-column="54" />
-          <folding />
+          <folding>
+            <element signature="e#26#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -655,7 +661,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="6720" max-vertical-offset="18480">
           <caret line="448" column="54" selection-start-line="448" selection-start-column="54" selection-end-line="448" selection-end-column="54" />
-          <folding />
+          <folding>
+            <element signature="e#26#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -679,7 +687,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5254" max-vertical-offset="16890">
           <caret line="457" column="12" selection-start-line="457" selection-start-column="12" selection-end-line="457" selection-end-column="12" />
-          <folding />
+          <folding>
+            <element signature="e#26#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -977,16 +987,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/starlingEngine/StarlingEngine.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="14355" max-vertical-offset="18540">
-          <caret line="957" column="9" selection-start-line="954" selection-start-column="24" selection-end-line="954" selection-end-column="25" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="11492" max-vertical-offset="18540">
+          <caret line="728" column="41" selection-start-line="728" selection-start-column="41" selection-end-line="728" selection-end-column="41" />
+          <folding>
+            <element signature="e#26#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.628959" vertical-offset="0" max-vertical-offset="4980">
-          <caret line="341" column="8" selection-start-line="341" selection-start-column="8" selection-end-line="341" selection-end-column="8" />
+        <state vertical-scroll-proportion="-0.81447965" vertical-offset="1590" max-vertical-offset="4980">
+          <caret line="118" column="16" selection-start-line="118" selection-start-column="16" selection-end-line="118" selection-end-column="16" />
           <folding />
         </state>
       </provider>
