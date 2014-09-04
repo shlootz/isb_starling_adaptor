@@ -1,6 +1,7 @@
 package
 {
 import bridge.abstract.AbstractPool;
+import bridge.abstract.IAbstractDisplayObjectContainer;
 import bridge.abstract.IAbstractGraphics;
 import bridge.abstract.IAbstractVideo;
 import bridge.abstract.events.IAbstractSignalEvent;
@@ -22,6 +23,9 @@ import bridge.abstract.ui.IAbstractSlider;
 import bridge.abstract.ui.IAbstractToggle;
 import bridge.BridgeGraphics;
 import bridge.IBridgeGraphics;
+
+import citrus.objects.vehicle.nape.Nugget;
+
 import com.greensock.TweenLite;
 import feathers.controls.Slider;
 
@@ -29,6 +33,7 @@ import flash.display.BitmapData;
 import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.media.Video;
 import flash.net.NetConnection;
@@ -44,6 +49,8 @@ import starling.animation.IAnimatable;
 import starling.animation.Juggler;
 import starling.display.Image;
 import starling.display.Quad;
+import starling.textures.GradientTexture;
+import starling.textures.Texture;
 import starling.utils.AssetManager;
 import starlingEngine.elements.EngineLabel;
 import starlingEngine.StarlingEngine;
@@ -116,12 +123,43 @@ public class Main extends Sprite
                 //showPaytable();
                 //makeUILayer();
                 //makeSlider();
-                testMovieClips();
+                //testMovieClips();
                 //testFLV();
                 //testLabel();
+                testGraphics();
             }
 
         });
+    }
+
+    private function testGraphics():void
+    {
+        var bgMatrix:Matrix = new Matrix();
+        var maxSquare:Number;
+        var stageH:Number = 480;
+        var stageW:Number = 600;
+
+//I am making a gradient to fit my stage, but I don't want to distort the circular shape, the * 2.48 is to match the 248% scale I used in photoshop when visualising the gradient.
+        if (stageH <= stageW) { maxSquare = stageH * 2.48 } else { maxSquare = stageW * 2.48 }
+
+        var boxRotation:Number = Math.PI/2; // 90° Rotation value in radians, in photoshop the angle was set to 90 degrees for me, 0 might be fine for you.
+//Setting the starting x/y values, as the gradient is larger than the stage to center it I need to offset it a bit.
+        var tx:Number = (stageW/2)-(maxSquare/2);
+        var ty:Number = (stageH/2)-(maxSquare/2);
+//width,height,angle,offsetX,offsetY
+        bgMatrix.createGradientBox(maxSquare, maxSquare, boxRotation, tx, ty);
+
+        var bgGradientTexture:Texture = GradientTexture.create(
+                600, 	//Define Width and Height to draw to, if less than defined in bgMatrix will clip the gradient
+                480,
+                "radial", 	//Gradient type
+                [0x00a2ff, 0x0335a6], //Colours
+                [1, 1], 	//Alpha values 0-1
+                [0, 255], 	//Ratio, where the colour is input into the gradient space, 0 left, 255 right, can be placed anywhere between
+                bgMatrix) 	//Matrix to use, optional but gives finer control of the gradient appearance
+
+        var img:Image = new Image(bgGradientTexture)
+        _bridgeGraphics.addChild(img);
     }
 
     private var lb:IAbstractLabel;
