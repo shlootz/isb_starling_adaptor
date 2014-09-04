@@ -46,6 +46,7 @@ package
 	import starling.display.BlendMode;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Graphics;
+	import starling.display.graphics.Stroke;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.textures.GradientTexture;
@@ -126,9 +127,9 @@ package
 						//testSounds();
 						//testMovieClipsFromFrames();
 						//testToggle();
-						testFreeSpins();
-						//testInputText();
-						testGradientFill();
+						//testFreeSpins();
+						testInputText();
+						//testGradientFill();
 					}
 				});
 		}
@@ -149,6 +150,16 @@ package
 				_bridgeGraphics.addChild(square);
 				
 				square.y = 300;
+				
+				var stroke:Stroke = new Stroke();
+				stroke.addVertex(100, 100, 1, 0xFFFFFF, 0, 0xFFFFFF, 0);
+				stroke.addVertex(150, 150, 2);
+				stroke.addVertex(250, 200, 5);
+				stroke.addVertex(250, 200, 2);
+				stroke.addVertex(400, 300);
+				stroke.addVertex(400, 400, 1, 0xFFFFFF, 0, 0xFFFFFF, 0);
+				stroke.alpha = 0.3;
+				_bridgeGraphics.addChild(stroke);
 		}
 		
 		private function testInputText():void
@@ -157,6 +168,7 @@ package
 			input.x = 50;
 			input.y = 50;
 			_bridgeGraphics.addChild(input);
+			trace(input.text);
 		}
 		
 		private function testFreeSpins():void
