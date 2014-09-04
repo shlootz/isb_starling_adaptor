@@ -25,10 +25,13 @@ package
 	import feathers.controls.Slider;
 	import feathers.controls.TextInput;
 	import flappybird.Assets;
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.media.Sound;
 	import flash.text.TextField;
@@ -40,10 +43,13 @@ package
 	import signals.SignalsHub;
 	import starling.animation.IAnimatable;
 	import starling.animation.Juggler;
+	import starling.display.BlendMode;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Graphics;
 	import starling.display.Image;
 	import starling.display.Quad;
+	import starling.textures.GradientTexture;
+	import starling.textures.Texture;
 	import starling.utils.AssetManager;
 	import starlingEngine.elements.EngineLabel;
 	import starlingEngine.StarlingEngine;
@@ -120,10 +126,29 @@ package
 						//testSounds();
 						//testMovieClipsFromFrames();
 						//testToggle();
-						//testFreeSpins();
-						testInputText();
+						testFreeSpins();
+						//testInputText();
+						testGradientFill();
 					}
 				});
+		}
+		
+		private function testGradientFill():void
+		{
+				var square:IAbstractSprite = _bridgeGraphics.requestSprite("sq");
+				var graphics:IAbstractGraphics = _bridgeGraphics.requestGraphics(square);
+				
+				graphics.beginFill(0x000000);
+				graphics.drawRect(0, 0, 200, 200);
+				graphics.endFill();
+				square.x = 200;
+				square.y = 200;
+				
+				graphics.beginGradientFill("linear", [0x000000, 0x000000], [0, 1], [0, 255]);
+				
+				_bridgeGraphics.addChild(square);
+				
+				square.y = 300;
 		}
 		
 		private function testInputText():void
