@@ -13,6 +13,7 @@
 	import bridge.abstract.ui.IAbstractSlider;
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
+	import flash.display.Sprite;
 	import flash.geom.Point;
 	import starling.filters.BlurFilter;
 	import starlingEngine.elements.EngineBlitMask;
@@ -1213,6 +1214,11 @@
 			 return _currentState;
 		 }
 		
+		 public function get nativeDisplay():Sprite
+		 { 
+			 return _starling.nativeOverlay;	 
+		 }
+		 
 		/**
 		 * 
 		 */

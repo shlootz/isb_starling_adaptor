@@ -128,10 +128,20 @@ package
 						//testMovieClipsFromFrames();
 						//testToggle();
 						//testFreeSpins();
-						testInputText();
+						//testInputText();
 						//testGradientFill();
+						testNativeOverlay();
 					}
 				});
+		}
+		
+		private function testNativeOverlay():void
+		{
+			var nativeOverlay:Sprite = _bridgeGraphics.nativeDisplay;
+			
+			nativeOverlay.graphics.beginFill(0xFF0000);
+			nativeOverlay.graphics.drawCircle(100, 100, 400);
+			nativeOverlay.graphics.endFill();
 		}
 		
 		private function testGradientFill():void
