@@ -15,6 +15,7 @@ import bridge.abstract.IAbstractTextField;
 import bridge.abstract.filters.IAbstractBlurFilter;
 import bridge.abstract.filters.IAbstractDropShadowFilter;
 import bridge.abstract.filters.IAbstractGlowFilter;
+import bridge.abstract.filters.IAbstractGlowFilter;
 import bridge.abstract.transitions.IAbstractLayerTransitionIn;
 import bridge.abstract.transitions.IAbstractLayerTransitionOut;
 import bridge.abstract.ui.IAbstractButton;
@@ -27,7 +28,10 @@ import bridge.IBridgeGraphics;
 import citrus.objects.vehicle.nape.Nugget;
 
 import com.greensock.TweenLite;
+
+import feathers.controls.List;
 import feathers.controls.Slider;
+import feathers.data.ListCollection;
 
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
@@ -61,7 +65,7 @@ import starlingEngine.ui.EngineToggleButton;
  * @author Eu
  */
 
-[SWF(backgroundColor='#ffffff',frameRate='60')]
+[SWF(backgroundColor='#FFFFFF',frameRate='30')]
 
 public class Main extends Sprite
 {
@@ -126,10 +130,62 @@ public class Main extends Sprite
                 //testMovieClips();
                 //testFLV();
                 //testLabel();
-                testGraphics();
+                //testGraphics();
+                //testFilters();
+                testComboBox();
             }
 
         });
+    }
+
+    private function testComboBox():void
+    {
+        var list:List = new List();
+        list.width = 250;
+        list.height = 300;
+        list.x = 100;
+        list.y = 100;
+        _bridgeGraphics.addChild( list );
+
+        var groceryList:ListCollection = new ListCollection(
+                [
+                    { text: "Milk" },
+                    { text: "Eggs"},
+                    { text: "Bread"},
+                    { text: "Chicken"},
+                ]);
+        list.dataProvider = groceryList;
+    }
+
+    private var _graphics:IAbstractGraphics;
+    private var _graphicsHolder:IAbstractSprite;
+
+    private function testFilters():void
+    {
+        _graphicsHolder = _bridgeGraphics.requestSprite("grHolder");
+
+        _graphics = _bridgeGraphics.requestGraphics(_graphicsHolder);
+        _graphics.lineStyle(3,0xFFFFFF);
+        _graphics.moveTo(100,100);
+
+        var glowFilter:IAbstractGlowFilter = _bridgeGraphics.requestGlowFilter();
+        glowFilter.alpha = 5;
+        glowFilter.color = 0xFF0000;
+        glowFilter.resolution = .5;
+        glowFilter.blur = 2;
+
+        var dropShadowFilter:IAbstractDropShadowFilter = _bridgeGraphics.requestDropShadowFilter();
+        dropShadowFilter.color = 0xFF0000;
+        dropShadowFilter.distance = 0;
+        dropShadowFilter.blur = 5;
+
+        _bridgeGraphics.addGlowFilter(_graphicsHolder, glowFilter);
+        //_bridgeGraphics.addDropShadowFilter(_graphicsHolder, dropShadowFilter);
+
+        _bridgeGraphics.addChild(_graphicsHolder);
+
+        _graphics.moveTo(100,100);
+        _graphics.lineTo(800,101);
     }
 
     private function testGraphics():void
