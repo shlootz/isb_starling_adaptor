@@ -15,6 +15,8 @@ package
 	import bridge.abstract.transitions.IAbstractLayerTransitionIn;
 	import bridge.abstract.transitions.IAbstractLayerTransitionOut;
 	import bridge.abstract.ui.IAbstractButton;
+	import bridge.abstract.ui.IAbstractComboBox;
+	import bridge.abstract.ui.IAbstractComboBoxItemRenderer;
 	import bridge.abstract.ui.IAbstractInputText;
 	import bridge.abstract.ui.IAbstractLabel;
 	import bridge.abstract.ui.IAbstractSlider;
@@ -22,8 +24,16 @@ package
 	import bridge.BridgeGraphics;
 	import bridge.IBridgeGraphics;
 	import com.greensock.TweenLite;
+	import feathers.controls.List;
+	import feathers.controls.renderers.DefaultListItemRenderer;
+	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.controls.Slider;
 	import feathers.controls.TextInput;
+	import feathers.data.ListCollection;
+	import feathers.display.Scale9Image;
+	import feathers.layout.HorizontalLayout;
+	import feathers.layout.VerticalLayout;
+	import feathers.text.BitmapFontTextFormat;
 	import flappybird.Assets;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -54,6 +64,9 @@ package
 	import starling.utils.AssetManager;
 	import starlingEngine.elements.EngineLabel;
 	import starlingEngine.StarlingEngine;
+	import starlingEngine.ui.EngineComboBox;
+	import starlingEngine.ui.EngineList;
+	import starlingEngine.ui.EngineComboBoxItemRenderer;
 	import starlingEngine.ui.EngineInputText;
 	import starlingEngine.ui.EngineSlider;
 	import starlingEngine.ui.EngineToggleButton;
@@ -63,7 +76,25 @@ package
 	 */
 	public class testLayers extends Sprite
 	{
-			private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
+		[Embed(source = "../bin/assets/bitmapfonts/Lcd.fnt", mimeType = "application/octet-stream")]
+		private static const defaultFontClass : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/Lcd_0.png")]
+		private static const defaultFontPng : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/Zrnic.fnt", mimeType = "application/octet-stream")]
+		private static const ZrnicFontClass : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/Zrnic_0.png")]
+		private static const ZrnicFontPng : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/ZrnicBig.fnt", mimeType = "application/octet-stream")]
+		private static const ZrnicBigFontClass : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/ZrnicBig_0.png")]
+		private static const ZrnicBigFontPng : Class;
+			
+		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
 																		new Point(800, 600),
 																		StarlingEngine,
 																		starling.utils.AssetManager,
@@ -130,9 +161,38 @@ package
 						//testFreeSpins();
 						//testInputText();
 						//testGradientFill();
-						testNativeOverlay();
+						//testNativeOverlay();
+						testComboBox();
 					}
 				});
+		}
+		
+		private function testComboBox():void
+		{
+			 _bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ZrnicFontPng(), XML(new ZrnicFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
+			
+			var dataProvider:Vector.<IAbstractComboBoxItemRenderer> = new Vector.<IAbstractComboBoxItemRenderer>;
+			dataProvider.push(new EngineComboBoxItemRenderer("test1", _bridgeGraphics.requestImage("Spark-1")));
+			dataProvider.push(new EngineComboBoxItemRenderer("test2", _bridgeGraphics.requestImage("Spark-1")));
+			dataProvider.push(new EngineComboBoxItemRenderer("test3", _bridgeGraphics.requestImage("Spark-1")));
+			dataProvider.push(new EngineComboBoxItemRenderer("test4", _bridgeGraphics.requestImage("Spark-1")));
+			dataProvider.push(new EngineComboBoxItemRenderer("test5", _bridgeGraphics.requestImage("Spark-1")));
+			dataProvider.push(new EngineComboBoxItemRenderer("test6", _bridgeGraphics.requestImage("Spark-1")));
+			dataProvider.push(new EngineComboBoxItemRenderer("test7", _bridgeGraphics.requestImage("Spark-1")));
+			dataProvider.push(new EngineComboBoxItemRenderer("test8", _bridgeGraphics.requestImage("Spark-1")));
+			dataProvider.push(new EngineComboBoxItemRenderer("test9", _bridgeGraphics.requestImage("Spark-1")));
+			
+			var backgroundImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(150, 200, false, 0xFFFFFF));
+			
+			//var cb:EngineComboBox = new EngineComboBox(_bridgeGraphics.signalsManager as SignalsHub,dataProvider, 200, 200,backgroundImage, "Zrnic");
+			var cb:IAbstractComboBox = _bridgeGraphics.requestComboBox(dataProvider, 200, 200,backgroundImage, "Zrnic");
+			_bridgeGraphics.addChild(cb);
+			
+			cb.x = 150;
+			cb.y = 150;
+			
 		}
 		
 		private function testNativeOverlay():void

@@ -9,6 +9,8 @@
 	import bridge.abstract.IAbstractGraphics;
 	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.IAbstractScrollTile;
+	import bridge.abstract.ui.IAbstractComboBox;
+	import bridge.abstract.ui.IAbstractComboBoxItemRenderer;
 	import bridge.abstract.ui.IAbstractInputText;
 	import bridge.abstract.ui.IAbstractSlider;
 	import bridge.abstract.ui.IAbstractToggle;
@@ -26,6 +28,7 @@
 	import starlingEngine.filters.BlurFilterVO;
 	import starlingEngine.filters.DropShadowFilterVO;
 	import starlingEngine.filters.GlowFilterVO;
+	import starlingEngine.ui.EngineComboBox;
 	import starlingEngine.ui.EngineInputText;
 	import starlingEngine.ui.EngineSlider;
 	import starlingEngine.ui.EngineToggleButton;
@@ -323,6 +326,8 @@
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_SLIDER_CHANGE, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
+			
+			(_signalsHub as SignalsHub).addSignal(Signals.LIST_ITEM_TOUCHED, new Signal(), new Vector.<Function>);
 		}
 		
 		/**
@@ -542,6 +547,12 @@
 				b.name = name;
 			}
 			return b;
+		}
+		
+		public function requestComboBox(dataProvider:Vector.<IAbstractComboBoxItemRenderer>, width:Number, height:Number, backgroundImage:IAbstractImage, font:String):IAbstractComboBox
+		{
+			var cb:IAbstractComboBox = new EngineComboBox(_signalsHub, dataProvider, width, height, backgroundImage, font);
+			return cb;
 		}
 		
 		public function requestSlider( 
