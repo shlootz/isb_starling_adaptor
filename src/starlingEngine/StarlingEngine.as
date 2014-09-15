@@ -328,6 +328,7 @@
 			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.LIST_ITEM_TOUCHED, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_CHANGED, new Signal(), new Vector.<Function>);
 		}
 		
 		/**
@@ -638,9 +639,9 @@
 		 * @param	color
 		 * @return
 		 */
-		public function requestInputTextField(width:int, height:int, text:String = "", fontName:String = "Verdana", fontSize:Number = 12, color:uint = 0):IAbstractInputText
+		public function requestInputTextField(signalsManager:Object, width:int, height:int, text:String = "", fontName:String = "Verdana", fontSize:Number = 12, color:uint = 0):IAbstractInputText
 		{
-			return new EngineInputText(width, height, text, fontName, fontSize, color);
+			return new EngineInputText(signalsManager, width, height, text, fontName, fontSize, color);
 		}
 		
 		/**

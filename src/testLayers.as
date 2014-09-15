@@ -159,10 +159,10 @@ package
 						//testMovieClipsFromFrames();
 						//testToggle();
 						//testFreeSpins();
-						//testInputText();
+						testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
-						testComboBox();
+						//testComboBox();
 					}
 				});
 		}
@@ -238,7 +238,13 @@ package
 			input.x = 50;
 			input.y = 50;
 			_bridgeGraphics.addChild(input);
-			trace(input.text);
+			
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.TEXT_INPUT_CHANGED, inputChanged);
+		}
+		
+		private function inputChanged(type:String, event:Object):void
+		{
+			trace("CAUGHT " + type+" event: " + event);
 		}
 		
 		private function testFreeSpins():void
