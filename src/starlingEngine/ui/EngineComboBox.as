@@ -114,6 +114,21 @@ package starlingEngine.ui
 		{
 			return _currentSelection
 		}
+		
+		public function addItem(item:IAbstractComboBoxItemRenderer):void
+		{
+			_cb.addItem(item as EngineComboBoxItemRenderer);
+		}
+		
+		public function removeItem(item:IAbstractComboBoxItemRenderer):void
+		{
+			_cb.removeItem(item as EngineComboBoxItemRenderer);
+		}
+		
+		public function clearList():void
+		{
+			_cb.clearList();
+		}
 
 	}
 

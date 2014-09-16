@@ -14,6 +14,7 @@ package starlingEngine.ui
 		
 		private var _text:String;
 		private var _thumbnail:IAbstractImage;
+		private var _data:Object;
 		
 		public function EngineComboBoxItemRenderer(text:String, thumbnail:IAbstractImage) 
 		{
@@ -39,6 +40,16 @@ package starlingEngine.ui
 		public function set thumbnail(value:IAbstractImage):void 
 		{
 			_thumbnail = value;
+		}
+		
+		public function get data():Object 
+		{
+			return _data;
+		}
+		
+		public function set data(value:Object):void 
+		{
+			_data = value;
 		}
 		
 		

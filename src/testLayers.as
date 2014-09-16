@@ -159,11 +159,11 @@ package
 						//testMovieClipsFromFrames();
 						//testToggle();
 						//testFreeSpins();
-						//testInputText();
+						testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
-						testComboBox("cb1", 150, 150);
-						testComboBox("cb2", 350,150);
+						//testComboBox("cb1", 150, 150);
+						//testComboBox("cb2", 350,150);
 					}
 				});
 		}
@@ -193,6 +193,8 @@ package
 			
 			cb.x = xPos;
 			cb.y = yPos;
+			
+			cb.addItem(new EngineComboBoxItemRenderer("test "+Math.random()*999999, _bridgeGraphics.requestImage("Spark-1")));
 			
 		}
 		
@@ -235,11 +237,13 @@ package
 		
 		private function testInputText():void
 		{
-			var input:IAbstractInputText = _bridgeGraphics.requestInputTextField(400, 50, "AAAAAAAAAAAAAAAAAAA", "Verdana", 50, 0xffffff);
+			var input:IAbstractInputText = _bridgeGraphics.requestInputTextField(400, 50, "AAAAAAAAAAAAAAAAAAA", "Verdana", 50, 0x000000);
+			input.name = "adadasd";
 			input.x = 50;
 			input.y = 50;
 			input.restriction = "0-9.";
 			_bridgeGraphics.addChild(input);
+			trace(input.name);
 			
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.TEXT_INPUT_CHANGED, inputChanged);
 		}

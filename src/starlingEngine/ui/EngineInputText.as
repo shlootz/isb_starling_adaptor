@@ -3,8 +3,11 @@ package starlingEngine.ui
 	import bridge.abstract.ui.IAbstractInputText;
 	import feathers.controls.TextInput;
 	import feathers.events.FeathersEventType;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import signals.Signals;
 	import signals.SignalsHub;
+	import starling.display.Image;
 	import starling.events.Event;
 	import starlingEngine.events.GESignalEvent;
 	/**
@@ -38,6 +41,10 @@ package starlingEngine.ui
 			this.textEditorProperties.fontFamily = fontName;
 			this.textEditorProperties.fontSize = fontSize;
 			this.textEditorProperties.color = color;
+			
+			var backGroundBmp:Bitmap = new Bitmap(new BitmapData(width, height, false, 0xFFFFFF));
+			var backgroundImage:Image = Image.fromBitmap(backGroundBmp);
+			this.backgroundSkin = backgroundImage;
 			
 			addEventListener( Event.CHANGE, input_changeHandler );
 			addEventListener( FeathersEventType.ENTER, input_enterHandler );
