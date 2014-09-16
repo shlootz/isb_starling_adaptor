@@ -67,7 +67,7 @@ package starlingEngine.ui
 			o.params = {
 				text:this.text
 			}
-			_signalsManager.dispatchSignal(Signals.TEXT_INPUT_CHANGED, o.params["text"], o);
+			_signalsManager.dispatchSignal(Signals.TEXT_INPUT_CHANGED, this.name, o);
 		}
 		
 		/**
@@ -82,7 +82,7 @@ package starlingEngine.ui
 			o.params = {
 				text:this.text
 			}
-			_signalsManager.dispatchSignal(Signals.TEXT_INPUT_CHANGED, o.params["text"], o);
+			_signalsManager.dispatchSignal(Signals.TEXT_INPUT_CHANGED, this.name, o);
 		}
 		
 	}
