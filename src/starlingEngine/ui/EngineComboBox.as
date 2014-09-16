@@ -99,9 +99,12 @@ package starlingEngine.ui
 		 */
 		private function makeSelection(event:String, obj:Object):void
 		{
-			_label.updateLabel(event);
-			_currentSelection = event;
-			toggle();
+			if (obj["engineEvent"]["currentTarget"]["parent"] === _cb)
+			{
+				_label.updateLabel(event);
+				_currentSelection = event;
+				toggle();
+			}
 		}
 		
 		/**

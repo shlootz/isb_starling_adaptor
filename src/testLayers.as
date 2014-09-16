@@ -159,15 +159,16 @@ package
 						//testMovieClipsFromFrames();
 						//testToggle();
 						//testFreeSpins();
-						testInputText();
+						//testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
-						//testComboBox();
+						testComboBox("cb1", 150, 150);
+						testComboBox("cb2", 350,150);
 					}
 				});
 		}
 		
-		private function testComboBox():void
+		private function testComboBox(name:String, xPos:uint, yPos:uint):void
 		{
 			 _bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
 			 _bridgeGraphics.registerBitmapFont(new ZrnicFontPng(), XML(new ZrnicFontClass()));
@@ -190,8 +191,8 @@ package
 			var cb:IAbstractComboBox = _bridgeGraphics.requestComboBox(dataProvider, 200, 200,backgroundImage, "Zrnic");
 			_bridgeGraphics.addChild(cb);
 			
-			cb.x = 150;
-			cb.y = 150;
+			cb.x = xPos;
+			cb.y = yPos;
 			
 		}
 		
@@ -237,6 +238,7 @@ package
 			var input:IAbstractInputText = _bridgeGraphics.requestInputTextField(400, 50, "AAAAAAAAAAAAAAAAAAA", "Verdana", 50, 0xffffff);
 			input.x = 50;
 			input.y = 50;
+			input.restriction = "0-9.";
 			_bridgeGraphics.addChild(input);
 			
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.TEXT_INPUT_CHANGED, inputChanged);

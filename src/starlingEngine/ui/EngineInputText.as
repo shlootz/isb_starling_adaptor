@@ -31,7 +31,7 @@ package starlingEngine.ui
 			super();
 			
 			_signalsManager = signalsManager as SignalsHub;
-			
+			 
 			this.width = width;
 			this.height = height;
 			this.text = text;
@@ -41,6 +41,11 @@ package starlingEngine.ui
 			
 			addEventListener( Event.CHANGE, input_changeHandler );
 			addEventListener( FeathersEventType.ENTER, input_enterHandler );
+		}
+		
+		public function set restriction(val:String):void
+		{
+			this.restrict = val;
 		}
 		
 		/**
