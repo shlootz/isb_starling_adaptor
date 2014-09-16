@@ -106,7 +106,7 @@ package starlingEngine.ui
 			var list:List = List( e.currentTarget );
 			
 			var o:GESignalEvent = new GESignalEvent()
-			o.eventName = Signals.GENERIC_TOGGLE_BUTTON_PRESSED;
+			o.eventName = Signals.LIST_ITEM_TOUCHED;
 			o.engineEvent = e;
 			o.params = {
 				selected:list.dataProvider.getItemAt(list.selectedIndex)
