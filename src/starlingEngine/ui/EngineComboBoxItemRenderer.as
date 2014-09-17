@@ -16,10 +16,11 @@ package starlingEngine.ui
 		private var _thumbnail:IAbstractImage;
 		private var _data:Object;
 		
-		public function EngineComboBoxItemRenderer(text:String, thumbnail:IAbstractImage) 
+		public function EngineComboBoxItemRenderer(text:String, thumbnail:IAbstractImage, data:Object = null) 
 		{
 			_text = text;
 			_thumbnail = thumbnail;
+			_data = data;
 		}
 		
 		public function get text():String 

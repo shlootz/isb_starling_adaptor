@@ -31,6 +31,7 @@ package starlingEngine.ui
 		private var _cb:EngineList;
 		private var _toggle:Boolean = false;
 		private var _currentSelection:String = "choose";
+		private var _currentSelectedIData:Object;
 		
 		/**
 		 * 
@@ -103,6 +104,7 @@ package starlingEngine.ui
 			{
 				_label.updateLabel(event);
 				_currentSelection = event;
+				_currentSelectedIData = obj["params"]["selected"]["data"];
 				toggle();
 			}
 		}
@@ -113,6 +115,14 @@ package starlingEngine.ui
 		public function get currentSelection():String
 		{
 			return _currentSelection
+		}
+		
+		/**
+		 * 
+		 */
+		public function get currentSelectedIData():Object
+		{
+			return _currentSelectedIData
 		}
 		
 		public function addItem(item:IAbstractComboBoxItemRenderer):void

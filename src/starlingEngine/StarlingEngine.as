@@ -532,6 +532,9 @@
 			{
 				b.name = name;
 			}
+			
+			(b as IAbstractButton).addEventListener(EngineEvent.TRIGGERED, button_triggeredHandler);
+			
 			return b;
 		}
 		

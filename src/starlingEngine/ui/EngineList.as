@@ -59,7 +59,8 @@ package starlingEngine.ui
 			{
 			var o:Object = {
 				text:_dataProvider[i].text,
-				thumbnail:Texture.fromTexture((_dataProvider[i].thumbnail as Image).texture)
+				thumbnail:Texture.fromTexture((_dataProvider[i].thumbnail as Image).texture),
+				data:_dataProvider[i].data
 			}
 				providerArray.push(o)
 			}
@@ -109,7 +110,8 @@ package starlingEngine.ui
 			o.eventName = Signals.LIST_ITEM_TOUCHED;
 			o.engineEvent = e;
 			o.params = {
-				selected:list.dataProvider.getItemAt(list.selectedIndex)
+				selected:list.dataProvider.getItemAt(list.selectedIndex),
+				data:e["target"]["selectedItem"]["data"]
 			}
 			
 			_signalsHub.dispatchSignal(Signals.LIST_ITEM_TOUCHED, o.params["selected"]["text"], o);
