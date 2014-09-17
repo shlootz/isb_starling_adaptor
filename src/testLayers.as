@@ -168,6 +168,9 @@ package
 				});
 		}
 		
+		private var cb:IAbstractComboBox;
+		private var testCount:uint = 10;
+		
 		private function testComboBox(name:String, xPos:uint, yPos:uint):void
 		{
 			 _bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
@@ -175,27 +178,37 @@ package
 			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
 			
 			var dataProvider:Vector.<IAbstractComboBoxItemRenderer> = new Vector.<IAbstractComboBoxItemRenderer>;
-			dataProvider.push(new EngineComboBoxItemRenderer("test1", _bridgeGraphics.requestImage("Spark-1"), {test:"haha"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test2", _bridgeGraphics.requestImage("Spark-1"), {test:"haha"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test3", _bridgeGraphics.requestImage("Spark-1"), {test:"haha"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test4", _bridgeGraphics.requestImage("Spark-1"), {test:"haha"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test5", _bridgeGraphics.requestImage("Spark-1"), {test:"haha"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test6", _bridgeGraphics.requestImage("Spark-1"), {test:"haha"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test7", _bridgeGraphics.requestImage("Spark-1"), {test:"haha"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test8", _bridgeGraphics.requestImage("Spark-1"), {test:"haha"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test9", _bridgeGraphics.requestImage("Spark-1"), {test:"haha"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test1", _bridgeGraphics.requestImage("Spark-1"), {test:"haha0"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test2", _bridgeGraphics.requestImage("Spark-1"), {test:"haha1"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test3", _bridgeGraphics.requestImage("Spark-1"), {test:"haha2"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test4", _bridgeGraphics.requestImage("Spark-1"), {test:"haha3"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test5", _bridgeGraphics.requestImage("Spark-1"), {test:"haha4"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test6", _bridgeGraphics.requestImage("Spark-1"), {test:"haha5"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test7", _bridgeGraphics.requestImage("Spark-1"), {test:"haha6"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test8", _bridgeGraphics.requestImage("Spark-1"), {test:"haha7"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test9", _bridgeGraphics.requestImage("Spark-1"), {test:"haha8"}));
 			
 			var backgroundImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(150, 200, false, 0xFFFFFF));
 			
 			//var cb:EngineComboBox = new EngineComboBox(_bridgeGraphics.signalsManager as SignalsHub,dataProvider, 200, 200,backgroundImage, "Zrnic");
-			var cb:IAbstractComboBox = _bridgeGraphics.requestComboBox(dataProvider, 200, 200,backgroundImage, "Zrnic");
+			cb = _bridgeGraphics.requestComboBox(dataProvider, 200, 200,backgroundImage, "Zrnic");
 			_bridgeGraphics.addChild(cb);
 			
 			cb.x = xPos;
 			cb.y = yPos;
 			
-			cb.addItem(new EngineComboBoxItemRenderer("test "+Math.random()*999999, _bridgeGraphics.requestImage("Spark-1")));
+			cb.addItem(new EngineComboBoxItemRenderer("test " + Math.random() * 999999, _bridgeGraphics.requestImage("Spark-1"), {test:"haha"+testCount}));
 			
+			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LIST_ITEM_TOUCHED, onItemTouched)
+			
+		}
+		
+		private function onItemTouched(type:String, e:Object):void
+		{
+			testCount++
+			cb.addItem(new EngineComboBoxItemRenderer("test " + Math.random() * 999999, _bridgeGraphics.requestImage("Spark-1"), { test:"test" +testCount } ));
+			cb.clearList();
+			//trace(e["params"]["data"]["test"]);
 		}
 		
 		private function testNativeOverlay():void

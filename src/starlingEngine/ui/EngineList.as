@@ -104,17 +104,20 @@ package starlingEngine.ui
 		
 		private function list_changeHandler( e: Object ):void
 		{
-			var list:List = List( e.currentTarget );
-			
-			var o:GESignalEvent = new GESignalEvent()
-			o.eventName = Signals.LIST_ITEM_TOUCHED;
-			o.engineEvent = e;
-			o.params = {
-				selected:list.dataProvider.getItemAt(list.selectedIndex),
-				data:e["target"]["selectedItem"]["data"]
+			if (e["target"]["selectedItem"]!= null)
+			{
+				var list:List = List( e.currentTarget );
+				
+				var o:GESignalEvent = new GESignalEvent()
+				o.eventName = Signals.LIST_ITEM_TOUCHED;
+				o.engineEvent = e;
+				o.params = {
+					selected:list.dataProvider.getItemAt(list.selectedIndex),
+					data:e["target"]["selectedItem"]["data"]
+				}
+				
+				_signalsHub.dispatchSignal(Signals.LIST_ITEM_TOUCHED, o.params["selected"]["text"], o);
 			}
-			
-			_signalsHub.dispatchSignal(Signals.LIST_ITEM_TOUCHED, o.params["selected"]["text"], o);
 		}
 		
 	}
