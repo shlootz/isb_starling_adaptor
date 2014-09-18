@@ -58,6 +58,7 @@ import starling.textures.Texture;
 import starling.utils.AssetManager;
 import starlingEngine.elements.EngineLabel;
 import starlingEngine.StarlingEngine;
+import starlingEngine.events.EngineEvent;
 import starlingEngine.ui.EngineSlider;
 import starlingEngine.ui.EngineToggleButton;
 /**
@@ -132,10 +133,35 @@ public class Main extends Sprite
                 //testLabel();
                 //testGraphics();
                 //testFilters();
-                testComboBox();
+                //testComboBox();
+                testButton();
             }
 
         });
+    }
+
+    private var btn:IAbstractButton;
+    private function testButton():void
+    {
+        btn = _bridgeGraphics.requestButton("test");
+        btn.upSkin_ = _bridgeGraphics.requestImage("option-button-down");
+        btn.downSkin_ = _bridgeGraphics.requestImage("option-button-down");
+        btn.defaultSkin_ = _bridgeGraphics.requestImage("option-button-down");
+        btn.hoverSkin_ = _bridgeGraphics.requestImage("option-button-down");
+
+        btn.addEventListener(EngineEvent.TRIGGERED, button_triggeredHandler)
+
+        btn.x = 150;
+        btn.y = 150;
+
+        btn.width = 500;
+        _bridgeGraphics.addChild(btn);
+    }
+
+    private function button_triggeredHandler(e:Object):void {
+        btn.width = 50+Math.random()*400;
+
+        trace(btn.width);
     }
 
     private function testComboBox():void
