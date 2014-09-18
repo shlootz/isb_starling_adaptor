@@ -382,7 +382,7 @@ package
 			_bridgeGraphics.addChild(_img);
 			
 			//addEventListener(Event.ENTER_FRAME, drawStuff);
-			_bridgeGraphics.colorizeImage(_img, 0xFF0000);
+			_bridgeGraphics.colorizeImage(_img, 0xCC5555);
 			
 			_img.x = 250;
 			_img.y = 250;

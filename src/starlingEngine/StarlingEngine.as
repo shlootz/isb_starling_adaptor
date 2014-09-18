@@ -141,6 +141,7 @@
 		private var _movieClipsPool:AbstractPool;
 		private var _buttonsPool:AbstractPool;
 		
+		private var _bitmapDataFallBack:BitmapData = new BitmapData(100, 100, true, 0x000000);
 		/**
 		 * 
 		 * @param	initCompleteCallback
@@ -392,6 +393,11 @@
 		public function requestImage(texture:Object, name:String = ""):IAbstractImage
 		{
 			var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
+			if (texture == null)
+			{
+				texture = Texture.fromBitmapData(_bitmapDataFallBack);
+			}
+			
 			i.newTexture = texture;
 			i.readjustSize();
 			
