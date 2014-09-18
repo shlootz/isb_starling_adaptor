@@ -405,6 +405,16 @@
 		
 		/**
 		 * 
+		 * @param	image
+		 * @param	color
+		 */
+		public function colorizeImage(image:IAbstractImage, color:uint):void
+		{
+			(image as Image).color = color;
+		}
+		
+		/**
+		 * 
 		 * @param	scrollImage
 		 * @param	width
 		 * @param	height

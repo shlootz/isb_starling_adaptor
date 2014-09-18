@@ -157,7 +157,7 @@ package
 						//showPaytable();
 						//makeSlider();
 						//testMovieClips();
-						//testImages();
+						testImages();
 						//testSounds();
 						//testMovieClipsFromFrames();
 						//testToggle();
@@ -167,7 +167,7 @@ package
 						//testNativeOverlay();
 						//testComboBox("cb1", 150, 150);
 						//testComboBox("cb2", 350,150);
-						testEmptyButton();
+						//testEmptyButton();
 					}
 				});
 		}
@@ -378,13 +378,16 @@ package
 		
 		private function testImages():void
 		{
-			_img = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(400, 400, false, 0x000000));
+			_img = _bridgeGraphics.requestImage("Slider-Dragger");
 			_bridgeGraphics.addChild(_img);
 			
-			addEventListener(Event.ENTER_FRAME, drawStuff);
+			//addEventListener(Event.ENTER_FRAME, drawStuff);
+			_bridgeGraphics.colorizeImage(_img, 0xFF0000);
 			
 			_img.x = 250;
 			_img.y = 250;
+			
+			_img.scaleX = _img.scaleY = 5;
 		}
 		
 		private function drawStuff(e:Event):void
