@@ -31,7 +31,7 @@ package starlingEngine.validators
 			var disabledStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.disabledState));
 			var hasIcon:Boolean = false;
 			var icon:IAbstractImage;
-						
+
 			btn.idName = element.name;
 			
 			if (element.flipped)

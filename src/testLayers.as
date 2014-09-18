@@ -154,7 +154,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						showPaytable();
+						//showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -165,10 +165,26 @@ package
 						//testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
-						testComboBox("cb1", 150, 150);
+						//testComboBox("cb1", 150, 150);
 						//testComboBox("cb2", 350,150);
+						testEmptyButton();
 					}
 				});
+		}
+		
+		private function testEmptyButton():void
+		{
+			var btn:IAbstractButton = _bridgeGraphics.requestButton("asd");
+			
+			btn.upSkin_ =  _bridgeGraphics.requestImage("asdasd");
+			btn.downSkin_ =  _bridgeGraphics.requestImage("asdasd");
+			btn.hoverSkin_ =  _bridgeGraphics.requestImage("asdasd");
+			
+			btn.width = 500;
+			
+			_bridgeGraphics.addChild(btn);
+			btn.x = 0;
+			btn.y = 0;
 		}
 		
 		private function testScreenShot():void
