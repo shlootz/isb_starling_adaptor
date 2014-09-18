@@ -43,6 +43,7 @@ package
 	import flash.events.Event;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.media.Sound;
 	import flash.text.TextField;
 	import flash.utils.getDefinitionByName;
@@ -53,12 +54,15 @@ package
 	import signals.SignalsHub;
 	import starling.animation.IAnimatable;
 	import starling.animation.Juggler;
+	import starling.core.RenderSupport;
+	import starling.core.Starling;
 	import starling.display.BlendMode;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Graphics;
 	import starling.display.graphics.Stroke;
 	import starling.display.Image;
 	import starling.display.Quad;
+	import starling.display.Stage;
 	import starling.textures.GradientTexture;
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;
@@ -150,8 +154,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						//showPaytable();
-						//makeUILayer();
+						showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -166,6 +169,14 @@ package
 						//testComboBox("cb2", 350,150);
 					}
 				});
+		}
+		
+		private function testScreenShot():void
+		{
+			var rect:Rectangle = new Rectangle(150, 150, 500, 500);
+			var img:Image = Image.fromBitmap(new Bitmap(_bridgeGraphics.requestScreenshot(rect, 1)));
+			img.y = 100;
+			_bridgeGraphics.addChild(img)
 		}
 		
 		private var cb:IAbstractComboBox;
@@ -205,6 +216,7 @@ package
 		
 		private function onItemTouched(type:String, e:Object):void
 		{
+			testScreenShot();
 			testCount++
 			cb.addItem(new EngineComboBoxItemRenderer("test " + Math.random() * 999999, _bridgeGraphics.requestImage("Spark-1"), { test:"test" +testCount } ));
 			cb.clearList();

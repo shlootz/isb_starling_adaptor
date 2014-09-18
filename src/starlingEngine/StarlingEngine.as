@@ -17,6 +17,8 @@
 	import bridge.abstract.ui.LabelProperties;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	import starling.core.RenderSupport;
 	import starling.filters.BlurFilter;
 	import starlingEngine.elements.EngineBlitMask;
 	import starlingEngine.elements.EngineGraphics;
@@ -1185,6 +1187,33 @@
 			  return new GlowFilterVO();
 		 }
 		
+		/**
+		 * 
+		 * @param	rect
+		 * @param	scale
+		 * @return
+		 */
+		public  function requestScreenshot(rect:Rectangle, scale:Number=1.0):BitmapData
+		{
+			var stage:Stage= Starling.current.stage;
+			var width:Number = rect.width;
+			var height:Number = rect.height
+		 
+			var rs:RenderSupport = new RenderSupport();
+		 
+			rs.clear(stage.color, 1.0);
+			rs.scaleMatrix(scale, scale);
+			rs.setOrthographicProjection(rect.x, rect.y, rect.width, rect.height);
+		 
+			stage.render(rs, 1.0);
+			rs.finishQuadBatch();
+		 
+			var outBmp:BitmapData = new BitmapData(width*scale, height*scale, true);
+			Starling.context.drawToBitmapData(outBmp);
+		 
+			return outBmp;
+		}
+		 
 		/**
 		 * 
 		 * @return
