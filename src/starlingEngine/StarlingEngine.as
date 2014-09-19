@@ -331,6 +331,7 @@
 			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.LIST_ITEM_TOUCHED, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.LIST_ITEM_TOUCHED_INTERNAL, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_CHANGED, new Signal(), new Vector.<Function>);
 		}
 		

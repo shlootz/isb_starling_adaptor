@@ -32,6 +32,8 @@ package starlingEngine.ui
 		private var _toggle:Boolean = false;
 		private var _currentSelection:String = "choose";
 		private var _currentSelectedIData:Object;
+		private var _currentSelectedIndex:uint = 0;
+		private var _signalsHub:SignalsHub;
 		
 		/**
 		 * 
@@ -47,7 +49,7 @@ package starlingEngine.ui
 			_cb = new EngineList(signalsHub, dataProvider, width, height, backgroundImage, font);
 			_cb.y = 20;
 			_cb.alpha = .9;
-			
+			_signalsHub = signalsHub;
 			// MAKE BACKGROUND
 			var bkSprite:Sprite = new Sprite();
 			var bkBmpData:BitmapData = new BitmapData(width, 20, false, 0xFFFFFF);
@@ -64,7 +66,7 @@ package starlingEngine.ui
 			this.addNewChild(_label);
 			
 			//ADD LIST LISTENER
-			signalsHub.addListenerToSignal(Signals.LIST_ITEM_TOUCHED, makeSelection);
+			signalsHub.addListenerToSignal(Signals.LIST_ITEM_TOUCHED_INTERNAL, makeSelection);
 		}
 		
 		/**
@@ -105,7 +107,10 @@ package starlingEngine.ui
 				_label.updateLabel(event);
 				_currentSelection = event;
 				_currentSelectedIData = obj["params"]["selected"]["data"];
+				_currentSelectedIndex =  obj["params"]["selectedIndex"];
 				toggle();
+				
+				_signalsHub.dispatchSignal(Signals.LIST_ITEM_TOUCHED, event, obj);
 			}
 		}
 		
@@ -115,6 +120,14 @@ package starlingEngine.ui
 		public function get currentSelection():String
 		{
 			return _currentSelection
+		}
+		
+		/**
+		 * 
+		 */
+		public function get currentSelectedIndex():uint
+		{
+			return _currentSelectedIndex
 		}
 		
 		/**

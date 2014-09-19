@@ -113,10 +113,11 @@ package starlingEngine.ui
 				o.engineEvent = e;
 				o.params = {
 					selected:list.dataProvider.getItemAt(list.selectedIndex),
+					selectedIndex:list.selectedIndex,
 					data:e["target"]["selectedItem"]["data"]
 				}
 				
-				_signalsHub.dispatchSignal(Signals.LIST_ITEM_TOUCHED, o.params["selected"]["text"], o);
+				_signalsHub.dispatchSignal(Signals.LIST_ITEM_TOUCHED_INTERNAL, o.params["selected"]["text"], o);
 			}
 		}
 		

@@ -157,7 +157,7 @@ package
 						//showPaytable();
 						//makeSlider();
 						//testMovieClips();
-						testImages();
+						//testImages();
 						//testSounds();
 						//testMovieClipsFromFrames();
 						//testToggle();
@@ -165,11 +165,17 @@ package
 						//testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
-						//testComboBox("cb1", 150, 150);
+						testComboBox("cb1", 150, 150);
 						//testComboBox("cb2", 350,150);
 						//testEmptyButton();
+						//testRequestBitmapDataFromDisplayObject();
 					}
 				});
+		}
+		
+		private function testRequestBitmapDataFromDisplayObject():void
+		{
+				
 		}
 		
 		private function testEmptyButton():void
@@ -232,11 +238,12 @@ package
 		
 		private function onItemTouched(type:String, e:Object):void
 		{
-			testScreenShot();
-			testCount++
-			cb.addItem(new EngineComboBoxItemRenderer("test " + Math.random() * 999999, _bridgeGraphics.requestImage("Spark-1"), { test:"test" +testCount } ));
-			cb.clearList();
+			//testScreenShot();
+			//testCount++
+			//cb.addItem(new EngineComboBoxItemRenderer("test " + Math.random() * 999999, _bridgeGraphics.requestImage("Spark-1"), { test:"test" +testCount } ));
+			//cb.clearList();
 			//trace(e["params"]["data"]["test"]);
+			trace(cb.currentSelectedIndex);
 		}
 		
 		private function testNativeOverlay():void
@@ -382,7 +389,7 @@ package
 			_bridgeGraphics.addChild(_img);
 			
 			//addEventListener(Event.ENTER_FRAME, drawStuff);
-			_bridgeGraphics.colorizeImage(_img, 0xCC5555);
+			_bridgeGraphics.colorizeImage(_img, 0xFF0000);
 			
 			_img.x = 250;
 			_img.y = 250;
