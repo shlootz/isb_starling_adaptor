@@ -13,6 +13,9 @@ package starlingEngine.elements
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Graphics;
 	import starling.display.Image;
+	import starling.display.materials.StandardMaterial;
+	import starling.display.shaders.fragment.TextureFragmentShader;
+	import starling.display.shaders.vertex.AnimateUVVertexShader;
 	import starling.textures.GradientTexture;
 	import starling.textures.Texture;
 	/**
@@ -22,6 +25,11 @@ package starlingEngine.elements
 	public class EngineGraphics extends Graphics implements IAbstractGraphics
 	{
 		private var _displayObjectContainer:IAbstractDisplayObjectContainer;
+		
+		private var _storedLineTexture:Texture;
+		
+		private var _animatedMaterial:StandardMaterial;
+		private var _storedAnimatedTexture:Texture;
 		
 		protected static const BEZIER_ERROR:Number = 0.75;
 		
@@ -39,6 +47,45 @@ package starlingEngine.elements
 		override public function cubicCurveTo( c1x:Number, c1y:Number, c2x:Number, c2y:Number, a2x:Number, a2y:Number,  error:Number = 0.75):void
 		{
 			super.cubicCurveTo(c1x, c1y, c2x, c2y, a2x, a2y, BEZIER_ERROR);
+		}
+		
+		public function drawLineTexture(thickness:Number, texture:Bitmap):void
+		{
+			if (_storedLineTexture == null)
+			{
+				_storedLineTexture = Texture.fromBitmap(texture);
+			}
+			
+			super.lineTexture(thickness, _storedLineTexture);
+		}
+		
+		public function updateLineTexture(newTexture:Bitmap):void
+		{
+			_storedLineTexture = Texture.fromBitmap(newTexture);
+		}
+		
+		public function animateTexture(uSpeed:Number, vSpeed:Number, thickness:Number, texture:Bitmap):void
+		{
+			if (_animatedMaterial == null)
+			{
+				_animatedMaterial = new StandardMaterial();
+			}
+
+			if (_storedAnimatedTexture == null)
+			{
+				_storedAnimatedTexture = Texture.fromBitmap(texture, false);
+			}
+			
+			_animatedMaterial.vertexShader = new AnimateUVVertexShader(uSpeed, vSpeed);
+			_animatedMaterial.fragmentShader = new TextureFragmentShader();
+			_animatedMaterial.textures[0] = _storedAnimatedTexture;	
+			
+			super.lineMaterial(thickness, _animatedMaterial);
+		}
+		
+		public function updateAnimateTexture(newTexture:Bitmap):void
+		{
+			_storedAnimatedTexture = Texture.fromBitmap(newTexture);
 		}
 		
 		public function beginGradientFill(gradientType:String, colours:Array, alphaValues:Array, ratio:Array):void

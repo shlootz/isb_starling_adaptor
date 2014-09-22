@@ -165,19 +165,47 @@ package
 						//testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
-						testComboBox("cb1", 150, 150);
+						//testComboBox("cb1", 150, 150);
 						//testComboBox("cb2", 350,150);
 						//testEmptyButton();
-						//testRequestBitmapDataFromDisplayObject();
+						testTexturedLine();
+						testAnimatedTexture();
 					}
 				});
 		}
 		
-		private function testRequestBitmapDataFromDisplayObject():void
+		private function testAnimatedTexture():void
 		{
-				
+			var spr:IAbstractSprite = _bridgeGraphics.requestSprite("adasd");
+			var gr:IAbstractGraphics = _bridgeGraphics.requestGraphics(spr);
+			
+			gr.animateTexture(1, 1, 50, new Bitmap(new BitmapData(1000, 30, false, 0xFFFFFF)));
+			gr.moveTo(150, 0);
+			gr.curveTo(500,100,500,300)
+			gr.curveTo(500, 100, 700, 650)
+			
+			_bridgeGraphics.addChild(spr);
 		}
 		
+		private function testTexturedLine():void
+		{
+			var spr:IAbstractSprite = _bridgeGraphics.requestSprite("adasd");
+			var gr:IAbstractGraphics = _bridgeGraphics.requestGraphics(spr);
+			
+			gr.drawLineTexture(50, new Bitmap(new BitmapData(1000, 30, false, 0xFF0000)));
+			gr.moveTo(150, 0);
+			gr.curveTo(500,100,500,300)
+			gr.curveTo(500, 100, 700, 650)
+			
+			gr.updateLineTexture(new Bitmap(new BitmapData(1000, 30, false, 0xFFFFFF)));
+			gr.drawLineTexture(50, new Bitmap(new BitmapData(1000, 30, false, 0xFFFFFF)));
+			gr.moveTo(150, 0);
+			gr.curveTo(500,100,500,300)
+			gr.curveTo(500, 100, 700, 650)
+			
+			_bridgeGraphics.addChild(spr);
+		}
+	
 		private function testEmptyButton():void
 		{
 			var btn:IAbstractButton = _bridgeGraphics.requestButton("asd");
