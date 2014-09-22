@@ -49,22 +49,22 @@ package starlingEngine.elements
 			super.cubicCurveTo(c1x, c1y, c2x, c2y, a2x, a2y, BEZIER_ERROR);
 		}
 		
-		public function drawLineTexture(thickness:Number, texture:Bitmap):void
+		public function drawLineTexture(thickness:Number, image:IAbstractImage):void
 		{
 			if (_storedLineTexture == null)
 			{
-				_storedLineTexture = Texture.fromBitmap(texture);
+				_storedLineTexture = image.currentTexture as Texture;
 			}
 			
 			super.lineTexture(thickness, _storedLineTexture);
 		}
 		
-		public function updateLineTexture(newTexture:Bitmap):void
+		public function updateLineTexture(image:IAbstractImage):void
 		{
-			_storedLineTexture = Texture.fromBitmap(newTexture);
+			_storedLineTexture = image.currentTexture as Texture;
 		}
 		
-		public function animateTexture(uSpeed:Number, vSpeed:Number, thickness:Number, texture:Bitmap):void
+		public function animateTexture(uSpeed:Number, vSpeed:Number, thickness:Number,  image:IAbstractImage):void
 		{
 			if (_animatedMaterial == null)
 			{
@@ -73,7 +73,7 @@ package starlingEngine.elements
 
 			if (_storedAnimatedTexture == null)
 			{
-				_storedAnimatedTexture = Texture.fromBitmap(texture, false);
+				_storedAnimatedTexture = image.currentTexture as Texture;
 			}
 			
 			_animatedMaterial.vertexShader = new AnimateUVVertexShader(uSpeed, vSpeed);
@@ -83,9 +83,9 @@ package starlingEngine.elements
 			super.lineMaterial(thickness, _animatedMaterial);
 		}
 		
-		public function updateAnimateTexture(newTexture:Bitmap):void
+		public function updateAnimateTexture(image:IAbstractImage):void
 		{
-			_storedAnimatedTexture = Texture.fromBitmap(newTexture);
+			_storedAnimatedTexture =  image.currentTexture as Texture;
 		}
 		
 		public function beginGradientFill(gradientType:String, colours:Array, alphaValues:Array, ratio:Array):void

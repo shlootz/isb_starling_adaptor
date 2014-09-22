@@ -168,7 +168,7 @@ package
 						//testComboBox("cb1", 150, 150);
 						//testComboBox("cb2", 350,150);
 						//testEmptyButton();
-						testTexturedLine();
+						//testTexturedLine();
 						testAnimatedTexture();
 					}
 				});
@@ -179,7 +179,7 @@ package
 			var spr:IAbstractSprite = _bridgeGraphics.requestSprite("adasd");
 			var gr:IAbstractGraphics = _bridgeGraphics.requestGraphics(spr);
 			
-			gr.animateTexture(1, 1, 50, new Bitmap(new BitmapData(1000, 30, false, 0xFFFFFF)));
+			gr.animateTexture(1, 1, 50, _bridgeGraphics.requestImage("User-Interface-Free-Spins-Background"));
 			gr.moveTo(150, 0);
 			gr.curveTo(500,100,500,300)
 			gr.curveTo(500, 100, 700, 650)
@@ -192,13 +192,7 @@ package
 			var spr:IAbstractSprite = _bridgeGraphics.requestSprite("adasd");
 			var gr:IAbstractGraphics = _bridgeGraphics.requestGraphics(spr);
 			
-			gr.drawLineTexture(50, new Bitmap(new BitmapData(1000, 30, false, 0xFF0000)));
-			gr.moveTo(150, 0);
-			gr.curveTo(500,100,500,300)
-			gr.curveTo(500, 100, 700, 650)
-			
-			gr.updateLineTexture(new Bitmap(new BitmapData(1000, 30, false, 0xFFFFFF)));
-			gr.drawLineTexture(50, new Bitmap(new BitmapData(1000, 30, false, 0xFFFFFF)));
+			gr.drawLineTexture(50, _bridgeGraphics.requestImage("User-Interface-Free-Spins-Background"));
 			gr.moveTo(150, 0);
 			gr.curveTo(500,100,500,300)
 			gr.curveTo(500, 100, 700, 650)
