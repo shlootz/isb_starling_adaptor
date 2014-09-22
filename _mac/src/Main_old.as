@@ -66,7 +66,7 @@ import starlingEngine.ui.EngineToggleButton;
  * @author Eu
  */
 
-[SWF(backgroundColor='#FFFFFF',frameRate='30')]
+[SWF(backgroundColor='#000000',frameRate='30')]
 
 public class Main extends Sprite
 {
@@ -132,9 +132,9 @@ public class Main extends Sprite
                 //testFLV();
                 //testLabel();
                 //testGraphics();
-                //testFilters();
+                testFilters();
                 //testComboBox();
-                testButton();
+                //testButton();
             }
 
         });
@@ -211,7 +211,7 @@ public class Main extends Sprite
         _bridgeGraphics.addChild(_graphicsHolder);
 
         _graphics.moveTo(100,100);
-        _graphics.lineTo(800,101);
+        _graphics.lineTo(800,100);
     }
 
     private function testGraphics():void
