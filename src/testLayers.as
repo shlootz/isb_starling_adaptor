@@ -12,6 +12,7 @@ package
 	import bridge.abstract.IAbstractMovie;
 	import bridge.abstract.IAbstractSprite;
 	import bridge.abstract.IAbstractTextField;
+	import bridge.abstract.IAbstractVideo;
 	import bridge.abstract.transitions.IAbstractLayerTransitionIn;
 	import bridge.abstract.transitions.IAbstractLayerTransitionOut;
 	import bridge.abstract.ui.IAbstractButton;
@@ -74,6 +75,7 @@ package
 	import starlingEngine.ui.EngineInputText;
 	import starlingEngine.ui.EngineSlider;
 	import starlingEngine.ui.EngineToggleButton;
+	import starlingEngine.video.display.Video;
 	/**
 	 * ...
 	 * @author Eu
@@ -154,7 +156,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						//showPaytable();
+						showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -169,9 +171,25 @@ package
 						//testComboBox("cb2", 350,150);
 						//testEmptyButton();
 						//testTexturedLine();
-						testAnimatedTexture();
+						//testAnimatedTexture();
+						//for (var i:uint = 0; i < 25; i++ )
+						//{
+							//testFLV(Math.random() * 800, Math.random() * 600);
+						//}
 					}
 				});
+		}
+		
+		private function testFLV(posX:Number, posY:Number):void
+		{
+			var flv:IAbstractVideo = _bridgeGraphics.requestVideo();
+			flv.addVideoPath("../bin/assets/test.flv");
+			
+			flv.scaleX = flv.scaleY = .25;
+			flv.x = posX;
+			flv.y = posY;
+			
+			_bridgeGraphics.addChild(flv);
 		}
 		
 		private function testAnimatedTexture():void

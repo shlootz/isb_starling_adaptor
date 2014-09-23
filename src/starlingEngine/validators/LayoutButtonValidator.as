@@ -69,6 +69,8 @@ package starlingEngine.validators
 			{
 				hasIcon = true;
 				icon = engine.requestImage(assetsManager.getTexture(element.icon));
+				icon.width = element.iconWidth;
+				icon.height = element.iconHeight;
 				btn.upIcon_ = icon;
 				btn.hoverIcon_ = icon;
 				btn.downIcon_ = icon;

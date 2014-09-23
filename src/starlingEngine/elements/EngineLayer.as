@@ -203,6 +203,8 @@ package starlingEngine.elements
 				var icon:String = _mainXML.child("Element")[i].attribute("icon");
 				var iconOffsetX:String = _mainXML.child("Element")[i].attribute("iconOffsetX");
 				var iconOffsetY:String = _mainXML.child("Element")[i].attribute("iconOffsetY");
+				var iconWidth:String = _mainXML.child("Element")[i].attribute("iconWidth");
+				var iconHeight:String = _mainXML.child("Element")[i].attribute("iconHeight");
 				var iconOn:String = _mainXML.child("Element")[i].attribute("iconOn");
 				var iconOff:String = _mainXML.child("Element")[i].attribute("iconOff");
 				
@@ -244,6 +246,8 @@ package starlingEngine.elements
 				o.iconOffsetY = Number(iconOffsetY);
 				o.iconOn = iconOn;
 				o.iconOff = iconOff;
+				o.iconWidth = Number(iconWidth);
+				o.iconHeight= Number(iconHeight);
 				o.thumbUpSkin = thumbUpSkin;
 				o.thumbDownSkin = thumbDownSkin;
 				o.trackUpSkin = trackUpSkin;

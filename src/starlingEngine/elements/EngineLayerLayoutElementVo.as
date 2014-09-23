@@ -44,6 +44,8 @@ package starlingEngine.elements
 		public var icon:String;
 		public var iconOffsetX:Number;
 		public var iconOffsetY:Number;
+		public var iconWidth:Number;
+		public var iconHeight:Number;
 		
 		public var iconOff:String;
 		public var iconOn:String;
