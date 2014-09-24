@@ -74,6 +74,12 @@ package starlingEngine.validators
 			iconOff = engine.requestImage(assetsManager.getTexture(element.iconOff));
 			btn.toggleFalseImage = iconOff;
 			
+			iconOn.width = element.iconWidth;
+			iconOn.height = element.iconHeight;
+			
+			iconOff.width = element.iconWidth;
+			iconOff.height = element.iconHeight;
+			
 			btn.iconOffsetX = element.iconOffsetX;
 			btn.iconOffsetY = element.iconOffsetY;
 			
