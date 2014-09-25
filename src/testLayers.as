@@ -555,6 +555,9 @@ package
 			var img:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100, 100, false, 0xff0000));
 			btn.upSkin_ = img;
 			btn.upIcon_ = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(10, 100, false, 0xffffff));
+			
+			var label:IAbstractLabel = btn.customLabel;
+			trace(label.textField.color);
 			//Creating a custom holder for the pages layouts
 			_paytablePagesHolder = _bridgeGraphics.requestSprite("paytableHolder");
 			

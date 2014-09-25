@@ -26,6 +26,11 @@ package starlingEngine.elements
 			_tField.text = text;
 		}
 		
+		public function get textField():IAbstractTextField
+		{
+			return _tField;
+		}
+		
 	}
 
 }
