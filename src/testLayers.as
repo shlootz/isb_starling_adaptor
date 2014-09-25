@@ -156,7 +156,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						showPaytable();
+						//showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -167,7 +167,7 @@ package
 						//testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
-						//testComboBox("cb1", 150, 150);
+						testComboBox("cb1", 150, 150);
 						//testComboBox("cb2", 350,150);
 						//testEmptyButton();
 						//testTexturedLine();
@@ -251,15 +251,15 @@ package
 			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
 			
 			var dataProvider:Vector.<IAbstractComboBoxItemRenderer> = new Vector.<IAbstractComboBoxItemRenderer>;
-			dataProvider.push(new EngineComboBoxItemRenderer("test1", _bridgeGraphics.requestImage("Spark-1"), {test:"haha0"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test2", _bridgeGraphics.requestImage("Spark-1"), {test:"haha1"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test3", _bridgeGraphics.requestImage("Spark-1"), {test:"haha2"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test4", _bridgeGraphics.requestImage("Spark-1"), {test:"haha3"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test5", _bridgeGraphics.requestImage("Spark-1"), {test:"haha4"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test6", _bridgeGraphics.requestImage("Spark-1"), {test:"haha5"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test7", _bridgeGraphics.requestImage("Spark-1"), {test:"haha6"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test8", _bridgeGraphics.requestImage("Spark-1"), {test:"haha7"}));
-			dataProvider.push(new EngineComboBoxItemRenderer("test9", _bridgeGraphics.requestImage("Spark-1"), {test:"haha8"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test1",  {test:"haha0"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test2",  {test:"haha1"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test3",  {test:"haha2"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test4",  {test:"haha3"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test5",  {test:"haha4"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test6",  {test:"haha5"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test7",  {test:"haha6"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test8",  {test:"haha7"}));
+			dataProvider.push(new EngineComboBoxItemRenderer("test9",  {test:"haha8"}));
 			
 			var backgroundImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(150, 200, false, 0xFFFFFF));
 			
@@ -270,7 +270,7 @@ package
 			cb.x = xPos;
 			cb.y = yPos;
 			
-			cb.addItem(new EngineComboBoxItemRenderer("test " + Math.random() * 999999, _bridgeGraphics.requestImage("Spark-1"), {test:"haha"+testCount}));
+			//cb.addItem(new EngineComboBoxItemRenderer("test " + Math.random() * 999999, _bridgeGraphics.requestImage("Spark-1"), {test:"haha"+testCount}));
 			
 			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LIST_ITEM_TOUCHED, onItemTouched)
 			

@@ -59,7 +59,6 @@ package starlingEngine.ui
 			{
 			var o:Object = {
 				text:_dataProvider[i].text,
-				thumbnail:Texture.fromTexture((_dataProvider[i].thumbnail as Image).texture),
 				data:_dataProvider[i].data
 			}
 				providerArray.push(o)
@@ -73,13 +72,11 @@ package starlingEngine.ui
 				 var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
 				 renderer.defaultLabelProperties.textFormat = new BitmapFontTextFormat(font, 15, 0x333333);
 				 renderer.labelField = "text";
-				 renderer.iconSourceField = "thumbnail";
 				 renderer.useHandCursor = true;
 				 return renderer;
 			 };
 			
 			_list.itemRendererProperties.labelField = "text";
-			_list.itemRendererProperties.iconSourceField = "thumbnail";
 			_list.itemRendererProperties.accessorySourceField = "accessory";
 			
 			_list.addEventListener( "change", list_changeHandler );
