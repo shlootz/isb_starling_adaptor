@@ -99,6 +99,24 @@ package
 		
 		[Embed(source = "../bin/assets/bitmapfonts/ZrnicBig_0.png")]
 		private static const ZrnicBigFontPng : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/Omnes.fnt", mimeType = "application/octet-stream")]
+		private static const OmnesClass : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/Omnes_0.png")]
+		private static const OmnesPng : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/Arial.fnt", mimeType = "application/octet-stream")]
+		private static const ArialClass : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/Arial_0.png")]
+		private static const ArialPng : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/desyrel.fnt", mimeType = "application/octet-stream")]
+		private static const DesyrelClass : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/desyrel.png")]
+		private static const DesyrelPng : Class;
 			
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
 																		new Point(800, 600),
@@ -156,7 +174,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						//showPaytable();
+						showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -167,7 +185,7 @@ package
 						//testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
-						testComboBox("cb1", 150, 150);
+						//testComboBox("cb1", 150, 150);
 						//testComboBox("cb2", 350,150);
 						//testEmptyButton();
 						//testTexturedLine();
@@ -247,8 +265,10 @@ package
 		private function testComboBox(name:String, xPos:uint, yPos:uint):void
 		{
 			 _bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
-			 _bridgeGraphics.registerBitmapFont(new ZrnicFontPng(), XML(new ZrnicFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new OmnesPng(), XML(new OmnesClass()));
 			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ArialPng(), XML(new ArialClass()));
+			 _bridgeGraphics.registerBitmapFont(new DesyrelPng(), XML(new DesyrelClass()));
 			
 			var dataProvider:Vector.<IAbstractComboBoxItemRenderer> = new Vector.<IAbstractComboBoxItemRenderer>;
 			dataProvider.push(new EngineComboBoxItemRenderer("test1",  {test:"haha0"}));
@@ -264,7 +284,7 @@ package
 			var backgroundImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(150, 200, false, 0xFFFFFF));
 			
 			//var cb:EngineComboBox = new EngineComboBox(_bridgeGraphics.signalsManager as SignalsHub,dataProvider, 200, 200,backgroundImage, "Zrnic");
-			cb = _bridgeGraphics.requestComboBox(dataProvider, 200, 200,backgroundImage, "Zrnic");
+			cb = _bridgeGraphics.requestComboBox(dataProvider, 200, 200,backgroundImage, "desyrel");
 			_bridgeGraphics.addChild(cb);
 			
 			cb.x = xPos;
@@ -493,26 +513,31 @@ package
 		
 		private function showPaytable():void
 		{	
-			getQualifiedClassName(_bridgeGraphics.requestSprite())
-			var aPool:AbstractPool = new AbstractPool("Test", 	getDefinitionByName(getQualifiedClassName(_bridgeGraphics.requestSprite())) as Class, 20);
+			_bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new OmnesPng(), XML(new OmnesClass()));
+			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ArialPng(), XML(new ArialClass()));
+			 _bridgeGraphics.registerBitmapFont(new DesyrelPng(), XML(new DesyrelClass()));
+			//getQualifiedClassName(_bridgeGraphics.requestSprite())
+			//var aPool:AbstractPool = new AbstractPool("Test", 	getDefinitionByName(getQualifiedClassName(_bridgeGraphics.requestSprite())) as Class, 20);
 			
-			var testSprite:IAbstractSprite = _bridgeGraphics.requestSprite("test");
-			testSprite.addNewChild(_bridgeGraphics.requestImage("Background"));
-			testSprite.updateMouseGestures(_bridgeGraphics.signalsManager, true);
-			_bridgeGraphics.addChild(testSprite);
+			//var testSprite:IAbstractSprite = _bridgeGraphics.requestSprite("test");
+			//testSprite.addNewChild(_bridgeGraphics.requestImage("Background"));
+			//testSprite.updateMouseGestures(_bridgeGraphics.signalsManager, true);
+			//_bridgeGraphics.addChild(testSprite);
 			
-			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
-			var img2:IAbstractImage = _bridgeGraphics.requestImage("Background");
-			
-			var testas:IAbstractLayer = _bridgeGraphics.requestLayer("asd", 2, null, false);
-			_bridgeGraphics.returnToPool(img);
-			_bridgeGraphics.returnToPool(img2);
-			_bridgeGraphics.returnToPool(testSprite);
-			
-			testSprite = _bridgeGraphics.requestSprite("test");
-			testSprite.addNewChild(_bridgeGraphics.requestImage("Bonus-Background"));
-			testSprite.updateMouseGestures(_bridgeGraphics.signalsManager, true);
-			_bridgeGraphics.addChild(testSprite);
+			//var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
+			//var img2:IAbstractImage = _bridgeGraphics.requestImage("Background");
+			//
+			//var testas:IAbstractLayer = _bridgeGraphics.requestLayer("asd", 2, null, false);
+			//_bridgeGraphics.returnToPool(img);
+			//_bridgeGraphics.returnToPool(img2);
+			//_bridgeGraphics.returnToPool(testSprite);
+			//
+			//testSprite = _bridgeGraphics.requestSprite("test");
+			//testSprite.addNewChild(_bridgeGraphics.requestImage("Bonus-Background"));
+			//testSprite.updateMouseGestures(_bridgeGraphics.signalsManager, true);
+			//_bridgeGraphics.addChild(testSprite);
 			 //Retrievieng the XML layout for the paytable main menu
 			var paytableXml:XML = new XML();
 			paytableXml = _bridgeGraphics.getXMLFromAssetsManager("Paytable");
@@ -520,9 +545,16 @@ package
 			 //Adding the Paytable layer and initializing the layout via auto methods
 			_layersVO.addLayer("Paytable", 0, paytableXml, true);
 			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
-			inLayers.push(_layersVO.retrieveLayer("Paytable"));
+			var paytableLayer:IAbstractLayer = _layersVO.retrieveLayer("Paytable");
+			inLayers.push(paytableLayer);
+			
 			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers);
 			
+			//AAAAAAAAAAAAA
+			var btn:IAbstractButton = paytableLayer.getChildByNameStr("backButton") as IAbstractButton;
+			var img:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100, 100, false, 0xff0000));
+			btn.upSkin_ = img;
+			btn.upIcon_ = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(10, 100, false, 0xffffff));
 			//Creating a custom holder for the pages layouts
 			_paytablePagesHolder = _bridgeGraphics.requestSprite("paytableHolder");
 			

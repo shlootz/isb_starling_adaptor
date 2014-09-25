@@ -31,6 +31,9 @@ package starlingEngine.validators
 			var disabledStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.disabledState));
 			var hasIcon:Boolean = false;
 			var icon:IAbstractImage;
+			
+			upSkin.width = element.width;
+			upSkin.height = element.height;
 
 			btn.idName = element.name;
 			
