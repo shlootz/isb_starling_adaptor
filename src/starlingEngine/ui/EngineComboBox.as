@@ -67,6 +67,12 @@ package starlingEngine.ui
 			
 			//ADD LIST LISTENER
 			signalsHub.addListenerToSignal(Signals.LIST_ITEM_TOUCHED_INTERNAL, makeSelection);
+			
+			//MAKE INITIAL SELECTION
+			_label.updateLabel(dataProvider[0].text);
+			_currentSelection = dataProvider[0].text;
+			_currentSelectedIData = dataProvider[0].data;
+			_currentSelectedIndex =  0;
 		}
 		
 		/**

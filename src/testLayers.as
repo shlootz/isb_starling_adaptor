@@ -68,6 +68,8 @@ package
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;
 	import starlingEngine.elements.EngineLabel;
+	import starlingEngine.events.EngineEvent;
+	import starlingEngine.events.GESignalEvent;
 	import starlingEngine.StarlingEngine;
 	import starlingEngine.ui.EngineComboBox;
 	import starlingEngine.ui.EngineList;
@@ -174,7 +176,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						showPaytable();
+						//showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -185,7 +187,7 @@ package
 						//testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
-						//testComboBox("cb1", 150, 150);
+						testComboBox("cb1", 150, 150);
 						//testComboBox("cb2", 350,150);
 						//testEmptyButton();
 						//testTexturedLine();
@@ -292,8 +294,15 @@ package
 			
 			//cb.addItem(new EngineComboBoxItemRenderer("test " + Math.random() * 999999, _bridgeGraphics.requestImage("Spark-1"), {test:"haha"+testCount}));
 			
-			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LIST_ITEM_TOUCHED, onItemTouched)
+			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LIST_ITEM_TOUCHED, onItemTouched);
+			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.MOUSE_WHEEL, onWheel);
 			
+			trace(cb.currentSelectedIData + " " + cb.currentSelectedIndex + " " + cb.currentSelection);
+		}
+		
+		private function onWheel(type:String, e:Object):void
+		{
+			trace(type+" " + e.params["delta"]);
 		}
 		
 		private function onItemTouched(type:String, e:Object):void
@@ -609,6 +618,19 @@ package
 			
 			_layersVO.retrieveLayer("Paytable").updateMouseGestures((_bridgeGraphics.signalsManager as ISignalsHub), true);
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.DISPLAY_OBJECT_TOUCHED, doTouched);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OVER, doOver);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_ENDED, doEnded);
+			
+		}
+		
+		private function doEnded(type:String, event:IAbstractSignalEvent):void
+		{
+			trace(type+" Ended");
+		}
+		
+		private function doOver(type:String, event:IAbstractSignalEvent):void
+		{
+			trace(type+" Over");
 		}
 		
 		private function doTouched(type:String, event:IAbstractSignalEvent):void

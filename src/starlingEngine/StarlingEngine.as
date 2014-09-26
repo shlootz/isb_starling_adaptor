@@ -16,9 +16,13 @@
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import starling.core.RenderSupport;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starling.filters.BlurFilter;
 	import starlingEngine.elements.EngineBlitMask;
 	import starlingEngine.elements.EngineGraphics;
@@ -297,6 +301,17 @@
 			_signalsHub.dispatchSignal(Signals.STARLING_READY, "", "");
 			
 			configureConsole();
+			
+			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel, false, 0 , true);
+		}
+		
+		private function onMouseWheel(e:MouseEvent):void
+		{
+			var o:GESignalEvent = new GESignalEvent()
+			o.eventName = Signals.MOUSE_WHEEL;
+			o.engineEvent = e;
+			o.params ={ delta:e.delta}
+			_signalsHub.dispatchSignal(Signals.MOUSE_WHEEL, "delta", o);
 		}
 		
 		private function configureConsole():void
@@ -319,10 +334,15 @@
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.CHANGE_GRAPHICS_STATE, new Signal(), new Vector.<Function>);
 			
+			(_signalsHub as SignalsHub).addSignal(Signals.MOUSE_WHEEL, new Signal(), new Vector.<Function>);
+			
 			(_signalsHub as SignalsHub).addSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, new Signal(), new Vector.<Function>);
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_OVER, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_ENDED, new Signal(), new Vector.<Function>);
+			
 			(_signalsHub as SignalsHub).addSignal(Signals.MOVIE_CLIP_ENDED, new Signal(), new Vector.<Function>);
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.DISPLAY_OBJECT_TOUCHED, new Signal(), new Vector.<Function>);
@@ -553,9 +573,11 @@
 			}
 			
 			(b as IAbstractButton).addEventListener(EngineEvent.TRIGGERED, button_triggeredHandler);
+			(b as IAbstractButton).addEventListener(TouchEvent.TOUCH, button_touchedHandler);
 			
 			return b;
 		}
+		
 		
 		/**
 		 * TODO build pool?
@@ -1052,12 +1074,14 @@
 					case ENGINE_BUTTON:
 						var btn:IAbstractButton = LayoutButtonValidator.validate(this, _assetsManager, sortedElements[i]);
 						(btn as IAbstractButton).addEventListener(EngineEvent.TRIGGERED, button_triggeredHandler);
+						(btn as IAbstractButton).addEventListener(TouchEvent.TOUCH, button_touchedHandler);
 						layer.addNewChildAt(btn, i);
 						break;
 						
 					case ENGINE_TOGGLE_BUTTON:
 						var toggleBtn:IAbstractToggle = LayoutToggleButtonValidator.validate(this, _assetsManager, sortedElements[i]);
 						(toggleBtn as IAbstractToggle).addEventListener(EngineEvent.TRIGGERED, toggle_button_triggeredHandler);
+						(toggleBtn as IAbstractButton).addEventListener(TouchEvent.TOUCH, button_touchedHandler);
 						layer.addNewChildAt(toggleBtn, i);
 						break;	
 						
@@ -1092,7 +1116,6 @@
 		 */
 		private function movieClip_Completed(e:Object):void
 		{
-			
 				var o:GESignalEvent = new GESignalEvent()
 				o.eventName = Signals.MOVIE_CLIP_ENDED;
 				o.engineEvent = e;
@@ -1111,7 +1134,34 @@
 				o.eventName = Signals.GENERIC_BUTTON_PRESSED;
 				o.engineEvent = e;
 				o.params = null
-			_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_PRESSED, (e.currentTarget as IAbstractButton).name, o);
+				_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_PRESSED, (e.currentTarget as IAbstractButton).name, o);
+		}
+		
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function button_touchedHandler(e:Object):void
+		{
+			var touch:Touch = e.getTouch(e["touches"][0]["target"]);
+			
+			if(touch.phase == TouchPhase.HOVER)//on finger down
+			{
+				var o:GESignalEvent = new GESignalEvent()
+				o.eventName = Signals.GENERIC_BUTTON_OVER;
+				o.engineEvent = e;
+				o.params = null
+				_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_OVER, (e.currentTarget as IAbstractButton).name, o);
+			}
+			
+			if(touch.phase == TouchPhase.ENDED)//on finger down
+			{
+				var oE:GESignalEvent = new GESignalEvent()
+				oE.eventName = Signals.GENERIC_BUTTON_ENDED;
+				oE.engineEvent = e;
+				oE.params = null
+				_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_ENDED, (e.currentTarget as IAbstractButton).name, oE);
+			}
 		}
 		
 		/**
