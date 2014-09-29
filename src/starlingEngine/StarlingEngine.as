@@ -1145,23 +1145,28 @@
 		{
 			var touch:Touch = e.getTouch(e["touches"][0]["target"]);
 			
-			if(touch.phase == TouchPhase.HOVER)//on finger down
-			{
-				var o:GESignalEvent = new GESignalEvent()
-				o.eventName = Signals.GENERIC_BUTTON_OVER;
-				o.engineEvent = e;
-				o.params = null
-				_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_OVER, (e.currentTarget as IAbstractButton).name, o);
-			}
-			
-			if(touch.phase == TouchPhase.ENDED)//on finger down
-			{
-				var oE:GESignalEvent = new GESignalEvent()
-				oE.eventName = Signals.GENERIC_BUTTON_ENDED;
-				oE.engineEvent = e;
-				oE.params = null
-				_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_ENDED, (e.currentTarget as IAbstractButton).name, oE);
-			}
+			if (!touch)
+			   {
+				return;
+			   }
+			   
+				if(touch.phase == TouchPhase.HOVER)//on finger down
+				{
+					var o:GESignalEvent = new GESignalEvent()
+					o.eventName = Signals.GENERIC_BUTTON_OVER;
+					o.engineEvent = e;
+					o.params = null
+					_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_OVER, (e.currentTarget as IAbstractButton).name, o);
+				}
+				
+				if(touch.phase == TouchPhase.ENDED)//on finger down
+				{
+					var oE:GESignalEvent = new GESignalEvent()
+					oE.eventName = Signals.GENERIC_BUTTON_ENDED;
+					oE.engineEvent = e;
+					oE.params = null
+					_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_ENDED, (e.currentTarget as IAbstractButton).name, oE);
+				}
 		}
 		
 		/**

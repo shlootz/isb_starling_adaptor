@@ -176,7 +176,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						//showPaytable();
+						showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -187,7 +187,7 @@ package
 						//testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
-						testComboBox("cb1", 150, 150);
+						//testComboBox("cb1", 150, 150);
 						//testComboBox("cb2", 350,150);
 						//testEmptyButton();
 						//testTexturedLine();
