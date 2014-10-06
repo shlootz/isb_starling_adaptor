@@ -16,7 +16,7 @@ package starlingEngine.ui
 	 */
 	public class EngineInputText extends TextInput implements IAbstractInputText
 	{
-		
+		private var _backgroundBitmap:Bitmap;
 		private var _signalsManager:SignalsHub;
 		
 		/**
@@ -41,10 +41,6 @@ package starlingEngine.ui
 			this.textEditorProperties.fontFamily = fontName;
 			this.textEditorProperties.fontSize = fontSize;
 			this.textEditorProperties.color = color;
-			
-			var backGroundBmp:Bitmap = new Bitmap(new BitmapData(width, height, false, 0xFFFFFF));
-			var backgroundImage:Image = Image.fromBitmap(backGroundBmp);
-			this.backgroundSkin = backgroundImage;
 			
 			addEventListener( Event.CHANGE, input_changeHandler );
 			addEventListener( FeathersEventType.ENTER, input_enterHandler );
@@ -83,6 +79,12 @@ package starlingEngine.ui
 				text:this.text
 			}
 			_signalsManager.dispatchSignal(Signals.TEXT_INPUT_CHANGED, this.name, o);
+		}
+		
+		public function set backgroundBitmap(val:Bitmap):void
+		{
+			var backgroundImage:Image = Image.fromBitmap(val);
+			this.backgroundSkin = backgroundImage;
 		}
 		
 	}

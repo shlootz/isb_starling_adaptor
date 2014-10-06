@@ -176,7 +176,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						showPaytable();
+						//showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -184,7 +184,7 @@ package
 						//testMovieClipsFromFrames();
 						//testToggle();
 						//testFreeSpins();
-						//testInputText();
+						testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
 						//testComboBox("cb1", 150, 150);
@@ -196,8 +196,22 @@ package
 						//{
 							//testFLV(Math.random() * 800, Math.random() * 600);
 						//}
+						//testOmnes();
 					}
 				});
+		}
+		
+		private function testOmnes():void
+		{
+			_bridgeGraphics.registerBitmapFont(new OmnesPng(), XML(new OmnesClass()));
+			
+			var tField:IAbstractTextField = _bridgeGraphics.requestTextField(400, 100, "abcdeghijklmnopqrstuvwxyzTESTtestTEST!@#$%^&*()_+", "Omnes-Regular", 20, 0xFFFFFF);
+			var label:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tField);
+			
+			label.x = 100;
+			label.y = 100;
+			
+			_bridgeGraphics.addChild(label);
 		}
 		
 		private function testFLV(posX:Number, posY:Number):void
@@ -359,6 +373,7 @@ package
 			input.x = 50;
 			input.y = 50;
 			input.restriction = "0-9.";
+			input.backgroundBitmap = new Bitmap(new BitmapData(width, height, false, 0xFFFFFF));
 			_bridgeGraphics.addChild(input);
 			trace(input.name);
 			
@@ -499,7 +514,7 @@ package
 		private var slider:IAbstractSlider;
 		private function makeSlider():void
 		{
-			var sliderTextField:IAbstractTextField = _bridgeGraphics.requestTextField(140, 50, "Test", "Verdana", 20, 0xFFFFFF);
+			var sliderTextField:IAbstractTextField = _bridgeGraphics.requestTextField(140, 50, "", "Verdana", 20, 0xFFFFFF);
 			var sliderLabel:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(sliderTextField, "label");
 			slider = _bridgeGraphics.requestSlider(_bridgeGraphics.requestImage("Slider-Dragger"), 
 																					_bridgeGraphics.requestImage("Slider-Dragger"),
@@ -509,7 +524,8 @@ package
 																					sliderLabel,
 																					"test"
 																					);
-			
+			slider.sliderComponentY = 20;
+			slider.sliderComponentX = 5;
 			slider.x = 250;
 			slider.y = 250;
 			_bridgeGraphics.addChild(slider);
