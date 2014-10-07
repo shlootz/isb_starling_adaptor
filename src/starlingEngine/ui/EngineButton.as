@@ -677,7 +677,7 @@ package starlingEngine.ui
 		public function isHit (localPoint:Point, forTouch:Boolean = false) : Boolean
 		{
 			var hit:Boolean = false;
-		
+			
 			if (this.parent.hitTest(localPoint, forTouch) as IAbstractButton)
 			{
 				hit = true;

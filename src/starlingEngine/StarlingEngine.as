@@ -1160,7 +1160,7 @@
 					
 					_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_OVER, (e.currentTarget as IAbstractButton).name, o);
 					
-					if (!(e.currentTarget as IAbstractButton).isHit(new Point(mouseX, mouseY), true))
+					if ((e.currentTarget as IAbstractButton).currentState_ == "up")
 					{
 						var oOut:GESignalEvent = new GESignalEvent()
 						oOut.eventName = Signals.GENERIC_BUTTON_OUT;
