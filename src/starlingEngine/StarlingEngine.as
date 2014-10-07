@@ -342,6 +342,7 @@
 			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_OVER, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_ENDED, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_OUT, new Signal(), new Vector.<Function>);
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.MOVIE_CLIP_ENDED, new Signal(), new Vector.<Function>);
 			
@@ -1156,7 +1157,18 @@
 					o.eventName = Signals.GENERIC_BUTTON_OVER;
 					o.engineEvent = e;
 					o.params = null
+					
 					_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_OVER, (e.currentTarget as IAbstractButton).name, o);
+					
+					if (!(e.currentTarget as IAbstractButton).isHit(new Point(mouseX, mouseY), true))
+					{
+						var oOut:GESignalEvent = new GESignalEvent()
+						oOut.eventName = Signals.GENERIC_BUTTON_OUT;
+						oOut.engineEvent = e;
+						oOut.params = null
+						
+						_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_OUT, (e.currentTarget as IAbstractButton).name, oOut);
+					}
 				}
 				
 				if(touch.phase == TouchPhase.ENDED)//on finger down
@@ -1164,7 +1176,8 @@
 					var oE:GESignalEvent = new GESignalEvent()
 					oE.eventName = Signals.GENERIC_BUTTON_ENDED;
 					oE.engineEvent = e;
-					oE.params = null
+					oE.params = null;
+					
 					_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_ENDED, (e.currentTarget as IAbstractButton).name, oE);
 				}
 		}

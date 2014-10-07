@@ -176,7 +176,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						//showPaytable();
+						showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -184,7 +184,7 @@ package
 						//testMovieClipsFromFrames();
 						//testToggle();
 						//testFreeSpins();
-						testInputText();
+						//testInputText();
 						//testGradientFill();
 						//testNativeOverlay();
 						//testComboBox("cb1", 150, 150);
@@ -636,7 +636,13 @@ package
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.DISPLAY_OBJECT_TOUCHED, doTouched);
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OVER, doOver);
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_ENDED, doEnded);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OUT, doOut);
 			
+		}
+		
+		private function doOut(type:String, event:IAbstractSignalEvent):void
+		{
+			trace(type+" Out");
 		}
 		
 		private function doEnded(type:String, event:IAbstractSignalEvent):void
