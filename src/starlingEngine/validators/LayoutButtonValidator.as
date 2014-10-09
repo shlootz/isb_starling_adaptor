@@ -77,6 +77,7 @@ package starlingEngine.validators
 				btn.upIcon_ = icon;
 				btn.hoverIcon_ = icon;
 				btn.downIcon_ = icon;
+				btn.disabledIcon_ = icon;
 				btn.iconOffsetX = element.iconOffsetX;
 				btn.iconOffsetY = element.iconOffsetY;
 			}
