@@ -305,6 +305,24 @@ package starlingEngine.elements
 		{
 			 _layers = val;
 		}
+		
+		/**
+		 * 
+		 * @param	localPoint
+		 * @param	forTouch
+		 * @return
+		 */
+		public function isHit (localPoint:Point, forTouch:Boolean = false) : Boolean
+		{
+			var hit:Boolean = false;
+			
+			if (this.hitTest(localPoint, forTouch))
+			{
+				hit = true;
+			}
+			
+			return hit
+		}
 	}
 
 }

@@ -150,7 +150,9 @@ package
 													"../bin/assets/spritesheets/spriteSheetElements.xml",
 													"../bin/assets/spritesheets/spriteSheetPayTable.xml",
 													"../bin/assets/spritesheets/preloader1x.png",
+													"../bin/assets/spritesheets/Scrolls of Ra Assets.png",
 													"../bin/assets/spritesheets/preloader1x.xml",
+													"../bin/assets/spritesheets/backgroundAssets.xml",
 													"../bin/assets/layouts/layerLayout.xml",
 													"../bin/assets/layouts/preloader1xLayout.xml",
 													"../bin/assets/layouts/buttonLayout.xml",
@@ -162,8 +164,10 @@ package
 													"../bin/assets/layouts/PaytablePage4.xml",
 													"../bin/assets/layouts/PaytablePage5.xml",
 													"../bin/assets/layouts/PaytablePage6.xml",
+													"../bin/assets/layouts/linesLayout.xml",
 													"../bin/assets/sounds/track.mp3",
-													"../bin/assets/layouts/freeSpinsLayout.xml"
+													"../bin/assets/layouts/freeSpinsLayout.xml",
+													"../bin/assets/layouts/menuLayout.xml"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
@@ -176,7 +180,9 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
-						showPaytable();
+						//showLines();
+						showMenu();
+						//showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -199,6 +205,31 @@ package
 						//testOmnes();
 					}
 				});
+		}
+		
+		private function showMenu():void
+		{
+			var paytableXml:XML = new XML();
+			paytableXml = _bridgeGraphics.getXMLFromAssetsManager("menuLayout");
+			
+			 //Adding the Paytable layer and initializing the layout via auto methods
+			_layersVO.addLayer("Paytable", 0, paytableXml, true);
+			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			var paytableLayer:IAbstractLayer = _layersVO.retrieveLayer("Paytable");
+			inLayers.push(paytableLayer);
+			
+			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers);
+			_bridgeGraphics.addChild(_bridgeGraphics.requestImage("Full-Screen-Icon"));
+			
+			var img:IAbstractImage = _bridgeGraphics.requestImage("Settings-Button-Hover");
+			img.y = 150;
+			
+			var btn:IAbstractButton = _bridgeGraphics.requestButton("george");
+			btn.upSkin_ = _bridgeGraphics.requestImage("Full-Screen-Icon");
+			btn.x = btn.y =  250;
+			
+			_bridgeGraphics.addChild(img);
+			_bridgeGraphics.addChild(btn);
 		}
 		
 		private function testOmnes():void
@@ -536,6 +567,42 @@ package
 		private var _currentPage:IAbstractLayer;
 		private var _paytablePagesHolder:IAbstractSprite;
 		
+		private function showLines():void
+		{
+			_bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new OmnesPng(), XML(new OmnesClass()));
+			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
+			 _bridgeGraphics.registerBitmapFont(new ArialPng(), XML(new ArialClass()));
+			 _bridgeGraphics.registerBitmapFont(new DesyrelPng(), XML(new DesyrelClass()));
+			 
+			 var linesXML:XML = new XML();
+			linesXML = _bridgeGraphics.getXMLFromAssetsManager("linesLayout");
+			
+			_layersVO.addLayer("Lines", 0, linesXML, true);
+			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			var linesLayer:IAbstractLayer = _layersVO.retrieveLayer("Lines");
+			inLayers.push(linesLayer);
+			
+			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers);
+			
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.DISPLAY_OBJECT_TOUCHED, doTouched);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OVER, doOver);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_ENDED, doEnded);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OUT, doOut);
+			
+			for (var i:uint = 0; i < 20; i++ )
+			{
+				var img:IAbstractImage = _bridgeGraphics.requestImage("History-Icon");
+				
+				img.name = "imgline"+(i+1);
+				img.x = _layersVO.retrieveLayer("Lines").getChildByNameStr("line"+(i+1)).x + 20;
+				img.y =_layersVO.retrieveLayer("Lines").getChildByNameStr("line"+(i+1)).y;
+				img.alpha = 0;
+				
+				_layersVO.retrieveLayer("Lines").addNewChild(img);
+			}
+		}
+		
 		private function showPaytable():void
 		{	
 			_bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
@@ -643,6 +710,8 @@ package
 		private function doOut(type:String, event:IAbstractSignalEvent):void
 		{
 			trace(type+" Out");
+			//(_layersVO.retrieveLayer("Lines").getChildByNameStr("img" + type)).alpha = 0;
+			TweenLite.to((_layersVO.retrieveLayer("Lines").getChildByNameStr("img" + type)), .5, { alpha:0} );
 		}
 		
 		private function doEnded(type:String, event:IAbstractSignalEvent):void
@@ -652,7 +721,9 @@ package
 		
 		private function doOver(type:String, event:IAbstractSignalEvent):void
 		{
-			trace(type+" Over");
+			trace(type+" Over ");
+			//(_layersVO.retrieveLayer("Lines").getChildByNameStr("img" + type)).alpha = 1;
+			TweenLite.to((_layersVO.retrieveLayer("Lines").getChildByNameStr("img" + type)), .5, { alpha:1 } );
 		}
 		
 		private function doTouched(type:String, event:IAbstractSignalEvent):void

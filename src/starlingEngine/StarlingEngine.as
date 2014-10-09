@@ -1378,6 +1378,11 @@
 			trace(this + " -> destroyed");
 		}
 		
+		public function isHit(localPoint:Point, forTouch:Boolean = false):Boolean
+		{
+			return true;
+		}
+		
 	}
 	
 }
