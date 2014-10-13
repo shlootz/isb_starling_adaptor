@@ -1,6 +1,7 @@
 ﻿package starlingEngine
 {
 	import adobe.utils.CustomActions;
+	import bridge.abstract.effects.IAbstractParticleSystem;
 	import bridge.abstract.filters.IAbstractBlurFilter;
 	import bridge.abstract.filters.IAbstractDropShadowFilter;
 	import bridge.abstract.filters.IAbstractGlowFilter;
@@ -24,6 +25,7 @@
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.filters.BlurFilter;
+	import starlingEngine.effects.EngineParticleSystem;
 	import starlingEngine.elements.EngineBlitMask;
 	import starlingEngine.elements.EngineGraphics;
 	import starlingEngine.elements.EngineMask;
@@ -1376,6 +1378,11 @@
 			super.destroy();
 			
 			trace(this + " -> destroyed");
+		}
+		
+		public function requestParticleSystem(configXML:XML, imageSource:IAbstractImage):IAbstractParticleSystem
+		{
+			return new EngineParticleSystem(configXML, imageSource, juggler as Juggler);
 		}
 		
 		public function isHit(localPoint:Point, forTouch:Boolean = false):Boolean
