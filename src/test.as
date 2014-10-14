@@ -2,6 +2,7 @@ package
 {
 	import adobe.utils.CustomActions;
 	import away3d.controllers.SpringController;
+	import away3d.library.assets.BitmapDataAsset;
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.effects.IAbstractParticleSystem;
 	import bridge.abstract.events.BridgeEvents;
@@ -252,7 +253,20 @@ package
 		
 		private function testStuff():void
 		{
-			particlesTest();
+			//particlesTest();
+			mcTest();
+		}
+		
+		private function mcTest():void
+		{
+			var framesVector:Vector.<IAbstractImage> = new Vector.<IAbstractImage>;
+			for (var i:uint = 0; i < 100; i++ )
+			{
+				framesVector.push(_bridgeGraphics.requestImageFromBitmapData(new BitmapData(300, 300, false, Math.random() * 0xFFFFFF)));
+			}
+			var mc:IAbstractMovie = _bridgeGraphics.requestMovieFromFrames(framesVector);
+			
+			_bridgeGraphics.addChild(mc);
 		}
 		
 		//private function testFlappy():void

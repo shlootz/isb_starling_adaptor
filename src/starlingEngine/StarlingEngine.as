@@ -294,17 +294,33 @@
 			//creates a new pool for buttons
 			_buttonsPool = new AbstractPool("buttons", EngineButton, 20);
 			
+			//assigns initial state
 			_currentState = requestState();
 			state = _currentState as IState;
 			
+			//alert bridge that init is complete
 			_initCompleteCallback.call();
+			
+			//assigns initial stage
 			_engineStage = starling.stage;
 			
+			//dispatch 
 			_signalsHub.dispatchSignal(Signals.STARLING_READY, "", "");
 			
+			//TO DO
 			configureConsole();
 			
+			//mouse wheel listener
 			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel, false, 0 , true);
+			
+			//deactivate event
+			stage.addEventListener(Event.DEACTIVATE, onDeactivate);
+		}
+		
+		private function onDeactivate(e:Event):void
+		{
+			Starling.current.start();
+			Starling.current.nativeStage.frameRate = 60;
 		}
 		
 		private function onMouseWheel(e:MouseEvent):void
@@ -510,6 +526,7 @@
 			(juggler as Juggler).add(n as IAnimatable);
 			
 			n.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
+			n.stop();
 			
 			return n;
 		}
@@ -533,6 +550,7 @@
 			(juggler as Juggler).add(n as IAnimatable);
 			
 			n.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
+			n.stop();
 			
 			return n;
 		}
