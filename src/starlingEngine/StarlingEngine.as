@@ -493,6 +493,7 @@
 			var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
 			i.newTexture = Texture.fromBitmapData(bitmapData);
 			i.readjustSize();
+			i.name = "ImageFromBitmapData" + Math.random() * 999999;
 			
 			return i;
 		}

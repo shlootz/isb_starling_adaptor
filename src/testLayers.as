@@ -181,8 +181,8 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						//showLines();
-						showMenu();
-						//showPaytable();
+						//showMenu();
+						showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -610,27 +610,7 @@ package
 			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
 			 _bridgeGraphics.registerBitmapFont(new ArialPng(), XML(new ArialClass()));
 			 _bridgeGraphics.registerBitmapFont(new DesyrelPng(), XML(new DesyrelClass()));
-			//getQualifiedClassName(_bridgeGraphics.requestSprite())
-			//var aPool:AbstractPool = new AbstractPool("Test", 	getDefinitionByName(getQualifiedClassName(_bridgeGraphics.requestSprite())) as Class, 20);
 			
-			//var testSprite:IAbstractSprite = _bridgeGraphics.requestSprite("test");
-			//testSprite.addNewChild(_bridgeGraphics.requestImage("Background"));
-			//testSprite.updateMouseGestures(_bridgeGraphics.signalsManager, true);
-			//_bridgeGraphics.addChild(testSprite);
-			
-			//var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
-			//var img2:IAbstractImage = _bridgeGraphics.requestImage("Background");
-			//
-			//var testas:IAbstractLayer = _bridgeGraphics.requestLayer("asd", 2, null, false);
-			//_bridgeGraphics.returnToPool(img);
-			//_bridgeGraphics.returnToPool(img2);
-			//_bridgeGraphics.returnToPool(testSprite);
-			//
-			//testSprite = _bridgeGraphics.requestSprite("test");
-			//testSprite.addNewChild(_bridgeGraphics.requestImage("Bonus-Background"));
-			//testSprite.updateMouseGestures(_bridgeGraphics.signalsManager, true);
-			//_bridgeGraphics.addChild(testSprite);
-			 //Retrievieng the XML layout for the paytable main menu
 			var paytableXml:XML = new XML();
 			paytableXml = _bridgeGraphics.getXMLFromAssetsManager("Paytable");
 			
@@ -641,69 +621,69 @@ package
 			inLayers.push(paytableLayer);
 			
 			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers);
-			
+			paytableLayer = _layersVO.retrieveLayer("Paytable");
 			//AAAAAAAAAAAAA
-			var btn:IAbstractButton = paytableLayer.getChildByNameStr("backButton") as IAbstractButton;
-			var img:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100, 100, false, 0xff0000));
-			btn.upSkin_ = img;
-			btn.upIcon_ = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(10, 100, false, 0xffffff));
+			//var btn:IAbstractButton = paytableLayer.getChildByNameStr("backButton") as IAbstractButton;
+			//var img:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100, 100, false, 0xff0000));
+			//btn.upSkin_ = img;
+			//btn.upIcon_ = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(10, 100, false, 0xffffff));
 			
-			var label:IAbstractLabel = btn.customLabel;
-			trace(label.textField.color);
+			//var label:IAbstractLabel = btn.customLabel;
+			//trace(label.textField.color);
 			//Creating a custom holder for the pages layouts
-			_paytablePagesHolder = _bridgeGraphics.requestSprite("paytableHolder");
+			//_paytablePagesHolder = _bridgeGraphics.requestSprite("paytableHolder");
 			
 			//Creating a custom layersVO for the container created above
-			_paytablePagesLayersVO = _bridgeGraphics.requestLayersVO();
+			//_paytablePagesLayersVO = _bridgeGraphics.requestLayersVO();
 			
 			//Creating the XMLs for each page. In real life, these XMLs will be parsed from a single paytable.xml file
-			var page1Xml:XML = new XML();
-			page1Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage1");
-			var page2Xml:XML = new XML();
-			page2Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage2");
-			var page3Xml:XML = new XML();
-			page3Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage3");
-			var page4Xml:XML = new XML();
-			page4Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage4");
-			var page5Xml:XML = new XML();
-			page5Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage5");
-			var page6Xml:XML = new XML();
-			page6Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage6");
+			//var page1Xml:XML = new XML();
+			//page1Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage1");
+			//var page2Xml:XML = new XML();
+			//page2Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage2");
+			//var page3Xml:XML = new XML();
+			//page3Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage3");
+			//var page4Xml:XML = new XML();
+			//page4Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage4");
+			//var page5Xml:XML = new XML();
+			//page5Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage5");
+			//var page6Xml:XML = new XML();
+			//page6Xml = _bridgeGraphics.getXMLFromAssetsManager("PaytablePage6");
 			
 			//Adding the layers to the custom layersVO 
-			_paytablePagesLayersVO.addLayer("Overview", 0, page1Xml);
-			_paytablePagesLayersVO.addLayer("Scatter", 1, page2Xml);
-			_paytablePagesLayersVO.addLayer("Wild", 2, page3Xml);
-			_paytablePagesLayersVO.addLayer("Bonus", 3, page4Xml);
-			_paytablePagesLayersVO.addLayer("Rules", 4, page5Xml);
-			_paytablePagesLayersVO.addLayer("Shortcuts", 5, page6Xml);
+			//_paytablePagesLayersVO.addLayer("Overview", 0, page1Xml);
+			//_paytablePagesLayersVO.addLayer("Scatter", 1, page2Xml);
+			//_paytablePagesLayersVO.addLayer("Wild", 2, page3Xml);
+			//_paytablePagesLayersVO.addLayer("Bonus", 3, page4Xml);
+			//_paytablePagesLayersVO.addLayer("Rules", 4, page5Xml);
+			//_paytablePagesLayersVO.addLayer("Shortcuts", 5, page6Xml);
 			
 			//Drawing the layouts by direct call to the drawLayerLayout method
-			_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Overview"));
-			_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Scatter"));
-			_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Wild"));
-			_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Bonus"));
-			_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Rules"));
-			_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Shortcuts"));
+			//_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Overview"));
+			//_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Scatter"));
+			//_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Wild"));
+			//_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Bonus"));
+			//_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Rules"));
+			//_bridgeGraphics.drawLayerLayout(_paytablePagesLayersVO.retrieveLayer("Shortcuts"));
 			
-			//Adding the first page of the paytable
-			_currentPage = _paytablePagesLayersVO.retrieveLayer("Overview");
-			//_paytablePagesHolder.addNewChild(_currentPage as IAbstractDisplayObject);
-			
-			//Moving the container a bit
-			_paytablePagesHolder.x = 200;
-			
-			//Adding the container to the paytable layer
-			_layersVO.retrieveLayer("Paytable").addNewChild(_paytablePagesHolder);
-			
-			//Adding a listener to the signal from paytable
-			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
-			
-			_layersVO.retrieveLayer("Paytable").updateMouseGestures((_bridgeGraphics.signalsManager as ISignalsHub), true);
-			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.DISPLAY_OBJECT_TOUCHED, doTouched);
-			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OVER, doOver);
-			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_ENDED, doEnded);
-			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OUT, doOut);
+			////Adding the first page of the paytable
+			//_currentPage = _paytablePagesLayersVO.retrieveLayer("Overview");
+			////_paytablePagesHolder.addNewChild(_currentPage as IAbstractDisplayObject);
+			//
+			////Moving the container a bit
+			//_paytablePagesHolder.x = 200;
+			//
+			////Adding the container to the paytable layer
+			//_layersVO.retrieveLayer("Paytable").addNewChild(_paytablePagesHolder);
+			//
+			////Adding a listener to the signal from paytable
+			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED, buttonPressed);
+			//
+			//_layersVO.retrieveLayer("Paytable").updateMouseGestures((_bridgeGraphics.signalsManager as ISignalsHub), true);
+			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.DISPLAY_OBJECT_TOUCHED, doTouched);
+			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OVER, doOver);
+			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_ENDED, doEnded);
+			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OUT, doOut);
 			
 		}
 		
@@ -711,7 +691,7 @@ package
 		{
 			trace(type+" Out");
 			//(_layersVO.retrieveLayer("Lines").getChildByNameStr("img" + type)).alpha = 0;
-			TweenLite.to((_layersVO.retrieveLayer("Lines").getChildByNameStr("img" + type)), .5, { alpha:0} );
+			//TweenLite.to((_layersVO.retrieveLayer("Lines").getChildByNameStr("img" + type)), .5, { alpha:0} );
 		}
 		
 		private function doEnded(type:String, event:IAbstractSignalEvent):void
@@ -723,7 +703,7 @@ package
 		{
 			trace(type+" Over ");
 			//(_layersVO.retrieveLayer("Lines").getChildByNameStr("img" + type)).alpha = 1;
-			TweenLite.to((_layersVO.retrieveLayer("Lines").getChildByNameStr("img" + type)), .5, { alpha:1 } );
+			//TweenLite.to((_layersVO.retrieveLayer("Lines").getChildByNameStr("img" + type)), .5, { alpha:1 } );
 		}
 		
 		private function doTouched(type:String, event:IAbstractSignalEvent):void

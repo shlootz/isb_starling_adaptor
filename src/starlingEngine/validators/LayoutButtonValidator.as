@@ -24,11 +24,16 @@ package starlingEngine.validators
 		public static function validate(engine:IEngine, assetsManager:AssetManager, element:EngineLayerLayoutElementVo):IAbstractButton
 		{
 			var btn:IAbstractButton = engine.requestButton();
-			var upSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.resource));
-			var upStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.upState));
-			var overStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.overState));
-			var pressedStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.pressedState));
-			var disabledStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.disabledState));
+			var upSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.resource), element.resource);
+			upSkin.name = element.resource;
+			var upStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.upState), element.upState);
+			upStateSkin.name = element.upState;
+			var overStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.overState), element.overState);
+			overStateSkin.name = element.overState;
+			var pressedStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.pressedState), element.pressedState);
+			pressedStateSkin.name = element.pressedState;
+			var disabledStateSkin:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.disabledState),  element.disabledState);
+			disabledStateSkin.name = element.disabledState;
 			var hasIcon:Boolean = false;
 			var icon:IAbstractImage;
 			

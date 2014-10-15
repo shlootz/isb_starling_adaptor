@@ -256,7 +256,19 @@ package
 		{
 			//particlesTest();
 			//mcTest();
-			inputText();
+			//inputText();
+			testEmptyButton();
+		}
+		
+		private function testEmptyButton():void
+		{
+			var bb:IAbstractButton = _bridgeGraphics.requestButton("tas");
+			
+			bb.upSkin_ = _bridgeGraphics.requestImage("adasdgs");
+			
+			bb.x = 100;
+			
+			_bridgeGraphics.addChild(bb);
 		}
 		
 		private function inputText():void
