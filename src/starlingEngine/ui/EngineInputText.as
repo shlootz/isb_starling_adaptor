@@ -44,6 +44,8 @@ package starlingEngine.ui
 			
 			addEventListener( Event.CHANGE, input_changeHandler );
 			addEventListener( FeathersEventType.ENTER, input_enterHandler );
+			addEventListener( FeathersEventType.FOCUS_IN, input_FocusInHandler );
+			addEventListener( FeathersEventType.FOCUS_OUT, input_FocusOutHandler );
 		}
 		
 		public function set restriction(val:String):void
@@ -79,6 +81,28 @@ package starlingEngine.ui
 				text:this.text
 			}
 			_signalsManager.dispatchSignal(Signals.TEXT_INPUT_CHANGED, this.name, o);
+		}
+		
+		private function input_FocusInHandler(e:Event):void
+		{
+			var o:GESignalEvent = new GESignalEvent()
+			o.eventName = Signals.TEXT_INPUT_FOCUS_IN;
+			o.engineEvent = e;
+			o.params = {
+				text:this.text
+			}
+			_signalsManager.dispatchSignal(Signals.TEXT_INPUT_FOCUS_IN, this.name, o);
+		}
+		
+		private function input_FocusOutHandler(e:Event):void
+		{
+			var o:GESignalEvent = new GESignalEvent()
+			o.eventName = Signals.TEXT_INPUT_FOCUS_OUT;
+			o.engineEvent = e;
+			o.params = {
+				text:this.text
+			}
+			_signalsManager.dispatchSignal(Signals.TEXT_INPUT_FOCUS_OUT, this.name, o);
 		}
 		
 		public function set backgroundBitmap(val:Bitmap):void

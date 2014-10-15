@@ -28,6 +28,7 @@ package
 	import bridge.abstract.transitions.IAbstractLayerTransitionOut;
 	import bridge.abstract.transitions.IAbstractStateTransition;
 	import bridge.abstract.ui.IAbstractButton;
+	import bridge.abstract.ui.IAbstractInputText;
 	import bridge.abstract.ui.IAbstractLabel;
 	import bridge.abstract.ui.LabelProperties;
 	import bridge.BridgeGraphics;
@@ -254,7 +255,26 @@ package
 		private function testStuff():void
 		{
 			//particlesTest();
-			mcTest();
+			//mcTest();
+			inputText();
+		}
+		
+		private function inputText():void
+		{
+			var tt:IAbstractInputText = _bridgeGraphics.requestInputTextField(200, 30, "AAAA");
+			tt.x = 100;
+			tt.y = 100;
+			_bridgeGraphics.addChild(tt);
+			
+			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.TEXT_INPUT_FOCUS_IN, function(ype:String, obj:Object):void {
+				trace("Focus In");
+			}
+			);
+			
+			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.TEXT_INPUT_FOCUS_OUT, function(ype:String, obj:Object):void {
+				trace("Focus Out");
+			}
+			);
 		}
 		
 		private function mcTest():void

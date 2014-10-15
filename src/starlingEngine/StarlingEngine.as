@@ -371,7 +371,10 @@
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.LIST_ITEM_TOUCHED, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.LIST_ITEM_TOUCHED_INTERNAL, new Signal(), new Vector.<Function>);
+			
 			(_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_CHANGED, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_FOCUS_IN, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_FOCUS_OUT, new Signal(), new Vector.<Function>);
 		}
 		
 		/**
