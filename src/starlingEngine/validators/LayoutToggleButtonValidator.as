@@ -73,6 +73,13 @@ package starlingEngine.validators
 			
 			iconOff = engine.requestImage(assetsManager.getTexture(element.iconOff));
 			btn.toggleFalseImage = iconOff;
+	
+			
+			btn.hoverIcon_ = btn.upIcon_;
+			btn.downIcon_ = btn.upIcon_;
+			btn.selectedDownIcon_ = btn.selectedUpIcon_;
+			btn.selectedHoverIcon_ = btn.selectedUpIcon_;
+			
 			
 			iconOn.width = element.iconWidth;
 			iconOn.height = element.iconHeight;
