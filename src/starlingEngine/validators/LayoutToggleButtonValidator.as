@@ -98,8 +98,6 @@ package starlingEngine.validators
 					label.name = "label"+element.name;
 					
 					labelText.autoScale = true;
-							
-					labelText.hAlign = LabelProperties.ALIGN_CENTER;
 						
 					if (element.labelX != 0 || element.labelY != 0)
 					{
@@ -111,6 +109,8 @@ package starlingEngine.validators
 					{
 						btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
 					}
+					
+					labelText.hAlign = element.labelAlign;
 			}
 						
 			return btn
