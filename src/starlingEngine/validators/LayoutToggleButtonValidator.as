@@ -94,6 +94,12 @@ package starlingEngine.validators
 			{
 					var labelText:IAbstractTextField = engine.requestTextField(int(element.labelWidth), int(element.labelHeight),element.label, element.font, element.labelFontSize, element.labelFontColor);
 					var label:IAbstractLabel = engine.requestLabelFromTextfield(labelText);
+					var labelAlign:String = "center";
+					
+					if (element.labelAlign != "")
+					{
+						labelAlign = element.labelAlign;
+					}
 					
 					label.name = "label"+element.name;
 					
@@ -110,7 +116,7 @@ package starlingEngine.validators
 						btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
 					}
 					
-					labelText.hAlign = element.labelAlign;
+					labelText.hAlign = labelAlign;
 			}
 						
 			return btn

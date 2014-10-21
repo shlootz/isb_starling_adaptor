@@ -91,23 +91,29 @@ package starlingEngine.validators
 			{
 					var labelText:IAbstractTextField = engine.requestTextField(int(element.labelWidth), int(element.labelHeight),element.label, element.font, element.labelFontSize, element.labelFontColor);
 					var label:IAbstractLabel = engine.requestLabelFromTextfield(labelText);
+					var labelAlign:String = "center";
+					
+					if (element.labelAlign != "")
+					{
+						labelAlign = element.labelAlign;
+					}
 					
 					label.name = "label"+element.name;
 					
 					labelText.autoScale = true;
-							
-					labelText.hAlign = LabelProperties.ALIGN_CENTER;
 						
 					if (element.labelX != 0 || element.labelY != 0)
 					{
-						btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
+						btn.addCustomLabel(label,  labelAlign);
 						label.x += element.labelX;
 						label.y += element.labelY;
 					}
 					else
 					{
-						btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
+						btn.addCustomLabel(label, labelAlign);
 					}
+					
+					labelText.hAlign = labelAlign;
 			}
 						
 			return btn
