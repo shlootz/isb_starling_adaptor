@@ -23,6 +23,7 @@ package starlingEngine.validators
 			var tLabel:IAbstractLabel = engine.requestLabelFromTextfield(tField, element.name);
 			tLabel.x = element.x;
 			tLabel.y = element.y;
+			tLabel.textField.hAlign = element.labelAlign;
 			
 			return tLabel;
 		}

@@ -40,6 +40,7 @@ package starlingEngine.elements
 		public var labelFontColor:uint;
 		public var labelX:Number;
 		public var labelY:Number;
+		public var labelAlign:String = "center";
 		
 		public var icon:String;
 		public var iconOffsetX:Number;

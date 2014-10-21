@@ -196,6 +196,7 @@ package starlingEngine.elements
 				var labelHeight:String = _mainXML.child("Element")[i].attribute("labelHeight");
 				var labelFontSize:String = _mainXML.child("Element")[i].attribute("labelFontSize");
 				var labelFontColor:String = _mainXML.child("Element")[i].attribute("labelFontColor");
+				var labelAlign:String = _mainXML.child("Element")[i].attribute("align");
 				var labelX:String = _mainXML.child("Element")[i].attribute("labelX");
 				var labelY:String = _mainXML.child("Element")[i].attribute("labelY");
 				var flipped:String = _mainXML.child("Element")[i].attribute("flipped");
@@ -255,6 +256,7 @@ package starlingEngine.elements
 				o.background = background;
 				o.sliderX = Number(sliderX);
 				o.sliderY = Number(sliderY);
+				o.labelAlign = labelAlign;
 				
 				if (flipped == "true")
 				{
