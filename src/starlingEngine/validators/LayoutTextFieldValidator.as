@@ -23,7 +23,14 @@ package starlingEngine.validators
 			var tLabel:IAbstractLabel = engine.requestLabelFromTextfield(tField, element.name);
 			tLabel.x = element.x;
 			tLabel.y = element.y;
-			tLabel.textField.hAlign = element.labelAlign;
+			if (element.labelAlign != "" && element.labelAlign != null)
+			{
+				tLabel.textField.hAlign = element.labelAlign;
+			}
+			else
+			{
+				tLabel.textField.hAlign = "center";
+			}
 			
 			return tLabel;
 		}
