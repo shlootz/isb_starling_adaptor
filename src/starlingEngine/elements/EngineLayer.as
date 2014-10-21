@@ -276,11 +276,30 @@ package starlingEngine.elements
 				
 				if (_layoutDictionary[name] != null)
 				{
-					o.name = o.name+"_";
+					name = o.name = generateNewName(name)
 				}
 				
 				_layoutDictionary[name] = o;
 			}
+		}
+		
+		/**
+		 * 
+		 * @param	name
+		 * @return
+		 */
+		private function generateNewName(name:String):String
+		{
+			var occurances:uint = 0;
+			for (var i:String in _layoutDictionary)
+			{
+				if (i.indexOf(name) != -1)
+				{
+					occurances++
+				}
+			}
+			
+			return (name+String(occurances));
 		}
 		
 		/**
