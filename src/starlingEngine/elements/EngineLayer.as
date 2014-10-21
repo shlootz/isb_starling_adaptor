@@ -274,6 +274,11 @@ package starlingEngine.elements
 					o.loop = false;
 				}
 				
+				if (_layoutDictionary[name] != null)
+				{
+					o.name = o.name+"_";
+				}
+				
 				_layoutDictionary[name] = o;
 			}
 		}
