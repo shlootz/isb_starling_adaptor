@@ -40,6 +40,16 @@ package starlingEngine.elements
 		
 		/**
 		 * 
+		 * @param	stream
+		 */
+		public function addVideoStream(stream:NetStream):void
+		{
+			_video = new Video(stream, null, true, true);
+			this.addChild(_video);
+		}
+		
+		/**
+		 * 
 		 */
 		public function pause():void
 		{

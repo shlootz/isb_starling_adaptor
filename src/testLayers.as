@@ -46,6 +46,7 @@ package
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.media.Sound;
+	import flash.net.NetStream;
 	import flash.text.TextField;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -181,7 +182,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
-						testMovieClipsFromFrames();
+						//testMovieClipsFromFrames();
 						//showLines();
 						//showMenu();
 						//showPaytable();
@@ -200,10 +201,10 @@ package
 						//testEmptyButton();
 						//testTexturedLine();
 						//testAnimatedTexture();
-						//for (var i:uint = 0; i < 25; i++ )
-						//{
-							//testFLV(Math.random() * 800, Math.random() * 600);
-						//}
+						for (var i:uint = 0; i < 5; i++ )
+						{
+							testFLV(Math.random() * 800, Math.random() * 600);
+						}
 						//testOmnes();
 					}
 				});
@@ -493,8 +494,6 @@ package
 			mc2.play();
 			
 			_bridgeGraphics.returnToPool(mc2);
-			
-			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, onMovieClipEnded);
 		}
 		
 		private function onMovieClipEnded(type:String, event:IAbstractSignalEvent):void
