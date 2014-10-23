@@ -2,9 +2,11 @@ package starlingEngine.ui
 {
 	import bridge.abstract.IAbstractImage;
 	import bridge.abstract.ui.IAbstractToggle;
+	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starlingEngine.events.EngineEvent;
 
 	/**
 	 * ...
@@ -20,7 +22,7 @@ package starlingEngine.ui
 		public function EngineToggleButton() 
 		{
 			super();
-			addEventListener(TouchEvent.TOUCH, toggleButtonTouched);
+			addEventListener(EngineEvent.TRIGGERED, toggle_button_triggeredHandler);
 		}
 		
 		public function toggle(val:Boolean):void
@@ -51,15 +53,10 @@ package starlingEngine.ui
 			_toggleFalseImage = val;
 			toggle(false);
 		}
-		
-		private function toggleButtonTouched(event:TouchEvent):void
+	
+		private function toggle_button_triggeredHandler(e:Object):void
 		{
-			var touchBegan:Touch = event.getTouch(this, TouchPhase.BEGAN);
-			
-			if (touchBegan)
-			{
-				toggle(!_toggle);
-			}
+			toggle(!_toggle);
 		}
 		
 	}

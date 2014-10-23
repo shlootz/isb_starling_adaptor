@@ -1106,7 +1106,6 @@
 					case ENGINE_TOGGLE_BUTTON:
 						var toggleBtn:IAbstractToggle = LayoutToggleButtonValidator.validate(this, _assetsManager, sortedElements[i]);
 						(toggleBtn as IAbstractToggle).addEventListener(EngineEvent.TRIGGERED, toggle_button_triggeredHandler);
-						(toggleBtn as IAbstractButton).addEventListener(TouchEvent.TOUCH, button_touchedHandler);
 						layer.addNewChildAt(toggleBtn, i);
 						break;	
 						

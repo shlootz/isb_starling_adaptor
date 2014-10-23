@@ -107,13 +107,13 @@ package starlingEngine.validators
 						
 					if (element.labelX != 0 || element.labelY != 0)
 					{
-						btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
+						btn.addCustomLabel(label, "center");
 						label.x += element.labelX;
 						label.y += element.labelY;
 					}
 					else
 					{
-						btn.addCustomLabel(label, LabelProperties.ALIGN_CENTER);
+						btn.addCustomLabel(label, "center");
 					}
 					
 					labelText.hAlign = labelAlign;
