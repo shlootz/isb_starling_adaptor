@@ -180,9 +180,11 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
+						
+						testMovieClipsFromFrames();
 						//showLines();
 						//showMenu();
-						showPaytable();
+						//showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -475,9 +477,9 @@ package
 				images.push(_bridgeGraphics.requestImageFromBitmapData(new BitmapData(120, 120, false, Math.random() * 0xFFFFFF)));
 			}
 			
-			for (var j:uint = 0; j < 1000; j++ )
+			for (var j:uint = 0; j < 5; j++ )
 			{
-				var mc:IAbstractMovie = _bridgeGraphics.requestMovieFromFrames(images, Math.random()*60);
+				var mc:IAbstractMovie = _bridgeGraphics.requestMovieFromFrames(images, 20);
 				mc.x = 100 + Math.random()*700;
 				mc.y = 100 + Math.random() * 500;
 				mc.name = "mc" + j;
@@ -485,7 +487,14 @@ package
 				_bridgeGraphics.addChild(mc);
 			}
 			
-			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, onMovieClipEnded);
+			var mc2:IAbstractMovie = _bridgeGraphics.requestMovie("Bet");
+			mc2.y = 150;
+			_bridgeGraphics.addChild(mc2);
+			mc2.play();
+			
+			_bridgeGraphics.returnToPool(mc2);
+			
+			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, onMovieClipEnded);
 		}
 		
 		private function onMovieClipEnded(type:String, event:IAbstractSignalEvent):void

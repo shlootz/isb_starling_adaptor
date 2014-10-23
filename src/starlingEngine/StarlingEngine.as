@@ -147,6 +147,7 @@
 		private var _movieClipsPool:AbstractPool;
 		private var _buttonsPool:AbstractPool;
 		
+		private var  defaultFramesVector:Vector.<Texture> = new Vector.<Texture>();
 		private var _bitmapDataFallBack:BitmapData = new BitmapData(100, 100, true, 0x000000);
 		/**
 		 * 
@@ -247,9 +248,7 @@
 				
 				(obj as EngineMovie).removeFromParent();
 				
-				var defaultVector:Vector.<Texture> = new Vector.<Texture>;
-				defaultVector.push(Texture.fromColor(2, 2, 0x000000));
-				obj = new EngineMovie(defaultVector);
+				obj = new EngineMovie(defaultFramesVector);
 				
 				_movieClipsPool.returnToPool(obj as EngineMovie);
 			}
@@ -271,7 +270,7 @@
 			}
 			else
 			{
-					trace("AssetsManager :: recycled " + obj + " succesfuly");
+				trace("AssetsManager :: recycled " + obj + " succesfuly");
 			}
 		}
 		
@@ -287,9 +286,8 @@
 			_imagesPool = new AbstractPool("images", EngineImage, 20, Texture.fromColor(2, 2, 0x000000));
 			
 			//creates a new pool for movieclips
-			var defaultVector:Vector.<Texture> = new Vector.<Texture>;
-			defaultVector.push(Texture.fromColor(2, 2, 0x000000));
-			_movieClipsPool = new AbstractPool("movieClips", EngineMovie, 50, defaultVector)
+			defaultFramesVector.push(Texture.fromColor(2, 2, 0x000000));
+			_movieClipsPool = new AbstractPool("movieClips", EngineMovie, 50, defaultFramesVector)
 			
 			//creates a new pool for buttons
 			_buttonsPool = new AbstractPool("buttons", EngineButton, 20);
@@ -378,7 +376,7 @@
 		}
 		
 		/**
-		 * 
+		 * @TODO
 		 */
 		private function initNape():void
 		{
@@ -508,24 +506,9 @@
 		{
 			var textures:Vector.<Texture> =  _assetsManager.getTextures(prefix);
 
-			var n:EngineMovie = _movieClipsPool.getNewObject() as EngineMovie;
-			
-			while (n.numFrames > 1)
-			{
-				n.removeFrameAt(0);
-			}
-			
-			for (var i:uint = 0; i < textures.length; i++ )
-			{
-				(n as MovieClip).addFrame(textures[i] as Texture);
-			}
-			
-			n.removeFrameAt(0);
-			
+			var n:IAbstractMovie = _movieClipsPool.getNewObject() as IAbstractMovie;
+			n = cleanMovieclip(n, textures, fps);
 			n.name = prefix;
-			n.currentFrame = 0;
-
-			n.readjustSize();
 			
 			(juggler as Juggler).add(n as IAnimatable);
 			
@@ -550,13 +533,37 @@
 				textures.push(frames[i].currentTexture as Texture);
 			}
 			
-			var n:EngineMovie = new EngineMovie(textures, 24);
+			var n:IAbstractMovie = _movieClipsPool.getNewObject() as IAbstractMovie;
+			n = cleanMovieclip(n, textures, fps);
+			n.name = "McFromFrames";
+
 			(juggler as Juggler).add(n as IAnimatable);
 			
 			n.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
 			n.stop();
 			
 			return n;
+		}
+		
+		private function cleanMovieclip(mc:IAbstractMovie, textures:Vector.<Texture>, fps:uint = 24):IAbstractMovie
+		{
+			while (mc.numFrames > 1)
+			{
+				mc.removeFrameAt(0);
+			}
+			
+			for (var i:uint = 0; i < textures.length; i++ )
+			{
+				(mc as MovieClip).addFrame(textures[i] as Texture);
+			}
+			
+			mc.removeFrameAt(0);
+			mc.currentFrame = 0;
+			mc.fps = fps;
+			
+			mc.readjustSize();
+			
+			return mc;
 		}
 		
 		/**
