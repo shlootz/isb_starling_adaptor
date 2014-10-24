@@ -32,6 +32,12 @@ package starlingEngine.elements
 		{
 			return Texture.empty(width, height, premultipliedAlpha, mipMapping, optimizeForRenderToTexture, scale, format) as EngineTexture;
 		}
+		
+		public function set repeat(val:Boolean):void
+		{
+			
+		}
+		
 		/**
 		 * 
 		 * @param	data
@@ -108,7 +114,6 @@ package starlingEngine.elements
 		{
 			return Texture.fromTexture(texture, region, frame) as EngineTexture;
 		}
-		
 	}
 
 }

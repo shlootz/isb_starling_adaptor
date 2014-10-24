@@ -16,6 +16,7 @@
 	import bridge.abstract.ui.IAbstractSlider;
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
+	import citrus.core.starling.CitrusStarlingJuggler;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -25,6 +26,7 @@
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.filters.BlurFilter;
+	import starling.utils.AssetManager;
 	import starlingEngine.effects.EngineParticleSystem;
 	import starlingEngine.elements.EngineBlitMask;
 	import starlingEngine.elements.EngineGraphics;
@@ -99,7 +101,6 @@
 	import starling.text.TextField;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
-	import starling.utils.AssetManager;
 	
 	import starlingEngine.elements.EngineImage;
 	import starlingEngine.elements.EngineLabel;
@@ -138,7 +139,7 @@
 		private var _layers:Dictionary = new Dictionary(true);
 		private var _space:Space;
 		private var _currentState:IAbstractState;
-		private var _assetsManager:starling.utils.AssetManager;
+		private var _assetsManager:AssetManager;
 		private var _signalsHub:SignalsHub;
 		private var _debugMode:Boolean = false;
 		
@@ -172,7 +173,8 @@
 		 */
 		public function injectAssetsManager(assetsManager:Object):void
 		{
-			_assetsManager = assetsManager as starling.utils.AssetManager;
+			_assetsManager = assetsManager as AssetManager;
+			(_assetsManager  as AssetManager).keepAtlasXmls = true;
 		}
 		
 		/**
@@ -859,7 +861,7 @@
 		/**
 		 * 
 		 */
-		public function get juggler():Object
+		public function get juggler_():Object
 		{
 			return starling.juggler;
 		}

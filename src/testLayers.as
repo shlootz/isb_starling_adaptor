@@ -1,5 +1,6 @@
 package  
 {
+	import away3d.events.AssetEvent;
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.events.IAbstractSignalEvent;
 	import bridge.abstract.filters.IAbstractBlurFilter;
@@ -41,13 +42,17 @@ package
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.AsyncErrorEvent;
 	import flash.events.Event;
+	import flash.events.NetStatusEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.media.Sound;
+	import flash.net.NetConnection;
 	import flash.net.NetStream;
 	import flash.text.TextField;
+	import flash.utils.ByteArray;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	import nape.space.Space;
@@ -67,6 +72,7 @@ package
 	import starling.display.Stage;
 	import starling.textures.GradientTexture;
 	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
 	import starlingEngine.elements.EngineLabel;
 	import starlingEngine.events.EngineEvent;
@@ -85,6 +91,9 @@ package
 	 */
 	public class testLayers extends Sprite
 	{
+		[Embed(source = "../bin/assets/test.flv", mimeType = "application/octet-stream")]
+		private static const flv : Class;
+		
 		[Embed(source = "../bin/assets/bitmapfonts/Lcd.fnt", mimeType = "application/octet-stream")]
 		private static const defaultFontClass : Class;
 		
@@ -144,31 +153,32 @@ package
 		
 		private function loadAssets(event:String, obj:Object):void
 		{
-			(_bridgeGraphics.assetsManager).enqueue("../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
-													"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
+			(_bridgeGraphics.assetsManager).enqueue(
+													//"../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
+													//"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
 													"../bin/assets/spritesheets/spriteSheetElements.png",
-													"../bin/assets/spritesheets/spriteSheetElements.xml",
-													"../bin/assets/spritesheets/spriteSheetElements.xml",
-													"../bin/assets/spritesheets/spriteSheetPayTable.xml",
-													"../bin/assets/spritesheets/preloader1x.png",
-													"../bin/assets/spritesheets/Scrolls of Ra Assets.png",
-													"../bin/assets/spritesheets/preloader1x.xml",
-													"../bin/assets/spritesheets/backgroundAssets.xml",
-													"../bin/assets/layouts/layerLayout.xml",
-													"../bin/assets/layouts/preloader1xLayout.xml",
-													"../bin/assets/layouts/buttonLayout.xml",
-													"../bin/assets/layouts/UserInterface.xml",
-													"../bin/assets/layouts/Paytable.xml",
-													"../bin/assets/layouts/PaytablePage1.xml",
-													"../bin/assets/layouts/PaytablePage2.xml",
-													"../bin/assets/layouts/PaytablePage3.xml",
-													"../bin/assets/layouts/PaytablePage4.xml",
-													"../bin/assets/layouts/PaytablePage5.xml",
-													"../bin/assets/layouts/PaytablePage6.xml",
-													"../bin/assets/layouts/linesLayout.xml",
-													"../bin/assets/sounds/track.mp3",
-													"../bin/assets/layouts/freeSpinsLayout.xml",
-													"../bin/assets/layouts/menuLayout.xml"
+													"../bin/assets/spritesheets/spriteSheetElements.xml"
+													//"../bin/assets/spritesheets/spriteSheetElements.xml",
+													//"../bin/assets/spritesheets/spriteSheetPayTable.xml",
+													//"../bin/assets/spritesheets/preloader1x.png",
+													//"../bin/assets/spritesheets/Scrolls of Ra Assets.png",
+													//"../bin/assets/spritesheets/preloader1x.xml",
+													//"../bin/assets/spritesheets/backgroundAssets.xml",
+													//"../bin/assets/layouts/layerLayout.xml",
+													//"../bin/assets/layouts/preloader1xLayout.xml",
+													//"../bin/assets/layouts/buttonLayout.xml",
+													//"../bin/assets/layouts/UserInterface.xml",
+													//"../bin/assets/layouts/Paytable.xml",
+													//"../bin/assets/layouts/PaytablePage1.xml",
+													//"../bin/assets/layouts/PaytablePage2.xml",
+													//"../bin/assets/layouts/PaytablePage3.xml",
+													//"../bin/assets/layouts/PaytablePage4.xml",
+													//"../bin/assets/layouts/PaytablePage5.xml",
+													//"../bin/assets/layouts/PaytablePage6.xml",
+													//"../bin/assets/layouts/linesLayout.xml",
+													//"../bin/assets/sounds/track.mp3",
+													//"../bin/assets/layouts/freeSpinsLayout.xml",
+													//"../bin/assets/layouts/menuLayout.xml"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
@@ -182,6 +192,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
+						testDifferentSize();
 						//testMovieClipsFromFrames();
 						//showLines();
 						//showMenu();
@@ -201,13 +212,23 @@ package
 						//testEmptyButton();
 						//testTexturedLine();
 						//testAnimatedTexture();
-						for (var i:uint = 0; i < 5; i++ )
-						{
-							testFLV(Math.random() * 800, Math.random() * 600);
-						}
+						//for (var i:uint = 0; i < 5; i++ )
+						//{
+							//testFLV(Math.random() * 800, Math.random() * 600);
+						//}
 						//testOmnes();
 					}
 				});
+		}
+		
+		private function testDifferentSize():void
+		{
+			var img:IAbstractImage = _bridgeGraphics.requestImage("Gun");
+			
+			img.x = 150;
+			img.y = 150;
+			
+			_bridgeGraphics.addChild(img);
 		}
 		
 		private function showMenu():void
@@ -250,14 +271,33 @@ package
 		
 		private function testFLV(posX:Number, posY:Number):void
 		{
-			var flv:IAbstractVideo = _bridgeGraphics.requestVideo();
-			flv.addVideoPath("../bin/assets/test.flv");
-			
-			flv.scaleX = flv.scaleY = .25;
-			flv.x = posX;
-			flv.y = posY;
-			
-			_bridgeGraphics.addChild(flv);
+			var nc:NetConnection = new NetConnection();
+			nc.addEventListener(NetStatusEvent.NET_STATUS , onConnect);
+			nc.addEventListener(AsyncErrorEvent.ASYNC_ERROR , trace);
+
+
+			var metaSniffer:Object=new Object();  
+			nc.client=metaSniffer;
+			nc.connect(null);
+		}
+		
+		private function onConnect(e:NetStatusEvent):void {
+			if (e.info.code == 'NetConnection.Connect.Success') {
+				trace(e.target as NetConnection);
+				var ns:NetStream = new NetStream(e.target as NetConnection);
+
+				ns.client = {};
+				var file:ByteArray = new flv();
+				ns.play(null);
+
+				ns.appendBytes(file);
+				
+				var flvHolder:IAbstractVideo = _bridgeGraphics.requestVideo();
+				//flv.addVideoPath("../bin/assets/test.flv");
+				flvHolder.addVideoStream(ns);
+				_bridgeGraphics.addChild(flvHolder);
+			}
+
 		}
 		
 		private function testAnimatedTexture():void
