@@ -223,7 +223,9 @@ package
 		
 		private function testDifferentSize():void
 		{
-			var img:IAbstractImage = _bridgeGraphics.requestImage("Gun");
+			var newXML:XML = new XML();
+			_bridgeGraphics.storeXML("aaaaaaaaaaaa",newXML);
+			var img:IAbstractImage = _bridgeGraphics.requestImage("Auto-Spin-Button-Down");
 			
 			img.x = 150;
 			img.y = 150;
