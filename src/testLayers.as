@@ -100,6 +100,12 @@ package
 		[Embed(source = "../bin/assets/bitmapfonts/Lcd_0.png")]
 		private static const defaultFontPng : Class;
 		
+		[Embed(source = "../bin/assets/bitmapfonts/Dimbo.fnt", mimeType = "application/octet-stream")]
+		private static const dimboFontClass : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/Dimbo.png")]
+		private static const dimboFontPng : Class;
+		
 		[Embed(source = "../bin/assets/bitmapfonts/Zrnic.fnt", mimeType = "application/octet-stream")]
 		private static const ZrnicFontClass : Class;
 		
@@ -192,13 +198,13 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
-						testDifferentSize();
+						//testDifferentSize();
 						//testMovieClipsFromFrames();
 						//showLines();
 						//showMenu();
 						//showPaytable();
 						//makeSlider();
-						//testMovieClips();
+						testMovieClips();
 						//testImages();
 						//testSounds();
 						//testMovieClipsFromFrames();
@@ -227,10 +233,17 @@ package
 			_bridgeGraphics.storeXML("aaaaaaaaaaaa",newXML);
 			var img:IAbstractImage = _bridgeGraphics.requestImage("Auto-Spin-Button-Down");
 			
-			img.x = 150;
-			img.y = 150;
+			img.x = 200;
+			img.y = 300;
 			
 			_bridgeGraphics.addChild(img);
+			
+			 _bridgeGraphics.registerBitmapFont(new dimboFontPng(), XML(new dimboFontClass()));
+			 var tField:IAbstractTextField = _bridgeGraphics.requestTextField(300, 200, "OLGA", "Dimbo-export", 130);
+			 var label:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tField, "test");
+			 label.x = 200;
+			 label.y = 300;
+			 _bridgeGraphics.addChild(label);
 		}
 		
 		private function showMenu():void
@@ -569,10 +582,10 @@ package
 		
 		private function testMovieClips():void
 		{
-			var snd:Sound = (_bridgeGraphics.assetsManager as starling.utils.AssetManager).getSound("track");
-			snd.play();
+			//var snd:Sound = (_bridgeGraphics.assetsManager as starling.utils.AssetManager).getSound("track");
+			//snd.play();
 			
-			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("s", 60);
+			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Spark", 60);
 			_bridgeGraphics.currentContainer.addNewChild(mc);
 			mc.play();
 			mc.x = mc.y = 250;
