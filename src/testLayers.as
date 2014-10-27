@@ -10,6 +10,7 @@ package
 	import bridge.abstract.IAbstractGraphics;
 	import bridge.abstract.IAbstractImage;
 	import bridge.abstract.IAbstractLayer;
+	import bridge.abstract.IAbstractMask;
 	import bridge.abstract.IAbstractMovie;
 	import bridge.abstract.IAbstractSprite;
 	import bridge.abstract.IAbstractTextField;
@@ -40,6 +41,7 @@ package
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.GradientType;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.AsyncErrorEvent;
@@ -198,13 +200,14 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
+						testGradientMask();
 						//testDifferentSize();
 						//testMovieClipsFromFrames();
 						//showLines();
 						//showMenu();
 						//showPaytable();
 						//makeSlider();
-						testMovieClips();
+						//testMovieClips();
 						//testImages();
 						//testSounds();
 						//testMovieClipsFromFrames();
@@ -225,6 +228,42 @@ package
 						//testOmnes();
 					}
 				});
+		}
+		
+		private function testGradientMask():void
+		{
+			//CREATE MASK
+			var rect:Shape = new Shape();
+			rect.width = 300;
+			rect.height = 300;
+			
+			var mat:Matrix=new Matrix();
+			var colors:Array = [0xFF0000,0x00FF00, 0x0000FF];
+			var alphas:Array = [0,1,0];
+			var ratios:Array = [0, 127, 255];
+			mat.createGradientBox(300,300, 30);
+			rect.graphics.lineStyle();
+			rect.graphics.beginGradientFill(GradientType.LINEAR,colors,alphas,ratios,mat);
+			rect.graphics.drawRect(0,0,300,300);
+			rect.graphics.endFill();
+			
+			var bmpd:BitmapData = new BitmapData(200, 200, true, 0x000000);
+			bmpd.draw(rect);
+			
+			var img:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(bmpd);
+			
+			//CREATE MASKED OBJECT
+			var maskedObject:IAbstractSprite = _bridgeGraphics.requestSprite(); 
+			maskedObject.addNewChild(_bridgeGraphics.requestImage("Logo"));
+			
+			//CREATE MASK OBJECT
+			var mask:IAbstractMask = _bridgeGraphics.requestMask(maskedObject, img);
+			mask.x = 250;
+			mask.y = 250;
+			
+			_bridgeGraphics.addChild(mask);
+			
+			TweenLite.to(maskedObject, 2000, { rotation:360 } );
 		}
 		
 		private function testDifferentSize():void
@@ -433,10 +472,11 @@ package
 				var graphics:IAbstractGraphics = _bridgeGraphics.requestGraphics(square);
 				
 				graphics.beginFill(0x000000);
-				graphics.drawRect(0, 0, 200, 200);
+				graphics.drawRect(0, 0, 100, 60);
 				graphics.endFill();
 				square.x = 200;
 				square.y = 200;
+				square.rotation = 30;
 				
 				graphics.beginGradientFill("linear", [0x000000, 0x000000], [0, 1], [0, 255]);
 				
@@ -444,15 +484,15 @@ package
 				
 				square.y = 300;
 				
-				var stroke:Stroke = new Stroke();
-				stroke.addVertex(100, 100, 1, 0xFFFFFF, 0, 0xFFFFFF, 0);
-				stroke.addVertex(150, 150, 2);
-				stroke.addVertex(250, 200, 5);
-				stroke.addVertex(250, 200, 2);
-				stroke.addVertex(400, 300);
-				stroke.addVertex(400, 400, 1, 0xFFFFFF, 0, 0xFFFFFF, 0);
-				stroke.alpha = 0.3;
-				_bridgeGraphics.addChild(stroke);
+				//var stroke:Stroke = new Stroke();
+				//stroke.addVertex(100, 100, 1, 0xFFFFFF, 0, 0xFFFFFF, 0);
+				//stroke.addVertex(150, 150, 2);
+				//stroke.addVertex(250, 200, 5);
+				//stroke.addVertex(250, 200, 2);
+				//stroke.addVertex(400, 300);
+				//stroke.addVertex(400, 400, 1, 0xFFFFFF, 0, 0xFFFFFF, 0);
+				//stroke.alpha = 0.3;
+				//_bridgeGraphics.addChild(stroke);
 		}
 		
 		private function testInputText():void
