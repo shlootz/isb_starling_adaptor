@@ -26,6 +26,7 @@ package
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.BridgeGraphics;
 	import bridge.IBridgeGraphics;
+	import com.greensock.TimelineMax;
 	import com.greensock.TweenLite;
 	import feathers.controls.List;
 	import feathers.controls.renderers.DefaultListItemRenderer;
@@ -162,8 +163,8 @@ package
 		private function loadAssets(event:String, obj:Object):void
 		{
 			(_bridgeGraphics.assetsManager).enqueue(
-													//"../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
-													//"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
+													"../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
+													"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
 													"../bin/assets/spritesheets/spriteSheetElements.png",
 													"../bin/assets/spritesheets/spriteSheetElements.xml"
 													//"../bin/assets/spritesheets/spriteSheetElements.xml",
@@ -200,9 +201,10 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
-						testGradientMask();
+						//testLayersTranzitions();
+						//testGradientMask();
 						//testDifferentSize();
-						//testMovieClipsFromFrames();
+						testMovieClipsFromFrames();
 						//showLines();
 						//showMenu();
 						//showPaytable();
@@ -228,6 +230,45 @@ package
 						//testOmnes();
 					}
 				});
+		}
+		
+		private var layer1:IAbstractLayer;
+		private var layer2:IAbstractLayer;
+		
+		private var holder:IAbstractSprite;
+		
+		private var transitionIn:IAbstractLayerTransitionIn;
+		private var transitionOut:IAbstractLayerTransitionOut
+		;
+		private function testLayersTranzitions():void
+		{
+			//layers properties
+			layer1 = _bridgeGraphics.requestLayer("Layer1", 0, null,  true);
+			layer1.redrawEnabled = false;
+			layer1.x = 0;
+			layer2 = _bridgeGraphics.requestLayer("Layer2", 1, null, true);
+			layer2.redrawEnabled = false;
+			layer2.x = 100;
+			
+			//transitions
+			transitionIn = _bridgeGraphics.requestLayerTransitionIN();
+			transitionOut = _bridgeGraphics.requestLayerTransitionOUT();
+			
+			//layers holder
+			holder = _bridgeGraphics.requestSprite("holder");
+			_bridgeGraphics.addChild(holder);
+			
+			//layers vectors
+			var layersIn:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
+			var layersOut:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>;
+			
+			layersIn.push(layer1);
+			layersOut.push(layer2);
+			
+			layer1.addNewChild(_bridgeGraphics.requestImage("Background"));
+			//layer2.addNewChild(_bridgeGraphics.requestImage("Bonus-Background"));
+			
+			_bridgeGraphics.updateLayers(holder, layersIn, layersOut, transitionIn, transitionOut);
 		}
 		
 		private function testGradientMask():void
@@ -261,28 +302,29 @@ package
 			mask.x = 250;
 			mask.y = 250;
 			
+			var oldImg:IAbstractImage = _bridgeGraphics.requestImage("Logo");
+			_bridgeGraphics.colorizeImage(oldImg, 0xFF0000);
+			oldImg.x = 250;
+			oldImg.y = 250;
+			
+			_bridgeGraphics.addChild(oldImg);
 			_bridgeGraphics.addChild(mask);
 			
-			TweenLite.to(maskedObject, 2000, { rotation:360 } );
+			TweenLite.to(img, 400, { rotation:360 } );
 		}
 		
 		private function testDifferentSize():void
 		{
-			var newXML:XML = new XML();
-			_bridgeGraphics.storeXML("aaaaaaaaaaaa",newXML);
-			var img:IAbstractImage = _bridgeGraphics.requestImage("Auto-Spin-Button-Down");
+			var img1:IAbstractImage = _bridgeGraphics.requestImage("Auto-Spin-Button");
+			var img2:IAbstractImage = _bridgeGraphics.requestImage("Auto-Spin-Button-Hover");
+			var img3:IAbstractImage = _bridgeGraphics.requestImage("Auto-Spin-Button-Down");
 			
-			img.x = 200;
-			img.y = 300;
+			img1.x = img2.x = img3.x =  200;
+			img1.y = img2.y = img3.y =  200;
 			
-			_bridgeGraphics.addChild(img);
-			
-			 _bridgeGraphics.registerBitmapFont(new dimboFontPng(), XML(new dimboFontClass()));
-			 var tField:IAbstractTextField = _bridgeGraphics.requestTextField(300, 200, "OLGA", "Dimbo-export", 130);
-			 var label:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tField, "test");
-			 label.x = 200;
-			 label.y = 300;
-			 _bridgeGraphics.addChild(label);
+			_bridgeGraphics.addChild(img3);
+			_bridgeGraphics.addChild(img2);
+			_bridgeGraphics.addChild(img1);
 		}
 		
 		private function showMenu():void
@@ -800,6 +842,13 @@ package
 		private function transInComplete(type:String, obj:IAbstractSignalEvent):void
 		{
 			trace("IN Caught Transition " + type+" & " + obj);
+			var img:IAbstractImage = layer1.getChildByNameStr("Background") as IAbstractImage;
+			TweenLite.to(img, 1, { x:300 } );
+			//var tweenTimeline:TimelineMax = new TimelineMax();
+			//tweenTimeline.insert(TweenLite.to(img, 3, { x:300 } ));
+			//tweenTimeline.insert(TweenLite.to(img, 3, { x:0 } ));
+			//
+			//tweenTimeline.play();
 		}
 		
 		private function transOutComplete(type:String, obj:IAbstractSignalEvent):void

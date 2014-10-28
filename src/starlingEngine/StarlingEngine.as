@@ -321,6 +321,7 @@
 		{
 			Starling.current.start();
 			Starling.current.nativeStage.frameRate = 60;
+			_juggler.paused = false;
 		}
 		
 		private function onMouseWheel(e:MouseEvent):void
