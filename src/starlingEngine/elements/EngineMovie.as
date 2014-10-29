@@ -13,6 +13,7 @@ package starlingEngine.elements
 	 */
 	public class EngineMovie extends MovieClip implements IAbstractMovie, IAbstractAnimatable
 	{
+		private var _frame:Number;
 		/**
 		 * 
 		 * @param	vector
@@ -62,19 +63,58 @@ package starlingEngine.elements
 			super.setFrameTexture(frameID, texture as EngineTexture);
 		}
 		
+		/**
+		 * 
+		 */
 		public function get currentTexture () : Object
 		{
 			return super.texture as Object;
 		}
 
+		/**
+		 * 
+		 */
 		public function set newTexture (value:Object) : void
 		{
 			super.texture = value as Texture;
 		}
 		
+		/**
+		 * 
+		 */
 		public function set newTextureFromBitmapData(value:BitmapData):void
 		{
 			super.texture = Texture.fromBitmapData(value);
+		}
+		
+		public function get frame():Number 
+		{
+			return this.currentFrame;
+		}
+		
+		public function set frame(value:Number):void 
+		{
+			this.currentFrame = value;
+		}
+		
+		/**
+		 * 
+		 * @param	frame
+		 */
+		public function gotoAndStop(frame:int):void
+		{
+			this.currentFrame = frame;
+			this.pause();
+		}
+		
+		/**
+		 * 
+		 * @param	frame
+		 */
+		public function gotoAndPlay(frame:int):void
+		{
+			this.currentFrame = frame;
+			this.play();
 		}
 
 	}

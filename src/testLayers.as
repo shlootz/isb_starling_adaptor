@@ -1,5 +1,6 @@
 package  
 {
+	import away3d.controllers.SpringController;
 	import away3d.events.AssetEvent;
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.events.IAbstractSignalEvent;
@@ -26,6 +27,9 @@ package
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.BridgeGraphics;
 	import bridge.IBridgeGraphics;
+	import cmodule.AwayPhysics.TextFieldI;
+	import com.greensock.plugins.FramePlugin;
+	import com.greensock.plugins.TweenPlugin;
 	import com.greensock.TimelineMax;
 	import com.greensock.TweenLite;
 	import feathers.controls.List;
@@ -71,6 +75,7 @@ package
 	import starling.display.Graphics;
 	import starling.display.graphics.Stroke;
 	import starling.display.Image;
+	import starling.display.MovieClip;
 	import starling.display.Quad;
 	import starling.display.Stage;
 	import starling.textures.GradientTexture;
@@ -609,28 +614,28 @@ package
 		private function testMovieClipsFromFrames():void
 		{
 			var images:Vector.<IAbstractImage> = new Vector.<IAbstractImage>;
+			var spr:Sprite = new Sprite();
+			var tf:TextField = new TextField();
+			spr.addChild(tf);
 			
 			for (var i:uint = 0; i < 1000; i++ )
 			{
-				images.push(_bridgeGraphics.requestImageFromBitmapData(new BitmapData(120, 120, false, Math.random() * 0xFFFFFF)));
+				tf.text = String(i);
+				var bmpData:BitmapData = new BitmapData(120, 120, true, 0xFF0000);
+				bmpData.draw(spr);
+				images.push(_bridgeGraphics.requestImageFromBitmapData(bmpData));
 			}
 			
-			for (var j:uint = 0; j < 5; j++ )
-			{
 				var mc:IAbstractMovie = _bridgeGraphics.requestMovieFromFrames(images, 20);
-				mc.x = 100 + Math.random()*700;
-				mc.y = 100 + Math.random() * 500;
-				mc.name = "mc" + j;
-				mc.play();
+				mc.x = 100;
+				mc.y = 100;
+				mc.name = "mc";
 				_bridgeGraphics.addChild(mc);
-			}
-			
-			var mc2:IAbstractMovie = _bridgeGraphics.requestMovie("Bet");
-			mc2.y = 150;
-			_bridgeGraphics.addChild(mc2);
-			mc2.play();
-			
-			_bridgeGraphics.returnToPool(mc2);
+				
+				TweenPlugin.activate([FramePlugin]);
+				var tMax:TimelineMax = new TimelineMax();
+				tMax.insert(TweenLite.to(mc, 2, { frame:999} ));
+				tMax.play();
 		}
 		
 		private function onMovieClipEnded(type:String, event:IAbstractSignalEvent):void
