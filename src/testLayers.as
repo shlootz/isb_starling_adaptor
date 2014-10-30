@@ -247,7 +247,7 @@ package
 			
 			//var pixelateFilter:PixelateFilter = new PixelateFilter(10);
 			//(img as Image).filter = pixelateFilter;
-			_bridgeGraphics.addPixelationFilter(img, 10);
+			_bridgeGraphics.addNewsPaperFilter(img, 10,2,30);
 		}
 		
 		private var layer1:IAbstractLayer;
