@@ -11,8 +11,6 @@ package
 		
 		public function Main() 
 		{
-			addChild(new Quad(500, 500));
-			trace("cucu")
 		}
 		
 	}

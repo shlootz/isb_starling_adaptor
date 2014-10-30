@@ -323,6 +323,11 @@ package starlingEngine.elements
 			
 			return hit
 		}
+		
+		public function set rotationX(val:Number):void
+		{
+			
+		}
 	}
 
 }

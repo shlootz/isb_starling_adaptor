@@ -2,6 +2,7 @@ package starlingEngine.elements
 {
 	import bridge.abstract.IAbstractDisplayObject;
 	import bridge.abstract.IAbstractDisplayObjectContainer;
+	import bridge.abstract.IAbstractSprite;
 	import bridge.abstract.IAbstractTextField;
 	import bridge.abstract.ui.IAbstractLabel;
 	import starling.display.DisplayObjectContainer;
@@ -10,7 +11,7 @@ package starlingEngine.elements
 	 * ...
 	 * @author Alex Popescu
 	 */
-	public class EngineLabel extends EngineSprite implements IAbstractLabel, IAbstractDisplayObjectContainer
+	public class EngineLabel extends EngineSprite implements IAbstractLabel, IAbstractSprite
 	{
 		
 		private var _tField:IAbstractTextField;

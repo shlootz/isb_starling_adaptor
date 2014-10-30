@@ -38,6 +38,8 @@
 	import starlingEngine.filters.BlurFilterVO;
 	import starlingEngine.filters.DropShadowFilterVO;
 	import starlingEngine.filters.GlowFilterVO;
+	import starlingEngine.filters.NewsprintFilter;
+	import starlingEngine.filters.PixelateFilter;
 	import starlingEngine.ui.EngineComboBox;
 	import starlingEngine.ui.EngineInputText;
 	import starlingEngine.ui.EngineSlider;
@@ -150,6 +152,8 @@
 		
 		private var  defaultFramesVector:Vector.<Texture> = new Vector.<Texture>();
 		private var _bitmapDataFallBack:BitmapData = new BitmapData(100, 100, true, 0x000000);
+		
+		private var _flareBridge:FlareBridge;
 		/**
 		 * 
 		 * @param	initCompleteCallback
@@ -194,16 +198,75 @@
 		override protected function handleAddedToStage(e:Event):void
 		{
 			super.handleAddedToStage(e);
-			initEngine(_debugMode);
+			initEngine();
 		}		
 		
 		/**
 		 * 
 		 */
-		public function initEngine(debugMode:Boolean = false):void
+		public function initEngine():void
 		{
 			Starling.handleLostContext = true;
-			setUpStarling(debugMode);
+			setUpStarling(_debugMode);
+		}
+		
+		private function initFlare():void
+		{
+			var spr:Sprite = new Sprite();
+			_signalsHub.addSignal(FlareBridge.FLARE_INITED, new Signal(), new Vector.<Function>());
+			_signalsHub.addListenerToSignal(FlareBridge.FLARE_INITED, onFlareInited);
+			_flareBridge = new FlareBridge(_signalsHub, spr);
+			
+			nativeDisplay.addChild(spr);
+		}
+		
+		private function onFlareInited(type:String, obj:Object):void
+		{
+			trace("FLARE INITED")
+		}
+		
+		/**
+		 * 
+		 */
+		override public function handleStarlingReady():void
+		{ 
+			//starling.shareContext = true;
+			//creates a new pool for sprites
+			_spritesPool = new AbstractPool("sprites", EngineSprite, 10);
+			
+			//creates a new pool for images
+			_imagesPool = new AbstractPool("images", EngineImage, 20, Texture.fromColor(2, 2, 0x000000));
+			
+			//creates a new pool for movieclips
+			defaultFramesVector.push(Texture.fromColor(2, 2, 0x000000));
+			_movieClipsPool = new AbstractPool("movieClips", EngineMovie, 50, defaultFramesVector)
+			
+			//creates a new pool for buttons
+			_buttonsPool = new AbstractPool("buttons", EngineButton, 20);
+			
+			//assigns initial state
+			_currentState = requestState();
+			state = _currentState as IState;
+			
+			//alert bridge that init is complete
+			_initCompleteCallback.call();
+			
+			//assigns initial stage
+			_engineStage = starling.stage;
+			
+			//dispatch 
+			_signalsHub.dispatchSignal(Signals.STARLING_READY, "", "");
+			
+			//TO DO
+			configureConsole();
+			
+			//mouse wheel listener
+			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel, false, 0 , true);
+			
+			//deactivate event
+			stage.addEventListener(Event.DEACTIVATE, onDeactivate);
+			
+			//initFlare();
 		}
 		
 		/**
@@ -274,47 +337,6 @@
 			{
 				trace("AssetsManager :: recycled " + obj + " succesfuly");
 			}
-		}
-		
-		/**
-		 * 
-		 */
-		override public function handleStarlingReady():void
-		{ 
-			//creates a new pool for sprites
-			_spritesPool = new AbstractPool("sprites", EngineSprite, 10);
-			
-			//creates a new pool for images
-			_imagesPool = new AbstractPool("images", EngineImage, 20, Texture.fromColor(2, 2, 0x000000));
-			
-			//creates a new pool for movieclips
-			defaultFramesVector.push(Texture.fromColor(2, 2, 0x000000));
-			_movieClipsPool = new AbstractPool("movieClips", EngineMovie, 50, defaultFramesVector)
-			
-			//creates a new pool for buttons
-			_buttonsPool = new AbstractPool("buttons", EngineButton, 20);
-			
-			//assigns initial state
-			_currentState = requestState();
-			state = _currentState as IState;
-			
-			//alert bridge that init is complete
-			_initCompleteCallback.call();
-			
-			//assigns initial stage
-			_engineStage = starling.stage;
-			
-			//dispatch 
-			_signalsHub.dispatchSignal(Signals.STARLING_READY, "", "");
-			
-			//TO DO
-			configureConsole();
-			
-			//mouse wheel listener
-			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel, false, 0 , true);
-			
-			//deactivate event
-			stage.addEventListener(Event.DEACTIVATE, onDeactivate);
 		}
 		
 		private function onDeactivate(e:Event):void
@@ -1349,6 +1371,26 @@
 		 public function addDropShadowFilter(target:IAbstractDisplayObject, vo:IAbstractDropShadowFilter):void
 		 {
 			 (target as DisplayObject).filter = BlurFilter.createDropShadow(vo.distance, vo.angle, vo.color, vo.alpha, vo.blur, vo.resolution);
+		 }
+		 
+		 /**
+		  * 
+		  * @param	target
+		  * @param	pixelSize
+		  */
+		 public function addPixelationFilter(target:IAbstractDisplayObject, pixelSize:int):void
+		 {
+			  (target as DisplayObject).filter = new PixelateFilter(pixelSize);
+		 }
+		 
+		  /**
+		  * 
+		  * @param	target
+		  * @param	pixelSize
+		  */
+		 public function addNewsPaperFilter(target:IAbstractDisplayObject, size:int, scale:int, angleInRadians:Number):void
+		 {
+			  (target as DisplayObject).filter = new NewsprintFilter(size, scale, angleInRadians);
 		 }
 		 
 		 	 /**

@@ -78,6 +78,7 @@ package
 	import starling.display.MovieClip;
 	import starling.display.Quad;
 	import starling.display.Stage;
+	import starlingEngine.filters.PixelateFilter;
 	import starling.textures.GradientTexture;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
@@ -161,6 +162,7 @@ package
 		
 		public function testLayers() 
 		{
+			
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
 		}
@@ -206,10 +208,11 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
+						testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
 						//testDifferentSize();
-						testMovieClipsFromFrames();
+						//testMovieClipsFromFrames();
 						//showLines();
 						//showMenu();
 						//showPaytable();
@@ -237,16 +240,36 @@ package
 				});
 		}
 		
+		private function testFiters():void
+		{
+			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
+			_bridgeGraphics.addChild(img);
+			
+			//var pixelateFilter:PixelateFilter = new PixelateFilter(10);
+			//(img as Image).filter = pixelateFilter;
+			_bridgeGraphics.addPixelationFilter(img, 10);
+		}
+		
 		private var layer1:IAbstractLayer;
 		private var layer2:IAbstractLayer;
 		
 		private var holder:IAbstractSprite;
 		
 		private var transitionIn:IAbstractLayerTransitionIn;
-		private var transitionOut:IAbstractLayerTransitionOut
-		;
+		private var transitionOut:IAbstractLayerTransitionOut;
 		private function testLayersTranzitions():void
 		{
+			var spr:IAbstractSprite = _bridgeGraphics.requestSprite("asdasds");
+			
+			var label:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(_bridgeGraphics.requestTextField(100, 100, "TESTADSD", "Verdana", 30));
+			_bridgeGraphics.addChild(label);
+			label.x = 100;
+			label.y = 100;
+			
+			label.pivotX = label.width / 2;
+			label.pivotY = label.height;
+			TweenLite.to(label, 10, { skewX:60} );
+			
 			//layers properties
 			layer1 = _bridgeGraphics.requestLayer("Layer1", 0, null,  true);
 			layer1.redrawEnabled = false;
