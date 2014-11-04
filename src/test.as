@@ -254,10 +254,10 @@ package
 		
 		private function testStuff():void
 		{
-			//particlesTest();
+			particlesTest();
 			//mcTest();
 			//inputText();
-			testEmptyButton();
+			//testEmptyButton();
 		}
 		
 		private function testEmptyButton():void

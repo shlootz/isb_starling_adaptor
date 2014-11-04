@@ -3,6 +3,7 @@ package
 	import away3d.controllers.SpringController;
 	import away3d.events.AssetEvent;
 	import bridge.abstract.AbstractPool;
+	import bridge.abstract.effects.IAbstractParticleSystem;
 	import bridge.abstract.events.IAbstractSignalEvent;
 	import bridge.abstract.filters.IAbstractBlurFilter;
 	import bridge.abstract.IAbstractDisplayObject;
@@ -72,12 +73,16 @@ package
 	import starling.core.Starling;
 	import starling.display.BlendMode;
 	import starling.display.DisplayObjectContainer;
+	import starling.display.FFParticleSystem;
+	import starling.display.FFParticleSystem.SystemOptions;
 	import starling.display.Graphics;
 	import starling.display.graphics.Stroke;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Quad;
 	import starling.display.Stage;
+	import starling.extensions.particles.PDParticle;
+	import starling.extensions.particles.PDParticleSystem;
 	import starlingEngine.filters.PixelateFilter;
 	import starling.textures.GradientTexture;
 	import starling.textures.Texture;
@@ -100,6 +105,21 @@ package
 	 */
 	public class testLayers extends Sprite
 	{
+		[Embed(source="../bin/assets/media/drugs.pex", mimeType="application/octet-stream")]
+        private static const DrugsConfig:Class;
+        
+        [Embed(source="../bin/assets/media/fire.pex", mimeType="application/octet-stream")]
+        private static const FireConfig:Class;
+        
+        [Embed(source="../bin/assets/media/sun.pex", mimeType="application/octet-stream")]
+        private static const SunConfig:Class;
+        
+        [Embed(source="../bin/assets/media/jellyfish.pex", mimeType="application/octet-stream")]
+        private static const JellyfishConfig:Class;
+		
+		[Embed(source = "../bin/assets/media/blue.pex", mimeType = "application/octet-stream")]
+		private static const BlueClass:Class;
+		
 		[Embed(source = "../bin/assets/test.flv", mimeType = "application/octet-stream")]
 		private static const flv : Class;
 		
@@ -144,6 +164,21 @@ package
 		
 		[Embed(source = "../bin/assets/bitmapfonts/desyrel.png")]
 		private static const DesyrelPng : Class;
+		
+		[Embed(source = "../bin/assets/media/drugs_particle.png")]
+        private static const DrugsParticle:Class;
+        
+        [Embed(source = "../bin/assets/media/fire_particle.png")]
+        private static const FireParticle:Class;
+        
+        [Embed(source = "../bin/assets/media/sun_particle.png")]
+        private static const SunParticle:Class;
+        
+        [Embed(source = "../bin/assets/media/jellyfish_particle.png")]
+        private static const JellyfishParticle:Class;
+		
+		[Embed(source = "../bin/assets/media/blue.png")]
+		private static const BlueParticle:Class;
 			
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
 																		new Point(800, 600),
@@ -208,7 +243,9 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
-						testFiters();
+						//testParticles();
+						testParticlesFromBridge();
+						//testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
 						//testDifferentSize();
@@ -238,6 +275,16 @@ package
 						//testOmnes();
 					}
 				});
+		}
+		
+		private function testParticlesFromBridge():void
+		{
+			var atlas:XML = _bridgeGraphics.getXMLFromAssetsManager("spriteSheetElements");
+			var particleTexture:Texture = _bridgeGraphics.requestImage("symbol_0").currentTexture as Texture;
+			
+			var advancedParticles:IAbstractParticleSystem = _bridgeGraphics.requestAdvancedParticleSystem(XML(new DrugsConfig()), _bridgeGraphics.requestImage("symbol_0"), atlas);
+			_bridgeGraphics.addChild(advancedParticles);
+			advancedParticles.start();
 		}
 		
 		private function testFiters():void

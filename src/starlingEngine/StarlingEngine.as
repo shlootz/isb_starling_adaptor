@@ -22,11 +22,14 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import starling.core.RenderSupport;
+	import starling.display.FFParticleSystem;
+	import starling.display.FFParticleSystem.SystemOptions;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.filters.BlurFilter;
 	import starling.utils.AssetManager;
+	import starlingEngine.effects.EngineAdvancedParticleSystem;
 	import starlingEngine.effects.EngineParticleSystem;
 	import starlingEngine.elements.EngineBlitMask;
 	import starlingEngine.elements.EngineGraphics;
@@ -1453,9 +1456,28 @@
 			trace(this + " -> destroyed");
 		}
 		
+		/**
+		 * 
+		 * @param	configXML
+		 * @param	imageSource
+		 * @return
+		 */
 		public function requestParticleSystem(configXML:XML, imageSource:IAbstractImage):IAbstractParticleSystem
 		{
 			return new EngineParticleSystem(configXML, imageSource, juggler as Juggler);
+		}
+		
+		/**
+		 * 
+		 * @param	configXML
+		 * @param	imageSource
+		 * @param	atlasXML
+		 * @return
+		 */
+		public function requestAdvancedParticleSystem(configXML:XML, imageSource:IAbstractImage, atlasXML:XML=null):IAbstractParticleSystem
+		{
+			var advancedParticleSystem:IAbstractParticleSystem = new EngineAdvancedParticleSystem(configXML, imageSource, juggler as Juggler, atlasXML);
+			return advancedParticleSystem;
 		}
 		
 		public function isHit(localPoint:Point, forTouch:Boolean = false):Boolean
