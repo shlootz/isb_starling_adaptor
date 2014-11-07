@@ -233,6 +233,8 @@
 		 */
 		override public function handleStarlingReady():void
 		{ 
+			_starling.supportHighResolutions = true;
+			
 			//starling.shareContext = true;
 			//creates a new pool for sprites
 			_spritesPool = new AbstractPool("sprites", EngineSprite, 10);
@@ -1119,16 +1121,18 @@
 		private function autoAddItems(layer:IAbstractLayer, sortedElements:Vector.<EngineLayerLayoutElementVo>): void
 		{
 			for (var i:uint = 0; i < sortedElements.length; i++ )
-			{
+			{	
 				switch (sortedElements[i].type) 
 				{
 					case ENGINE_LAYER_PROPERTIES:
-						layer.x = sortedElements[i].layerX;
-						layer.y = sortedElements[i].layerY;
+						layer.x = Math.round(sortedElements[i].layerX);
+						layer.y = Math.round(sortedElements[i].layerY);
 						break;
 					
 					case ENGINE_IMAGE:
 						layer.addNewChildAt(LayoutImageValidator.validate(this, _assetsManager, sortedElements[i]), i);
+						sortedElements[i].x = Math.round(sortedElements[i].x);
+						sortedElements[i].y = Math.round(sortedElements[i].y);
 						break;
 						
 					case ENGINE_BUTTON:
@@ -1136,18 +1140,24 @@
 						(btn as IAbstractButton).addEventListener(EngineEvent.TRIGGERED, button_triggeredHandler);
 						(btn as IAbstractButton).addEventListener(TouchEvent.TOUCH, button_touchedHandler);
 						layer.addNewChildAt(btn, i);
+						sortedElements[i].x = Math.round(sortedElements[i].x);
+						sortedElements[i].y = Math.round(sortedElements[i].y);
 						break;
 						
 					case ENGINE_TOGGLE_BUTTON:
 						var toggleBtn:IAbstractToggle = LayoutToggleButtonValidator.validate(this, _assetsManager, sortedElements[i]);
 						(toggleBtn as IAbstractToggle).addEventListener(EngineEvent.TRIGGERED, toggle_button_triggeredHandler);
 						layer.addNewChildAt(toggleBtn, i);
+						sortedElements[i].x = Math.round(sortedElements[i].x);
+						sortedElements[i].y = Math.round(sortedElements[i].y);
 						break;	
 						
 					case ENGINE_SLIDER:
 						var slider:IAbstractSlider = LayoutSliderValidator.validate(this, _assetsManager, sortedElements[i]);
 						slider.anchor = slider_component_changed;
 						layer.addNewChildAt(slider, i);
+						sortedElements[i].x = Math.round(sortedElements[i].x);
+						sortedElements[i].y = Math.round(sortedElements[i].y);
 						break;
 						
 					case ENGINE_MOVIE_CLIP:
@@ -1155,10 +1165,14 @@
 						mc.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
 						layer.addNewChildAt(mc, i);
 						juggler.add(mc as IAnimatable);
+						sortedElements[i].x = Math.round(sortedElements[i].x);
+						sortedElements[i].y = Math.round(sortedElements[i].y);
 						break;
 						
 					case ENGINE_TEXT_FIELD:
 							layer.addNewChildAt(LayoutTextFieldValidator.validate(this, _assetsManager, sortedElements[i]), i);
+							sortedElements[i].x = Math.round(sortedElements[i].x);
+							sortedElements[i].y = Math.round(sortedElements[i].y);
 						break
 						
 					case ENGINE_FLV:

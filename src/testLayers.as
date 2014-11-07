@@ -33,16 +33,20 @@ package
 	import com.greensock.plugins.TweenPlugin;
 	import com.greensock.TimelineMax;
 	import com.greensock.TweenLite;
+	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.DefaultListItemRenderer;
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.controls.Slider;
+	import feathers.controls.text.BitmapFontTextRenderer;
 	import feathers.controls.TextInput;
+	import feathers.core.ITextRenderer;
 	import feathers.data.ListCollection;
 	import feathers.display.Scale9Image;
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
 	import feathers.text.BitmapFontTextFormat;
+	import feathers.text.StageTextField;
 	import flappybird.Assets;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -83,6 +87,9 @@ package
 	import starling.display.Stage;
 	import starling.extensions.particles.PDParticle;
 	import starling.extensions.particles.PDParticleSystem;
+	import starling.textures.TextureSmoothing;
+	import starlingEngine.extensions.DistanceFieldFont;
+	import starlingEngine.extensions.DistanceFieldQuadBatch;
 	import starlingEngine.filters.PixelateFilter;
 	import starling.textures.GradientTexture;
 	import starling.textures.Texture;
@@ -179,6 +186,13 @@ package
 		
 		[Embed(source = "../bin/assets/media/blue.png")]
 		private static const BlueParticle:Class;
+		
+		[Embed(source = "../bin/assets/sdfFonts/Poplar.png")]
+		private static const PoplarPNG:Class;
+		
+		[Embed(source = "../bin/assets/sdfFonts/Poplar.xml", mimeType = "application/octet-stream")]
+		private static const PoplarXML:Class;
+		
 			
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
 																		new Point(800, 600),
@@ -208,7 +222,8 @@ package
 													"../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
 													"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
 													"../bin/assets/spritesheets/spriteSheetElements.png",
-													"../bin/assets/spritesheets/spriteSheetElements.xml"
+													"../bin/assets/spritesheets/spriteSheetElements.xml",
+													 "../bin/assets/sdfFonts/Poplar.otf_sdf.xml"
 													//"../bin/assets/spritesheets/spriteSheetElements.xml",
 													//"../bin/assets/spritesheets/spriteSheetPayTable.xml",
 													//"../bin/assets/spritesheets/preloader1x.png",
@@ -243,10 +258,12 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
+						//testTexts();
+						//testDistanceFonts();
 						//testParticles();
-						testParticlesFromBridge();
+						//testParticlesFromBridge();
 						//testFiters();
-						//testLayersTranzitions();
+						testLayersTranzitions();
 						//testGradientMask();
 						//testDifferentSize();
 						//testMovieClipsFromFrames();
@@ -275,6 +292,78 @@ package
 						//testOmnes();
 					}
 				});
+		}
+		
+		private function testDistanceFonts():void
+		{
+			var	texture:Texture = Texture.fromBitmap(new PoplarPNG());
+			var	xml:XML = XML(new PoplarXML());
+			 
+			//var	batch:QuadBatch = new QuadBatch ();
+			//var	font:BitmapFont = new BitmapFont (texture, xml);
+			 
+			var	batch:DistanceFieldQuadBatch = new DistanceFieldQuadBatch ();
+			var	font:DistanceFieldFont = new DistanceFieldFont (texture, xml);
+			 
+			font.fillQuadBatch (batch, 512, 512, "Hello This is a test", 50, 0xff0000, "center", "center", false, false);
+			 
+			_bridgeGraphics.addChild(batch);
+		}
+		
+		private function testTexts():void
+		{
+			_bridgeGraphics.registerBitmapFont(new dimboFontPng(), XML(new dimboFontClass()));
+			
+			var tF1:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 10, 0xFFFFFF);
+			var tF2:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 15, 0xFFFFFF);
+			var tF3:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 20, 0xFFFFFF);
+			var tF4:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 30, 0xFFFFFF);
+			var tF5:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 40, 0xFFFFFF);
+			var tF6:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 50, 0xFFFFFF);
+			
+			var label1:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF1);
+			var label2:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF2);
+			var label3:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF3);
+			var label4:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF4);
+			var label5:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF5);
+			var label6:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF6);
+			
+			label1.x = label2.x = label3.x = label4.x = label5.x = label6.x = 100;
+			label1.y = 20;
+			label2.y = 50;
+			label3.y = 80;
+			label4.y = 110;
+			label5.y = 140;
+			label6.y = 180;
+			
+			_bridgeGraphics.addChild(label1);
+			_bridgeGraphics.addChild(label2);
+			_bridgeGraphics.addChild(label3);
+			_bridgeGraphics.addChild(label4);
+			_bridgeGraphics.addChild(label5);
+			_bridgeGraphics.addChild(label6);
+			
+			tryLabel(250, 20, 10);
+			tryLabel(250, 50, 15);
+			tryLabel(250, 80, 20);
+			tryLabel(250, 110, 30);
+			tryLabel(250, 140, 40);
+			tryLabel(250, 180, 50);
+		}
+		
+		private function tryLabel(newX:uint, newY:uint, newSize:uint):void
+		{
+			var labelFeathers1:Label = new Label();
+			labelFeathers1.text = "GEORGE";
+			labelFeathers1.x = newX;
+			labelFeathers1.y = newY;
+			labelFeathers1.textRendererFactory = function():ITextRenderer
+			{
+				var textRenderer:BitmapFontTextRenderer = new BitmapFontTextRenderer();
+				textRenderer.textFormat = new BitmapFontTextFormat("Dimbo", newSize);
+				return textRenderer;
+			}
+			_bridgeGraphics.addChild(labelFeathers1);
 		}
 		
 		private function testParticlesFromBridge():void
