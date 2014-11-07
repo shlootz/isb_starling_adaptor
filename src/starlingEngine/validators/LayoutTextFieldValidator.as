@@ -21,8 +21,8 @@ package starlingEngine.validators
 		{
 			var tField:IAbstractTextField = engine.requestTextField(element.width, element.height, element.label, element.font, element.labelFontSize, element.labelFontColor);
 			var tLabel:IAbstractLabel = engine.requestLabelFromTextfield(tField, element.name);
-			tLabel.x = element.x;
-			tLabel.y = element.y;
+			tLabel.x = Math.round(element.x);
+			tLabel.y = Math.round(element.y);
 			if (element.labelAlign != "" && element.labelAlign != null)
 			{
 				tLabel.textField.hAlign = element.labelAlign;

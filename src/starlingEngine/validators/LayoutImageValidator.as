@@ -19,10 +19,10 @@ package starlingEngine.validators
 		public static function validate(engine:IEngine, assetsManager:AssetManager, element:EngineLayerLayoutElementVo):IAbstractImage
 		{
 			var img:IAbstractImage = engine.requestImage(assetsManager.getTexture(element.resource));
-			img.x = Number(element.x);
-			img.y = Number(element.y);
-			img.width = Number(element.width);
-			img.height = Number(element.height);
+			img.x = Math.round(Number(element.x));
+			img.y = Math.round(Number(element.y));
+			img.width =  Math.round(Number(element.width));
+			img.height =  Math.round(Number(element.height));
 			img.name = element.name;
 			
 			if (element.flipped)

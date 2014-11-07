@@ -37,8 +37,8 @@ package starlingEngine.validators
 			var hasIcon:Boolean = false;
 			var icon:IAbstractImage;
 			
-			upSkin.width = element.width;
-			upSkin.height = element.height;
+			upSkin.width = Math.round(element.width);
+			upSkin.height = Math.round(element.height);
 
 			btn.idName = element.name;
 			
@@ -65,11 +65,11 @@ package starlingEngine.validators
 			btn.downSkin_ = pressedStateSkin;
 			btn.disabledSkin_ = disabledStateSkin;
 						
-			btn.x = Number(element.x);
-			btn.y = Number(element.y);
+			btn.x = Math.round(Number(element.x));
+			btn.y = Math.round(Number(element.y));
 					
-			btn.width = Number(element.width);
-			btn.height = Number(element.height);
+			btn.width = Math.round(Number(element.width))
+			btn.height = Math.round(Number(element.height));
 						
 			btn.name = element.name;
 			
@@ -77,14 +77,14 @@ package starlingEngine.validators
 			{
 				hasIcon = true;
 				icon = engine.requestImage(assetsManager.getTexture(element.icon));
-				icon.width = element.iconWidth;
-				icon.height = element.iconHeight;
+				icon.width = Math.round(element.iconWidth);
+				icon.height = Math.round(element.iconHeight);
 				btn.upIcon_ = icon;
 				btn.hoverIcon_ = icon;
 				btn.downIcon_ = icon;
 				btn.disabledIcon_ = icon;
-				btn.iconOffsetX = element.iconOffsetX;
-				btn.iconOffsetY = element.iconOffsetY;
+				btn.iconOffsetX = Math.round(element.iconOffsetX);
+				btn.iconOffsetY = Math.round(element.iconOffsetY);
 			}
 			
 			if (element.label != "")
@@ -107,6 +107,9 @@ package starlingEngine.validators
 						btn.addCustomLabel(label,  "center");
 						label.x += element.labelX;
 						label.y += element.labelY;
+						
+						label.x = Math.round(label.x);
+						label.y = Math.round(label.y);
 					}
 					else
 					{

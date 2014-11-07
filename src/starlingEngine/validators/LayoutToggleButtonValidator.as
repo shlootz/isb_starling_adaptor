@@ -59,11 +59,11 @@ package starlingEngine.validators
 			btn.downSkin_ = pressedStateSkin;
 			btn.disabledSkin_ = disabledStateSkin;
 						
-			btn.x = Number(element.x);
-			btn.y = Number(element.y);
+			btn.x = Math.round(Number(element.x));
+			btn.y = Math.round(Number(element.y));
 					
-			btn.width = Number(element.width);
-			btn.height = Number(element.height);
+			btn.width = Math.round(Number(element.width));
+			btn.height = Math.round(Number(element.height));
 						
 			btn.name = element.name;
 			
@@ -81,14 +81,14 @@ package starlingEngine.validators
 			btn.selectedHoverIcon_ = btn.selectedUpIcon_;
 			
 			
-			iconOn.width = element.iconWidth;
-			iconOn.height = element.iconHeight;
+			iconOn.width = Math.round(element.iconWidth);
+			iconOn.height = Math.round(element.iconHeight);
 			
-			iconOff.width = element.iconWidth;
-			iconOff.height = element.iconHeight;
+			iconOff.width = Math.round(element.iconWidth);
+			iconOff.height = Math.round(element.iconHeight);
 			
-			btn.iconOffsetX = element.iconOffsetX;
-			btn.iconOffsetY = element.iconOffsetY;
+			btn.iconOffsetX =Math.round(element.iconOffsetX);
+			btn.iconOffsetY = Math.round(element.iconOffsetY);
 			
 			if (element.label != "")
 			{
@@ -110,6 +110,9 @@ package starlingEngine.validators
 						btn.addCustomLabel(label, "center");
 						label.x += element.labelX;
 						label.y += element.labelY;
+						
+						label.x = Math.round(label.x);
+						label.y = Math.round(label.y);
 					}
 					else
 					{
