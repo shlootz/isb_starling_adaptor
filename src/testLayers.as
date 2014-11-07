@@ -193,7 +193,6 @@ package
 		[Embed(source = "../bin/assets/sdfFonts/Poplar.xml", mimeType = "application/octet-stream")]
 		private static const PoplarXML:Class;
 		
-			
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
 																		new Point(800, 600),
 																		StarlingEngine,
@@ -215,7 +214,7 @@ package
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
 		}
-		
+
 		private function loadAssets(event:String, obj:Object):void
 		{
 			(_bridgeGraphics.assetsManager).enqueue(
@@ -223,7 +222,11 @@ package
 													"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
 													"../bin/assets/spritesheets/spriteSheetElements.png",
 													"../bin/assets/spritesheets/spriteSheetElements.xml",
-													 "../bin/assets/sdfFonts/Poplar.otf_sdf.xml"
+													 "../bin/assets/sdfFonts/Poplar.otf_sdf.xml",
+													 "../bin/assets/layouts/bonusLayout.xml",
+													 "../bin/assets/spritesheets/featureAssets.xml",
+													 "../bin/assets/spritesheets/Scrolls of Ra Feature Assets.png"
+													 
 													//"../bin/assets/spritesheets/spriteSheetElements.xml",
 													//"../bin/assets/spritesheets/spriteSheetPayTable.xml",
 													//"../bin/assets/spritesheets/preloader1x.png",
@@ -258,12 +261,17 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
+						container = _bridgeGraphics.requestSprite("asd");
+						layer = _bridgeGraphics.requestLayer("bonus", 1, _bridgeGraphics.getXMLFromAssetsManager("bonusLayout") , true);
+						_bridgeGraphics.addChild(container);
+						(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, bonusOver);
+						testBonus();
 						//testTexts();
 						//testDistanceFonts();
 						//testParticles();
 						//testParticlesFromBridge();
 						//testFiters();
-						testLayersTranzitions();
+						//testLayersTranzitions();
 						//testGradientMask();
 						//testDifferentSize();
 						//testMovieClipsFromFrames();
@@ -292,6 +300,39 @@ package
 						//testOmnes();
 					}
 				});
+		}
+		
+		private var container:IAbstractSprite;
+		private var layer:IAbstractLayer;
+		
+		private function testBonus():void
+		{
+			var layersIn:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			layersIn.push(layer);
+			
+			_bridgeGraphics.updateLayers(container, layersIn);
+			
+			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED,chestPressed);
+		}
+		
+		private function bonusOver(type:String, obj:Object):void
+		{ 
+				testBonus();
+		} 
+		
+		private  function chestPressed(type:String, obj:Object):void
+		{
+			trace(type);
+			if (type == "chestButtonImage25")
+			{
+				var layersOut:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+				layersOut.push(layer);
+				_bridgeGraphics.updateLayers(container, null, layersOut);
+			}
+			else
+			{
+				layer.removeChildAndDispose(layer.getChildByNameStr(type), true);
+			}
 		}
 		
 		private function testDistanceFonts():void
@@ -1005,9 +1046,9 @@ package
 		
 		private function transInComplete(type:String, obj:IAbstractSignalEvent):void
 		{
-			trace("IN Caught Transition " + type+" & " + obj);
-			var img:IAbstractImage = layer1.getChildByNameStr("Background") as IAbstractImage;
-			TweenLite.to(img, 1, { x:300 } );
+			//trace("IN Caught Transition " + type+" & " + obj);
+			//var img:IAbstractImage = layer1.getChildByNameStr("Background") as IAbstractImage;
+			//TweenLite.to(img, 1, { x:300 } );
 			//var tweenTimeline:TimelineMax = new TimelineMax();
 			//tweenTimeline.insert(TweenLite.to(img, 3, { x:300 } ));
 			//tweenTimeline.insert(TweenLite.to(img, 3, { x:0 } ));

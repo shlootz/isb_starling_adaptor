@@ -1030,20 +1030,20 @@
 		 * @param	target1
 		 * @param	target2
 		 */
-		public function tranzitionToLayerOutComplete(target1:Object = null, target2:Object = null, params:Object = null):void
+		public function tranzitionToLayerOutComplete(target:Object = null, container:Object = null, params:Object = null):void
 		{
-			if (target1)
+			if (target)
 			{
-				target2.removeChildAndDispose(target1 as EngineLayer);
+				container.removeChildAndDispose(target as EngineLayer);
 				
-				(target1 as EngineLayer).destroyAll();
+				(target as EngineLayer).destroyAll();
 			
 				var o:GESignalEvent = new GESignalEvent()
 					o.eventName = Signals.LAYER_TRANSITION_OUT_COMPLETE;
 					o.engineEvent = null;
 					o.params = params
 				
-				_signalsHub.dispatchSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, (target1 as IAbstractDisplayObject).name, o);
+				_signalsHub.dispatchSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, (target as IAbstractDisplayObject).name, o);
 			}
 		}
 		
