@@ -266,6 +266,8 @@ package
 						_bridgeGraphics.addChild(container);
 						(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, bonusOver);
 						testBonus();
+						//layer.redrawEnabled = false;
+						
 						//testTexts();
 						//testDistanceFonts();
 						//testParticles();
