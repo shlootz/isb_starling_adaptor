@@ -28,6 +28,7 @@ package
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.BridgeGraphics;
 	import bridge.IBridgeGraphics;
+	import citrus.ui.starling.UI;
 	import cmodule.AwayPhysics.TextFieldI;
 	import com.greensock.plugins.FramePlugin;
 	import com.greensock.plugins.TweenPlugin;
@@ -67,6 +68,7 @@ package
 	import flash.utils.ByteArray;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
+	import flash.utils.setInterval;
 	import nape.space.Space;
 	import signals.ISignalsHub;
 	import signals.Signals;
@@ -225,8 +227,15 @@ package
 													 "../bin/assets/sdfFonts/Poplar.otf_sdf.xml",
 													 "../bin/assets/layouts/bonusLayout.xml",
 													 "../bin/assets/spritesheets/featureAssets.xml",
-													 "../bin/assets/spritesheets/Scrolls of Ra Feature Assets.png"
-													 
+													 "../bin/assets/spritesheets/Scrolls of Ra Feature Assets.png",
+													"../bin/assets/spritesheets/winningsAnimations11-12.png",
+													 "../bin/assets/spritesheets/winningsAnimations13-14.png",
+													"../bin/assets/spritesheets/winningsAnimations1-5.png",
+													 "../bin/assets/spritesheets/winningsAnimations6-10.png",
+													"../bin/assets/spritesheets/winningsAnimationsAssets11-12.xml",
+													"../bin/assets/spritesheets/winningsAnimationsAssets13-14.xml",
+													"../bin/assets/spritesheets/winningsAnimationsAssets1-5.xml",
+													"../bin/assets/spritesheets/winningsAnimationsAssets6-10.xml"
 													//"../bin/assets/spritesheets/spriteSheetElements.xml",
 													//"../bin/assets/spritesheets/spriteSheetPayTable.xml",
 													//"../bin/assets/spritesheets/preloader1x.png",
@@ -261,11 +270,13 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
-						container = _bridgeGraphics.requestSprite("asd");
-						layer = _bridgeGraphics.requestLayer("bonus", 1, _bridgeGraphics.getXMLFromAssetsManager("bonusLayout") , true);
-						_bridgeGraphics.addChild(container);
-						(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, bonusOver);
-						testBonus();
+						testPool();
+						
+						//container = _bridgeGraphics.requestSprite("asd");
+						//layer = _bridgeGraphics.requestLayer("bonus", 1, _bridgeGraphics.getXMLFromAssetsManager("bonusLayout") , true);
+						//_bridgeGraphics.addChild(container);
+						//(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, bonusOver);
+						//testBonus();
 						//layer.redrawEnabled = false;
 						
 						//testTexts();
@@ -306,6 +317,33 @@ package
 		
 		private var container:IAbstractSprite;
 		private var layer:IAbstractLayer;
+		
+		private var intervalId:uint;
+		private var imgCount:int = 0;
+		private var label:IAbstractLabel;
+		
+		private function testPool():void
+		{
+			var tField:IAbstractTextField = _bridgeGraphics.requestTextField(100, 30, "", "Verdana", 30, 0xFFFFFF);
+			label = _bridgeGraphics.requestLabelFromTextfield(tField);
+			label.y = 30;
+			_bridgeGraphics.addChild(label);
+			
+			intervalId = setInterval(createChildren, 1);
+		}
+		
+		private function createChildren():void
+		{
+				var ranSymbol:int = 1 + Math.random() * 13;
+				var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Symbol"+String(ranSymbol)+"Animation");
+				mc.x = Math.random() * 800;
+				mc.y = Math.random() * 600;
+				mc.play();
+				_bridgeGraphics.currentContainer.addNewChild(mc);
+				_bridgeGraphics.returnToPool(mc);
+				imgCount++;
+				label.updateLabel(String(imgCount));
+		}
 		
 		private function testBonus():void
 		{
