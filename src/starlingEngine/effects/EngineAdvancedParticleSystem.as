@@ -3,12 +3,15 @@ package starlingEngine.effects
 	import bridge.abstract.effects.IAbstractParticleSystem;
 	import bridge.abstract.IAbstractImage;
 	import flash.geom.Point;
+	import signals.ISignalsHub;
+	import signals.Signals;
 	import starling.animation.Juggler;
 	import starling.display.FFParticleSystem;
 	import starling.display.FFParticleSystem.SystemOptions;
 	import starling.display.Image;
 	import starling.textures.Texture;
 	import starlingEngine.elements.EngineSprite;
+	import starlingEngine.events.GESignalEvent;
 	/**
 	 * ...
 	 * @author Eu
@@ -20,14 +23,27 @@ package starlingEngine.effects
 		private var _particlesConfig:SystemOptions;
 		private var _particleSystem:FFParticleSystem;
 		private var _juggler:Juggler;
+		private var _signalsHub:ISignalsHub;
 		
-		public function EngineAdvancedParticleSystem(configXML:XML, imageSource:IAbstractImage, juggler:Juggler, atlasXML:XML = null) 
+		public function EngineAdvancedParticleSystem(configXML:XML, imageSource:IAbstractImage, juggler:Juggler,  signalsHub:ISignalsHub, atlasXML:XML = null) 
 		{
+			_signalsHub = signalsHub;
 			_juggler = juggler;
 			_texture = (imageSource as Image).texture;
 			_particlesConfig = new SystemOptions(_texture, atlasXML, configXML);
 			_particleSystem = new FFParticleSystem(_particlesConfig);
+			_particleSystem.addEventListener("complete", particlesOnComplete);
 			this.addNewChild(_particleSystem);
+		}
+		
+		private function particlesOnComplete(e:Object):void
+		{
+			var oOut:GESignalEvent = new GESignalEvent()
+						oOut.eventName = Signals.PARTICLE_SYSTEM_COMPLETED;
+						oOut.engineEvent = e;
+						oOut.params = null
+						
+						_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_OUT, _particleSystem.name, oOut);
 		}
 		
 		public function start(duration:Number = Number.MAX_VALUE):void

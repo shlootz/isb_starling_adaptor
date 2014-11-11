@@ -403,6 +403,8 @@
 			(_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_CHANGED, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_FOCUS_IN, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_FOCUS_OUT, new Signal(), new Vector.<Function>);
+			
+			(_signalsHub as SignalsHub).addSignal(Signals.PARTICLE_SYSTEM_COMPLETED, new Signal(), new Vector.<Function>);
 		}
 		
 		/**
@@ -1478,7 +1480,7 @@
 		 */
 		public function requestAdvancedParticleSystem(configXML:XML, imageSource:IAbstractImage, atlasXML:XML=null):IAbstractParticleSystem
 		{
-			var advancedParticleSystem:IAbstractParticleSystem = new EngineAdvancedParticleSystem(configXML, imageSource, juggler as Juggler, atlasXML);
+			var advancedParticleSystem:IAbstractParticleSystem = new EngineAdvancedParticleSystem(configXML, imageSource, juggler as Juggler, _signalsHub, atlasXML);
 			return advancedParticleSystem;
 		}
 		
