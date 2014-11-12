@@ -195,6 +195,12 @@ package
 		[Embed(source = "../bin/assets/sdfFonts/Poplar.xml", mimeType = "application/octet-stream")]
 		private static const PoplarXML:Class;
 		
+		[Embed(source = "../bin/assets/particles/start.pex", mimeType = "application/octet-stream")]
+			private static const ParticleTestPex:Class;
+		
+		[Embed(source = "../bin/assets/particles/texture.png")]
+			private static const ParticleTestPNG:Class;
+		
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
 																		new Point(800, 600),
 																		StarlingEngine,
@@ -270,7 +276,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
-						testPool();
+						//testPool();
 						
 						//container = _bridgeGraphics.requestSprite("asd");
 						//layer = _bridgeGraphics.requestLayer("bonus", 1, _bridgeGraphics.getXMLFromAssetsManager("bonusLayout") , true);
@@ -282,7 +288,7 @@ package
 						//testTexts();
 						//testDistanceFonts();
 						//testParticles();
-						//testParticlesFromBridge();
+						testParticlesFromBridge();
 						//testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
@@ -352,7 +358,7 @@ package
 			
 			_bridgeGraphics.updateLayers(container, layersIn);
 			
-			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED,chestPressed);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_PRESSED,chestPressed);
 		}
 		
 		private function bonusOver(type:String, obj:Object):void
@@ -447,14 +453,28 @@ package
 			_bridgeGraphics.addChild(labelFeathers1);
 		}
 		
+		private	var advancedParticles:IAbstractParticleSystem
+		
 		private function testParticlesFromBridge():void
 		{
 			var atlas:XML = _bridgeGraphics.getXMLFromAssetsManager("spriteSheetElements");
 			var particleTexture:Texture = _bridgeGraphics.requestImage("symbol_0").currentTexture as Texture;
 			
-			var advancedParticles:IAbstractParticleSystem = _bridgeGraphics.requestAdvancedParticleSystem(XML(new DrugsConfig()), _bridgeGraphics.requestImage("symbol_0"), atlas);
+			advancedParticles = _bridgeGraphics.requestAdvancedParticleSystem(XML(new ParticleTestPex()), _bridgeGraphics.requestImage("symbol_0"), atlas);
 			_bridgeGraphics.addChild(advancedParticles);
 			advancedParticles.start();
+			
+			TweenLite.to(advancedParticles, 1, { x:300, onComplete:particlesCompleted } )
+		}
+		
+		private function particlesCompleted():void
+		{
+			advancedParticles.stop();
+		}
+		
+		private function onParticlesCompleted(type:String, obj:Object):void
+		{
+			trace("Particles Compelted")
 		}
 		
 		private function testFiters():void

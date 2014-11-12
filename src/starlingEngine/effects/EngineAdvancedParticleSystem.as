@@ -27,12 +27,14 @@ package starlingEngine.effects
 		
 		public function EngineAdvancedParticleSystem(configXML:XML, imageSource:IAbstractImage, juggler:Juggler,  signalsHub:ISignalsHub, atlasXML:XML = null) 
 		{
+			name = "EngineAdvancedParticleSystem" + Math.random() * 9999999;
 			_signalsHub = signalsHub;
 			_juggler = juggler;
 			_texture = (imageSource as Image).texture;
 			_particlesConfig = new SystemOptions(_texture, atlasXML, configXML);
 			_particleSystem = new FFParticleSystem(_particlesConfig);
 			_particleSystem.addEventListener("complete", particlesOnComplete);
+			
 			this.addNewChild(_particleSystem);
 		}
 		
@@ -43,7 +45,7 @@ package starlingEngine.effects
 						oOut.engineEvent = e;
 						oOut.params = null
 						
-						_signalsHub.dispatchSignal(Signals.GENERIC_BUTTON_OUT, _particleSystem.name, oOut);
+						_signalsHub.dispatchSignal(Signals.PARTICLE_SYSTEM_COMPLETED, name, oOut);
 		}
 		
 		public function start(duration:Number = Number.MAX_VALUE):void
