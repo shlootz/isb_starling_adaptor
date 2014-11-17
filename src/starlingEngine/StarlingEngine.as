@@ -405,6 +405,8 @@
 			(_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_FOCUS_OUT, new Signal(), new Vector.<Function>);
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.PARTICLE_SYSTEM_COMPLETED, new Signal(), new Vector.<Function>);
+			
+			(_signalsHub as SignalsHub).addSignal(Signals.FLV_MOVIE_ENDED, new Signal(), new Vector.<Function>);
 		}
 		
 		/**
@@ -853,7 +855,7 @@
 		 */
 		public function requestVideo():IAbstractVideo
 		{
-			var video:IAbstractVideo = new EngineVideo();
+			var video:IAbstractVideo = new EngineVideo(_signalsHub);
 			return video
 		}
 		

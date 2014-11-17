@@ -288,7 +288,8 @@ package
 						//testTexts();
 						//testDistanceFonts();
 						//testParticles();
-						testParticlesFromBridge();
+						//testParticlesFromBridge();
+						//testParticlesFromBridge2();
 						//testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
@@ -314,7 +315,7 @@ package
 						//testAnimatedTexture();
 						//for (var i:uint = 0; i < 5; i++ )
 						//{
-							//testFLV(Math.random() * 800, Math.random() * 600);
+							testFLV();
 						//}
 						//testOmnes();
 					}
@@ -454,6 +455,7 @@ package
 		}
 		
 		private	var advancedParticles:IAbstractParticleSystem
+		private	var advancedParticles2:IAbstractParticleSystem
 		
 		private function testParticlesFromBridge():void
 		{
@@ -467,9 +469,26 @@ package
 			TweenLite.to(advancedParticles, 1, { x:300, onComplete:particlesCompleted } )
 		}
 		
+		private function testParticlesFromBridge2():void
+		{
+			var atlas:XML = _bridgeGraphics.getXMLFromAssetsManager("spriteSheetElements");
+			var particleTexture:Texture = _bridgeGraphics.requestImage("symbol_0").currentTexture as Texture;
+			
+			advancedParticles2 = _bridgeGraphics.requestAdvancedParticleSystem(XML(new ParticleTestPex()), _bridgeGraphics.requestImage("symbol_0"), atlas);
+			_bridgeGraphics.addChild(advancedParticles2);
+			advancedParticles2.start();
+			
+			TweenLite.to(advancedParticles2, 1.5, { y:300, onComplete:particlesCompleted2 } )
+		}
+		
 		private function particlesCompleted():void
 		{
 			advancedParticles.stop();
+		}
+		
+			private function particlesCompleted2():void
+		{
+			advancedParticles2.stop();
 		}
 		
 		private function onParticlesCompleted(type:String, obj:Object):void
@@ -630,16 +649,11 @@ package
 			_bridgeGraphics.addChild(label);
 		}
 		
-		private function testFLV(posX:Number, posY:Number):void
+		private function testFLV():void
 		{
-			var nc:NetConnection = new NetConnection();
-			nc.addEventListener(NetStatusEvent.NET_STATUS , onConnect);
-			nc.addEventListener(AsyncErrorEvent.ASYNC_ERROR , trace);
-
-
-			var metaSniffer:Object=new Object();  
-			nc.client=metaSniffer;
-			nc.connect(null);
+			var stream:IAbstractVideo = _bridgeGraphics.requestVideo();
+			stream.addVideoPath("../bin/assets/test.flv");
+			_bridgeGraphics.addChild(stream);
 		}
 		
 		private function onConnect(e:NetStatusEvent):void {
