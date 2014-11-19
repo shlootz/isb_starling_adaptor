@@ -57,6 +57,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.AsyncErrorEvent;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.NetStatusEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -218,6 +219,10 @@ package
 		
 		public function testLayers() 
 		{
+			//stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent):void
+			//{
+				//testFLV();
+			//})
 			
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
@@ -277,7 +282,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
 						//testPool();
-						
+						testList();
 						//container = _bridgeGraphics.requestSprite("asd");
 						//layer = _bridgeGraphics.requestLayer("bonus", 1, _bridgeGraphics.getXMLFromAssetsManager("bonusLayout") , true);
 						//_bridgeGraphics.addChild(container);
@@ -315,11 +320,27 @@ package
 						//testAnimatedTexture();
 						//for (var i:uint = 0; i < 5; i++ )
 						//{
-							testFLV();
+							//testFLV();
 						//}
 						//testOmnes();
 					}
 				});
+		}
+		
+		private function testList():void
+		{
+			_bridgeGraphics.registerBitmapFont(new dimboFontPng(), XML(new dimboFontClass()));
+			
+			var data:Vector.<IAbstractComboBoxItemRenderer> = new Vector.<IAbstractComboBoxItemRenderer>();
+			data.push(new EngineComboBoxItemRenderer("test1"));
+			data.push(new EngineComboBoxItemRenderer("test2"));
+			data.push(new EngineComboBoxItemRenderer("test3"));
+			data.push(new EngineComboBoxItemRenderer("test4"));
+			var list:IAbstractComboBox = _bridgeGraphics.requestComboBox(data, 150, 300, null, "Dimbo");
+			
+			list.x = 100;
+			list.y = 100;
+			_bridgeGraphics.addChild(list);
 		}
 		
 		private var container:IAbstractSprite;
