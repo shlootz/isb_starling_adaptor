@@ -237,14 +237,14 @@
 			
 			//starling.shareContext = true;
 			//creates a new pool for sprites
-			_spritesPool = new AbstractPool("sprites", EngineSprite, 10);
+			_spritesPool = new AbstractPool("sprites", EngineSprite, 500);
 			
 			//creates a new pool for images
-			_imagesPool = new AbstractPool("images", EngineImage, 20, Texture.fromColor(2, 2, 0x000000));
+			_imagesPool = new AbstractPool("images", EngineImage, 500, Texture.fromColor(2, 2, 0x000000));
 			
 			//creates a new pool for movieclips
 			defaultFramesVector.push(Texture.fromColor(2, 2, 0x000000));
-			_movieClipsPool = new AbstractPool("movieClips", EngineMovie, 50, defaultFramesVector)
+			_movieClipsPool = new AbstractPool("movieClips", EngineMovie, 100, defaultFramesVector)
 			
 			//creates a new pool for buttons
 			_buttonsPool = new AbstractPool("buttons", EngineButton, 20);
