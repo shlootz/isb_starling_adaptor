@@ -281,7 +281,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
-						testPool();
+						//testPool();
 						//testList();
 						//container = _bridgeGraphics.requestSprite("asd");
 						//layer = _bridgeGraphics.requestLayer("bonus", 1, _bridgeGraphics.getXMLFromAssetsManager("bonusLayout") , true);
@@ -294,7 +294,7 @@ package
 						//testDistanceFonts();
 						//testParticles();
 						//testParticlesFromBridge();
-						//testParticlesFromBridge2();
+						testParticlesFromBridge2();
 						//testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
@@ -499,7 +499,8 @@ package
 			_bridgeGraphics.addChild(advancedParticles2);
 			advancedParticles2.start();
 			
-			TweenLite.to(advancedParticles2, 1.5, { y:300, onComplete:particlesCompleted2 } )
+			TweenLite.to(advancedParticles2, 1.5, { y:50, onComplete:particlesCompleted2 } )
+			
 		}
 		
 		private function particlesCompleted():void

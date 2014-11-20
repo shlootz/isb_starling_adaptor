@@ -42,7 +42,7 @@ package starlingEngine.effects
 		{
 			var oOut:GESignalEvent = new GESignalEvent()
 						oOut.eventName = Signals.PARTICLE_SYSTEM_COMPLETED;
-						oOut.engineEvent = e;
+						oOut.engineEvent = {currentTarget:this};
 						oOut.params = null
 						
 						_signalsHub.dispatchSignal(Signals.PARTICLE_SYSTEM_COMPLETED, name, oOut);
