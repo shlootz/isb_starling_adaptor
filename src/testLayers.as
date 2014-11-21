@@ -281,6 +281,7 @@ package
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
 						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
+						testNullMovie();
 						//testPool();
 						//testList();
 						//container = _bridgeGraphics.requestSprite("asd");
@@ -294,7 +295,7 @@ package
 						//testDistanceFonts();
 						//testParticles();
 						//testParticlesFromBridge();
-						testParticlesFromBridge2();
+						//testParticlesFromBridge2();
 						//testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
@@ -325,6 +326,12 @@ package
 						//testOmnes();
 					}
 				});
+		}
+		
+		private function testNullMovie():void
+		{
+			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("symbol");
+			trace(mc);
 		}
 		
 		private function testList():void

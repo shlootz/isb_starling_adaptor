@@ -540,16 +540,20 @@
 		 */
 		public function requestMovie(prefix:String, fps:uint = 24):IAbstractMovie
 		{
+			var n:IAbstractMovie = null;
 			var textures:Vector.<Texture> =  _assetsManager.getTextures(prefix);
-
-			var n:IAbstractMovie = _movieClipsPool.getNewObject() as IAbstractMovie;
-			n = cleanMovieclip(n, textures, fps);
-			n.name = prefix;
 			
-			(juggler as Juggler).add(n as IAnimatable);
-			
-			n.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
-			n.stop();
+			if (textures.length != 0)
+			{
+				n = _movieClipsPool.getNewObject() as IAbstractMovie;
+				n = cleanMovieclip(n, textures, fps);
+				n.name = prefix;
+				
+				(juggler as Juggler).add(n as IAnimatable);
+				
+				n.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
+				n.stop();
+			}
 			
 			return n;
 		}
