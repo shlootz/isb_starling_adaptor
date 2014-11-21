@@ -155,6 +155,7 @@
 		
 		private var  defaultFramesVector:Vector.<Texture> = new Vector.<Texture>();
 		private var _bitmapDataFallBack:BitmapData = new BitmapData(100, 100, true, 0x000000);
+		private var _textureFallBack:Texture;
 		
 		private var _flareBridge:FlareBridge;
 		/**
@@ -234,6 +235,7 @@
 		override public function handleStarlingReady():void
 		{ 
 			_starling.supportHighResolutions = true;
+			_textureFallBack = Texture.fromBitmapData(_bitmapDataFallBack);
 			
 			//starling.shareContext = true;
 			//creates a new pool for sprites
@@ -307,7 +309,7 @@
 				
 				(obj as EngineImage).removeFromParent();
 				
-				obj = new EngineImage(Texture.fromColor(2, 2, 0x000000));
+				obj = new EngineImage(_textureFallBack);
 				
 				_imagesPool.returnToPool(obj as EngineImage);
 			}
