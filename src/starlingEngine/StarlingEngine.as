@@ -472,7 +472,7 @@
 			var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
 			if (texture == null)
 			{
-				texture = Texture.fromBitmapData(_bitmapDataFallBack);
+				texture = _textureFallBack;
 			}
 			
 			i.newTexture = texture;
