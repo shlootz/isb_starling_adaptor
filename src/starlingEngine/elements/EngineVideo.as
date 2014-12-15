@@ -3,6 +3,7 @@ package starlingEngine.elements
 	import bridge.abstract.IAbstractSprite;
 	import bridge.abstract.IAbstractVideo;
 	import flash.events.TimerEvent;
+	import flash.geom.Rectangle;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
 	import flash.utils.Timer;

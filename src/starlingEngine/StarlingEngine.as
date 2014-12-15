@@ -1428,6 +1428,15 @@
 			  (target as DisplayObject).filter = new BlurFilter(vo.blurX, vo.blurY, vo.resolution);
 		 }
 		 
+		 /**
+		  * 
+		  * @param	target
+		  */
+		 public function clearFilter(target:IAbstractDisplayObject):void
+		 {
+			 (target as DisplayObject).filter = null;
+		 }
+		 
 		 public function get currentContainer():IAbstractState
 		 {
 			 return _currentState;

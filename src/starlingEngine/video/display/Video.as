@@ -758,6 +758,7 @@
 		 */
 		private function video_enterFrameHandler(e:flash.events.Event):void
 		{
+			
 			if (!contextStatus)
 				return;
 			

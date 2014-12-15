@@ -1,10 +1,13 @@
 package starlingEngine.elements 
 {
 	import bridge.abstract.IAbstractAnimatable;
+	import bridge.abstract.IAbstractImage;
 	import bridge.abstract.IAbstractMovie;
 	import bridge.abstract.IAbstractTexture;
+	import citrus.ui.starling.UI;
 	import flash.display.BitmapData;
 	import flash.media.Sound;
+	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.textures.Texture;
 	/**
@@ -13,6 +16,7 @@ package starlingEngine.elements
 	 */
 	public class EngineMovie extends MovieClip implements IAbstractMovie, IAbstractAnimatable
 	{
+		private var _frames:Vector.<Texture> = new Vector.<Texture>();
 		private var _frame:Number;
 		/**
 		 * 
@@ -21,6 +25,7 @@ package starlingEngine.elements
 		 */
 		public function EngineMovie(vector:Vector.<Texture>, fps:uint = 24) 
 		{
+			_frames = vector;
 			super(vector, fps);
 		}
 		/**
@@ -29,9 +34,9 @@ package starlingEngine.elements
 		 * @param	sound
 		 * @param	duration
 		 */
-		public function addNewFrame(texture:IAbstractTexture, sound:Sound = null, duration:Number = -1):void
+		public function addNewFrame(image:IAbstractImage, sound:Sound = null, duration:Number = -1):void
 		{
-			super.addFrame(texture as Texture, sound, duration);
+			super.addFrame(image.currentTexture as Texture, sound, duration);
 		}
 		/**
 		 * 
@@ -40,27 +45,27 @@ package starlingEngine.elements
 		 * @param	sound
 		 * @param	duration
 		 */
-		public function addNewFrameAt(frameID:uint, texture:IAbstractTexture, sound:Sound = null, duration:Number = -1):void
+		public function addNewFrameAt(frameID:uint, image:IAbstractImage, sound:Sound = null, duration:Number = -1):void
 		{
-			super.addFrameAt(frameID, texture as EngineTexture, sound, duration);
+			super.addFrameAt(frameID, image.currentTexture as EngineTexture, sound, duration);
 		}
 		/**
 		 * 
 		 * @param	frameID
 		 * @return
 		 */
-		public function getTextureFromFrame(frameID:uint):IAbstractTexture
+		public function getTextureFromFrame(frameID:uint):IAbstractImage
 		{
-			return super.getFrameTexture(frameID) as IAbstractTexture
+			return new Image(super.getFrameTexture(frameID) as Texture) as IAbstractImage
 		}
 		/**
 		 * 
 		 * @param	frameID
 		 * @param	texture
 		 */
-		public function setTextureToFrame(frameID:uint, texture:IAbstractTexture):void
+		public function setTextureToFrame(frameID:uint, image:IAbstractImage):void
 		{
-			super.setFrameTexture(frameID, texture as EngineTexture);
+			super.setFrameTexture(frameID, image.currentTexture as EngineTexture);
 		}
 		
 		/**
@@ -116,7 +121,6 @@ package starlingEngine.elements
 			this.currentFrame = frame;
 			this.play();
 		}
-
 	}
 
 }

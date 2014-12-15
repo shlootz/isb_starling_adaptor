@@ -231,22 +231,22 @@ package
 		private function loadAssets(event:String, obj:Object):void
 		{
 			(_bridgeGraphics.assetsManager).enqueue(
-													"../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
-													"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
-													"../bin/assets/spritesheets/spriteSheetElements.png",
-													"../bin/assets/spritesheets/spriteSheetElements.xml",
-													 "../bin/assets/sdfFonts/Poplar.otf_sdf.xml",
-													 "../bin/assets/layouts/bonusLayout.xml",
-													 "../bin/assets/spritesheets/featureAssets.xml",
-													 "../bin/assets/spritesheets/Scrolls of Ra Feature Assets.png",
-													"../bin/assets/spritesheets/winningsAnimations11-12.png",
-													 "../bin/assets/spritesheets/winningsAnimations13-14.png",
-													"../bin/assets/spritesheets/winningsAnimations1-5.png",
-													 "../bin/assets/spritesheets/winningsAnimations6-10.png",
-													"../bin/assets/spritesheets/winningsAnimationsAssets11-12.xml",
-													"../bin/assets/spritesheets/winningsAnimationsAssets13-14.xml",
-													"../bin/assets/spritesheets/winningsAnimationsAssets1-5.xml",
-													"../bin/assets/spritesheets/winningsAnimationsAssets6-10.xml"
+													//"../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
+													//"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
+													//"../bin/assets/spritesheets/spriteSheetElements.png",
+													//"../bin/assets/spritesheets/spriteSheetElements.xml",
+													 //"../bin/assets/sdfFonts/Poplar.otf_sdf.xml",
+													 //"../bin/assets/layouts/bonusLayout.xml",
+													 //"../bin/assets/spritesheets/featureAssets.xml",
+													 //"../bin/assets/spritesheets/Scrolls of Ra Feature Assets.png",
+													//"../bin/assets/spritesheets/winningsAnimations11-12.png",
+													 //"../bin/assets/spritesheets/winningsAnimations13-14.png",
+													//"../bin/assets/spritesheets/winningsAnimations1-5.png",
+													 //"../bin/assets/spritesheets/winningsAnimations6-10.png",
+													//"../bin/assets/spritesheets/winningsAnimationsAssets11-12.xml",
+													//"../bin/assets/spritesheets/winningsAnimationsAssets13-14.xml",
+													//"../bin/assets/spritesheets/winningsAnimationsAssets1-5.xml",
+													//"../bin/assets/spritesheets/winningsAnimationsAssets6-10.xml",
 													//"../bin/assets/spritesheets/spriteSheetElements.xml",
 													//"../bin/assets/spritesheets/spriteSheetPayTable.xml",
 													//"../bin/assets/spritesheets/preloader1x.png",
@@ -267,21 +267,26 @@ package
 													//"../bin/assets/layouts/linesLayout.xml",
 													//"../bin/assets/sounds/track.mp3",
 													//"../bin/assets/layouts/freeSpinsLayout.xml",
-													//"../bin/assets/layouts/menuLayout.xml"
+													//"../bin/assets/layouts/menuLayout.xml",
+													"../bin/assets/spritesheets/FeaturesModuleAssets.xml",
+													"../bin/assets/spritesheets/FeaturesModuleSkin.png"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
 					trace("Loading assets, progress:", ratio);
 					if (ratio == 1)
 					{	
+						//testErrorThrowing();
+						
 						_transIn.injectAnimation(animIn);
-						_transOut.injectAnimation(animIn);
+						_transOut.injectAnimation(animOut);
 						
-						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
-						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
-						((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
+						//((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
+						//((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, transOutComplete);
+						//((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.GENERIC_SLIDER_CHANGE, onSlider);
 						
-						testNullMovie();
+						//testEmptyButton();
+						//testNullMovie();
 						//testPool();
 						//testList();
 						//container = _bridgeGraphics.requestSprite("asd");
@@ -296,13 +301,21 @@ package
 						//testParticles();
 						//testParticlesFromBridge();
 						//testParticlesFromBridge2();
-						//testFiters();
+						testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
 						//testDifferentSize();
 						//testMovieClipsFromFrames();
 						//showLines();
 						//showMenu();
+						//(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, function(type:String, e:Object):void {
+							//trace("@@@@@@@@@@@@@@@@@@@ LAYER_TRANSITION_IN_COMPLETE " + type);
+						//});
+						//
+						//(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, function(type:String, e:Object):void {
+							//trace("@@@@@@@@@@@@@@@@@@@ LAYER_TRANSITION_OUT_COMPLETE " + type);
+							//showPaytable();
+						//});
 						//showPaytable();
 						//makeSlider();
 						//testMovieClips();
@@ -324,8 +337,56 @@ package
 							//testFLV();
 						//}
 						//testOmnes();
+						//testAnimatedButtons();
+						//testDoubleSize();
 					}
 				});
+		}
+		
+		private function testDoubleSize():void
+		{
+			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("BadGuy-Walking-", 10, true);
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
+			_bridgeGraphics.addChild(mc);
+			mc.play();
+		}
+		
+		private function testAnimatedButtons():void
+		{
+			var mcUp:IAbstractMovie = _bridgeGraphics.requestMovie("Chest");
+			var mcHover:IAbstractMovie = _bridgeGraphics.requestMovie("Symbol11Animation");
+			var mcDown:IAbstractMovie = _bridgeGraphics.requestMovie("Symbol13Animation");
+			var btn:IAbstractButton = _bridgeGraphics.requestButton("asd");
+			
+			btn.upSkin_ = mcUp;
+			btn.hoverSkin_ = mcHover;
+			btn.downSkin_ = mcDown;
+			
+			//mcUp.play();
+			//mcHover.play();
+			//mcDown.p     lay();
+			
+			_bridgeGraphics.addChild(btn);
+			
+			btn.touchable = false;
+		}
+		
+		private function testErrorThrowing():void
+		{
+			((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
+			((_bridgeGraphics.signalsManager) as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, transInComplete);
 		}
 		
 		private function testNullMovie():void
@@ -527,12 +588,14 @@ package
 		
 		private function testFiters():void
 		{
-			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
+			var img:IAbstractImage = _bridgeGraphics.requestImage("Mode2Background");
 			_bridgeGraphics.addChild(img);
 			
 			//var pixelateFilter:PixelateFilter = new PixelateFilter(10);
 			//(img as Image).filter = pixelateFilter;
-			_bridgeGraphics.addNewsPaperFilter(img, 10,2,30);
+			_bridgeGraphics.addNewsPaperFilter(img, 10, 2, 30);
+			
+			_bridgeGraphics.clearFilter(img);
 		}
 		
 		private var layer1:IAbstractLayer;
@@ -652,17 +715,6 @@ package
 			inLayers.push(paytableLayer);
 			
 			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers);
-			_bridgeGraphics.addChild(_bridgeGraphics.requestImage("Full-Screen-Icon"));
-			
-			var img:IAbstractImage = _bridgeGraphics.requestImage("Settings-Button-Hover");
-			img.y = 150;
-			
-			var btn:IAbstractButton = _bridgeGraphics.requestButton("george");
-			btn.upSkin_ = _bridgeGraphics.requestImage("Full-Screen-Icon");
-			btn.x = btn.y =  250;
-			
-			_bridgeGraphics.addChild(img);
-			_bridgeGraphics.addChild(btn);
 		}
 		
 		private function testOmnes():void
@@ -683,6 +735,7 @@ package
 			var stream:IAbstractVideo = _bridgeGraphics.requestVideo();
 			stream.addVideoPath("../bin/assets/test.flv");
 			_bridgeGraphics.addChild(stream);
+			trace(stream.width + " " + stream.height + " " + stream.scaleX + " " + stream.scaleY);
 		}
 		
 		private function onConnect(e:NetStatusEvent):void {
@@ -733,16 +786,18 @@ package
 		private function testEmptyButton():void
 		{
 			var btn:IAbstractButton = _bridgeGraphics.requestButton("asd");
+			var tField:IAbstractTextField = _bridgeGraphics.requestTextField(100, 30, "Ioana");
+			var customLabel:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tField);
 			
 			btn.upSkin_ =  _bridgeGraphics.requestImage("asdasd");
 			btn.downSkin_ =  _bridgeGraphics.requestImage("asdasd");
 			btn.hoverSkin_ =  _bridgeGraphics.requestImage("asdasd");
-			
+			btn.addCustomLabel(customLabel);
 			btn.width = 500;
 			
 			_bridgeGraphics.addChild(btn);
-			btn.x = 0;
-			btn.y = 0;
+			btn.x = 50;
+			btn.y = 50;
 		}
 		
 		private function testScreenShot():void
@@ -908,8 +963,17 @@ package
 		
 		private function onToggle(type:String, e:Object):void
 		{
-			trace(type);
-			trace(e);
+			var paytableXml:XML = new XML();
+			paytableXml = _bridgeGraphics.getXMLFromAssetsManager("UserInterface");
+			
+			 //Adding the Paytable layer and initializing the layout via auto methods
+			_layersVO.addLayer("UserInterface", 1, paytableXml, true);
+			var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			var outLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+			var paytableLayer:IAbstractLayer = _layersVO.retrieveLayer("UserInterface");
+			inLayers.push(paytableLayer);
+			outLayers.push(_layersVO.retrieveLayer("Paytable"));
+			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, null, outLayers, null, _transOut);
 		}
 		
 		private var _img:IAbstractImage
@@ -1073,7 +1137,7 @@ package
 			var paytableLayer:IAbstractLayer = _layersVO.retrieveLayer("Paytable");
 			inLayers.push(paytableLayer);
 			
-			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers);
+			_bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers, null, _transIn);
 			paytableLayer = _layersVO.retrieveLayer("Paytable");
 			
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, onToggle);
@@ -1145,6 +1209,11 @@ package
 		private function animIn(obj1:IAbstractDisplayObject, obj2:IAbstractDisplayObject):void
 		{
 			TweenLite.to(obj1, Math.random()*2, { x:Math.random() * 250, onComplete:  _transIn.onTransitionComplete, onCompleteParams:[obj1, obj2]} );
+		}
+		
+		private function animOut(obj1:IAbstractDisplayObject, obj2:IAbstractDisplayObject):void
+		{
+			TweenLite.to(obj1, Math.random()*2, { x:Math.random() * 250, onComplete:  _transOut.onTransitionComplete, onCompleteParams:[obj1, obj2]} );
 		}
 		
 		private function transInComplete(type:String, obj:IAbstractSignalEvent):void
