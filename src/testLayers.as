@@ -6,6 +6,7 @@ package
 	import bridge.abstract.effects.IAbstractParticleSystem;
 	import bridge.abstract.events.IAbstractSignalEvent;
 	import bridge.abstract.filters.IAbstractBlurFilter;
+	import bridge.abstract.filters.IAbstractGlowFilter;
 	import bridge.abstract.IAbstractDisplayObject;
 	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractEngineLayerVO;
@@ -237,8 +238,7 @@ package
 													//"../bin/assets/spritesheets/spriteSheetElements.xml",
 													 //"../bin/assets/sdfFonts/Poplar.otf_sdf.xml",
 													 //"../bin/assets/layouts/bonusLayout.xml",
-													 //"../bin/assets/spritesheets/featureAssets.xml",
-													 //"../bin/assets/spritesheets/Scrolls of Ra Feature Assets.png",
+													 "../bin/assets/spritesheets/Scrolls of Ra Feature Assets.png",
 													//"../bin/assets/spritesheets/winningsAnimations11-12.png",
 													 //"../bin/assets/spritesheets/winningsAnimations13-14.png",
 													//"../bin/assets/spritesheets/winningsAnimations1-5.png",
@@ -269,13 +269,14 @@ package
 													//"../bin/assets/layouts/freeSpinsLayout.xml",
 													//"../bin/assets/layouts/menuLayout.xml",
 													"../bin/assets/spritesheets/FeaturesModuleAssets.xml",
-													"../bin/assets/spritesheets/FeaturesModuleSkin.png"
+													"../bin/assets/spritesheets/FeaturesModuleSkin.png",
+													 "../bin/assets/spritesheets/featureAssets.xml"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
 					trace("Loading assets, progress:", ratio);
 					if (ratio == 1)
-					{	
+					{	 
 						//testErrorThrowing();
 						
 						_transIn.injectAnimation(animIn);
@@ -586,16 +587,66 @@ package
 			trace("Particles Compelted")
 		}
 		
+		private var btn:IAbstractButton;
+		private var glowFilter:IAbstractGlowFilter
+		private var added:Boolean = false;
+		
 		private function testFiters():void
 		{
-			var img:IAbstractImage = _bridgeGraphics.requestImage("Mode2Background");
-			_bridgeGraphics.addChild(img);
+			//var img:IAbstractImage = _bridgeGraphics.requestImage("Mode2Background");
+			//_bridgeGraphics.addChild(img);
+			//img.x = 200;
+			//img.y = 200;
+			//
+			glowFilter = _bridgeGraphics.requestGlowFilter();
+			glowFilter.blur = 10;
+			glowFilter.color = 0xFF0000;
+			//
+			////var pixelateFilter:PixelateFilter = new PixelateFilter(10);
+			////(img as Image).filter = pixelateFilter;
+			////_bridgeGraphics.addNewsPaperFilter(img, 10, 2, 30);
+			//
+			//for (var i:uint = 0; i < 1000; i++ )
+			//{
+				//_bridgeGraphics.addGlowFilter(img, glowFilter);
+				////_bridgeGraphics.clearFilter(img);
+				//trace(i + " x " + glowFilter);
+			//}
+			//
+			btn = _bridgeGraphics.requestButton("asd");
+			btn.upSkin_ = _bridgeGraphics.requestImage("Scroll-Mare-Static1");
+			btn.downSkin_ = _bridgeGraphics.requestImage("Scroll-Mare-Static1");
+			btn.hoverSkin_ = _bridgeGraphics.requestImage("Scroll-Mare-Static1");
 			
-			//var pixelateFilter:PixelateFilter = new PixelateFilter(10);
-			//(img as Image).filter = pixelateFilter;
-			_bridgeGraphics.addNewsPaperFilter(img, 10, 2, 30);
+			_bridgeGraphics.addChild(btn);
 			
-			_bridgeGraphics.clearFilter(img);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OVER, onButtonHover);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OUT, onButtonOut);
+		}
+		
+		private function onButtonHover(type:String, e:Object):void
+		{
+			trace("over");
+			if (!added)
+			{
+				_bridgeGraphics.addGlowFilter(btn, glowFilter);
+				added = true;
+			}
+			//_bridgeGraphics.clearFilter(btn);
+			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OUT, onButtonOut);
+			//(_bridgeGraphics.signalsManager as ISignalsHub).removeListenerFromSignal(Signals.GENERIC_BUTTON_OVER, onButtonHover)
+		}
+		
+		private function onButtonOut(type:String, e:Object):void
+		{
+			trace("out");
+			if (added)
+			{
+				_bridgeGraphics.clearFilter(btn);
+				added = false;
+			}
+			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OVER, onButtonHover);
+			//(_bridgeGraphics.signalsManager as ISignalsHub).removeListenerFromSignal(Signals.GENERIC_BUTTON_OVER, onButtonOut);
 		}
 		
 		private var layer1:IAbstractLayer;
@@ -736,6 +787,8 @@ package
 			stream.addVideoPath("../bin/assets/test.flv");
 			_bridgeGraphics.addChild(stream);
 			trace(stream.width + " " + stream.height + " " + stream.scaleX + " " + stream.scaleY);
+			
+			stream.resizeVideo();
 		}
 		
 		private function onConnect(e:NetStatusEvent):void {
@@ -768,7 +821,7 @@ package
 			gr.curveTo(500, 100, 700, 650)
 			
 			_bridgeGraphics.addChild(spr);
-		}
+		}  
 		
 		private function testTexturedLine():void
 		{

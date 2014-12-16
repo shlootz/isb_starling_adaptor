@@ -28,6 +28,7 @@
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.filters.BlurFilter;
+	import starling.filters.FragmentFilter;
 	import starling.utils.AssetManager;
 	import starlingEngine.effects.EngineAdvancedParticleSystem;
 	import starlingEngine.effects.EngineParticleSystem;
@@ -152,6 +153,7 @@
 		private var _imagesPool:AbstractPool;
 		private var _movieClipsPool:AbstractPool;
 		private var _buttonsPool:AbstractPool;
+		private var _fragmentStandardFilterPool:AbstractPool;
 		
 		private var  defaultFramesVector:Vector.<Texture> = new Vector.<Texture>();
 		private var _bitmapDataFallBack:BitmapData = new BitmapData(100, 100, true, 0x000000);
@@ -250,6 +252,9 @@
 			
 			//creates a new pool for buttons
 			_buttonsPool = new AbstractPool("buttons", EngineButton, 20);
+			
+			//creates a new pool for FragmentFilters
+			_fragmentStandardFilterPool = new AbstractPool("fragmentFilters", BlurFilter, 30);
 			
 			//assigns initial state
 			_currentState = requestState();
@@ -1381,16 +1386,6 @@
 		 /**
 		  * 
 		  * @param	target
-		  * @param	vo
-		  */
-		 public function addDropShadowFilter(target:IAbstractDisplayObject, vo:IAbstractDropShadowFilter):void
-		 {
-			 (target as DisplayObject).filter = BlurFilter.createDropShadow(vo.distance, vo.angle, vo.color, vo.alpha, vo.blur, vo.resolution);
-		 }
-		 
-		 /**
-		  * 
-		  * @param	target
 		  * @param	pixelSize
 		  */
 		 public function addPixelationFilter(target:IAbstractDisplayObject, pixelSize:int):void
@@ -1408,14 +1403,28 @@
 			  (target as DisplayObject).filter = new NewsprintFilter(size, scale, angleInRadians);
 		 }
 		 
-		 	 /**
+		  /**
+		  * 
+		  * @param	target
+		  * @param	vo
+		  */
+		 public function addDropShadowFilter(target:IAbstractDisplayObject, vo:IAbstractDropShadowFilter):void
+		 {
+			  var blurFilter:BlurFilter = _fragmentStandardFilterPool.getNewObject() as BlurFilter;
+			  blurFilter = BlurFilter.createDropShadow(vo.distance, vo.angle, vo.color, vo.alpha, vo.blur, vo.resolution);
+			 (target as DisplayObject).filter = blurFilter;
+		 }
+		 
+		 /**
 		  * 
 		  * @param	target
 		  * @param	vo
 		  */
 		 public function addGlowFilter(target:IAbstractDisplayObject, vo:IAbstractGlowFilter):void
 		 {
-			 (target as DisplayObject).filter = BlurFilter.createGlow(vo.color, vo.alpha, vo.blur, vo.resolution);
+			 var blurFilter:BlurFilter = _fragmentStandardFilterPool.getNewObject() as BlurFilter;
+			 blurFilter = BlurFilter.createGlow(vo.color, vo.alpha, vo.blur, vo.resolution);
+			 (target as DisplayObject).filter = blurFilter;
 		 }
 		 
 		 /**
@@ -1425,7 +1434,11 @@
 		  */
 		 public function addBlurFilter(target:IAbstractDisplayObject, vo:IAbstractBlurFilter):void
 		 {
-			  (target as DisplayObject).filter = new BlurFilter(vo.blurX, vo.blurY, vo.resolution);
+			  var blurFilter:BlurFilter = _fragmentStandardFilterPool.getNewObject() as BlurFilter;
+			  blurFilter.blurX = vo.blurX;
+			  blurFilter.blurY = vo.blurY;
+			  blurFilter.resolution = vo.resolution;
+			  (target as DisplayObject).filter = blurFilter;
 		 }
 		 
 		 /**
@@ -1435,6 +1448,7 @@
 		 public function clearFilter(target:IAbstractDisplayObject):void
 		 {
 			 (target as DisplayObject).filter = null;
+			 _fragmentStandardFilterPool.returnToPool(target);
 		 }
 		 
 		 public function get currentContainer():IAbstractState

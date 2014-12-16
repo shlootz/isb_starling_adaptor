@@ -141,6 +141,11 @@ package starlingEngine.elements
 			_loop = value;
 		}
 		
+		public  function resizeVideo(width:int = 800, height:int = 600):void 
+		{
+			_video.resizeVideo(width, height);
+		}
+		
 	}
 
 }
