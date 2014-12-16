@@ -601,6 +601,7 @@ package
 			glowFilter = _bridgeGraphics.requestGlowFilter();
 			glowFilter.blur = 10;
 			glowFilter.color = 0xFF0000;
+			glowFilter.resolution = .1;
 			//
 			////var pixelateFilter:PixelateFilter = new PixelateFilter(10);
 			////(img as Image).filter = pixelateFilter;
@@ -625,10 +626,10 @@ package
 		}
 		
 		private function onButtonHover(type:String, e:Object):void
-		{
-			trace("over");
+		{		
 			if (!added)
 			{
+				trace("over");
 				_bridgeGraphics.addGlowFilter(btn, glowFilter);
 				added = true;
 			}
@@ -639,9 +640,9 @@ package
 		
 		private function onButtonOut(type:String, e:Object):void
 		{
-			trace("out");
 			if (added)
 			{
+					trace("out");
 				_bridgeGraphics.clearFilter(btn);
 				added = false;
 			}

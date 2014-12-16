@@ -1447,8 +1447,8 @@
 		  */
 		 public function clearFilter(target:IAbstractDisplayObject):void
 		 {
+			 (target as DisplayObject).filter.dispose();
 			 (target as DisplayObject).filter = null;
-			 _fragmentStandardFilterPool.returnToPool(target);
 		 }
 		 
 		 public function get currentContainer():IAbstractState
