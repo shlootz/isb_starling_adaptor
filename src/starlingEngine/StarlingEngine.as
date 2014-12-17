@@ -1447,8 +1447,11 @@
 		  */
 		 public function clearFilter(target:IAbstractDisplayObject):void
 		 {
-			 (target as DisplayObject).filter.dispose();
-			 (target as DisplayObject).filter = null;
+			 if ( (target as DisplayObject).filter != null)
+			 {
+				 (target as DisplayObject).filter.dispose();
+				 (target as DisplayObject).filter = null;
+			 }
 		 }
 		 
 		 public function get currentContainer():IAbstractState
