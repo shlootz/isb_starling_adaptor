@@ -217,6 +217,8 @@ package starlingEngine.elements
 				var sliderX:String = _mainXML.child("Element")[i].attribute("sliderX");
 				var sliderY:String = _mainXML.child("Element")[i].attribute("sliderY");
 				
+				var filters:String = _mainXML.child("Element")[i].attribute("filters");
+				
 				var o:EngineLayerLayoutElementVo = new EngineLayerLayoutElementVo();
 				o.layerX = Number(layerX);
 				o.layerY = Number(layerY);
@@ -257,6 +259,7 @@ package starlingEngine.elements
 				o.sliderX = Number(sliderX);
 				o.sliderY = Number(sliderY);
 				o.labelAlign = labelAlign;
+				o.filters = filters;
 				
 				if (flipped == "true")
 				{

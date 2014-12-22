@@ -59,6 +59,8 @@ package starlingEngine.elements
 		public var sliderX:Number;
 		public var sliderY:Number;
 		
+		public var filters:String;
+		
 		public var flipped:Boolean = false;
 					
 		public function EngineLayerLayoutElementVo() 

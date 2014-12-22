@@ -22,6 +22,7 @@ package starlingEngine.ui
 		{
 			super();
 			this.useHandCursor = true;
+			super.defaultLabelProperties.embedFonts = true;
 		}
 		
 		public function set idName(value:String):void

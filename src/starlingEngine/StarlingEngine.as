@@ -725,7 +725,7 @@
 		 * 
 		 * @return IAbstractTextField
 		 */
-		public function requestTextField(width:int, height:int, text:String, fontName:String="Verdana", fontSize:Number=12, color:uint=0, bold:Boolean=false):IAbstractTextField
+		public function requestTextField(width:int, height:int, text:String, fontName:String="Verdana", fontSize:Number=12, color:uint=0, bold:Boolean=false, nativeFiltersArr:Array = null):IAbstractTextField
 		{
 			while (text.indexOf("\\n") != -1)
 			{
@@ -743,7 +743,7 @@
 				finalH = dynamicH;
 			}
 			
-			var t:IAbstractTextField = new EngineTextField(width, finalH, text, fontName, fontSize, color, bold) as IAbstractTextField;
+			var t:IAbstractTextField = new EngineTextField(width, finalH, text, fontName, fontSize, color, bold, nativeFiltersArr) as IAbstractTextField;
 			t.batchable = true;
 			t.autoScale = true;
 			

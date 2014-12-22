@@ -13,9 +13,13 @@ package starlingEngine.elements
 	public class EngineTextField extends TextField implements IAbstractTextField
 	{
 		
-		public function EngineTextField(width:int, height:int, text:String, fontName:String="Verdana", fontSize:Number=12, color:uint=0, bold:Boolean=false) 
+		public function EngineTextField(width:int, height:int, text:String, fontName:String="Verdana", fontSize:Number=12, color:uint=0, bold:Boolean=false, nativeFiltersArr:Array = null) 
 		{
 			super(width, height, text, fontName, fontSize, color, bold);
+			if (nativeFiltersArr)
+			{
+				super.nativeFilters = nativeFiltersArr;
+			}
 		}
 		
 		/**
