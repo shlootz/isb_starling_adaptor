@@ -73,7 +73,7 @@ package starlingEngine.validators
 					case "bevelFilter":
 						var bevelFilter:BevelFilter = new BevelFilter();
 						setProperties(bevelFilter, filterObj);
-						tFieldFiltersArray.push(filterObj);
+						tFieldFiltersArray.push(bevelFilter);
 						break;
 						
 					case "dropShadowFilter":
@@ -87,6 +87,9 @@ package starlingEngine.validators
 						setProperties(gradientBevelFilter, filterObj);
 						tFieldFiltersArray.push(gradientBevelFilter);
 						break;	
+						
+					default:
+						break;
 				}
 			}
 			
