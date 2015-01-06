@@ -58,10 +58,17 @@ package starlingEngine.validators
 			var tFieldFiltersJSON:Object = JSON.parse(tFieldFiltersString);
 			var tFieldFiltersArray:Array = new Array();
 			var filterObj:Object;
+			var filtersLength:uint = 0;
 			
 			for (var i:String in tFieldFiltersJSON)
 			{
-				filterObj= tFieldFiltersJSON[i];
+				filtersLength++;
+			}
+			
+			for (var j:uint = 0; j < filtersLength; j++ )
+			{
+				filterObj = tFieldFiltersJSON["filter"+j];
+				
 				switch(filterObj["name"])
 				{
 					case "glowFilter":
@@ -144,7 +151,7 @@ package starlingEngine.validators
 									}
 									break;
 								default:
-									target[i] = parseInt(source[i]);
+									target[i] = Number(source[i]);
 									break;
 							}
 							break;
