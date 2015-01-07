@@ -117,6 +117,12 @@ package starlingEngine.validators
 					}
 					
 					labelText.hAlign = labelAlign;
+					
+					if (element.filters != "")
+					{
+						labelText.nativeFilters = LayoutTextFieldValidator.parseFilters(element.filters);
+						
+					}
 			}
 						
 			return btn

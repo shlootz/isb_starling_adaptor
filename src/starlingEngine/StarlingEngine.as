@@ -1444,6 +1444,16 @@
 		 /**
 		  * 
 		  * @param	target
+		  * @param	filter
+		  */
+		 public function addFragmentFilter(target:IAbstractDisplayObject, filter:FragmentFilter):void
+		 {
+			 (target as DisplayObject).filter = filter;
+		 }
+		 
+		 /**
+		  * 
+		  * @param	target
 		  */
 		 public function clearFilter(target:IAbstractDisplayObject):void
 		 {
