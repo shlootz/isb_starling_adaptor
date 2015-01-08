@@ -29,6 +29,11 @@ package starlingEngine.effects
 			this.addNewChild(_particleSystem)
 		}
 		
+		public function updateConfigXML(newConfigXML:XML, atlasXML:XML = null):void
+		{
+			trace("StarlingEngine :: EngineParticleSystem :: WARNING :: updateConfigXML only available for Advanced Particle System");
+		}
+		
 		public function start(duration:Number = Number.MAX_VALUE):void
 		{
 			_juggler.add(_particleSystem);
@@ -606,6 +611,30 @@ package starlingEngine.effects
 		public function set tangentialAccelerationVariance(val:Number):void
 		{
 			_particleSystem.tangentialAccelerationVariance = val;
+		}
+		
+			/**
+		 * 
+		 */
+		public function get startColor():Object
+		{
+			return _particleSystem.startColor;
+		}
+		public function set startColor(val:Object):void
+		{
+			_particleSystem.startColor = val as  starling.extensions.particles.ColorArgb;
+		}
+		
+			/**
+		 * 
+		 */
+		public function get endColor():Object
+		{
+			return _particleSystem.endColor;
+		}
+		public function set endColor(val:Object):void
+		{
+			_particleSystem.endColor = val as  starling.extensions.particles.ColorArgb;
 		}
 		
 	}

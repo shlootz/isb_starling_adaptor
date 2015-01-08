@@ -12,6 +12,7 @@ package starlingEngine.effects
 	import starling.textures.Texture;
 	import starlingEngine.elements.EngineSprite;
 	import starlingEngine.events.GESignalEvent;
+	import utils.ColorArgb;
 	/**
 	 * ...
 	 * @author Eu
@@ -36,6 +37,13 @@ package starlingEngine.effects
 			_particleSystem.addEventListener("complete", particlesOnComplete);
 			
 			this.addNewChild(_particleSystem);
+		}
+		
+		public function updateConfigXML(newConfigXML:XML, atlasXML:XML = null):void
+		{
+			var newConfig:SystemOptions = new SystemOptions(_texture, atlasXML, newConfigXML);
+			_particleSystem.parseSystemOptions(newConfig);
+			_particlesConfig = newConfig;
 		}
 		
 		private function particlesOnComplete(e:Object):void
@@ -623,6 +631,30 @@ package starlingEngine.effects
 		public function set tangentialAccelerationVariance(val:Number):void
 		{
 			_particleSystem.tangentialAccelerationVariance = val;
+		}
+		
+		/**
+		 * 
+		 */
+		public function get startColor():Object
+		{
+			return _particleSystem.startColor;
+		}
+		public function set startColor(val:Object):void
+		{
+			_particleSystem.startColor = val as ColorArgb;
+		}
+		
+			/**
+		 * 
+		 */
+		public function get endColor():Object
+		{
+			return _particleSystem.endColor;
+		}
+		public function set endColor(val:Object):void
+		{
+			_particleSystem.endColor = val as ColorArgb;
 		}
 	}
 

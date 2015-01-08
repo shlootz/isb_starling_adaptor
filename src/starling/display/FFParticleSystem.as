@@ -1275,7 +1275,7 @@ package starling.display
 			createBuffers(sBufferSize);
 		}
 		
-		private function parseSystemOptions(systemOptions:SystemOptions):void
+		public function parseSystemOptions(systemOptions:SystemOptions):void
 		{
 			if (!systemOptions)
 				return;
