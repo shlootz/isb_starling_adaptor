@@ -46,8 +46,8 @@ package starlingEngine.elements
 			_netConnection.client.onMetaData = function ():void { };
 			_netStream = new NetStream(_netConnection);
 			_netStream.play(path);
-			_video = new Video(_netStream, null, true, true);
-			this.addChild(_video);
+			_video = new Video(_netStream, null, true, true, this);
+			this.addNewChild(_video);
 			
 			_statsTimer.addEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
 			_statsTimer.start();
@@ -56,7 +56,7 @@ package starlingEngine.elements
 		private function statsTimer_timerHandler(e:TimerEvent):void
         {
           //  trace("decoded/dropped frames:\t " + _netStream.decodedFrames +"/" + _netStream.info.droppedFrames + "\nFPS:\t" + _netStream.currentFPS.toFixed(1) + "\nvideo:\t" + _video.width + "x" + _video.height + "\ntextureClass: " + _video.texture.root.base + "\ntexture:\t" + _video.texture.root.nativeWidth + "x" + _video.texture.root.nativeHeight + "\ndraw:\t" + _video.drawTime.toFixed(2) + " ms" + "\nupload:\t" + _video.uploadTime.toFixed(2) + " ms" + "\ncomplete:\t" + (_video.drawTime + _video.uploadTime).toFixed(2) + " ms");
-			if (_prevDecodedFrames != _netStream.decodedFrames)
+			if (_prevDecodedFrames != _netStream.decodedFrames || _netStream.decodedFrames == 0)
 			{
 				_prevDecodedFrames = _netStream.decodedFrames;
 			}
@@ -144,6 +144,11 @@ package starlingEngine.elements
 		public  function resizeVideo(width:int = 800, height:int = 600):void 
 		{
 			_video.resizeVideo(width, height);
+		}
+		
+		public function get video():Object
+		{
+			return _video.video;
 		}
 		
 	}

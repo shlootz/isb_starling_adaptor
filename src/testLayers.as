@@ -60,6 +60,10 @@ package
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.NetStatusEvent;
+	import flash.filters.BevelFilter;
+	import flash.filters.BitmapFilter;
+	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -67,6 +71,7 @@ package
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
 	import flash.text.TextField;
+	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -94,6 +99,7 @@ package
 	import starling.textures.TextureSmoothing;
 	import starlingEngine.extensions.DistanceFieldFont;
 	import starlingEngine.extensions.DistanceFieldQuadBatch;
+	import starlingEngine.filters.GodRaysFilter;
 	import starlingEngine.filters.PixelateFilter;
 	import starling.textures.GradientTexture;
 	import starling.textures.Texture;
@@ -164,6 +170,12 @@ package
 		[Embed(source = "../bin/assets/bitmapfonts/Omnes_0.png")]
 		private static const OmnesPng : Class;
 		
+		[Embed(source = "../bin/assets/bitmapfonts/ScrollsOfRaCreditRiverMedium.fnt", mimeType = "application/octet-stream")]
+		private static const CreditRiverXML : Class;
+		
+		[Embed(source = "../bin/assets/bitmapfonts/ScrollsOfRaCreditRiverMedium.png")]
+		private static const CreditRiverPNG : Class;
+		
 		[Embed(source = "../bin/assets/bitmapfonts/Arial.fnt", mimeType = "application/octet-stream")]
 		private static const ArialClass : Class;
 		
@@ -204,7 +216,7 @@ package
 			private static const ParticleTestPNG:Class;
 		
 		private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
-																		new Point(800, 600),
+																		new Point(1920, 1080),
 																		StarlingEngine,
 																		starling.utils.AssetManager,
 																		signals.SignalsHub,
@@ -232,45 +244,46 @@ package
 		private function loadAssets(event:String, obj:Object):void
 		{
 			(_bridgeGraphics.assetsManager).enqueue(
-													//"../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
-													//"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
-													//"../bin/assets/spritesheets/spriteSheetElements.png",
-													//"../bin/assets/spritesheets/spriteSheetElements.xml",
-													 //"../bin/assets/sdfFonts/Poplar.otf_sdf.xml",
-													 //"../bin/assets/layouts/bonusLayout.xml",
+													"../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
+													"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
+													"../bin/assets/spritesheets/spriteSheetElements.png",
+													"../bin/assets/spritesheets/spriteSheetElements.xml",
+													 "../bin/assets/sdfFonts/Poplar.otf_sdf.xml",
+													 "../bin/assets/layouts/bonusLayout.xml",
 													 "../bin/assets/spritesheets/Scrolls of Ra Feature Assets.png",
-													//"../bin/assets/spritesheets/winningsAnimations11-12.png",
-													 //"../bin/assets/spritesheets/winningsAnimations13-14.png",
-													//"../bin/assets/spritesheets/winningsAnimations1-5.png",
-													 //"../bin/assets/spritesheets/winningsAnimations6-10.png",
-													//"../bin/assets/spritesheets/winningsAnimationsAssets11-12.xml",
-													//"../bin/assets/spritesheets/winningsAnimationsAssets13-14.xml",
-													//"../bin/assets/spritesheets/winningsAnimationsAssets1-5.xml",
-													//"../bin/assets/spritesheets/winningsAnimationsAssets6-10.xml",
-													//"../bin/assets/spritesheets/spriteSheetElements.xml",
-													//"../bin/assets/spritesheets/spriteSheetPayTable.xml",
-													//"../bin/assets/spritesheets/preloader1x.png",
-													//"../bin/assets/spritesheets/Scrolls of Ra Assets.png",
-													//"../bin/assets/spritesheets/preloader1x.xml",
-													//"../bin/assets/spritesheets/backgroundAssets.xml",
-													//"../bin/assets/layouts/layerLayout.xml",
-													//"../bin/assets/layouts/preloader1xLayout.xml",
-													//"../bin/assets/layouts/buttonLayout.xml",
-													//"../bin/assets/layouts/UserInterface.xml",
-													//"../bin/assets/layouts/Paytable.xml",
-													//"../bin/assets/layouts/PaytablePage1.xml",
-													//"../bin/assets/layouts/PaytablePage2.xml",
-													//"../bin/assets/layouts/PaytablePage3.xml",
-													//"../bin/assets/layouts/PaytablePage4.xml",
-													//"../bin/assets/layouts/PaytablePage5.xml",
-													//"../bin/assets/layouts/PaytablePage6.xml",
-													//"../bin/assets/layouts/linesLayout.xml",
-													//"../bin/assets/sounds/track.mp3",
-													//"../bin/assets/layouts/freeSpinsLayout.xml",
-													//"../bin/assets/layouts/menuLayout.xml",
+													"../bin/assets/spritesheets/winningsAnimations11-12.png",
+													 "../bin/assets/spritesheets/winningsAnimations13-14.png",
+													"../bin/assets/spritesheets/winningsAnimations1-5.png",
+													 "../bin/assets/spritesheets/winningsAnimations6-10.png",
+													"../bin/assets/spritesheets/winningsAnimationsAssets11-12.xml",
+													"../bin/assets/spritesheets/winningsAnimationsAssets13-14.xml",
+													"../bin/assets/spritesheets/winningsAnimationsAssets1-5.xml",
+													"../bin/assets/spritesheets/winningsAnimationsAssets6-10.xml",
+													"../bin/assets/spritesheets/spriteSheetElements.xml",
+													"../bin/assets/spritesheets/spriteSheetPayTable.xml",
+													"../bin/assets/spritesheets/preloader1x.png",
+													"../bin/assets/spritesheets/Scrolls of Ra Assets.png",
+													"../bin/assets/spritesheets/preloader1x.xml",
+													"../bin/assets/spritesheets/backgroundAssets.xml",
+													"../bin/assets/layouts/layerLayout.xml",
+													"../bin/assets/layouts/preloader1xLayout.xml",
+													"../bin/assets/layouts/buttonLayout.xml",
+													"../bin/assets/layouts/UserInterface.xml",
+													"../bin/assets/layouts/Paytable.xml",
+													"../bin/assets/layouts/PaytablePage1.xml",
+													"../bin/assets/layouts/PaytablePage2.xml",
+													"../bin/assets/layouts/PaytablePage3.xml",
+													"../bin/assets/layouts/PaytablePage4.xml",
+													"../bin/assets/layouts/PaytablePage5.xml",
+													"../bin/assets/layouts/PaytablePage6.xml",
+													"../bin/assets/layouts/linesLayout.xml",
+													"../bin/assets/sounds/track.mp3",
+													"../bin/assets/layouts/freeSpinsLayout.xml",
+													"../bin/assets/layouts/menuLayout.xml",
 													"../bin/assets/spritesheets/FeaturesModuleAssets.xml",
 													"../bin/assets/spritesheets/FeaturesModuleSkin.png",
-													 "../bin/assets/spritesheets/featureAssets.xml"
+													 "../bin/assets/spritesheets/featureAssets.xml",
+													 "../bin/assets/layouts/PayTableModulePayTableLayerLayout.xml"
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
@@ -302,7 +315,7 @@ package
 						//testParticles();
 						//testParticlesFromBridge();
 						//testParticlesFromBridge2();
-						testFiters();
+						//testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
 						//testDifferentSize();
@@ -335,11 +348,14 @@ package
 						//testAnimatedTexture();
 						//for (var i:uint = 0; i < 5; i++ )
 						//{
-							//testFLV();
+							testFLV();
 						//}
 						//testOmnes();
 						//testAnimatedButtons();
 						//testDoubleSize();
+						//testTexts();
+						//testTextsVector();
+						//testNativeTexts();
 					}
 				});
 		}
@@ -488,16 +504,28 @@ package
 			_bridgeGraphics.addChild(batch);
 		}
 		
+		private function testNativeTexts():void
+		{
+			var tFormat:TextFormat = new TextFormat("Credit River", 50, 0xFFFFFF);
+			var tF1:TextField = new TextField();
+			tF1.text = "OVERVIEW";
+			tF1.setTextFormat(tFormat);
+			tF1.y = 30;
+			tF1.x = 500;
+			
+			_bridgeGraphics.nativeDisplay.addChild(tF1);
+		}
+		
 		private function testTexts():void
 		{
-			_bridgeGraphics.registerBitmapFont(new dimboFontPng(), XML(new dimboFontClass()));
+			_bridgeGraphics.registerBitmapFont(new OmnesPng(), XML(new OmnesClass()));
 			
-			var tF1:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 10, 0xFFFFFF);
-			var tF2:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 15, 0xFFFFFF);
-			var tF3:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 20, 0xFFFFFF);
-			var tF4:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 30, 0xFFFFFF);
-			var tF5:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 40, 0xFFFFFF);
-			var tF6:IAbstractTextField = _bridgeGraphics.requestTextField(100, 100, "GEORGE", "Dimbo", 50, 0xFFFFFF);
+			var tF1:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Omnes-Regular", 10, 0xFFFFFF);
+			var tF2:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Omnes-Regular", 15, 0xFFFFFF);
+			var tF3:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Omnes-Regular", 20, 0xFFFFFF);
+			var tF4:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Omnes-Regular", 30, 0xFFFFFF);
+			var tF5:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Omnes-Regular", 40, 0xFFFFFF);
+			var tF6:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Omnes-Regular", 50, 0xFFFFFF);
 			
 			var label1:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF1);
 			var label2:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF2);
@@ -521,27 +549,66 @@ package
 			_bridgeGraphics.addChild(label5);
 			_bridgeGraphics.addChild(label6);
 			
-			tryLabel(250, 20, 10);
-			tryLabel(250, 50, 15);
-			tryLabel(250, 80, 20);
-			tryLabel(250, 110, 30);
-			tryLabel(250, 140, 40);
-			tryLabel(250, 180, 50);
+		}
+		
+		private function testTextsVector():void
+		{
+			_bridgeGraphics.registerBitmapFont(new CreditRiverPNG(), XML(new CreditRiverXML()));
+			
+			var factor:Number = 1.3;
+			
+			var tF1:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Credit River", 10*factor, 0xFFFFFF);
+			var tF2:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Credit River", 15*factor, 0xFFFFFF);
+			var tF3:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Credit River", 20*factor, 0xFFFFFF);
+			var tF4:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Credit River", 30*factor, 0xFFFFFF);
+			var tF5:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Credit River", 40*factor, 0xFFFFFF);
+			var tF6:IAbstractTextField = _bridgeGraphics.requestTextField(200, 100, "GEORGE", "Credit River", 50*factor, 0xFFFFFF);
+			
+			var label1:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF1);
+			var label2:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF2);
+			var label3:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF3);
+			var label4:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF4);
+			var label5:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF5);
+			var label6:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tF6);
+			
+			label1.x = label2.x = label3.x = label4.x = label5.x = label6.x = 100;
+			label1.y = 20;
+			label2.y = 53;
+			label3.y = 85;
+			label4.y = 115;
+			label5.y = 148;
+			label6.y = 188;
+			
+			_bridgeGraphics.addChild(label1);
+			_bridgeGraphics.addChild(label2);
+			_bridgeGraphics.addChild(label3);
+			_bridgeGraphics.addChild(label4);
+			_bridgeGraphics.addChild(label5);
+			_bridgeGraphics.addChild(label6);
+			
 		}
 		
 		private function tryLabel(newX:uint, newY:uint, newSize:uint):void
 		{
-			var labelFeathers1:Label = new Label();
-			labelFeathers1.text = "GEORGE";
-			labelFeathers1.x = newX;
-			labelFeathers1.y = newY;
-			labelFeathers1.textRendererFactory = function():ITextRenderer
-			{
-				var textRenderer:BitmapFontTextRenderer = new BitmapFontTextRenderer();
-				textRenderer.textFormat = new BitmapFontTextFormat("Dimbo", newSize);
-				return textRenderer;
-			}
-			_bridgeGraphics.addChild(labelFeathers1);
+			//var labelFeathers1:Label = new Label();
+			//labelFeathers1.text = "GEORGE";
+			//labelFeathers1.x = newX;
+			//labelFeathers1.y = newY;
+			//labelFeathers1.textRendererFactory = function():ITextRenderer
+			//{
+				//var textRenderer:BitmapFontTextRenderer = new BitmapFontTextRenderer();
+				//textRenderer.textFormat = new BitmapFontTextFormat("Arial", newSize);
+				//return textRenderer;
+			//}
+			//_bridgeGraphics.addChild(labelFeathers1);
+			
+			var tField:IAbstractTextField = _bridgeGraphics.requestTextField(200, 30, "ASDasd123", "Verdana", 40, 0, false, [new GlowFilter()]);
+			var label:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tField);
+			
+			label.x = 200;
+			label.y = 200;
+			
+			_bridgeGraphics.addChild(label);
 		}
 		
 		private	var advancedParticles:IAbstractParticleSystem
@@ -593,36 +660,12 @@ package
 		
 		private function testFiters():void
 		{
-			//var img:IAbstractImage = _bridgeGraphics.requestImage("Mode2Background");
-			//_bridgeGraphics.addChild(img);
-			//img.x = 200;
-			//img.y = 200;
-			//
-			glowFilter = _bridgeGraphics.requestGlowFilter();
-			glowFilter.blur = 10;
-			glowFilter.color = 0xFF0000;
-			glowFilter.resolution = .1;
-			//
-			////var pixelateFilter:PixelateFilter = new PixelateFilter(10);
-			////(img as Image).filter = pixelateFilter;
-			////_bridgeGraphics.addNewsPaperFilter(img, 10, 2, 30);
-			//
-			//for (var i:uint = 0; i < 1000; i++ )
-			//{
-				//_bridgeGraphics.addGlowFilter(img, glowFilter);
-				////_bridgeGraphics.clearFilter(img);
-				//trace(i + " x " + glowFilter);
-			//}
-			//
-			btn = _bridgeGraphics.requestButton("asd");
-			btn.upSkin_ = _bridgeGraphics.requestImage("Scroll-Mare-Static1");
-			btn.downSkin_ = _bridgeGraphics.requestImage("Scroll-Mare-Static1");
-			btn.hoverSkin_ = _bridgeGraphics.requestImage("Scroll-Mare-Static1");
+			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
+			_bridgeGraphics.addChild(img);
 			
-			_bridgeGraphics.addChild(btn);
+			var pixelateFilter:GodRaysFilter = new GodRaysFilter(300);
+			(img as Image).filter = pixelateFilter;
 			
-			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OVER, onButtonHover);
-			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OUT, onButtonOut);
 		}
 		
 		private function onButtonHover(type:String, e:Object):void
@@ -784,12 +827,21 @@ package
 		
 		private function testFLV():void
 		{
+			var holder:IAbstractSprite = _bridgeGraphics.requestSprite("holder");
 			var stream:IAbstractVideo = _bridgeGraphics.requestVideo();
 			stream.addVideoPath("../bin/assets/test.flv");
-			_bridgeGraphics.addChild(stream);
-			trace(stream.width + " " + stream.height + " " + stream.scaleX + " " + stream.scaleY);
+			_bridgeGraphics.addChild(holder);
+			holder.addNewChild(stream);
+			trace(holder.width + " " + holder.height + " " + holder.scaleX + " " + holder.scaleY);
 			
-			stream.resizeVideo();
+			//stream.resizeVideo();
+			
+			var refBmpData:BitmapData = new BitmapData(800, 600, false, 0xFF0000);
+			var refImg:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(refBmpData);
+			refImg.alpha = .25;
+			holder.addNewChild(refImg);
+			
+			holder.y = 150;
 		}
 		
 		private function onConnect(e:NetStatusEvent):void {
@@ -836,11 +888,12 @@ package
 			
 			_bridgeGraphics.addChild(spr);
 		}
+		
 	
 		private function testEmptyButton():void
 		{
 			var btn:IAbstractButton = _bridgeGraphics.requestButton("asd");
-			var tField:IAbstractTextField = _bridgeGraphics.requestTextField(100, 30, "Ioana");
+			var tField:IAbstractTextField = _bridgeGraphics.requestTextField(300, 300, "Ioana", "Verdana", 50, 0, false);
 			var customLabel:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tField);
 			
 			btn.upSkin_ =  _bridgeGraphics.requestImage("asdasd");
@@ -850,8 +903,8 @@ package
 			btn.width = 500;
 			
 			_bridgeGraphics.addChild(btn);
-			btn.x = 50;
-			btn.y = 50;
+			btn.x = 150;
+			btn.y = 150;
 		}
 		
 		private function testScreenShot():void
@@ -1176,11 +1229,11 @@ package
 		
 		private function showPaytable():void
 		{	
-			_bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
-			 _bridgeGraphics.registerBitmapFont(new OmnesPng(), XML(new OmnesClass()));
-			 _bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
-			 _bridgeGraphics.registerBitmapFont(new ArialPng(), XML(new ArialClass()));
-			 _bridgeGraphics.registerBitmapFont(new DesyrelPng(), XML(new DesyrelClass()));
+			//_bridgeGraphics.registerBitmapFont(new defaultFontPng(), XML(new defaultFontClass()));
+			 //_bridgeGraphics.registerBitmapFont(new OmnesPng(), XML(new OmnesClass()));
+			 //_bridgeGraphics.registerBitmapFont(new ZrnicBigFontPng(), XML(new ZrnicBigFontClass()));
+			 //_bridgeGraphics.registerBitmapFont(new ArialPng(), XML(new ArialClass()));
+			 //_bridgeGraphics.registerBitmapFont(new DesyrelPng(), XML(new DesyrelClass()));
 			
 			var paytableXml:XML = new XML();
 			paytableXml = _bridgeGraphics.getXMLFromAssetsManager("Paytable");

@@ -22,6 +22,10 @@
 
  package starlingEngine.video.display
 {
+	import flash.display.Bitmap;
+	import starling.display.DisplayObject;
+	import starling.display.DisplayObjectContainer;
+	import starling.display.Image;
 	import starlingEngine.video.events.VideoEvent;
 	import flash.desktop.*;
 	import flash.display.BitmapData;
@@ -91,8 +95,8 @@
 	
 	public class Video extends starling.display.Quad
 	{
-		private static const HEIGHT:int = 120;
-		private static const WIDTH:int = 160;
+		private static const HEIGHT:int = 600;
+		private static const WIDTH:int = 800;
 		public static const STATS_PRECISION:uint = 15;
 		
 		private var mActive:Boolean = true;
@@ -131,6 +135,11 @@
 		private var mVertexDataCacheInvalid:Boolean;
 		private var mVideo:flash.media.Video = new flash.media.Video(WIDTH, HEIGHT);
 		
+		private var _parent:DisplayObjectContainer;
+		private var _videoTexture:Texture;
+		private var _videoImage:Image;
+		private var _videoBitmap:Bitmap;
+		
 		/** Creates a Video
 		 * @param netStream
 		 * The NetStream attached to the Video.
@@ -144,9 +153,9 @@
 		 * Whether the bitmapData for uploading has an alpha channel
 		 */
 		 
-		public function Video(stream:NetStream, rect:Rectangle = null, autoStart:Boolean = true, alpha:Boolean = false) {
+		public function Video(stream:NetStream, rect:Rectangle = null, autoStart:Boolean = true, alpha:Boolean = false, parent:DisplayObjectContainer = null) {
 			var pma:Boolean = true;
-			
+			_parent = parent;
 			mStream = stream;
 			mStream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
             mStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
@@ -306,6 +315,25 @@
 			fRect.height = mBitmapData.height;
 			mBitmapData.fillRect(fRect, 0x000000)
 			mBitmapData.draw(mVideo, mFrameMatrix);
+			
+			///////////TESTING DELETE ME
+			
+			if (_videoImage == null)
+			{
+				_videoBitmap = new Bitmap(mBitmapData)
+				_videoImage = Image.fromBitmap(_videoBitmap);
+				_parent.addChild(_videoImage);
+			}
+			else
+			{
+				_videoImage.texture.dispose();
+				_videoImage.texture = Texture.fromBitmap(_videoBitmap);
+			}
+			//img.x = 800;
+			//_parent.addChild(img);
+			
+			////////////////////////////////////////////////
+			
 			mStatsDrawTime.unshift(getTimer() - mTime);
 			
 			while (mStatsDrawTime.length > STATS_PRECISION)
@@ -775,7 +803,7 @@
 				dispatchEventWith(starlingEngine.video.events.VideoEvent.VIDEO_FRAME);
 				if (mRecording) {
 					draw();
-					upload();
+					//upload();
 				}
 			}
 		}
@@ -1009,7 +1037,6 @@
 			
 			readjustSize();
 		}
-		
 	}
 
 }
