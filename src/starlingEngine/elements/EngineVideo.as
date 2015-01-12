@@ -2,6 +2,7 @@ package starlingEngine.elements
 {
 	import bridge.abstract.IAbstractSprite;
 	import bridge.abstract.IAbstractVideo;
+	import citrus.ui.starling.UI;
 	import flash.events.TimerEvent;
 	import flash.geom.Rectangle;
 	import flash.net.NetConnection;
@@ -18,6 +19,8 @@ package starlingEngine.elements
 	public class EngineVideo extends EngineSprite implements IAbstractVideo
 	{
 		
+		private static const RETRIES_LIMIT:uint = 60;
+		
 		private var _video:Video;
 		private var _netConnection:NetConnection;
         private var _netStream:NetStream;
@@ -26,6 +29,7 @@ package starlingEngine.elements
 		private var _loop:Boolean = true;
 		private var _path:String = "";
 		private var _signalsHub:ISignalsHub;
+		private var _retriesCount:uint = 0;
 		
 		public function EngineVideo(signalsHub:ISignalsHub) 
 		{
@@ -56,9 +60,11 @@ package starlingEngine.elements
 		private function statsTimer_timerHandler(e:TimerEvent):void
         {
           //  trace("decoded/dropped frames:\t " + _netStream.decodedFrames +"/" + _netStream.info.droppedFrames + "\nFPS:\t" + _netStream.currentFPS.toFixed(1) + "\nvideo:\t" + _video.width + "x" + _video.height + "\ntextureClass: " + _video.texture.root.base + "\ntexture:\t" + _video.texture.root.nativeWidth + "x" + _video.texture.root.nativeHeight + "\ndraw:\t" + _video.drawTime.toFixed(2) + " ms" + "\nupload:\t" + _video.uploadTime.toFixed(2) + " ms" + "\ncomplete:\t" + (_video.drawTime + _video.uploadTime).toFixed(2) + " ms");
+		  
 			if (_prevDecodedFrames != _netStream.decodedFrames || _netStream.decodedFrames == 0)
 			{
 				_prevDecodedFrames = _netStream.decodedFrames;
+				_retriesCount = 0;
 			}
 			else
 			{
@@ -71,7 +77,14 @@ package starlingEngine.elements
 					_statsTimer.removeEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
 				}
 				
-				emitSignal(e);
+				if (_retriesCount < RETRIES_LIMIT)
+				{
+					_retriesCount++
+				}
+				else
+				{
+					emitSignal(e);
+				}
 			}
         }
 		

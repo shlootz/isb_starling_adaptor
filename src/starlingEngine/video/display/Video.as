@@ -26,6 +26,7 @@
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Image;
+	import starling.utils.getNextPowerOfTwo;
 	import starlingEngine.video.events.VideoEvent;
 	import flash.desktop.*;
 	import flash.display.BitmapData;
@@ -136,7 +137,7 @@
 		private var mVideo:flash.media.Video = new flash.media.Video(WIDTH, HEIGHT);
 		
 		private var _parent:DisplayObjectContainer;
-		private var _videoTexture:Texture;
+		private var _videoTexture:starling.textures.Texture;
 		private var _videoImage:Image;
 		private var _videoBitmap:Bitmap;
 		
@@ -311,8 +312,8 @@
 			
 			mTime = getTimer();
 			
-			fRect.width = mBitmapData.width;
-			fRect.height = mBitmapData.height;
+			fRect.width = getNextPowerOfTwo(mBitmapData.width);
+			fRect.height = getNextPowerOfTwo(mBitmapData.height);
 			mBitmapData.fillRect(fRect, 0x000000)
 			mBitmapData.draw(mVideo, mFrameMatrix);
 			
@@ -327,7 +328,11 @@
 			else
 			{
 				_videoImage.texture.dispose();
-				_videoImage.texture = Texture.fromBitmap(_videoBitmap);
+				if (_videoBitmap.width > 1 && _videoBitmap.height > 1 && _videoBitmap.width < 801 && _videoBitmap.height < 601)
+				{
+					_videoTexture = starling.textures.Texture.fromBitmap(_videoBitmap);
+					_videoImage.texture = _videoTexture;
+				}
 			}
 			//img.x = 800;
 			//_parent.addChild(img);
