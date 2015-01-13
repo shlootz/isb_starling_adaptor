@@ -19,7 +19,7 @@ package starlingEngine.elements
 	public class EngineVideo extends EngineSprite implements IAbstractVideo
 	{
 		
-		private static const RETRIES_LIMIT:uint = 60;
+		private static const RETRIES_LIMIT:uint = 10;
 		
 		private var _video:Video;
 		private var _netConnection:NetConnection;
@@ -72,10 +72,6 @@ package starlingEngine.elements
 				{
 					_netStream.seek(0);
 				}
-				else
-				{
-					_statsTimer.removeEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
-				}
 				
 				if (_retriesCount < RETRIES_LIMIT)
 				{
@@ -84,6 +80,7 @@ package starlingEngine.elements
 				else
 				{
 					emitSignal(e);
+					_statsTimer.removeEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
 				}
 			}
         }

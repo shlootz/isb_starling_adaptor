@@ -314,11 +314,10 @@
 			
 			fRect.width = getNextPowerOfTwo(mBitmapData.width);
 			fRect.height = getNextPowerOfTwo(mBitmapData.height);
+			
 			mBitmapData.fillRect(fRect, 0x000000)
 			mBitmapData.draw(mVideo, mFrameMatrix);
-			
-			///////////TESTING DELETE ME
-			
+		
 			if (_videoImage == null)
 			{
 				_videoBitmap = new Bitmap(mBitmapData)
@@ -328,17 +327,11 @@
 			else
 			{
 				_videoImage.texture.dispose();
-				if (_videoBitmap.width > 1 && _videoBitmap.height > 1 && _videoBitmap.width < 801 && _videoBitmap.height < 601)
-				{
-					_videoTexture = starling.textures.Texture.fromBitmap(_videoBitmap);
-					_videoImage.texture = _videoTexture;
-				}
+				_videoTexture = starling.textures.Texture.fromBitmapData(mBitmapData);
+				_videoImage.texture = _videoTexture;
+				_videoImage.readjustSize();
 			}
-			//img.x = 800;
-			//_parent.addChild(img);
-			
-			////////////////////////////////////////////////
-			
+		
 			mStatsDrawTime.unshift(getTimer() - mTime);
 			
 			while (mStatsDrawTime.length > STATS_PRECISION)
