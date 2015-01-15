@@ -1390,7 +1390,14 @@
 		  */
 		 public function addPixelationFilter(target:IAbstractDisplayObject, pixelSize:int):void
 		 {
-			  (target as DisplayObject).filter = new PixelateFilter(pixelSize);
+			 if ((target as DisplayObject).filter == null)
+			 {
+				(target as DisplayObject).filter = new PixelateFilter(pixelSize);
+			 }
+			 else
+			 {
+				 ((target as DisplayObject).filter as PixelateFilter).pixelSize = pixelSize;
+			 }
 		 }
 		 
 		  /**

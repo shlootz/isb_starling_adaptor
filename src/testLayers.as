@@ -31,6 +31,7 @@ package
 	import bridge.IBridgeGraphics;
 	import citrus.ui.starling.UI;
 	import cmodule.AwayPhysics.TextFieldI;
+	import com.greensock.easing.Elastic;
 	import com.greensock.plugins.FramePlugin;
 	import com.greensock.plugins.TweenPlugin;
 	import com.greensock.TimelineMax;
@@ -243,7 +244,7 @@ package
 
 		private function loadAssets(event:String, obj:Object):void
 		{
-			(_bridgeGraphics.assetsManager).enqueue(
+			(_bridgeGraphics.assetsManager as AssetManager).enqueue(
 													"../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
 													"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
 													"../bin/assets/spritesheets/spriteSheetElements.png",
@@ -315,7 +316,7 @@ package
 						//testParticles();
 						//testParticlesFromBridge();
 						//testParticlesFromBridge2();
-						//testFiters();
+						testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
 						//testDifferentSize();
@@ -348,7 +349,7 @@ package
 						//testAnimatedTexture();
 						//for (var i:uint = 0; i < 5; i++ )
 						//{
-							testFLV();
+							//testFLV();
 						//}
 						//testOmnes();
 						//testAnimatedButtons();
@@ -657,15 +658,21 @@ package
 		private var btn:IAbstractButton;
 		private var glowFilter:IAbstractGlowFilter
 		private var added:Boolean = false;
+		private var imgToPixelate:IAbstractImage
+		private var pixelSize:uint = 1;
 		
 		private function testFiters():void
 		{
-			var img:IAbstractImage = _bridgeGraphics.requestImage("Background");
-			_bridgeGraphics.addChild(img);
+			 imgToPixelate = _bridgeGraphics.requestImage("Background");
+			_bridgeGraphics.addChild(imgToPixelate);
 			
-			var pixelateFilter:GodRaysFilter = new GodRaysFilter(300);
-			(img as Image).filter = pixelateFilter;
-			
+			addEventListener(Event.ENTER_FRAME, pixelate);
+		}
+		
+		private function pixelate(e:Event):void
+		{
+			pixelSize += 5;
+			_bridgeGraphics.addPixelationFilter(imgToPixelate, pixelSize);
 		}
 		
 		private function onButtonHover(type:String, e:Object):void
@@ -829,19 +836,19 @@ package
 		{
 			var holder:IAbstractSprite = _bridgeGraphics.requestSprite("holder");
 			var stream:IAbstractVideo = _bridgeGraphics.requestVideo();
-			stream.addVideoPath("../bin/assets/test.flv");
+			//stream.addVideoPath("../bin/assets/test2.flv");
+			stream.addVideoPath("http://demo.isoftbet.com/flashgames/Templates/Test/test2.flv");
 			_bridgeGraphics.addChild(holder);
 			holder.addNewChild(stream);
-			trace(holder.width + " " + holder.height + " " + holder.scaleX + " " + holder.scaleY);
 			
-			//stream.resizeVideo();
+			stream.pivotX = holder.width / 2;
+			stream.pivotY = holder.height / 2;
 			
-			var refBmpData:BitmapData = new BitmapData(800, 600, false, 0xFF0000);
-			var refImg:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(refBmpData);
-			refImg.alpha = .25;
-			holder.addNewChild(refImg);
+			holder.x = 1000;
+			holder.y = 600;
 			
-			holder.y = 150;
+			stream.scaleX = stream.scaleY = 0;
+			TweenLite.to(stream, 1, { scaleX:1, scaleY:1, ease:Elastic.easeOut } );
 		}
 		
 		private function onConnect(e:NetStatusEvent):void {
