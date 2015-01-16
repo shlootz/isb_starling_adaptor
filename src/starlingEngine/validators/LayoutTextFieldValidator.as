@@ -42,6 +42,7 @@ package starlingEngine.validators
 			else
 			{
 				tLabel.textField.hAlign = "center";
+				tLabel.textField.vAlign = "center";
 			}
 			
 			return tLabel;
