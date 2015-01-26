@@ -30,6 +30,7 @@ package starlingEngine.elements
 		private var _path:String = "";
 		private var _signalsHub:ISignalsHub;
 		private var _retriesCount:uint = 0;
+		private var _started:Boolean = false;
 		
 		public function EngineVideo(signalsHub:ISignalsHub) 
 		{
@@ -63,8 +64,8 @@ package starlingEngine.elements
 		 */
 		private function statsTimer_timerHandler(e:TimerEvent):void
         {
-          //  trace("decoded/dropped frames:\t " + _netStream.decodedFrames +"/" + _netStream.info.droppedFrames + "\nFPS:\t" + _netStream.currentFPS.toFixed(1) + "\nvideo:\t" + _video.width + "x" + _video.height + "\ntextureClass: " + _video.texture.root.base + "\ntexture:\t" + _video.texture.root.nativeWidth + "x" + _video.texture.root.nativeHeight + "\ndraw:\t" + _video.drawTime.toFixed(2) + " ms" + "\nupload:\t" + _video.uploadTime.toFixed(2) + " ms" + "\ncomplete:\t" + (_video.drawTime + _video.uploadTime).toFixed(2) + " ms");
-			if (_netStream.decodedFrames == 1)
+          //trace("decoded/dropped frames:\t " + _netStream.decodedFrames +"/" + _netStream.info.droppedFrames + "\nFPS:\t" + _netStream.currentFPS.toFixed(1) + "\nvideo:\t" + _video.width + "x" + _video.height + "\ntextureClass: " + _video.texture.root.base + "\ntexture:\t" + _video.texture.root.nativeWidth + "x" + _video.texture.root.nativeHeight + "\ndraw:\t" + _video.drawTime.toFixed(2) + " ms" + "\nupload:\t" + _video.uploadTime.toFixed(2) + " ms" + "\ncomplete:\t" + (_video.drawTime + _video.uploadTime).toFixed(2) + " ms");
+			if (_netStream.decodedFrames > 1 && !_started)
 			{
 				emitStartSignal();
 			}
@@ -97,6 +98,7 @@ package starlingEngine.elements
 		 */
 		private function emitStartSignal():void
 		{
+			_started = true;
 			var o:GESignalEvent = new GESignalEvent()
 					o.eventName = Signals.FLV_MOVIE_STARTED;
 					o.engineEvent = null;
@@ -110,6 +112,7 @@ package starlingEngine.elements
 		 */
 		private function emitStopSignal(e:TimerEvent):void
 		{
+			_started = false;
 			var o:GESignalEvent = new GESignalEvent()
 					o.eventName = Signals.FLV_MOVIE_ENDED;
 					o.engineEvent = e;
