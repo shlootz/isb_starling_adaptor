@@ -414,6 +414,7 @@
 			(_signalsHub as SignalsHub).addSignal(Signals.PARTICLE_SYSTEM_COMPLETED, new Signal(), new Vector.<Function>);
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.FLV_MOVIE_ENDED, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.FLV_MOVIE_STARTED, new Signal(), new Vector.<Function>);
 		}
 		
 		/**

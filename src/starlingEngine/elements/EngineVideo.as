@@ -57,10 +57,17 @@ package starlingEngine.elements
 			_statsTimer.start();
 		}
 		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function statsTimer_timerHandler(e:TimerEvent):void
         {
           //  trace("decoded/dropped frames:\t " + _netStream.decodedFrames +"/" + _netStream.info.droppedFrames + "\nFPS:\t" + _netStream.currentFPS.toFixed(1) + "\nvideo:\t" + _video.width + "x" + _video.height + "\ntextureClass: " + _video.texture.root.base + "\ntexture:\t" + _video.texture.root.nativeWidth + "x" + _video.texture.root.nativeHeight + "\ndraw:\t" + _video.drawTime.toFixed(2) + " ms" + "\nupload:\t" + _video.uploadTime.toFixed(2) + " ms" + "\ncomplete:\t" + (_video.drawTime + _video.uploadTime).toFixed(2) + " ms");
-		  
+			if (_netStream.decodedFrames == 1)
+			{
+				emitStartSignal();
+			}
 			if (_prevDecodedFrames != _netStream.decodedFrames || _netStream.decodedFrames == 0)
 			{
 				_prevDecodedFrames = _netStream.decodedFrames;
@@ -79,13 +86,29 @@ package starlingEngine.elements
 				}
 				else
 				{
-					emitSignal(e);
+					emitStopSignal(e);
 					_statsTimer.removeEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
 				}
 			}
         }
 		
-		private function emitSignal(e:TimerEvent):void
+		/**
+		 * 
+		 */
+		private function emitStartSignal():void
+		{
+			var o:GESignalEvent = new GESignalEvent()
+					o.eventName = Signals.FLV_MOVIE_STARTED;
+					o.engineEvent = null;
+					o.params = {loop:_loop}
+					_signalsHub.dispatchSignal(Signals.FLV_MOVIE_STARTED,this.name, o);
+		}
+		
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function emitStopSignal(e:TimerEvent):void
 		{
 			var o:GESignalEvent = new GESignalEvent()
 					o.eventName = Signals.FLV_MOVIE_ENDED;
