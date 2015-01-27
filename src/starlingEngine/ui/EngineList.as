@@ -70,7 +70,7 @@ package starlingEngine.ui
 			_list.itemRendererFactory = function():IListItemRenderer
 			 {
 				 var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
-				 renderer.defaultLabelProperties.textFormat = new BitmapFontTextFormat(font, 15, 0x333333);
+				 renderer.defaultLabelProperties.textFormat = new BitmapFontTextFormat(font, 15, 0xFFFFFF);
 				 renderer.labelField = "text";
 				 renderer.useHandCursor = true;
 				 return renderer;
