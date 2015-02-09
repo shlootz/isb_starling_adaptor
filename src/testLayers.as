@@ -292,7 +292,6 @@ package
 					if (ratio == 1)
 					{	 
 						//testErrorThrowing();
-						
 						_transIn.injectAnimation(animIn);
 						_transOut.injectAnimation(animOut);
 						
@@ -316,7 +315,7 @@ package
 						//testParticles();
 						//testParticlesFromBridge();
 						//testParticlesFromBridge2();
-						testFiters();
+						//testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
 						//testDifferentSize();
@@ -665,13 +664,14 @@ package
 		{
 			 imgToPixelate = _bridgeGraphics.requestImage("Background");
 			_bridgeGraphics.addChild(imgToPixelate);
+			_bridgeGraphics.addPixelationFilter(imgToPixelate, 100);
 			
 			addEventListener(Event.ENTER_FRAME, pixelate);
 		}
 		
 		private function pixelate(e:Event):void
 		{
-			pixelSize += 5;
+			pixelSize -= 5;
 			_bridgeGraphics.addPixelationFilter(imgToPixelate, pixelSize);
 		}
 		
@@ -841,14 +841,20 @@ package
 			_bridgeGraphics.addChild(holder);
 			holder.addNewChild(stream);
 			
-			stream.pivotX = holder.width / 2;
-			stream.pivotY = holder.height / 2;
+			holder.pivotX = holder.width / 2;
+			holder.pivotY = holder.height / 2;
 			
 			holder.x = 1000;
 			holder.y = 600;
 			
 			stream.scaleX = stream.scaleY = 0;
-			TweenLite.to(stream, 1, { scaleX:1, scaleY:1, ease:Elastic.easeOut } );
+
+			TweenLite.to(stream, 4, { scaleX:1, scaleY:1, ease:Elastic.easeOut } );
+			
+			addEventListener(Event.ENTER_FRAME, function(e:Event) {
+				trace(holder.width + " * " + holder.height);
+			}
+			);
 		}
 		
 		private function onConnect(e:NetStatusEvent):void {
@@ -1255,6 +1261,14 @@ package
 			paytableLayer = _layersVO.retrieveLayer("Paytable");
 			
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, onToggle);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, onTransitionInComplete);
+			
+			paytableLayer.flatten();
+		}
+		
+		private function onTransitionInComplete(type:String, data:Object ):void
+		{
+			trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!! " + type);
 		}
 		
 		private function doOut(type:String, event:IAbstractSignalEvent):void
