@@ -18,6 +18,10 @@
 	import bridge.abstract.ui.LabelProperties;
 	import citrus.core.starling.CitrusStarlingJuggler;
 	import flash.display.Sprite;
+	import flash.display.Stage3D;
+	import flash.display3D.Context3D;
+	import flash.display3D.Context3DRenderMode;
+	import flash.events.ErrorEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -76,9 +80,7 @@
 	
 	import citrus.core.IState;
 	import citrus.core.starling.StarlingCitrusEngine;
-	import citrus.core.starling.StarlingState;
 	import citrus.core.starling.ViewportMode;
-	import citrus.datastructures.PoolObject;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -139,6 +141,11 @@
 		public static const ENGINE_TOGGLE_BUTTON:String = "toggleButton";
 		public static const ENGINE_SLIDER:String = "slider";
 		public static const ENGINE_TEXT_FIELD:String = "textField";
+		
+		private var _flareHolder:Sprite = new Sprite();
+		private var _is3D:Boolean = false;
+		
+		private var _starlingRoot:starling.display.Sprite;
 		
 		private var _initCompleteCallback:Function;
 		private var _engineStage:Stage;
@@ -204,31 +211,58 @@
 		override protected function handleAddedToStage(e:Event):void
 		{
 			super.handleAddedToStage(e);
-			initEngine();
+			Starling.handleLostContext = true;
+			
+			if (is3D)
+			{
+				initFlare();
+			}
+			else
+			{
+				initEngine();
+			}
 		}		
 		
 		/**
 		 * 
 		 */
-		public function initEngine():void
+		public function initEngine(sharedContext:Context3D = null):void
 		{
-			Starling.handleLostContext = true;
 			setUpStarling(_debugMode);
 		}
 		
 		private function initFlare():void
 		{
-			var spr:Sprite = new Sprite();
+			_flareHolder = new Sprite();
 			_signalsHub.addSignal(FlareBridge.FLARE_INITED, new Signal(), new Vector.<Function>());
 			_signalsHub.addListenerToSignal(FlareBridge.FLARE_INITED, onFlareInited);
-			_flareBridge = new FlareBridge(_signalsHub, spr);
+			_flareBridge = new FlareBridge(_signalsHub, _flareHolder, _starling);
 			
-			nativeDisplay.addChild(spr);
+			this.addChild(_flareHolder);
 		}
 		
 		private function onFlareInited(type:String, obj:Object):void
 		{
-			trace("FLARE INITED")
+			trace("BridgeGraphics :: Flare3D :: init successful");
+			
+			_starling = new Starling( StarlingMain, stage, null, stage.stage3Ds[0]);
+			_starling.addEventListener( "rootCreated", starlingRootEvent );
+			_starling.start();
+			
+			if (_debugMode)
+			{
+				_starling.showStats = true;
+			}
+		}
+		
+		private function starlingRootEvent( e:starling.events.Event ):void
+		{
+			trace("BridgeGraphics :: Flare3D :: Starling force started :: succesful");
+			
+			_starlingRoot = _starling.root as starling.display.Sprite;
+			_flareBridge._starling = _starling;
+			
+			handleStarlingReady();
 		}
 		
 		/**
@@ -531,9 +565,11 @@
 		public function requestImageFromBitmapData(bitmapData:BitmapData):IAbstractImage
 		{
 			var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
-			i.newTexture = Texture.fromBitmapData(bitmapData);
+			var storageName:String = "ImageFromBitmapData" + Math.random() * 999999;
+			_assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData));
+			i.newTexture = _assetsManager.getTexture(storageName);
 			i.readjustSize();
-			i.name = "ImageFromBitmapData" + Math.random() * 999999;
+			i.name = storageName;
 			
 			return i;
 		}
@@ -1480,6 +1516,16 @@
 		 public function get nativeDisplay():Sprite
 		 { 
 			 return _starling.nativeOverlay;	 
+		 }
+		 
+		 public function get is3D():Boolean 
+		 {
+			 return _is3D;
+		 }
+		 
+		 public function set is3D(value:Boolean):void 
+		 {
+			 _is3D = value;
 		 }
 		 
 		/**
