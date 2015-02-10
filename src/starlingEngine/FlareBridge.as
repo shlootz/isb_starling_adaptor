@@ -70,12 +70,15 @@ package starlingEngine
 		 */
 		private function postRenderEvent( e:Event ):void
 		{
-			//// prepare and draw the Starling frame
+			// prepare and draw the Starling frame
+			
+			_cubes.draw(true);
+			
 			if (_starling)
 			{
 				_starling.nextFrame();
 			}
-			_cubes.draw(true);
+			
 		}	
 		
 		/**

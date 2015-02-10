@@ -17,6 +17,7 @@
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
 	import citrus.core.starling.CitrusStarlingJuggler;
+	import com.greensock.TweenLite;
 	import flash.display.Sprite;
 	import flash.display.Stage3D;
 	import flash.display3D.Context3D;
@@ -25,6 +26,7 @@
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.setTimeout;
 	import starling.core.RenderSupport;
 	import starling.display.FFParticleSystem;
 	import starling.display.FFParticleSystem.SystemOptions;
@@ -37,6 +39,7 @@
 	import starlingEngine.effects.EngineAdvancedParticleSystem;
 	import starlingEngine.effects.EngineParticleSystem;
 	import starlingEngine.elements.EngineBlitMask;
+	import starlingEngine.elements.EngineDisplayObject;
 	import starlingEngine.elements.EngineGraphics;
 	import starlingEngine.elements.EngineMask;
 	import starlingEngine.elements.EngineScrollTile;
@@ -58,6 +61,7 @@
 	import starlingEngine.validators.LayoutSliderValidator;
 	import starlingEngine.validators.LayoutTextFieldValidator;
 	import starlingEngine.validators.LayoutToggleButtonValidator;
+	import utils.delayedFunctionCall;
 	
 	import bridge.abstract.AbstractPool;
 	import bridge.abstract.IAbstractDisplayObject;
@@ -270,6 +274,9 @@
 		 */
 		override public function handleStarlingReady():void
 		{ 
+			Starling.current.addEventListener(starling.events.Event.CONTEXT3D_CREATE, onContext3DEventCreate);
+			Starling.current.addEventListener(starling.events.Event.TEXTURES_RESTORED, onTexturesRestored);
+ 
 			_starling.supportHighResolutions = true;
 			_textureFallBack = Texture.fromBitmapData(_bitmapDataFallBack);
 			
@@ -418,6 +425,7 @@
 		public function initSignals():void
 		{
 			(_signalsHub as SignalsHub).addSignal(Signals.STARLING_READY, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.REMOVE_AND_DISPOSE, new Signal(), new Vector.<Function>);
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.CHANGE_GRAPHICS_STATE, new Signal(), new Vector.<Function>);
 			
@@ -449,6 +457,8 @@
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.FLV_MOVIE_ENDED, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.FLV_MOVIE_STARTED, new Signal(), new Vector.<Function>);
+			
+			(_signalsHub as SignalsHub).addListenerToSignal(Signals.REMOVE_AND_DISPOSE, tryRemove);
 		}
 		
 		/**
@@ -1587,6 +1597,71 @@
 			return true;
 		}
 		
+		/**
+		 * Returns a Boolean whether the context is available or not (e.g. disposed)
+		 * @return
+		 */
+		public function  contextStatus():Boolean
+		{
+			var context:Boolean = true;
+			
+			if (!Starling.current.context || Starling.current.context.driverInfo == "Disposed")
+			{
+				context =  false;
+			}
+			
+			return context;
+		}
+		
+		private var _pendingRemove:Vector.<Object> = new Vector.<Object>;
+		/**
+		 * 
+		 * @param	type
+		 * @param	obj
+		 */
+		private function tryRemove(type:String, obj:GESignalEvent):void
+		{
+			if (contextStatus())
+			{
+				(obj["params"]["parent"] as IAbstractDisplayObjectContainer).removeChildAndDispose(obj["params"]["target"] as IAbstractDisplayObject, true);
+			}
+			else
+			{
+				_pendingRemove.push(obj["params"]);
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		private function onContext3DEventCreate():void
+		{
+			trace("Context Restored");
+			TweenLite.delayedCall(.1, delayedRemove);
+		}
+		
+		/**
+		 * 
+		 */
+		private function delayedRemove():void
+		{
+			var obj:Object;
+			while (_pendingRemove.length > 0)
+			{
+				obj = _pendingRemove.pop();
+				var parent:IAbstractDisplayObjectContainer = (obj["parent"] as IAbstractDisplayObjectContainer);
+				var target:IAbstractDisplayObject = (obj["target"] as IAbstractDisplayObject);
+				
+				parent.removeChildAndDispose(target, true);
+				
+				trace("Async removing: " + target.name+" from " + parent.name);
+			}
+		}
+		
+		private function onTexturesRestored():void
+		{
+			trace("Textures from AssetManager restored");
+		}
 	}
 	
 }

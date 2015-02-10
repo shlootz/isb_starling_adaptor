@@ -237,7 +237,7 @@ package
 			//{
 				//testFLV();
 			//})
-			
+			_bridgeGraphics.engine.is3D = false;
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
 		}
@@ -348,7 +348,7 @@ package
 						//testAnimatedTexture();
 						//for (var i:uint = 0; i < 5; i++ )
 						//{
-							//testFLV();
+							testFLV();
 						//}
 						//testOmnes();
 						//testAnimatedButtons();
@@ -753,8 +753,8 @@ package
 		{
 			//CREATE MASK
 			var rect:Shape = new Shape();
-			rect.width = 300;
-			rect.height = 300;
+			rect.width = 800;
+			rect.height = 800;
 			
 			var mat:Matrix=new Matrix();
 			var colors:Array = [0xFF0000,0x00FF00, 0x0000FF];
@@ -788,7 +788,7 @@ package
 			_bridgeGraphics.addChild(oldImg);
 			_bridgeGraphics.addChild(mask);
 			
-			TweenLite.to(img, 400, { rotation:360 } );
+			TweenLite.to(img, 20, { rotation:360 } );
 		}
 		
 		private function testDifferentSize():void
@@ -837,22 +837,36 @@ package
 			var holder:IAbstractSprite = _bridgeGraphics.requestSprite("holder");
 			var stream:IAbstractVideo = _bridgeGraphics.requestVideo();
 			//stream.addVideoPath("../bin/assets/test2.flv");
-			stream.addVideoPath("http://demo.isoftbet.com/flashgames/Templates/Test/test2.flv");
+			stream.addVideoPath("../bin/assets/test2.flv");
 			_bridgeGraphics.addChild(holder);
 			holder.addNewChild(stream);
-			
+			stream.loop = false;
 			holder.pivotX = holder.width / 2;
 			holder.pivotY = holder.height / 2;
 			
-			holder.x = 1000;
-			holder.y = 600;
+			holder.x = 400;
+			holder.y = 300;
 			
-			stream.scaleX = stream.scaleY = 0;
+			//stream.scaleX = stream.scaleY = 0;
 
-			TweenLite.to(stream, 4, { scaleX:1, scaleY:1, ease:Elastic.easeOut } );
+			//TweenLite.to(stream, 4, { scaleX:1, scaleY:1, ease:Elastic.easeOut } );
 			
-			addEventListener(Event.ENTER_FRAME, function(e:Event) {
-				trace(holder.width + " * " + holder.height);
+			//addEventListener(Event.ENTER_FRAME, function(e:Event):void {
+				//trace(holder.width + " * " + holder.height);
+			//}
+			//);
+			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.FLV_MOVIE_ENDED, function(type:String, obj:Object):void
+			{
+				trace("CONTEXT : " + _bridgeGraphics.contextStatus());
+				//if (_bridgeGraphics.contextStatus())
+				//{
+					//stream.removeFromParent(true)
+					//stream = null;
+				//}
+				var removeEvent:GESignalEvent = new GESignalEvent();
+				removeEvent.eventName = Signals.REMOVE_AND_DISPOSE;
+				removeEvent.params = {target:stream, parent:holder}
+				_bridgeGraphics.signalsManager.dispatchSignal(Signals.REMOVE_AND_DISPOSE, stream.name, removeEvent);
 			}
 			);
 		}
