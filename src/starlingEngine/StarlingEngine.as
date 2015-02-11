@@ -17,7 +17,6 @@
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
 	import citrus.core.starling.CitrusStarlingJuggler;
-	import com.greensock.TweenLite;
 	import flash.display.Sprite;
 	import flash.display.Stage3D;
 	import flash.display3D.Context3D;
@@ -1637,7 +1636,7 @@
 		private function onContext3DEventCreate():void
 		{
 			trace("Context Restored");
-			TweenLite.delayedCall(.1, delayedRemove);
+			var delayedCall:delayedFunctionCall = new delayedFunctionCall(delayedRemove, 10);
 		}
 		
 		/**
