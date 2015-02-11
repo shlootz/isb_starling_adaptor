@@ -912,7 +912,7 @@
 		 */
 		public function requestVideo():IAbstractVideo
 		{
-			var video:IAbstractVideo = new EngineVideo(_signalsHub);
+			var video:IAbstractVideo = new EngineVideo(_signalsHub, _assetsManager);
 			return video
 		}
 		
@@ -1622,6 +1622,7 @@
 		{
 			if (contextStatus())
 			{
+				trace("Sync removing: " + obj["params"]["target"]+" from " +obj["params"]["parent"]);
 				(obj["params"]["parent"] as IAbstractDisplayObjectContainer).removeChildAndDispose(obj["params"]["target"] as IAbstractDisplayObject, true);
 			}
 			else
@@ -1636,7 +1637,7 @@
 		private function onContext3DEventCreate():void
 		{
 			trace("Context Restored");
-			var delayedCall:delayedFunctionCall = new delayedFunctionCall(delayedRemove, 10);
+			var delayedCall:delayedFunctionCall = new delayedFunctionCall(delayedRemove, 100);
 		}
 		
 		/**
@@ -1652,7 +1653,6 @@
 				var target:IAbstractDisplayObject = (obj["target"] as IAbstractDisplayObject);
 				
 				parent.removeChildAndDispose(target, true);
-				
 				trace("Async removing: " + target.name+" from " + parent.name);
 			}
 		}

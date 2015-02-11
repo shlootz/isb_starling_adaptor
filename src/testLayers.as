@@ -98,6 +98,7 @@ package
 	import starling.extensions.particles.PDParticle;
 	import starling.extensions.particles.PDParticleSystem;
 	import starling.textures.TextureSmoothing;
+	import starlingEngine.events.EngineDelayedDisposeSignalEvent;
 	import starlingEngine.extensions.DistanceFieldFont;
 	import starlingEngine.extensions.DistanceFieldQuadBatch;
 	import starlingEngine.filters.GodRaysFilter;
@@ -863,9 +864,7 @@ package
 					//stream.removeFromParent(true)
 					//stream = null;
 				//}
-				var removeEvent:GESignalEvent = new GESignalEvent();
-				removeEvent.eventName = Signals.REMOVE_AND_DISPOSE;
-				removeEvent.params = {target:stream, parent:holder}
+				var removeEvent:EngineDelayedDisposeSignalEvent = new EngineDelayedDisposeSignalEvent(stream, holder);
 				_bridgeGraphics.signalsManager.dispatchSignal(Signals.REMOVE_AND_DISPOSE, stream.name, removeEvent);
 			}
 			);

@@ -26,6 +26,7 @@
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Image;
+	import starling.utils.AssetManager;
 	import starling.utils.getNextPowerOfTwo;
 	import starlingEngine.video.events.VideoEvent;
 	import flash.desktop.*;
@@ -140,6 +141,7 @@
 		private var _videoTexture:starling.textures.Texture;
 		private var _videoImage:Image;
 		private var _videoBitmap:Bitmap;
+		private var _assetsManager:AssetManager;
 		
 		/** Creates a Video
 		 * @param netStream
@@ -154,9 +156,10 @@
 		 * Whether the bitmapData for uploading has an alpha channel
 		 */
 		 
-		public function Video(stream:NetStream, rect:Rectangle = null, autoStart:Boolean = true, alpha:Boolean = false, parent:DisplayObjectContainer = null) {
+		public function Video(stream:NetStream, rect:Rectangle = null, autoStart:Boolean = true, alpha:Boolean = false, parent:DisplayObjectContainer = null, assetsManager:AssetManager = null) {
 			var pma:Boolean = true;
 			_parent = parent;
+			_assetsManager = assetsManager;
 			mStream = stream;
 			mStream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
             mStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
@@ -272,15 +275,17 @@
 				mNativeApplicationClass.nativeApplication.removeEventListener(flash.events.Event.ACTIVATE, activateHandler);
 				mNativeApplicationClass.nativeApplication.removeEventListener(flash.events.Event.DEACTIVATE, deactivateHandler);
 			}
+			
 			disposeVideo();
-			if (mTexture)
-				mTexture.dispose();
-			if (texture)
-				texture.dispose();
-			if (mBitmapData)
-				mBitmapData.dispose();
-			if (parent)
-				parent.removeChild(this);
+
+			//if (mTexture)
+				//mTexture.dispose();
+			//if (texture)
+				//texture.dispose();
+			//if (mBitmapData)
+				//mBitmapData.dispose();
+			//if (parent)
+				//parent.removeChild(this);
 			super.dispose();
 		}
 		

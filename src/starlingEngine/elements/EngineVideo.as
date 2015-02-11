@@ -10,6 +10,7 @@ package starlingEngine.elements
 	import flash.utils.Timer;
 	import signals.ISignalsHub;
 	import signals.Signals;
+	import starling.utils.AssetManager;
 	import starlingEngine.events.GESignalEvent;
 	import starlingEngine.video.display.Video;
 	/**
@@ -31,10 +32,12 @@ package starlingEngine.elements
 		private var _signalsHub:ISignalsHub;
 		private var _retriesCount:uint = 0;
 		private var _started:Boolean = false;
+		private var _assetsManager:AssetManager;
 		
-		public function EngineVideo(signalsHub:ISignalsHub) 
+		public function EngineVideo(signalsHub:ISignalsHub, assetManager:Object) 
 		{
 			_signalsHub = signalsHub;
+			_assetsManager = assetManager as AssetManager;
 			this.name = "FLV" + String(Math.random() * 999999);
 		}
 		
@@ -51,7 +54,7 @@ package starlingEngine.elements
 			_netConnection.client.onMetaData = function ():void { };
 			_netStream = new NetStream(_netConnection);
 			_netStream.play(path);
-			_video = new Video(_netStream, null, true, true, this);
+			_video = new Video(_netStream, null, true, true, this, _assetsManager);
 			this.addNewChild(_video);
 			
 			_statsTimer.addEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
@@ -126,7 +129,7 @@ package starlingEngine.elements
 		 */
 		public function addVideoStream(stream:NetStream):void
 		{
-			_video = new Video(stream, null, true, true);
+			_video = new Video(stream, null, true, true, null, _assetsManager);
 			this.addChild(_video);
 		}
 		
