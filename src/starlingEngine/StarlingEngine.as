@@ -17,9 +17,12 @@
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
 	import citrus.core.starling.CitrusStarlingJuggler;
+	import flare.flsl.FLSL;
+	import flare.system.Device3D;
 	import flash.display.Sprite;
 	import flash.display.Stage3D;
 	import flash.display3D.Context3D;
+	import flash.display3D.Context3DProfile;
 	import flash.display3D.Context3DRenderMode;
 	import flash.events.ErrorEvent;
 	import flash.events.MouseEvent;
@@ -236,6 +239,9 @@
 		
 		private function initFlare():void
 		{
+			Device3D.profile = "standard";
+			FLSL.agalVersion = 2;
+			
 			_flareHolder = new Sprite();
 			_signalsHub.addSignal(FlareBridge.FLARE_INITED, new Signal(), new Vector.<Function>());
 			_signalsHub.addListenerToSignal(FlareBridge.FLARE_INITED, onFlareInited);
@@ -248,7 +254,7 @@
 		{
 			trace("BridgeGraphics :: Flare3D :: init successful");
 			
-			_starling = new Starling( StarlingMain, stage, null, stage.stage3Ds[0]);
+			_starling = new Starling(StarlingMain, stage, null, stage.stage3Ds[0]);
 			_starling.addEventListener( "rootCreated", starlingRootEvent );
 			_starling.start();
 			

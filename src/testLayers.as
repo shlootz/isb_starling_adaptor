@@ -118,6 +118,7 @@ package
 	import starlingEngine.ui.EngineSlider;
 	import starlingEngine.ui.EngineToggleButton;
 	import starlingEngine.video.display.Video;
+	import utils.delayedFunctionCall;
 	/**
 	 * ...
 	 * @author Eu
@@ -238,7 +239,7 @@ package
 			//{
 				//testFLV();
 			//})
-			_bridgeGraphics.engine.is3D = false;
+			_bridgeGraphics.engine.is3D = true;
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
 		}
@@ -319,6 +320,7 @@ package
 						//testFiters();
 						//testLayersTranzitions();
 						//testGradientMask();
+						//testMask();
 						//testDifferentSize();
 						//testMovieClipsFromFrames();
 						//showLines();
@@ -359,6 +361,18 @@ package
 						//testNativeTexts();
 					}
 				});
+		}
+		
+		private function testMask():void 
+		{
+			var imgToMask:IAbstractImage = _bridgeGraphics.requestImage("BadGuy-Walking-01");
+			var imgMask:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(50, 50, false, 0xFFFFFF));
+			
+			//_bridgeGraphics.addChild (imgToMask);
+			//_bridgeGraphics.addChild (imgMask);
+			
+			var mask:IAbstractMask = _bridgeGraphics.requestMask(imgToMask, imgMask);
+			_bridgeGraphics.addChild(mask);
 		}
 		
 		private function testDoubleSize():void
@@ -833,39 +847,33 @@ package
 			_bridgeGraphics.addChild(label);
 		}
 		
+		private var __stream:IAbstractVideo;
+		private var __holder:IAbstractSprite;
+		
 		private function testFLV():void
 		{
-			var holder:IAbstractSprite = _bridgeGraphics.requestSprite("holder");
-			var stream:IAbstractVideo = _bridgeGraphics.requestVideo();
-			//stream.addVideoPath("../bin/assets/test2.flv");
-			stream.addVideoPath("../bin/assets/test2.flv");
-			_bridgeGraphics.addChild(holder);
-			holder.addNewChild(stream);
-			stream.loop = false;
-			holder.pivotX = holder.width / 2;
-			holder.pivotY = holder.height / 2;
+			__holder = _bridgeGraphics.requestSprite("holder");
+			__stream = _bridgeGraphics.requestVideo();
 			
-			holder.x = 400;
-			holder.y = 300;
+			//var delay:delayedFunctionCall = new delayedFunctionCall(delayedFLV, 2000);
+			delayedFLV();
+		}
+		
+		private function delayedFLV():void
+		{
+			__stream.addVideoPath("../bin/assets/test.flv");
+			_bridgeGraphics.addChild(__holder);
+			__holder.addNewChild(__stream);
+			__stream.loop = false;
 			
-			//stream.scaleX = stream.scaleY = 0;
-
-			//TweenLite.to(stream, 4, { scaleX:1, scaleY:1, ease:Elastic.easeOut } );
+			__holder.x = 400;
+			__holder.y = 300;
 			
-			//addEventListener(Event.ENTER_FRAME, function(e:Event):void {
-				//trace(holder.width + " * " + holder.height);
-			//}
-			//);
 			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.FLV_MOVIE_ENDED, function(type:String, obj:Object):void
 			{
 				trace("CONTEXT : " + _bridgeGraphics.contextStatus());
-				//if (_bridgeGraphics.contextStatus())
-				//{
-					//stream.removeFromParent(true)
-					//stream = null;
-				//}
-				var removeEvent:EngineDelayedDisposeSignalEvent = new EngineDelayedDisposeSignalEvent(stream, holder);
-				_bridgeGraphics.signalsManager.dispatchSignal(Signals.REMOVE_AND_DISPOSE, stream.name, removeEvent);
+				var removeEvent:EngineDelayedDisposeSignalEvent = new EngineDelayedDisposeSignalEvent(__stream, __holder);
+				_bridgeGraphics.signalsManager.dispatchSignal(Signals.REMOVE_AND_DISPOSE, __stream.name, removeEvent);
 			}
 			);
 		}
