@@ -239,8 +239,8 @@
 		
 		private function initFlare():void
 		{
-			Device3D.profile = "standard";
-			FLSL.agalVersion = 2;
+			//Device3D.profile = "standard";
+			//FLSL.agalVersion = 2;
 			
 			_flareHolder = new Sprite();
 			_signalsHub.addSignal(FlareBridge.FLARE_INITED, new Signal(), new Vector.<Function>());
@@ -313,7 +313,14 @@
 			_engineStage = starling.stage;
 			
 			//dispatch 
-			_signalsHub.dispatchSignal(Signals.STARLING_READY, "", "");
+			if (is3D)
+			{
+				_signalsHub.dispatchSignal(Signals.STARLING_READY, "", { "3dScene":_flareBridge.scene } );
+			}
+			else
+			{
+				_signalsHub.dispatchSignal(Signals.STARLING_READY, "", { } );
+			}
 			
 			//TO DO
 			configureConsole();

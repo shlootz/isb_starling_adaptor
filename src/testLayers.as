@@ -239,7 +239,7 @@ package
 			//{
 				//testFLV();
 			//})
-			_bridgeGraphics.engine.is3D = true;
+			_bridgeGraphics.engine.is3D = false;
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
 		}

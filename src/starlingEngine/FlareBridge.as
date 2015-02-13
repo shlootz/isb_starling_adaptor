@@ -89,6 +89,16 @@ package starlingEngine
 		{
 			return _scene.context;
 		}
+		
+		public function get scene():Scene3D 
+		{
+			return _scene;
+		}
+		
+		public function set scene(value:Scene3D):void 
+		{
+			_scene = value;
+		}
 	}
 
 }
