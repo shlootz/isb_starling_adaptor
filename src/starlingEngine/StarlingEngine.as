@@ -430,6 +430,7 @@
 		public function initSignals():void
 		{
 			(_signalsHub as SignalsHub).addSignal(Signals.STARLING_READY, new Signal(), new Vector.<Function>);
+			(_signalsHub as SignalsHub).addSignal(Signals.CONTEXT_3D_RESTORED, new Signal(), new Vector.<Function>);
 			(_signalsHub as SignalsHub).addSignal(Signals.REMOVE_AND_DISPOSE, new Signal(), new Vector.<Function>);
 			
 			(_signalsHub as SignalsHub).addSignal(Signals.CHANGE_GRAPHICS_STATE, new Signal(), new Vector.<Function>);
@@ -1644,6 +1645,12 @@
 		{
 			trace("Context Restored");
 			var delayedCall:delayedFunctionCall = new delayedFunctionCall(delayedRemove, 100);
+			
+			var contextSignal:GESignalEvent = new GESignalEvent();
+			contextSignal.engineEvent = Signals.CONTEXT_3D_RESTORED;
+			contextSignal.eventName = "Restore";
+			contextSignal.params = { };
+			_signalsHub.dispatchSignal(Signals.CONTEXT_3D_RESTORED, Signals.CONTEXT_3D_RESTORED, contextSignal);
 		}
 		
 		/**
