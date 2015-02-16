@@ -17,6 +17,7 @@
 	import bridge.abstract.ui.IAbstractToggle;
 	import bridge.abstract.ui.LabelProperties;
 	import citrus.core.starling.CitrusStarlingJuggler;
+	import flare.basic.Scene3D;
 	import flare.flsl.FLSL;
 	import flare.system.Device3D;
 	import flash.display.Sprite;
@@ -237,6 +238,9 @@
 			setUpStarling(_debugMode);
 		}
 		
+		/**
+		 * 
+		 */
 		private function initFlare():void
 		{
 			//Device3D.profile = "standard";
@@ -250,6 +254,11 @@
 			this.addChild(_flareHolder);
 		}
 		
+		/**
+		 * 
+		 * @param	type
+		 * @param	obj
+		 */
 		private function onFlareInited(type:String, obj:Object):void
 		{
 			trace("BridgeGraphics :: Flare3D :: init successful");
@@ -1549,6 +1558,11 @@
 		 public function set is3D(value:Boolean):void 
 		 {
 			 _is3D = value;
+		 }
+		 
+		 public function get scene3D():Object 
+		 {
+			 return _flareBridge.scene;
 		 }
 		 
 		/**
