@@ -51,6 +51,7 @@ package
 	import feathers.text.BitmapFontTextFormat;
 	import feathers.text.StageTextField;
 	import flappybird.Assets;
+	import flare.basic.Scene3D;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -239,7 +240,7 @@ package
 			//{
 				//testFLV();
 			//})
-			_bridgeGraphics.engine.is3D = false;
+			_bridgeGraphics.engine.is3D = true;
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
 		}
@@ -359,6 +360,8 @@ package
 						//testTexts();
 						//testTextsVector();
 						//testNativeTexts();
+						//_bridgeGraphics.storeObject("", "")
+						//_bridgeGraphics.retrieveObject();
 					}
 				});
 		}
@@ -852,6 +855,9 @@ package
 		
 		private function testFLV():void
 		{
+			trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			var sc3D:Scene3D = (_bridgeGraphics.scene3D as Scene3D);
+			sc3D.visible = false;
 			__holder = _bridgeGraphics.requestSprite("holder");
 			__stream = _bridgeGraphics.requestVideo();
 			
