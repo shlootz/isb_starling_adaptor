@@ -335,6 +335,7 @@
 				_videoTexture = starling.textures.Texture.fromBitmapData(mBitmapData);
 				_videoImage.texture = _videoTexture;
 				_videoImage.readjustSize();
+				mBitmapData.fillRect(mBitmapData.rect, 0x000000);
 			}
 		
 			mStatsDrawTime.unshift(getTimer() - mTime);

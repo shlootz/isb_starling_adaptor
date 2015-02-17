@@ -240,7 +240,7 @@ package
 			//{
 				//testFLV();
 			//})
-			_bridgeGraphics.engine.is3D = true;
+			//_bridgeGraphics.engine.is3D = true;
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
 		}
@@ -856,8 +856,8 @@ package
 		private function testFLV():void
 		{
 			trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			var sc3D:Scene3D = (_bridgeGraphics.scene3D as Scene3D);
-			sc3D.visible = false;
+			//var sc3D:Scene3D = (_bridgeGraphics.scene3D as Scene3D);
+			//sc3D.visible = false;
 			__holder = _bridgeGraphics.requestSprite("holder");
 			__stream = _bridgeGraphics.requestVideo();
 			
@@ -867,7 +867,7 @@ package
 		
 		private function delayedFLV():void
 		{
-			__stream.addVideoPath("../bin/assets/test.flv");
+			__stream.addVideoPath("../bin/assets/test2.flv");
 			_bridgeGraphics.addChild(__holder);
 			__holder.addNewChild(__stream);
 			__stream.loop = false;
