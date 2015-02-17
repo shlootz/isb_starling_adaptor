@@ -5,6 +5,7 @@
 	import bridge.abstract.filters.IAbstractBlurFilter;
 	import bridge.abstract.filters.IAbstractDropShadowFilter;
 	import bridge.abstract.filters.IAbstractGlowFilter;
+	import bridge.abstract.filters.IAbstractReferencedFilter;
 	import bridge.abstract.IAbstractBlitMask;
 	import bridge.abstract.IAbstractDisplayObjectContainer;
 	import bridge.abstract.IAbstractGraphics;
@@ -401,6 +402,12 @@
 				obj = new EngineButton();
 				
 				_buttonsPool.returnToPool(obj as EngineButton);
+			}
+			
+			if (obj as IAbstractReferencedFilter)
+			{
+				poolSucces = true;
+				_fragmentStandardFilterPool.returnToPool((obj as IAbstractReferencedFilter).reference);
 			}
 			
 			if (!poolSucces)
@@ -1489,6 +1496,7 @@
 			  var blurFilter:BlurFilter = _fragmentStandardFilterPool.getNewObject() as BlurFilter;
 			  blurFilter = BlurFilter.createDropShadow(vo.distance, vo.angle, vo.color, vo.alpha, vo.blur, vo.resolution);
 			 (target as DisplayObject).filter = blurFilter;
+			 vo.reference = blurFilter;
 		 }
 		 
 		 /**
@@ -1501,6 +1509,7 @@
 			 var blurFilter:BlurFilter = _fragmentStandardFilterPool.getNewObject() as BlurFilter;
 			 blurFilter = BlurFilter.createGlow(vo.color, vo.alpha, vo.blur, vo.resolution);
 			 (target as DisplayObject).filter = blurFilter;
+			 vo.reference = blurFilter;
 		 }
 		 
 		 /**
@@ -1515,6 +1524,7 @@
 			  blurFilter.blurY = vo.blurY;
 			  blurFilter.resolution = vo.resolution;
 			  (target as DisplayObject).filter = blurFilter;
+			  vo.reference = blurFilter;
 		 }
 		 
 		 /**

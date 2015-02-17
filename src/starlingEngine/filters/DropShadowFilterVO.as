@@ -14,6 +14,8 @@ package starlingEngine.filters
 		private var _alpha:Number = 0.5;
 		private var _blur:Number = 1;
 		private var _resolution:Number = 0.5;
+		private var _reference:Object;
+		
 		
 		public function DropShadowFilterVO(distance:Number=4, angle:Number=0.785, color:uint=0, alpha:Number=0.5, blur:Number=1, resolution:Number=0.5) 
 		{
@@ -83,6 +85,16 @@ package starlingEngine.filters
 		public function get resolution():Number
 		{
 			return _resolution
+		}
+		
+		public function get reference():Object 
+		{
+			return _reference;
+		}
+		
+		public function set reference(value:Object):void 
+		{
+			_reference = value;
 		}
 		
 	}

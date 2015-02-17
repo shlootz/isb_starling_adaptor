@@ -11,6 +11,7 @@ package starlingEngine.filters
 		private var _blurX:Number = 1;
 		private var _blurY:Number = 1;
 		private var _resolution:Number = 0.5;
+		private var _reference:Object;
 		
 		public function BlurFilterVO(blurX:Number=1, blurY:Number=1, resolution:Number=1) 
 		{
@@ -47,6 +48,16 @@ package starlingEngine.filters
 		public function get resolution():Number
 		{
 			return _resolution
+		}
+		
+		public function get reference():Object 
+		{
+			return _reference;
+		}
+		
+		public function set reference(value:Object):void 
+		{
+			_reference = value;
 		}
 		
 	}
