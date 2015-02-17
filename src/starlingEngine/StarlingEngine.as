@@ -263,10 +263,12 @@
 		private function onFlareInited(type:String, obj:Object):void
 		{
 			trace("BridgeGraphics :: Flare3D :: init successful");
-			
-			_starling = new Starling(StarlingMain, stage, null, stage.stage3Ds[0]);
-			_starling.addEventListener( "rootCreated", starlingRootEvent );
-			_starling.start();
+			if (!_starling)
+			{
+				_starling = new Starling(StarlingMain, stage, null, stage.stage3Ds[0]);
+				_starling.addEventListener( "rootCreated", starlingRootEvent );
+				_starling.start();
+			}
 			
 			if (_debugMode)
 			{
