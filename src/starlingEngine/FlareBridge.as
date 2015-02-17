@@ -56,12 +56,12 @@ package starlingEngine
 			// Context3D object
 			_signalsManager.dispatchSignal(FLARE_INITED, FLARE_INITED, new Object());
 		
-			var cube:Cube = new Cube( "cube", 30, 30, 30 );
-			_cubes = new Pivot3D();
-			_cubes.addChild( cube.clone() ).setPosition( 100, 0, 0 );
-			_cubes.addChild( cube.clone() ).setPosition( -100, 0, 0 );
-			_cubes.addChild( cube.clone() ).setPosition( 0, 0, 100 );
-			_cubes.addChild( cube.clone() ).setPosition( 0, 0, -100 );
+			//var cube:Cube = new Cube( "cube", 30, 30, 30 );
+			//_cubes = new Pivot3D();
+			//_cubes.addChild( cube.clone() ).setPosition( 100, 0, 0 );
+			//_cubes.addChild( cube.clone() ).setPosition( -100, 0, 0 );
+			//_cubes.addChild( cube.clone() ).setPosition( 0, 0, 100 );
+			//_cubes.addChild( cube.clone() ).setPosition( 0, 0, -100 );
 		}
 		
 		/**
@@ -72,7 +72,7 @@ package starlingEngine
 		{
 			// prepare and draw the Starling frame
 			
-			_cubes.draw(true);
+			//_cubes.draw(true);
 			
 			if (_starling)
 			{
