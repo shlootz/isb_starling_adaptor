@@ -168,6 +168,7 @@
 		private var _imagesPool:AbstractPool;
 		private var _movieClipsPool:AbstractPool;
 		private var _buttonsPool:AbstractPool;
+		private var _masksPool:AbstractPool;
 		private var _fragmentStandardFilterPool:AbstractPool;
 		
 		private var  defaultFramesVector:Vector.<Texture> = new Vector.<Texture>();
@@ -314,6 +315,9 @@
 			//creates a new pool for FragmentFilters
 			_fragmentStandardFilterPool = new AbstractPool("fragmentFilters", BlurFilter, 30);
 			
+			//creates a new pool for Maks
+			_masksPool = new AbstractPool("maskPool", EngineMask, 50);
+			
 			//assigns initial state
 			_currentState = requestState();
 			state = _currentState as IState;
@@ -404,6 +408,18 @@
 				obj = new EngineButton();
 				
 				_buttonsPool.returnToPool(obj as EngineButton);
+			}
+			
+			if (obj as EngineMask != null)
+			{
+				poolSucces = true;
+				
+				(obj as EngineMask).removeFromParent();
+				
+				//obj = new EngineMask();
+				
+				_masksPool.returnToPool(obj as EngineMask);
+				(obj as EngineMask).dispose();
 			}
 			
 			if (obj as IAbstractReferencedFilter)
@@ -866,19 +882,11 @@
 		 */
 		public function requestMask(maskedObject:IAbstractDisplayObject, mask:IAbstractDisplayObject, isAnimated:Boolean=false):IAbstractMask
 		{
-			var mM:IAbstractMask = new EngineMask();
-			
-			var myCustomDisplayObject:IAbstractSprite = requestSprite();
-			var myCustomMaskDisplayObject:IAbstractSprite = requestSprite();
-			
-			myCustomDisplayObject.name = maskedObject.name;
-			myCustomMaskDisplayObject.name = maskedObject.name + "mask";
-			
-			myCustomDisplayObject.addNewChild(maskedObject);
-			myCustomMaskDisplayObject.addNewChild(mask);
+			var mM:IAbstractMask = _masksPool.getNewObject() as EngineMask;
+			//var mM:IAbstractMask = new EngineMask();
 			 
-			mM.addNewChild(myCustomDisplayObject);
-			mM.newMask = myCustomMaskDisplayObject;
+			mM.addNewChild(maskedObject);
+			mM.newMask = mask;
 			
 			mM.touchable = false;
 			
@@ -1276,6 +1284,8 @@
 				o.params = null
 					
 			_signalsHub.dispatchSignal(Signals.MOVIE_CLIP_ENDED, (e.currentTarget as IAbstractMovie).name, o);
+			trace("StarlingEngine :: Signals Manager :: dispatching " + Signals.MOVIE_CLIP_ENDED + " from " + (e.currentTarget as IAbstractMovie).name);
+			
 		}
 		
 		/**

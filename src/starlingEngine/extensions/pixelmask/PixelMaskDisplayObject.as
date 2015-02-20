@@ -1,7 +1,10 @@
 package starlingEngine.extensions.pixelmask
 {
+	import bridge.abstract.AbstractPool;
 	import flash.display3D.Context3DBlendFactor;
 	import flash.geom.Matrix;
+	import starling.textures.Texture;
+	import starlingEngine.elements.EngineImage;
 	
 	import starling.core.RenderSupport;
 	import starling.core.Starling;
@@ -105,18 +108,22 @@ package starlingEngine.extensions.pixelmask
 			// clean up old render textures and images
 			if (_maskRenderTexture) {
 				_maskRenderTexture.dispose();
+				_maskRenderTexture = null;
 			}
 			
 			if (_renderTexture) {
 				_renderTexture.dispose();
+				_renderTexture = null;
 			}
 			
 			if (_image) {
 				_image.dispose();
+				_image = null;
 			}
 			
 			if (_maskImage) {
 				_maskImage.dispose();
+				_maskImage = null;
 			}
 		}
 		
@@ -130,11 +137,9 @@ package starlingEngine.extensions.pixelmask
 				_renderTexture = new RenderTexture(_mask.width, _mask.height, false, _scaleFactor);
 				
 				// create image with the new render texture
-				_image = new Image(_renderTexture);
-				
+				_image = new Image(_renderTexture)
 				// create image to blit the mask onto
 				_maskImage = new Image(_maskRenderTexture);
-			
 				// set the blending mode to MASK (ZERO, SRC_ALPHA)
 				if (_inverted) {
 					_maskImage.blendMode = MASK_MODE_INVERTED;
