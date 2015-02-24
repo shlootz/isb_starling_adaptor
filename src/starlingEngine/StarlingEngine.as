@@ -416,8 +416,6 @@
 				
 				(obj as EngineMask).removeFromParent();
 				
-				//obj = new EngineMask();
-				
 				_masksPool.returnToPool(obj as EngineMask);
 				(obj as EngineMask).dispose();
 			}
