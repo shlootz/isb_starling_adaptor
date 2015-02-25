@@ -65,6 +65,8 @@ package starlingEngine.elements
 			
 			_statsTimer.addEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
 			_statsTimer.start();
+			
+			this.visible = false;
 		}
 		
 		private function onAddedToStage():void
@@ -126,6 +128,7 @@ package starlingEngine.elements
 		private function emitStartSignal():void
 		{
 			_started = true;
+			this.visible = true;
 			var o:GESignalEvent = new GESignalEvent()
 					o.eventName = Signals.FLV_MOVIE_STARTED;
 					o.engineEvent = null;
@@ -166,6 +169,7 @@ package starlingEngine.elements
 		public function pause():void
 		{
 			_netStream.pause();
+			_video.pause();
 		}
 		
 		/**
@@ -174,6 +178,7 @@ package starlingEngine.elements
 		public function resume():void
 		{
 			_netStream.resume();
+			_video.start();
 		}
 		
 		/**
@@ -182,6 +187,7 @@ package starlingEngine.elements
 		public function stop():void
 		{
 			_netStream.close();
+			_video.stop();
 		}
 		
 		public function start(forceRecording:Boolean = false):void
