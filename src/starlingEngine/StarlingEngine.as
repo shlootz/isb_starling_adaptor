@@ -171,6 +171,8 @@
 		private var _masksPool:AbstractPool;
 		private var _fragmentStandardFilterPool:AbstractPool;
 		
+		private var _floatingTexturesDictionary:Dictionary = new Dictionary(true)
+		
 		private var  defaultFramesVector:Vector.<Texture> = new Vector.<Texture>();
 		private var _bitmapDataFallBack:BitmapData = new BitmapData(100, 100, true, 0x000000);
 		private var _textureFallBack:Texture;
@@ -383,7 +385,17 @@
 				
 				(obj as EngineImage).removeFromParent();
 				
+				if ((obj as EngineImage).texture != null)
+				{
+					if (_floatingTexturesDictionary[(obj as EngineImage).name])
+					{
+						_assetsManager.removeTexture(_floatingTexturesDictionary[(obj as EngineImage).name]);
+						_floatingTexturesDictionary[(obj as EngineImage).name] = null;
+						delete _floatingTexturesDictionary[(obj as EngineImage).name];
+					}
+					
 				obj = new EngineImage(_textureFallBack);
+				}
 				
 				_imagesPool.returnToPool(obj as EngineImage);
 			}
@@ -626,6 +638,9 @@
 			i.readjustSize();
 			i.name = storageName;
 			
+			_floatingTexturesDictionary[ storageName] = _assetsManager.getTexture(storageName);
+			
+			trace(_floatingTexturesDictionary);
 			return i;
 		}
 		
@@ -1670,8 +1685,15 @@
 		{
 			if (contextStatus())
 			{
-				trace("Sync removing: " + obj["params"]["target"]+" from " +obj["params"]["parent"]);
-				(obj["params"]["parent"] as IAbstractDisplayObjectContainer).removeChildAndDispose(obj["params"]["target"] as IAbstractDisplayObject, true);
+				trace("Sync removing: " + obj["params"]["target"] + " from " +obj["params"]["parent"]);
+				if (!obj["params"]["recycle"])
+				{
+					(obj["params"]["parent"] as IAbstractDisplayObjectContainer).removeChildAndDispose(obj["params"]["target"] as IAbstractDisplayObject, true);
+				}
+				else
+				{
+					returnToPool(obj["params"]["target"]);
+				}
 			}
 			else
 			{
@@ -1703,10 +1725,18 @@
 			while (_pendingRemove.length > 0)
 			{
 				obj = _pendingRemove.pop();
+				var recycle:Boolean = obj["recycle"];
 				var parent:IAbstractDisplayObjectContainer = (obj["parent"] as IAbstractDisplayObjectContainer);
 				var target:IAbstractDisplayObject = (obj["target"] as IAbstractDisplayObject);
 				
-				parent.removeChildAndDispose(target, true);
+				if (!recycle)
+				{
+					parent.removeChildAndDispose(target, true);
+				}
+				else
+				{
+					returnToPool(target);
+				}
 				trace("Async removing: " + target.name+" from " + parent.name);
 			}
 		}

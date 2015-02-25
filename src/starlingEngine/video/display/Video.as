@@ -790,7 +790,6 @@
 		 */
 		private function video_enterFrameHandler(e:flash.events.Event):void
 		{
-			
 			if (!contextStatus)
 				return;
 			
@@ -805,7 +804,7 @@
 			
 			if (mNewFrameAvailable) {
 				dispatchEventWith(starlingEngine.video.events.VideoEvent.VIDEO_FRAME);
-				if (mRecording) {
+				if (mRecording && this.mAddedToStage) {
 					draw();
 					//upload();
 				}

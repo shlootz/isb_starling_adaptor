@@ -5,25 +5,27 @@ package starlingEngine.events
 	import signals.Signals;
 	/**
 	 * ...
-	 * @author Eu
+	 * @author Alex Popescu
 	 */
 	public class EngineDelayedDisposeSignalEvent extends GESignalEvent
 	{
 		
 		private var _child:IAbstractDisplayObject;
 		private var _parent:IAbstractDisplayObjectContainer;
+		private var _recycle:Boolean = false;
 		
 		/**
 		 * 
 		 * @param	child
 		 * @param	container
 		 */
-		public function EngineDelayedDisposeSignalEvent(child:IAbstractDisplayObject, container:IAbstractDisplayObjectContainer) 
+		public function EngineDelayedDisposeSignalEvent(child:IAbstractDisplayObject, container:IAbstractDisplayObjectContainer, recycle:Boolean = false) 
 		{
 			_child  = child;
 			_parent = container;
+			_recycle = recycle;
 			
-			updateEvent(child, container);
+			updateEvent(child, container, recycle);
 			
 			eventName = Signals.REMOVE_AND_DISPOSE;
 		}
@@ -33,9 +35,9 @@ package starlingEngine.events
 		 * @param	child
 		 * @param	container
 		 */
-		public function updateEvent(child:IAbstractDisplayObject, container:IAbstractDisplayObjectContainer):void
+		public function updateEvent(child:IAbstractDisplayObject, container:IAbstractDisplayObjectContainer, recycle:Boolean = false):void
 		{
-			params = { target:child, parent:container };
+			params = { target:child, parent:container, recycle:recycle };
 		}
 		
 	}
