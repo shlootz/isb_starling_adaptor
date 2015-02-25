@@ -1,140 +1,120 @@
 ﻿package starlingEngine
 {
-	import adobe.utils.CustomActions;
-	import bridge.abstract.effects.IAbstractParticleSystem;
-	import bridge.abstract.filters.IAbstractBlurFilter;
-	import bridge.abstract.filters.IAbstractDropShadowFilter;
-	import bridge.abstract.filters.IAbstractGlowFilter;
-	import bridge.abstract.filters.IAbstractReferencedFilter;
-	import bridge.abstract.IAbstractBlitMask;
-	import bridge.abstract.IAbstractDisplayObjectContainer;
-	import bridge.abstract.IAbstractGraphics;
-	import bridge.abstract.IAbstractMask;
-	import bridge.abstract.IAbstractScrollTile;
-	import bridge.abstract.ui.IAbstractComboBox;
-	import bridge.abstract.ui.IAbstractComboBoxItemRenderer;
-	import bridge.abstract.ui.IAbstractInputText;
-	import bridge.abstract.ui.IAbstractSlider;
-	import bridge.abstract.ui.IAbstractToggle;
-	import bridge.abstract.ui.LabelProperties;
-	import citrus.core.starling.CitrusStarlingJuggler;
-	import flare.basic.Scene3D;
-	import flare.flsl.FLSL;
-	import flare.system.Device3D;
-	import flash.display.Sprite;
-	import flash.display.Stage3D;
-	import flash.display3D.Context3D;
-	import flash.display3D.Context3DProfile;
-	import flash.display3D.Context3DRenderMode;
-	import flash.events.ErrorEvent;
-	import flash.events.MouseEvent;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import flash.utils.setTimeout;
-	import starling.core.RenderSupport;
-	import starling.display.FFParticleSystem;
-	import starling.display.FFParticleSystem.SystemOptions;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	import starling.filters.BlurFilter;
-	import starling.filters.FragmentFilter;
-	import starling.utils.AssetManager;
-	import starlingEngine.effects.EngineAdvancedParticleSystem;
-	import starlingEngine.effects.EngineParticleSystem;
-	import starlingEngine.elements.EngineBlitMask;
-	import starlingEngine.elements.EngineDisplayObject;
-	import starlingEngine.elements.EngineGraphics;
-	import starlingEngine.elements.EngineMask;
-	import starlingEngine.elements.EngineScrollTile;
-	import starlingEngine.events.GESignalEvent;
-	import starlingEngine.extensions.krecha.ScrollImage;
-	import starlingEngine.extensions.krecha.ScrollTile;
-	import starlingEngine.filters.BlurFilterVO;
-	import starlingEngine.filters.DropShadowFilterVO;
-	import starlingEngine.filters.GlowFilterVO;
-	import starlingEngine.filters.NewsprintFilter;
-	import starlingEngine.filters.PixelateFilter;
-	import starlingEngine.ui.EngineComboBox;
-	import starlingEngine.ui.EngineInputText;
-	import starlingEngine.ui.EngineSlider;
-	import starlingEngine.ui.EngineToggleButton;
-	import starlingEngine.validators.LayoutButtonValidator;
-	import starlingEngine.validators.LayoutImageValidator;
-	import starlingEngine.validators.LayoutMovieClipValidator;
-	import starlingEngine.validators.LayoutSliderValidator;
-	import starlingEngine.validators.LayoutTextFieldValidator;
-	import starlingEngine.validators.LayoutToggleButtonValidator;
-	import utils.delayedFunctionCall;
-	
-	import bridge.abstract.AbstractPool;
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.IAbstractEngineLayerVO;
-	import bridge.abstract.IAbstractImage;
-	import bridge.abstract.IAbstractLayer;
-	import bridge.abstract.IAbstractMovie;
-	import bridge.abstract.IAbstractSprite;
-	import bridge.abstract.IAbstractState;
-	import bridge.abstract.IAbstractTexture;
-	import bridge.abstract.IAbstractTextField;
-	import bridge.abstract.IAbstractVideo;
-	import bridge.abstract.transitions.IAbstractLayerTransitionIn;
-	import bridge.abstract.transitions.IAbstractLayerTransitionOut;
-	import bridge.abstract.transitions.IAbstractStateTransition;
-	import bridge.abstract.ui.IAbstractButton;
-	import bridge.abstract.ui.IAbstractLabel;
-	import bridge.BridgeGraphics;
-	import bridge.IEngine;
-	
-	import citrus.core.IState;
-	import citrus.core.starling.StarlingCitrusEngine;
-	import citrus.core.starling.ViewportMode;
-	
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.events.Event;
-	import flash.utils.Dictionary;
-	
-	import nape.geom.Vec2;
-	import nape.space.Space;
-	import nape.util.ShapeDebug;
-	
-	import org.osflash.signals.Signal;
-	
-	import signals.ISignalsHub;
-	import signals.Signals;
-	import signals.SignalsHub;
-	
-	import starling.animation.IAnimatable;
-	import starling.animation.Juggler;
-	import starling.core.Starling;
-	import starling.display.DisplayObject;
-	import starling.display.Image;
-	import starling.display.MovieClip;
-	import starling.display.Quad;
-	import starling.display.Stage;
-	import starling.text.BitmapFont;
-	import starling.text.TextField;
-	import starling.textures.Texture;
-	import starling.textures.TextureAtlas;
-	
-	import starlingEngine.elements.EngineImage;
-	import starlingEngine.elements.EngineLabel;
-	import starlingEngine.elements.EngineLayer;
-	import starlingEngine.elements.EngineLayerLayoutElementVo;
-	import starlingEngine.elements.EngineLayerVO;
-	import starlingEngine.elements.EngineMovie;
-	import starlingEngine.elements.EngineSprite;
-	import starlingEngine.elements.EngineState;
-	import starlingEngine.elements.EngineTextField;
-	import starlingEngine.elements.EngineTexture;
-	import starlingEngine.elements.EngineVideo;
-	import starlingEngine.events.EngineEvent;
-	import starlingEngine.transitions.EngineLayerTransitionIn;
-	import starlingEngine.transitions.EngineLayerTransitionOut;
-	import starlingEngine.ui.EngineButton;
-	
-	/**
+import bridge.IEngine;
+import bridge.abstract.AbstractPool;
+import bridge.abstract.IAbstractBlitMask;
+import bridge.abstract.IAbstractDisplayObject;
+import bridge.abstract.IAbstractDisplayObjectContainer;
+import bridge.abstract.IAbstractEngineLayerVO;
+import bridge.abstract.IAbstractGraphics;
+import bridge.abstract.IAbstractImage;
+import bridge.abstract.IAbstractLayer;
+import bridge.abstract.IAbstractMask;
+import bridge.abstract.IAbstractMovie;
+import bridge.abstract.IAbstractScrollTile;
+import bridge.abstract.IAbstractSprite;
+import bridge.abstract.IAbstractState;
+import bridge.abstract.IAbstractTextField;
+import bridge.abstract.IAbstractTexture;
+import bridge.abstract.IAbstractVideo;
+import bridge.abstract.effects.IAbstractParticleSystem;
+import bridge.abstract.filters.IAbstractBlurFilter;
+import bridge.abstract.filters.IAbstractDropShadowFilter;
+import bridge.abstract.filters.IAbstractGlowFilter;
+import bridge.abstract.filters.IAbstractReferencedFilter;
+import bridge.abstract.transitions.IAbstractLayerTransitionIn;
+import bridge.abstract.transitions.IAbstractLayerTransitionOut;
+import bridge.abstract.transitions.IAbstractStateTransition;
+import bridge.abstract.ui.IAbstractButton;
+import bridge.abstract.ui.IAbstractComboBox;
+import bridge.abstract.ui.IAbstractComboBoxItemRenderer;
+import bridge.abstract.ui.IAbstractInputText;
+import bridge.abstract.ui.IAbstractLabel;
+import bridge.abstract.ui.IAbstractSlider;
+import bridge.abstract.ui.IAbstractToggle;
+
+import citrus.core.IState;
+import citrus.core.starling.StarlingCitrusEngine;
+import citrus.core.starling.ViewportMode;
+
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.Sprite;
+import flash.display3D.Context3D;
+import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+import flash.utils.Dictionary;
+
+import nape.space.Space;
+
+import org.osflash.signals.Signal;
+
+import signals.Signals;
+import signals.SignalsHub;
+
+import starling.animation.IAnimatable;
+import starling.animation.Juggler;
+import starling.core.RenderSupport;
+import starling.core.Starling;
+import starling.display.DisplayObject;
+import starling.display.FFParticleSystem;
+import starling.display.Image;
+import starling.display.MovieClip;
+import starling.display.Stage;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
+import starling.filters.BlurFilter;
+import starling.filters.FragmentFilter;
+import starling.text.BitmapFont;
+import starling.text.TextField;
+import starling.textures.Texture;
+import starling.textures.TextureAtlas;
+import starling.utils.AssetManager;
+
+import starlingEngine.effects.EngineAdvancedParticleSystem;
+import starlingEngine.effects.EngineParticleSystem;
+import starlingEngine.elements.EngineBlitMask;
+import starlingEngine.elements.EngineGraphics;
+import starlingEngine.elements.EngineImage;
+import starlingEngine.elements.EngineLabel;
+import starlingEngine.elements.EngineLayer;
+import starlingEngine.elements.EngineLayerLayoutElementVo;
+import starlingEngine.elements.EngineLayerVO;
+import starlingEngine.elements.EngineMask;
+import starlingEngine.elements.EngineMovie;
+import starlingEngine.elements.EngineScrollTile;
+import starlingEngine.elements.EngineSprite;
+import starlingEngine.elements.EngineState;
+import starlingEngine.elements.EngineTextField;
+import starlingEngine.elements.EngineTexture;
+import starlingEngine.elements.EngineVideo;
+import starlingEngine.events.EngineEvent;
+import starlingEngine.events.GESignalEvent;
+import starlingEngine.filters.BlurFilterVO;
+import starlingEngine.filters.DropShadowFilterVO;
+import starlingEngine.filters.GlowFilterVO;
+import starlingEngine.filters.NewsprintFilter;
+import starlingEngine.filters.PixelateFilter;
+import starlingEngine.transitions.EngineLayerTransitionIn;
+import starlingEngine.transitions.EngineLayerTransitionOut;
+import starlingEngine.ui.EngineButton;
+import starlingEngine.ui.EngineComboBox;
+import starlingEngine.ui.EngineInputText;
+import starlingEngine.ui.EngineSlider;
+import starlingEngine.ui.EngineToggleButton;
+import starlingEngine.validators.LayoutButtonValidator;
+import starlingEngine.validators.LayoutImageValidator;
+import starlingEngine.validators.LayoutMovieClipValidator;
+import starlingEngine.validators.LayoutSliderValidator;
+import starlingEngine.validators.LayoutTextFieldValidator;
+import starlingEngine.validators.LayoutToggleButtonValidator;
+
+import utils.delayedFunctionCall;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */
