@@ -172,6 +172,7 @@ import utils.delayedFunctionCall;
 		 */
 		public function pause():void
 		{
+			_started = false;
 			_netStream.pause();
 			_video.pause();
             this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
@@ -194,6 +195,7 @@ import utils.delayedFunctionCall;
 			_netStream.close();
 			_video.stop();
             this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			_started = false;
 		}
 		
 		public function start(forceRecording:Boolean = false):void
