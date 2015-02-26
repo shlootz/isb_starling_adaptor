@@ -64,22 +64,22 @@ import utils.delayedFunctionCall;
 			_netStream = new NetStream(_netConnection);
 			_netStream.play(path);
 			_video = new Video(_netStream, null, true, true, this, _assetsManager);
+            _statsTimer.addEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
+            _statsTimer.start();
+
 			this.addNewChild(_video);
-			
-			_statsTimer.addEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
-			_statsTimer.start();
 			
 			this.visible = false;
 		}
 		
 		private function onAddedToStage():void
 		{
-			if (_prevDecodedFrames != _netStream.decodedFrames || _netStream.decodedFrames == 0)
+			if (_netStream.decodedFrames == 0)
 			{
 				var addedDelayedFunctionCall:delayedFunctionCall = new delayedFunctionCall(onAddedToStage, 100);
 			}
 			else
-			{
+            {
 				this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 				_netStream.seek(0);
 				
@@ -97,7 +97,7 @@ import utils.delayedFunctionCall;
 		private function statsTimer_timerHandler(e:TimerEvent):void
         {
           //trace("decoded/dropped frames:\t " + _netStream.decodedFrames +"/" + _netStream.info.droppedFrames + "\nFPS:\t" + _netStream.currentFPS.toFixed(1) + "\nvideo:\t" + _video.width + "x" + _video.height + "\ntextureClass: " + _video.texture.root.base + "\ntexture:\t" + _video.texture.root.nativeWidth + "x" + _video.texture.root.nativeHeight + "\ndraw:\t" + _video.drawTime.toFixed(2) + " ms" + "\nupload:\t" + _video.uploadTime.toFixed(2) + " ms" + "\ncomplete:\t" + (_video.drawTime + _video.uploadTime).toFixed(2) + " ms");
-		  //trace(_prevDecodedFrames +" != " + _netStream.decodedFrames + " || " + _netStream.decodedFrames + " == 0");
+		  trace(_prevDecodedFrames +" != " + _netStream.decodedFrames + " || " + _netStream.decodedFrames + " == 0");
 		  
 			if (_prevDecodedFrames != _netStream.decodedFrames || _netStream.decodedFrames == 0)
 			{
@@ -121,6 +121,7 @@ import utils.delayedFunctionCall;
 					_bufferComplete = true;
 					emitStopSignal(e);
 					_statsTimer.removeEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
+                    this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 				}
 			}
         }
@@ -173,6 +174,7 @@ import utils.delayedFunctionCall;
 		{
 			_netStream.pause();
 			_video.pause();
+            this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
 		/**
@@ -191,6 +193,7 @@ import utils.delayedFunctionCall;
 		{
 			_netStream.close();
 			_video.stop();
+            this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
 		public function start(forceRecording:Boolean = false):void
