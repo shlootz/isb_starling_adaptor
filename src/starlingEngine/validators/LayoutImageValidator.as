@@ -1,10 +1,13 @@
 package starlingEngine.validators 
 {
-	import bridge.abstract.IAbstractImage;
-	import bridge.IEngine;
-	import starling.utils.AssetManager;
-	import starlingEngine.elements.EngineLayerLayoutElementVo;
-	/**
+import bridge.IEngine;
+import bridge.abstract.IAbstractImage;
+
+import starling.utils.AssetManager;
+
+import starlingEngine.elements.EngineLayerLayoutElementVo;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

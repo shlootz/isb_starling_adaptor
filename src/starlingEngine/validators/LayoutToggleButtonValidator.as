@@ -1,16 +1,16 @@
 package starlingEngine.validators 
 {
-	import bridge.abstract.IAbstractImage;
-	import bridge.abstract.IAbstractTextField;
-	import bridge.abstract.ui.IAbstractButton;
-	import bridge.abstract.ui.IAbstractLabel;
-	import bridge.abstract.ui.IAbstractToggle;
-	import bridge.abstract.ui.LabelProperties;
-	import bridge.IEngine;
-	import flash.geom.Point;
-	import starling.utils.AssetManager;
-	import starlingEngine.elements.EngineLayerLayoutElementVo;
-	/**
+import bridge.IEngine;
+import bridge.abstract.IAbstractImage;
+import bridge.abstract.IAbstractTextField;
+import bridge.abstract.ui.IAbstractLabel;
+import bridge.abstract.ui.IAbstractToggle;
+
+import starling.utils.AssetManager;
+
+import starlingEngine.elements.EngineLayerLayoutElementVo;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

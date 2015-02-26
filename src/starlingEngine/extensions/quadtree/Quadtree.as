@@ -1,10 +1,10 @@
 package starlingEngine.extensions.quadtree
 {
-    import flash.geom.Point;
-    import flash.geom.Rectangle;
-    import flash.utils.Dictionary;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+import flash.utils.Dictionary;
 
-    public class Quadtree
+public class Quadtree
     {
         private var _root:QuadtreeNode;
 

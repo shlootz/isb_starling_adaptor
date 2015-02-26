@@ -1,9 +1,11 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractEngineLayerVO;
-	import bridge.abstract.IAbstractLayer;
-	import flash.utils.Dictionary;
-	/**
+import bridge.abstract.IAbstractEngineLayerVO;
+import bridge.abstract.IAbstractLayer;
+
+import flash.utils.Dictionary;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

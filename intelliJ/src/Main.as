@@ -3,6 +3,7 @@ package {
 import bridge.BridgeGraphics;
 import bridge.IBridgeGraphics;
 import bridge.abstract.AbstractPool;
+import bridge.abstract.IAbstractVideo;
 
 import flash.display.DisplayObject;
 
@@ -22,6 +23,8 @@ import starling.animation.Juggler;
 import starling.utils.AssetManager;
 
 import starlingEngine.StarlingEngine;
+
+import utils.delayedFunctionCall;
 
 public class Main extends Sprite {
 
@@ -45,9 +48,21 @@ public class Main extends Sprite {
         (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
     }
 
+    private var flv:IAbstractVideo;
+
     private function loadAssets(event:String, obj:Object):void
     {
-        trace("STARLING INITIED");
+        flv = _bridgeGraphics.requestVideo();
+        flv.loop = false;
+        flv.addVideoPath("assets/IntroVideoModuleOther.flv", true);
+
+        var delayedFLV:delayedFunctionCall = new delayedFunctionCall(delayedFLVFct, 2000)
+
+    }
+
+    private function delayedFLVFct():void
+    {
+        _bridgeGraphics.currentContainer.addNewChild(flv);
     }
 }
 }

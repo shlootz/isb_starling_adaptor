@@ -22,37 +22,33 @@
 
  package starlingEngine.video.display
 {
-	import flash.display.Bitmap;
-	import starling.display.DisplayObject;
-	import starling.display.DisplayObjectContainer;
-	import starling.display.Image;
-	import starling.utils.AssetManager;
-	import starling.utils.getNextPowerOfTwo;
-	import starlingEngine.video.events.VideoEvent;
-	import flash.desktop.*;
-	import flash.display.BitmapData;
-	import flash.display3D.textures.*;
-	import flash.events.*;
-	import flash.geom.Matrix;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import flash.media.Video;
-	import flash.net.NetStream;
-	import flash.system.Capabilities;
-	import flash.utils.getDefinitionByName;
-	import flash.utils.getQualifiedClassName;
-	import flash.utils.getTimer;
-	import starling.core.RenderSupport;
-	import starling.core.Starling;
-	import starling.display.BlendMode;
-	import starling.display.Quad;
-	import starling.events.Event;
-	import starling.textures.ConcreteTexture;
-	import starling.textures.Texture;
-	import starling.textures.TextureSmoothing;
-	import starling.utils.VertexData;
-	
-	/** Dispatched when a new frame of the video is available. */
+ import flash.display.Bitmap;
+ import flash.display.BitmapData;
+ import flash.events.*;
+ import flash.geom.Matrix;
+ import flash.geom.Rectangle;
+ import flash.media.Video;
+ import flash.net.NetStream;
+ import flash.system.Capabilities;
+ import flash.utils.getDefinitionByName;
+ import flash.utils.getQualifiedClassName;
+ import flash.utils.getTimer;
+
+ import starling.core.RenderSupport;
+ import starling.core.Starling;
+ import starling.display.DisplayObjectContainer;
+ import starling.display.Image;
+ import starling.display.Quad;
+ import starling.events.Event;
+ import starling.textures.Texture;
+ import starling.textures.TextureSmoothing;
+ import starling.utils.AssetManager;
+ import starling.utils.VertexData;
+ import starling.utils.getNextPowerOfTwo;
+
+ import starlingEngine.video.events.VideoEvent;
+
+ /** Dispatched when a new frame of the video is available. */
     [Event(name="videoFrame", type="starlingEngine.video.events.VideoEvent")]
     /** Dispatched after a new frame has been drawn to BitmapData. */
     [Event(name="drawComplete", type="starlingEngine.video.events.VideoEvent")]
@@ -95,7 +91,7 @@
 	 *  @author Michael Trenkler
 	 */
 	
-	public class Video extends starling.display.Quad
+	public class Video extends Quad
 	{
 		private static const HEIGHT:int = 600;
 		private static const WIDTH:int = 800;
@@ -130,7 +126,7 @@
 		private var mStatsUploadTime:Vector.<uint> = new Vector.<uint>();
 		private var mStream:NetStream;
 		private var mStreamPlaying:Boolean = false;
-		private var mTexture:starling.textures.Texture;
+		private var mTexture:Texture;
 		private var mTextureClass:Class;
 		private var mTime:uint;
 		private var mVertexDataCache:VertexData;
@@ -138,7 +134,7 @@
 		private var mVideo:flash.media.Video = new flash.media.Video(WIDTH, HEIGHT);
 		
 		private var _parent:DisplayObjectContainer;
-		private var _videoTexture:starling.textures.Texture;
+		private var _videoTexture:Texture;
 		private var _videoImage:Image;
 		private var _videoBitmap:Bitmap;
 		private var _assetsManager:AssetManager;
@@ -332,7 +328,7 @@
 			else
 			{
 				_videoImage.texture.dispose();
-				_videoTexture = starling.textures.Texture.fromBitmapData(mBitmapData);
+				_videoTexture = Texture.fromBitmapData(mBitmapData);
 				_videoImage.texture = _videoTexture;
 				_videoImage.readjustSize();
 				mBitmapData.fillRect(mBitmapData.rect, 0x000000);
@@ -673,7 +669,7 @@
 			}
 			
 			if (!texture)
-				_texture = starling.textures.Texture.fromBitmapData(mBitmapData, false) as starling.textures.Texture;
+				_texture = Texture.fromBitmapData(mBitmapData, false) as Texture;
 			
 			dispatchEventWith(starling.events.Event.RESIZE, false);
 		}
@@ -989,12 +985,12 @@
 		/** The texture with the video image. Can be used in other DisplayObjects then the Video as well.
 		 *  Note: The texture will never be transformed by the use of flipHorizontal/flipVertical.
 		 */
-		public function get texture():starling.textures.Texture
+		public function get texture():Texture
 		{
 			return mTexture;
 		}
 		
-		private function set _texture(value:starling.textures.Texture):void
+		private function set _texture(value:Texture):void
 		{
 			if (value == null)
 			{

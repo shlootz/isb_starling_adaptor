@@ -1,14 +1,18 @@
 package starlingEngine.ui 
 {
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.ui.IAbstractButton;
-	import bridge.abstract.ui.IAbstractLabel;
-	import bridge.abstract.ui.LabelProperties;
-	import feathers.controls.Button;
-	import flash.geom.Point;
-	import starling.display.DisplayObject;
-	import starling.events.Event;
-	/**
+import bridge.abstract.IAbstractDisplayObject;
+import bridge.abstract.ui.IAbstractButton;
+import bridge.abstract.ui.IAbstractLabel;
+import bridge.abstract.ui.LabelProperties;
+
+import feathers.controls.Button;
+
+import flash.geom.Point;
+
+import starling.display.DisplayObject;
+import starling.events.Event;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

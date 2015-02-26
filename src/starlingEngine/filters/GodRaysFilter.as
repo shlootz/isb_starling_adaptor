@@ -22,14 +22,14 @@
  
 package starlingEngine.filters 
 {
-	import flash.display3D.Context3D;
-	import flash.display3D.Context3DBlendFactor;
-	import flash.display3D.Context3DProgramType;
-	import flash.display3D.Program3D;
-	import starling.filters.FragmentFilter;
-	import starling.textures.Texture;
- 
-	/**
+import flash.display3D.Context3D;
+import flash.display3D.Context3DProgramType;
+import flash.display3D.Program3D;
+
+import starling.filters.FragmentFilter;
+import starling.textures.Texture;
+
+/**
 	 * Creates a 'God Rays' / fake volumetric light filter effect. Only use with Context3DProfile.BASELINE (not compatible with constrained profile)
 	 * @author Devon O.
 	 */

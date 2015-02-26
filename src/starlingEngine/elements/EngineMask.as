@@ -1,20 +1,23 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.IAbstractMask;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import flash.utils.Dictionary;
-	import signals.Signals;
-	import signals.SignalsHub;
-	import starling.display.DisplayObject;
-	import starling.display.DisplayObjectContainer;
-	import starling.display.Sprite;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	import starlingEngine.extensions.pixelmask.PixelMaskDisplayObject;
-	/**
+import bridge.abstract.IAbstractDisplayObject;
+import bridge.abstract.IAbstractMask;
+
+import flash.geom.Point;
+import flash.geom.Rectangle;
+import flash.utils.Dictionary;
+
+import signals.Signals;
+import signals.SignalsHub;
+
+import starling.display.DisplayObject;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
+
+import starlingEngine.extensions.pixelmask.PixelMaskDisplayObject;
+
+/**
 	 * ...
 	 * @author ...
 	 */

@@ -1,10 +1,9 @@
 package starlingEngine.transitions 
 {
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.transitions.IAbstractStateTransition;
-	import com.greensock.TweenLite;
-	import starlingEngine.elements.EngineDisplayObject;
-	/**
+import bridge.abstract.IAbstractDisplayObject;
+import bridge.abstract.transitions.IAbstractStateTransition;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

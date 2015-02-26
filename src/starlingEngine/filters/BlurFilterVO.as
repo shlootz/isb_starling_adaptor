@@ -1,7 +1,8 @@
 package starlingEngine.filters 
 {
-	import bridge.abstract.filters.IAbstractBlurFilter;
-	/**
+import bridge.abstract.filters.IAbstractBlurFilter;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

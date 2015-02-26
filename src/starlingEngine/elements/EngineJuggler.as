@@ -1,8 +1,10 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractJuggler;
-	import starling.animation.Juggler;
-	/**
+import bridge.abstract.IAbstractJuggler;
+
+import starling.animation.Juggler;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

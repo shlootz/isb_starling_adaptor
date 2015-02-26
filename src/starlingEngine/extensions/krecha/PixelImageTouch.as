@@ -1,13 +1,14 @@
 package starlingEngine.extensions.krecha
 {
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import starling.display.DisplayObject;
-	import starling.display.Image;
-	import starling.textures.SubTexture;
-	import starling.textures.Texture;
-  
-	/**
+import flash.geom.Point;
+import flash.geom.Rectangle;
+
+import starling.display.DisplayObject;
+import starling.display.Image;
+import starling.textures.SubTexture;
+import starling.textures.Texture;
+
+/**
 	 * Create Image object with pixel perfect touch.
 	 * @author KrechaGames - Łukasz 'Cywil' Cywiński
 	 */

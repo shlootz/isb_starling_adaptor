@@ -1,9 +1,11 @@
 package starlingEngine.events 
 {
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.IAbstractDisplayObjectContainer;
-	import signals.Signals;
-	/**
+import bridge.abstract.IAbstractDisplayObject;
+import bridge.abstract.IAbstractDisplayObjectContainer;
+
+import signals.Signals;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

@@ -10,31 +10,31 @@
 
 package starlingEngine.extensions
 {
-    import com.adobe.utils.AGALMiniAssembler;
-    
-    import flash.display3D.Context3D;
-    import flash.display3D.Context3DBlendFactor;
-    import flash.display3D.Context3DProgramType;
-    import flash.display3D.Context3DVertexBufferFormat;
-    import flash.display3D.IndexBuffer3D;
-    import flash.display3D.Program3D;
-    import flash.display3D.VertexBuffer3D;
-    import flash.geom.Matrix;
-    import flash.geom.Point;
-    import flash.geom.Rectangle;
-    
-    import starling.animation.IAnimatable;
-    import starling.core.RenderSupport;
-    import starling.core.Starling;
-    import starling.display.DisplayObject;
-    import starling.errors.MissingContextError;
-    import starling.events.Event;
-    import starling.textures.Texture;
-    import starling.textures.TextureSmoothing;
-    import starling.utils.MatrixUtil;
-    import starling.utils.VertexData;
-    
-    /** Dispatched when emission of particles is finished. */
+import com.adobe.utils.AGALMiniAssembler;
+
+import flash.display3D.Context3D;
+import flash.display3D.Context3DBlendFactor;
+import flash.display3D.Context3DProgramType;
+import flash.display3D.Context3DVertexBufferFormat;
+import flash.display3D.IndexBuffer3D;
+import flash.display3D.Program3D;
+import flash.display3D.VertexBuffer3D;
+import flash.geom.Matrix;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+
+import starling.animation.IAnimatable;
+import starling.core.RenderSupport;
+import starling.core.Starling;
+import starling.display.DisplayObject;
+import starling.errors.MissingContextError;
+import starling.events.Event;
+import starling.textures.Texture;
+import starling.textures.TextureSmoothing;
+import starling.utils.MatrixUtil;
+import starling.utils.VertexData;
+
+/** Dispatched when emission of particles is finished. */
     [Event(name="complete", type="starling.events.Event")]
     
     public class ParticleSystem extends DisplayObject implements IAnimatable

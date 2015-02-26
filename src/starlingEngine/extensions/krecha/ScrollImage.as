@@ -1,22 +1,22 @@
 package starlingEngine.extensions.krecha 
 {
-	import com.adobe.utils.AGALMiniAssembler;
-	import flash.display3D.*;
-	import flash.geom.*;
-	import flash.utils.Dictionary;
-	import starling.core.RenderSupport;
-	import starling.core.Starling;
-	import starling.display.DisplayObject;
-	import starling.errors.MissingContextError;
-	import starling.events.Event;
-	import starling.textures.Texture;
-	import starling.textures.TextureSmoothing;
-	import starling.utils.MatrixUtil;
-	import starling.utils.VertexData;
+import com.adobe.utils.AGALMiniAssembler;
 
+import flash.display3D.*;
+import flash.geom.*;
+import flash.utils.Dictionary;
 
+import starling.core.RenderSupport;
+import starling.core.Starling;
+import starling.display.DisplayObject;
+import starling.errors.MissingContextError;
+import starling.events.Event;
+import starling.textures.Texture;
+import starling.textures.TextureSmoothing;
+import starling.utils.MatrixUtil;
+import starling.utils.VertexData;
 
-	/**
+/**
 	 * Display object with tile texture, may contain 16 TileTexture objects
 	 * @author KrechaGames - Łukasz 'Cywil' Cywiński
 	 * Thanks to Pierre Chamberlain - http://pierrechamberlain.ca/blog

@@ -1,13 +1,18 @@
 package starlingEngine.effects 
 {
-	import bridge.abstract.effects.IAbstractParticleSystem;
-	import bridge.abstract.IAbstractImage;
-	import flash.geom.Point;
-	import starling.animation.Juggler;
-	import starling.extensions.particles.PDParticleSystem;
-	import starling.textures.Texture;
-	import starlingEngine.elements.EngineSprite;
-	/**
+import bridge.abstract.IAbstractImage;
+import bridge.abstract.effects.IAbstractParticleSystem;
+
+import flash.geom.Point;
+
+import starling.animation.Juggler;
+import starling.extensions.particles.ColorArgb;
+import starling.extensions.particles.PDParticleSystem;
+import starling.textures.Texture;
+
+import starlingEngine.elements.EngineSprite;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */
@@ -622,7 +627,7 @@ package starlingEngine.effects
 		}
 		public function set startColor(val:Object):void
 		{
-			_particleSystem.startColor = val as  starling.extensions.particles.ColorArgb;
+			_particleSystem.startColor = val as  ColorArgb;
 		}
 		
 			/**
@@ -634,7 +639,7 @@ package starlingEngine.effects
 		}
 		public function set endColor(val:Object):void
 		{
-			_particleSystem.endColor = val as  starling.extensions.particles.ColorArgb;
+			_particleSystem.endColor = val as  ColorArgb;
 		}
 		
 	}

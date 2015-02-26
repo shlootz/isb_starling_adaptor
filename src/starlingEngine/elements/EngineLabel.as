@@ -1,13 +1,12 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.IAbstractDisplayObjectContainer;
-	import bridge.abstract.IAbstractSprite;
-	import bridge.abstract.IAbstractTextField;
-	import bridge.abstract.ui.IAbstractLabel;
-	import starling.display.DisplayObjectContainer;
-	import starling.text.TextField;
-	/**
+import bridge.abstract.IAbstractSprite;
+import bridge.abstract.IAbstractTextField;
+import bridge.abstract.ui.IAbstractLabel;
+
+import starling.text.TextField;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

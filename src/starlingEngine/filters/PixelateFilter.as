@@ -21,14 +21,14 @@
  */
  
 package starlingEngine.filters {
-    import flash.display3D.Context3D;
-    import flash.display3D.Context3DProgramType;
-    import flash.display3D.Program3D;
-	import starling.filters.FragmentFilter;
- 
-    import starling.textures.Texture;
- 
-    public class PixelateFilter extends FragmentFilter
+import flash.display3D.Context3D;
+import flash.display3D.Context3DProgramType;
+import flash.display3D.Program3D;
+
+import starling.filters.FragmentFilter;
+import starling.textures.Texture;
+
+public class PixelateFilter extends FragmentFilter
     {
         private var mQuantifiers:Vector.<Number> = new <Number>[1, 1, 1, 1];
         private var mPixelSize:int;

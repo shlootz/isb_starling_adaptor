@@ -1,11 +1,9 @@
 package starlingEngine.ui 
 {
-	import bridge.abstract.IAbstractImage;
-	import bridge.abstract.ui.IAbstractComboBoxItemRenderer;
-	import starling.display.Image;
-	import starling.textures.Texture;
-	import starlingEngine.elements.EngineImage;
-	/**
+import bridge.abstract.IAbstractImage;
+import bridge.abstract.ui.IAbstractComboBoxItemRenderer;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

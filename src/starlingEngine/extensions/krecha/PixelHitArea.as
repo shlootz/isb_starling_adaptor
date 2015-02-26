@@ -1,14 +1,15 @@
 package starlingEngine.extensions.krecha 
 {
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.geom.Matrix;
-	import flash.sampler.getSize;
-	import flash.utils.Dictionary;
-	import flash.utils.getTimer;
-	import starling.utils.Color;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.geom.Matrix;
+import flash.sampler.getSize;
+import flash.utils.Dictionary;
+import flash.utils.getTimer;
 
-	/**	 
+import starling.utils.Color;
+
+/**
 	 * Create and manage pixel hit areas.
 	 * @author KrechaGames - Łukasz 'Cywil' Cywiński
 	 */

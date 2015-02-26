@@ -1,21 +1,26 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractState;
-	import citrus.core.starling.StarlingState;
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.IAbstractSprite;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import flash.utils.Dictionary;
-	import signals.Signals;
-	import signals.SignalsHub;
-	import starling.display.DisplayObject;
-	import starling.display.Sprite;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	import starlingEngine.events.GESignalEvent;
-	/**
+import bridge.abstract.IAbstractDisplayObject;
+import bridge.abstract.IAbstractSprite;
+import bridge.abstract.IAbstractState;
+
+import citrus.core.starling.StarlingState;
+
+import flash.geom.Point;
+import flash.geom.Rectangle;
+import flash.utils.Dictionary;
+
+import signals.Signals;
+import signals.SignalsHub;
+
+import starling.display.DisplayObject;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
+
+import starlingEngine.events.GESignalEvent;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

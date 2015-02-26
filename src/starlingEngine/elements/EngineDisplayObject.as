@@ -1,8 +1,10 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractDisplayObject;
-	import starling.display.DisplayObject;
-	/**
+import bridge.abstract.IAbstractDisplayObject;
+
+import starling.display.DisplayObject;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

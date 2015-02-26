@@ -1,12 +1,12 @@
 package starlingEngine.extensions.krecha 
 {
-	import flash.geom.Rectangle;
+import flash.geom.Rectangle;
 
-	import starling.textures.ConcreteTexture;
-	import starling.textures.SubTexture;
-	import starling.textures.Texture;
+import starling.textures.ConcreteTexture;
+import starling.textures.SubTexture;
+import starling.textures.Texture;
 
-	/**
+/**
 	 * Tile layer used in ScrollImage
 	 * @author KrechaGames - Łukasz 'Cywil' Cywiński
 	 */

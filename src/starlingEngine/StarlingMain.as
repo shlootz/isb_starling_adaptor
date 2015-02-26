@@ -1,8 +1,8 @@
 package  starlingEngine
 {
-	import starling.display.Quad;
-	import starling.display.Sprite;
-	/**
+import starling.display.Sprite;
+
+/**
 	 * ...
 	 * @author Eu
 	 */

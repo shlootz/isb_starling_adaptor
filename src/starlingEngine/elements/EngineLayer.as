@@ -1,17 +1,13 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.IAbstractDisplayObjectContainer;
-	import bridge.abstract.IAbstractLayer;
-	import flash.geom.Point;
-	import flash.utils.Dictionary;
-	import org.osflash.signals.natives.NativeSignal;
-	import starling.display.DisplayObject;
-	import starling.display.Sprite;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	/**
+import bridge.abstract.IAbstractDisplayObject;
+import bridge.abstract.IAbstractLayer;
+
+import flash.utils.Dictionary;
+
+import starling.display.DisplayObject;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

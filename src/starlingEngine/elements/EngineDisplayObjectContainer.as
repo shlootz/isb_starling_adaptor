@@ -1,8 +1,10 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractDisplayObjectContainer;
-	import flash.utils.Dictionary;
-	/**
+import bridge.abstract.IAbstractDisplayObjectContainer;
+
+import flash.utils.Dictionary;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

@@ -1,16 +1,16 @@
 package starlingEngine.extensions
 {
-  import flash.geom.Rectangle;
-	import flash.utils.Dictionary;
-	
-	import starling.display.Image;
-	import starling.text.BitmapChar;
-	import starling.textures.Texture;
-	import starling.textures.TextureSmoothing;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
+import flash.geom.Rectangle;
+import flash.utils.Dictionary;
 
-	public class DistanceFieldFont
+import starling.display.Image;
+import starling.text.BitmapChar;
+import starling.textures.Texture;
+import starling.textures.TextureSmoothing;
+import starling.utils.HAlign;
+import starling.utils.VAlign;
+
+public class DistanceFieldFont
 	{
 		/** Use this constant for the <code>fontSize</code> property of the TextField class to 
 		 *  render the bitmap font in exactly the size it was created. */ 

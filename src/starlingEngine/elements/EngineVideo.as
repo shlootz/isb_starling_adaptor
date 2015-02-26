@@ -1,21 +1,24 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractSprite;
-	import bridge.abstract.IAbstractVideo;
-	import citrus.ui.starling.UI;
-	import flash.events.TimerEvent;
-	import flash.geom.Rectangle;
-	import flash.net.NetConnection;
-	import flash.net.NetStream;
-	import flash.utils.Timer;
-	import signals.ISignalsHub;
-	import signals.Signals;
-	import starling.events.Event;
-	import starling.utils.AssetManager;
-	import starlingEngine.events.GESignalEvent;
-	import starlingEngine.video.display.Video;
-	import utils.delayedFunctionCall;
-	/**
+import bridge.abstract.IAbstractVideo;
+
+import flash.events.TimerEvent;
+import flash.net.NetConnection;
+import flash.net.NetStream;
+import flash.utils.Timer;
+
+import signals.ISignalsHub;
+import signals.Signals;
+
+import starling.events.Event;
+import starling.utils.AssetManager;
+
+import starlingEngine.events.GESignalEvent;
+import starlingEngine.video.display.Video;
+
+import utils.delayedFunctionCall;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */
@@ -142,7 +145,6 @@ package starlingEngine.elements
 		 */
 		private function emitStopSignal(e:TimerEvent):void
 		{
-			_started = false;
 			var o:GESignalEvent = new GESignalEvent()
 					o.eventName = Signals.FLV_MOVIE_ENDED;
 					o.engineEvent = e;
@@ -151,6 +153,7 @@ package starlingEngine.elements
 					{
 						_signalsHub.dispatchSignal(Signals.FLV_MOVIE_ENDED, this.name, o);
 					}
+            _started = false;
 		}
 		
 		/**

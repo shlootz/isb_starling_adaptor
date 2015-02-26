@@ -1,16 +1,18 @@
 package starlingEngine.ui 
 {
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.IAbstractImage;
-	import bridge.abstract.ui.IAbstractLabel;
-	import bridge.abstract.ui.IAbstractSlider;
-	import feathers.controls.Button;
-	import feathers.controls.Slider;
-	import starling.display.Image;
-	import starling.display.Sprite;
-	import starling.events.Event;
-	import starlingEngine.elements.EngineSprite;
-	/**
+import bridge.abstract.IAbstractImage;
+import bridge.abstract.ui.IAbstractLabel;
+import bridge.abstract.ui.IAbstractSlider;
+
+import feathers.controls.Button;
+import feathers.controls.Slider;
+
+import starling.display.Image;
+import starling.events.Event;
+
+import starlingEngine.elements.EngineSprite;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */
@@ -36,18 +38,18 @@ package starlingEngine.ui
 			 slider.value = 50;
 			 slider.addEventListener( Event.CHANGE, slider_changeHandler );
 			 
-			 slider.thumbFactory = function():feathers.controls.Button
+			 slider.thumbFactory = function():Button
 			{
-				var button:feathers.controls.Button = new feathers.controls.Button();
+				var button:Button = new Button();
 				//skin the thumb here
 				button.defaultSkin = thumbUpSkin as Image;
 				button.downSkin = thumbDownSkin as Image;
 				return button;
 			}
 			
-			slider.minimumTrackFactory = function():feathers.controls.Button
+			slider.minimumTrackFactory = function():Button
 			{
-				var button:feathers.controls.Button = new feathers.controls.Button();
+				var button:Button = new Button();
 				//skin the minimum track here
 				button.defaultSkin = trackUpSkin as Image;
 				button.downSkin = trackDownSkin as Image;

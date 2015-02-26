@@ -1,19 +1,25 @@
 package starlingEngine.effects 
 {
-	import bridge.abstract.effects.IAbstractParticleSystem;
-	import bridge.abstract.IAbstractImage;
-	import flash.geom.Point;
-	import signals.ISignalsHub;
-	import signals.Signals;
-	import starling.animation.Juggler;
-	import starling.display.FFParticleSystem;
-	import starling.display.FFParticleSystem.SystemOptions;
-	import starling.display.Image;
-	import starling.textures.Texture;
-	import starlingEngine.elements.EngineSprite;
-	import starlingEngine.events.GESignalEvent;
-	import utils.ColorArgb;
-	/**
+import bridge.abstract.IAbstractImage;
+import bridge.abstract.effects.IAbstractParticleSystem;
+
+import flash.geom.Point;
+
+import signals.ISignalsHub;
+import signals.Signals;
+
+import starling.animation.Juggler;
+import starling.display.FFParticleSystem;
+import starling.display.FFParticleSystem.SystemOptions;
+import starling.display.Image;
+import starling.textures.Texture;
+
+import starlingEngine.elements.EngineSprite;
+import starlingEngine.events.GESignalEvent;
+
+import utils.ColorArgb;
+
+/**
 	 * ...
 	 * @author Eu
 	 */

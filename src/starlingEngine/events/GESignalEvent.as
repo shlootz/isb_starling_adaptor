@@ -1,7 +1,8 @@
 package starlingEngine.events 
 {
-	import bridge.abstract.events.IAbstractSignalEvent;
-	/**
+import bridge.abstract.events.IAbstractSignalEvent;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

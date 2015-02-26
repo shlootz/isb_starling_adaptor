@@ -1,21 +1,18 @@
 package starlingEngine.extensions.pixelmask
 {
-	import bridge.abstract.AbstractPool;
-	import flash.display3D.Context3DBlendFactor;
-	import flash.geom.Matrix;
-	import starling.textures.Texture;
-	import starlingEngine.elements.EngineImage;
-	
-	import starling.core.RenderSupport;
-	import starling.core.Starling;
-	import starling.display.BlendMode;
-	import starling.display.DisplayObject;
-	import starling.display.DisplayObjectContainer;
-	import starling.display.Image;
-	import starling.events.Event;
-	import starling.textures.RenderTexture;
-	
-	public class PixelMaskDisplayObject extends DisplayObjectContainer
+import flash.display3D.Context3DBlendFactor;
+import flash.geom.Matrix;
+
+import starling.core.RenderSupport;
+import starling.core.Starling;
+import starling.display.BlendMode;
+import starling.display.DisplayObject;
+import starling.display.DisplayObjectContainer;
+import starling.display.Image;
+import starling.events.Event;
+import starling.textures.RenderTexture;
+
+public class PixelMaskDisplayObject extends DisplayObjectContainer
 	{
 		private static const MASK_MODE_NORMAL:String = "mask";
 		private static const MASK_MODE_INVERTED:String = "maskinverted";

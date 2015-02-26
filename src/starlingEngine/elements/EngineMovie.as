@@ -1,16 +1,17 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractAnimatable;
-	import bridge.abstract.IAbstractImage;
-	import bridge.abstract.IAbstractMovie;
-	import bridge.abstract.IAbstractTexture;
-	import citrus.ui.starling.UI;
-	import flash.display.BitmapData;
-	import flash.media.Sound;
-	import starling.display.Image;
-	import starling.display.MovieClip;
-	import starling.textures.Texture;
-	/**
+import bridge.abstract.IAbstractAnimatable;
+import bridge.abstract.IAbstractImage;
+import bridge.abstract.IAbstractMovie;
+
+import flash.display.BitmapData;
+import flash.media.Sound;
+
+import starling.display.Image;
+import starling.display.MovieClip;
+import starling.textures.Texture;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

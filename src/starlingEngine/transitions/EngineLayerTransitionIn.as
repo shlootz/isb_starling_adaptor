@@ -1,9 +1,9 @@
 package starlingEngine.transitions 
 {
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.transitions.IAbstractLayerTransitionIn;
-	import com.greensock.TweenLite;
-	/**
+import bridge.abstract.IAbstractDisplayObject;
+import bridge.abstract.transitions.IAbstractLayerTransitionIn;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

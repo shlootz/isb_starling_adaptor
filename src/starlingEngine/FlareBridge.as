@@ -1,20 +1,20 @@
 package starlingEngine 
 {
-	import flare.basic.Scene3D;
-	import flare.basic.Viewer3D;
-	import flare.core.Camera3D;
-	import flare.core.Pivot3D;
-	import flare.primitives.Cube;
-	import flash.display.Sprite;
-	import flash.display.Stage3D;
-	import flash.display3D.Context3D;
-	import flash.events.Event;
-	import flash.geom.Vector3D;
-	import org.osflash.signals.Signal;
-	import signals.ISignalsHub;
-	import starling.core.Starling;
-	
-	/**
+import flare.basic.Scene3D;
+import flare.basic.Viewer3D;
+import flare.core.Camera3D;
+import flare.core.Pivot3D;
+
+import flash.display.Sprite;
+import flash.display3D.Context3D;
+import flash.events.Event;
+import flash.geom.Vector3D;
+
+import signals.ISignalsHub;
+
+import starling.core.Starling;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

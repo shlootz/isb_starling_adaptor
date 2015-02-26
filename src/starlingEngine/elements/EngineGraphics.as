@@ -1,24 +1,21 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractDisplayObject;
-	import bridge.abstract.IAbstractDisplayObjectContainer;
-	import bridge.abstract.IAbstractGraphics;
-	import bridge.abstract.IAbstractImage;
-	import bridge.abstract.IAbstractMask;
-	import bridge.abstract.IAbstractSprite;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.Shape;
-	import flash.geom.Matrix;
-	import starling.display.DisplayObjectContainer;
-	import starling.display.Graphics;
-	import starling.display.Image;
-	import starling.display.materials.StandardMaterial;
-	import starling.display.shaders.fragment.TextureFragmentShader;
-	import starling.display.shaders.vertex.AnimateUVVertexShader;
-	import starling.textures.GradientTexture;
-	import starling.textures.Texture;
-	/**
+import bridge.abstract.IAbstractDisplayObjectContainer;
+import bridge.abstract.IAbstractGraphics;
+import bridge.abstract.IAbstractImage;
+
+import flash.geom.Matrix;
+
+import starling.display.DisplayObjectContainer;
+import starling.display.Graphics;
+import starling.display.Image;
+import starling.display.materials.StandardMaterial;
+import starling.display.shaders.fragment.TextureFragmentShader;
+import starling.display.shaders.vertex.AnimateUVVertexShader;
+import starling.textures.GradientTexture;
+import starling.textures.Texture;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

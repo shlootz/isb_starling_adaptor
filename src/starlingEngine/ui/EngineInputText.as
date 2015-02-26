@@ -1,16 +1,21 @@
 package starlingEngine.ui 
 {
-	import bridge.abstract.ui.IAbstractInputText;
-	import feathers.controls.TextInput;
-	import feathers.events.FeathersEventType;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import signals.Signals;
-	import signals.SignalsHub;
-	import starling.display.Image;
-	import starling.events.Event;
-	import starlingEngine.events.GESignalEvent;
-	/**
+import bridge.abstract.ui.IAbstractInputText;
+
+import feathers.controls.TextInput;
+import feathers.events.FeathersEventType;
+
+import flash.display.Bitmap;
+
+import signals.Signals;
+import signals.SignalsHub;
+
+import starling.display.Image;
+import starling.events.Event;
+
+import starlingEngine.events.GESignalEvent;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

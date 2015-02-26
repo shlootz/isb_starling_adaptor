@@ -1,11 +1,13 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractImage;
-	import bridge.abstract.IAbstractTexture;
-	import flash.display.BitmapData;
-	import starling.display.Image;
-	import starling.textures.Texture;
-	/**
+import bridge.abstract.IAbstractImage;
+
+import flash.display.BitmapData;
+
+import starling.display.Image;
+import starling.textures.Texture;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

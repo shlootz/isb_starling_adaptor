@@ -1,17 +1,16 @@
 package starlingEngine.extensions
 {
-    import flash.utils.Dictionary;
+import flash.geom.Rectangle;
+import flash.utils.Dictionary;
 
-    import starlingEngine.extensions.quadtree.Quadtree;
+import starling.core.RenderSupport;
+import starling.display.DisplayObject;
+import starling.display.Sprite;
+import starling.events.Event;
 
-    import flash.geom.Rectangle;
+import starlingEngine.extensions.quadtree.Quadtree;
 
-    import starling.core.RenderSupport;
-    import starling.display.DisplayObject;
-    import starling.display.Sprite;
-    import starling.events.Event;
-
-    public class QuadtreeSprite extends Sprite
+public class QuadtreeSprite extends Sprite
     {
         private var _quadtree:Quadtree;
         private var _viewport:Rectangle;

@@ -1,16 +1,20 @@
 package starlingEngine.validators 
 {
-	import bridge.abstract.IAbstractTextField;
-	import bridge.abstract.ui.IAbstractLabel;
-	import bridge.IEngine;
-	import flash.filters.BevelFilter;
-	import flash.filters.BitmapFilterQuality;
-	import flash.filters.DropShadowFilter;
-	import flash.filters.GlowFilter;
-	import flash.filters.GradientBevelFilter;
-	import starling.utils.AssetManager;
-	import starlingEngine.elements.EngineLayerLayoutElementVo;
-	/**
+import bridge.IEngine;
+import bridge.abstract.IAbstractTextField;
+import bridge.abstract.ui.IAbstractLabel;
+
+import flash.filters.BevelFilter;
+import flash.filters.BitmapFilterQuality;
+import flash.filters.DropShadowFilter;
+import flash.filters.GlowFilter;
+import flash.filters.GradientBevelFilter;
+
+import starling.utils.AssetManager;
+
+import starlingEngine.elements.EngineLayerLayoutElementVo;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

@@ -21,14 +21,14 @@
  */
  
 package starlingEngine.filters {
-    import flash.display3D.Context3D;
-    import flash.display3D.Context3DProgramType;
-    import flash.display3D.Program3D;
-	import starling.filters.FragmentFilter;
- 
-    import starling.textures.Texture;
- 
-    public class NewsprintFilter extends FragmentFilter
+import flash.display3D.Context3D;
+import flash.display3D.Context3DProgramType;
+import flash.display3D.Program3D;
+
+import starling.filters.FragmentFilter;
+import starling.textures.Texture;
+
+public class NewsprintFilter extends FragmentFilter
     {
         private var mQuantifiers:Vector.<Number>	= new <Number>[1.0, 1.0, 1.0,  1.0];
 	private var mConstants:Vector.<Number>		= new <Number>[4.0, 5.0, 10.0, 3.0];;

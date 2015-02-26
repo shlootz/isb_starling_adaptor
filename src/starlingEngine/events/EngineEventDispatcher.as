@@ -1,12 +1,15 @@
 package starlingEngine.events 
 {
-	import bridge.abstract.events.IAbstractEvent;
-	import bridge.abstract.events.IAbstractEventDispatcher;
-	/**
+import bridge.abstract.events.IAbstractEvent;
+import bridge.abstract.events.IAbstractEventDispatcher;
+
+import starling.events.EventDispatcher;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */
-	public class EngineEventDispatcher extends starling.events.EventDispatcher implements IAbstractEventDispatcher
+	public class EngineEventDispatcher extends EventDispatcher implements IAbstractEventDispatcher
 	{
 		
 		public function EngineEventDispatcher() 

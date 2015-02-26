@@ -22,10 +22,10 @@
 
 package starlingEngine.video.events
 {
-    
-	import starling.events.Event;
-	 
-    /** A VideoEvent is triggered once per video/camera frame and dispatched by Video/WebcamVideo.
+
+import starling.events.Event;
+
+/** A VideoEvent is triggered once per video/camera frame and dispatched by Video/WebcamVideo.
      *
      *  They may come in handy if you want to handle the draw/upload process yourself; if you
 	 *  want to process a BitmapData/ByteArrays only if it gets updated (AR); or if you want to
@@ -35,7 +35,7 @@ package starlingEngine.video.events
 	 *  @see de.flintfabrik.starling.display.WebcamVideo
 	 * 
      */ 
-	public class VideoEvent extends starling.events.Event
+	public class VideoEvent extends Event
     {
         /** Event type for a new frame available. */
 		public static const VIDEO_FRAME:String = "videoFrame";

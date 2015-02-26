@@ -1,14 +1,11 @@
 package starlingEngine.ui 
 {
-	import bridge.abstract.IAbstractImage;
-	import bridge.abstract.ui.IAbstractToggle;
-	import starling.events.Event;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	import starlingEngine.events.EngineEvent;
+import bridge.abstract.IAbstractImage;
+import bridge.abstract.ui.IAbstractToggle;
 
-	/**
+import starlingEngine.events.EngineEvent;
+
+/**
 	 * ...
 	 * @author  Alex Popescu
 	 */

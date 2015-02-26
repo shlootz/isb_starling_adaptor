@@ -23,7 +23,11 @@
           </entries>
           <sdk name="AIRSDK_Compiler" />
         </dependencies>
-        <compiler-options />
+        <compiler-options>
+          <map>
+            <entry key="compiler.keep-generated-actionscript" value="true" />
+          </map>
+        </compiler-options>
         <packaging-air-desktop />
         <packaging-android />
         <packaging-ios />

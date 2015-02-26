@@ -10,12 +10,12 @@
 
 package starlingEngine.extensions
 {
-    import flash.display3D.Context3DBlendFactor;
-    
-    import starling.textures.Texture;
-    import starling.utils.deg2rad;
-    
-    public class PDParticleSystem extends ParticleSystem
+import flash.display3D.Context3DBlendFactor;
+
+import starling.textures.Texture;
+import starling.utils.deg2rad;
+
+public class PDParticleSystem extends ParticleSystem
     {
         private const EMITTER_TYPE_GRAVITY:int = 0;
         private const EMITTER_TYPE_RADIAL:int  = 1;

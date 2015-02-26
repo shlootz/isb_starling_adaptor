@@ -1,7 +1,8 @@
 package starlingEngine.filters 
 {
-	import bridge.abstract.filters.IAbstractDropShadowFilter;
-	/**
+import bridge.abstract.filters.IAbstractDropShadowFilter;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

@@ -1,21 +1,21 @@
 package starlingEngine.extensions
 {
-  import flash.geom.Matrix;
-	import flash.geom.Point;
-	import flash.text.TextFormatAlign;
-	
-	import feathers.core.FeathersControl;
-	import feathers.core.ITextRenderer;
-	import feathers.text.BitmapFontTextFormat;
-	
-	import starling.core.RenderSupport;
-	import starling.display.Image;
-	import starling.text.BitmapChar;
-	import starling.text.BitmapFont;
-	import starling.textures.Texture;
-	import starling.textures.TextureSmoothing;
-	
-	public class DistanceFieldFontTextRenderer extends FeathersControl implements ITextRenderer
+import feathers.core.FeathersControl;
+import feathers.core.ITextRenderer;
+import feathers.text.BitmapFontTextFormat;
+
+import flash.geom.Matrix;
+import flash.geom.Point;
+import flash.text.TextFormatAlign;
+
+import starling.core.RenderSupport;
+import starling.display.Image;
+import starling.text.BitmapChar;
+import starling.text.BitmapFont;
+import starling.textures.Texture;
+import starling.textures.TextureSmoothing;
+
+public class DistanceFieldFontTextRenderer extends FeathersControl implements ITextRenderer
 	{
 		/**
 		 * @private

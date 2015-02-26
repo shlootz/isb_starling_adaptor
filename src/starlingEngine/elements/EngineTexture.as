@@ -1,12 +1,15 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractTexture;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.geom.Rectangle;
-	import flash.utils.ByteArray;
-	import starling.textures.Texture;
-	/**
+import bridge.abstract.IAbstractTexture;
+
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.geom.Rectangle;
+import flash.utils.ByteArray;
+
+import starling.textures.Texture;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

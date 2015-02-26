@@ -1,10 +1,13 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractImage;
-	import bridge.abstract.IAbstractScrollTile;
-	import starling.textures.Texture;
-	import starlingEngine.extensions.krecha.ScrollTile;
-	/**
+import bridge.abstract.IAbstractImage;
+import bridge.abstract.IAbstractScrollTile;
+
+import starling.textures.Texture;
+
+import starlingEngine.extensions.krecha.ScrollTile;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */

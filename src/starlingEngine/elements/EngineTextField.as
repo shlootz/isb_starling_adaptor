@@ -1,12 +1,14 @@
 package starlingEngine.elements 
 {
-	import bridge.abstract.IAbstractTextField;
-	import flash.geom.Rectangle;
-	import flash.text.TextFormat;
-	import starling.display.DisplayObject;
-	import starling.text.BitmapFont;
-	import starling.text.TextField;
-	/**
+import bridge.abstract.IAbstractTextField;
+
+import flash.geom.Rectangle;
+import flash.text.TextFormat;
+
+import starling.display.DisplayObject;
+import starling.text.TextField;
+
+/**
 	 * ...
 	 * @author Alex Popescu
 	 */
@@ -222,7 +224,7 @@ package starlingEngine.elements
 		 * coordinate system. If you pass a 'resultRectangle', the result will be stored in this 
 		 * rectangle instead of creating a new object.
 		 */
-		override public function getBounds (targetSpace:DisplayObject, resultRect:flash.geom.Rectangle = null) : flash.geom.Rectangle
+		override public function getBounds (targetSpace:DisplayObject, resultRect:Rectangle = null) : Rectangle
 		{
 			return super.getBounds(targetSpace, resultRect);
 		}

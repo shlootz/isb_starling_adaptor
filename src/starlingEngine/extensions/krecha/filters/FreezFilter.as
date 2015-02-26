@@ -1,12 +1,12 @@
 package starlingEngine.extensions.krecha.filters
 {
-    import flash.display3D.Context3D;
-    import flash.display3D.Program3D;
-	import starling.filters.FragmentFilter;
-    
-    import starling.textures.Texture;
+import flash.display3D.Context3D;
+import flash.display3D.Program3D;
 
-	/**
+import starling.filters.FragmentFilter;
+import starling.textures.Texture;
+
+/**
 	 * Filter draw object only once - use clearCache() to unfreez. Based on starling.filters.IdentityFilter.
 	 */
     public class FreezFilter extends FragmentFilter
