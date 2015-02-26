@@ -76,15 +76,18 @@ import utils.delayedFunctionCall;
 		{
 			if (_netStream.decodedFrames == 0)
 			{
+                trace("SEEKING")
 				var addedDelayedFunctionCall:delayedFunctionCall = new delayedFunctionCall(onAddedToStage, 100);
 			}
 			else
             {
+                trace("STARTING");
 				this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 				_netStream.seek(0);
 				
-				if (_netStream.decodedFrames > 1 && !_started)
+				if (_netStream.decodedFrames >= 1 && !_started)
 				{
+                    trace("EMITING");
 						emitStartSignal();
 				}
 			}
@@ -97,7 +100,7 @@ import utils.delayedFunctionCall;
 		private function statsTimer_timerHandler(e:TimerEvent):void
         {
           //trace("decoded/dropped frames:\t " + _netStream.decodedFrames +"/" + _netStream.info.droppedFrames + "\nFPS:\t" + _netStream.currentFPS.toFixed(1) + "\nvideo:\t" + _video.width + "x" + _video.height + "\ntextureClass: " + _video.texture.root.base + "\ntexture:\t" + _video.texture.root.nativeWidth + "x" + _video.texture.root.nativeHeight + "\ndraw:\t" + _video.drawTime.toFixed(2) + " ms" + "\nupload:\t" + _video.uploadTime.toFixed(2) + " ms" + "\ncomplete:\t" + (_video.drawTime + _video.uploadTime).toFixed(2) + " ms");
-		  trace(_prevDecodedFrames +" != " + _netStream.decodedFrames + " || " + _netStream.decodedFrames + " == 0");
+		  //trace(_prevDecodedFrames +" != " + _netStream.decodedFrames + " || " + _netStream.decodedFrames + " == 0");
 		  
 			if (_prevDecodedFrames != _netStream.decodedFrames || _netStream.decodedFrames == 0)
 			{
