@@ -1,11 +1,15 @@
 package starlingEngine.elements 
 {
+import bridge.IBridgeGraphics;
 import bridge.abstract.IAbstractDisplayObject;
 import bridge.abstract.IAbstractLayer;
 
 import flash.utils.Dictionary;
 
 import starling.display.DisplayObject;
+import starling.utils.AssetManager;
+
+import starlingEngine.extensions.ImageBatch;
 
 /**
 	 * ...
@@ -20,12 +24,12 @@ import starling.display.DisplayObject;
 		private var _layoutElements:Dictionary = new Dictionary(true);
 		private var _addToStage:Boolean = false;
 		private var _redrawEnabled:Boolean = true;
-		
+
 		/**
 		 * 
 		 * @param	layerName
 		 */
-		public function EngineLayer(name:String, depth:uint = 0, layout:XML = null, addToStage:Boolean = true ) 
+		public function EngineLayer(name:String, depth:uint = 0, layout:XML = null, addToStage:Boolean = true)
 		{
 			_layerName = name;
 			_layerDepth = depth;
@@ -78,9 +82,9 @@ import starling.display.DisplayObject;
 			return super.addChildAt(child as DisplayObject, index) as IAbstractDisplayObject;
 		}
 		
-	/**
-	 * 
-	 */
+        /**
+         *
+         */
 		public function set layerName(name:String):void
 		{
 			_layerName = name;
@@ -257,23 +261,9 @@ import starling.display.DisplayObject;
 				o.labelAlign = labelAlign;
 				o.filters = filters;
 				
-				if (flipped == "true")
-				{
-					o.flipped = true;
-				}
-				else
-				{
-					o.flipped = false;
-				}
+				o.flipped = flipped == "true";
 				
-				if (loop == "true")
-				{
-					o.loop = true;
-				}
-				else
-				{
-					o.loop = false;
-				}
+				o.loop = loop == "true";
 				
 				if (_layoutDictionary[name] != null)
 				{
@@ -338,6 +328,11 @@ import starling.display.DisplayObject;
 				super.killAllObjects();
 			}
 		}
+
+        override public function killAll(... rest):void
+        {
+            super.killAll(rest);
+        }
 	}
 	
 }

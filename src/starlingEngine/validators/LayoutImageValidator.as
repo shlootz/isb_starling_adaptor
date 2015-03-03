@@ -27,7 +27,7 @@ import starlingEngine.elements.EngineLayerLayoutElementVo;
 			img.width =  Math.round(Number(element.width));
 			img.height =  Math.round(Number(element.height));
 			img.name = element.name;
-			
+			img.touchable = false;
 			if (element.flipped)
 			{
 				img.pivotX = img.width;

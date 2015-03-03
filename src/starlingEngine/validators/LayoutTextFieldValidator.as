@@ -48,7 +48,8 @@ import starlingEngine.elements.EngineLayerLayoutElementVo;
 				tLabel.textField.hAlign = "center";
 				tLabel.textField.vAlign = "center";
 			}
-			
+
+			tLabel.flatten();
 			return tLabel;
 		}
 		
@@ -122,14 +123,7 @@ import starlingEngine.elements.EngineLayerLayoutElementVo;
 					switch (typeof target[i])
 					{
 						case "boolean":
-							if (source[i] == "true")
-							{
-								target[i] = true;
-							}
-							else
-							{
-								target[i] = false;
-							}
+							target[i] = source[i] == "true";
 							break;
 							
 						case "number":

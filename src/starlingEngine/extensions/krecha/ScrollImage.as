@@ -186,8 +186,6 @@ import starling.utils.VertexData;
 				}else {
 					reset ();
 				}
-			}else {
-				return;
 			}
 		}
 
