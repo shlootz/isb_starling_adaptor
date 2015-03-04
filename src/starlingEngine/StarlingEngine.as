@@ -206,12 +206,11 @@ import utils.delayedFunctionCall;
             _starling.supportHighResolutions = true;
             _textureFallBack = Texture.fromBitmapData(_bitmapDataFallBack);
 
-            //starling.shareContext = true;
             //creates a new pool for sprites
             _spritesPool = new AbstractPool("sprites", EngineSprite, 500);
 
             //creates a new pool for images
-            _imagesPool = new AbstractPool("images", EngineImage, 500, _textureFallBack);
+            _imagesPool = new AbstractPool("images", EngineImage, 1000, _textureFallBack);
 
             //creates a new pool for movieclips
             defaultFramesVector.push(Texture.fromColor(2, 2, 0x000000));
@@ -534,7 +533,7 @@ import utils.delayedFunctionCall;
             i.readjustSize();
             i.name = storageName;
 
-            _floatingTexturesDictionary[ storageName] = _assetsManager.getTexture(storageName);
+            _floatingTexturesDictionary[storageName] = _assetsManager.getTexture(storageName);
 
             return i;
         }
@@ -725,7 +724,6 @@ import utils.delayedFunctionCall;
             }
 
             var t:IAbstractTextField = new EngineTextField(width, finalH, text, fontName, fontSize, color, bold, nativeFiltersArr) as IAbstractTextField;
-            t.batchable = true;
             t.autoScale = true;
 
             return t;

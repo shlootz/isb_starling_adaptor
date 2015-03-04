@@ -30,7 +30,7 @@ import starlingEngine.elements.EngineLayerLayoutElementVo;
 		{
 			var tField:IAbstractTextField = engine.requestTextField(element.width, element.height, element.label, element.font, element.labelFontSize, element.labelFontColor);
 			var tLabel:IAbstractLabel = engine.requestLabelFromTextfield(tField, element.name);
-			
+
 			tLabel.x = Math.round(element.x);
 			tLabel.y = Math.round(element.y);
 			
@@ -49,7 +49,6 @@ import starlingEngine.elements.EngineLayerLayoutElementVo;
 				tLabel.textField.vAlign = "center";
 			}
 
-			tLabel.flatten();
 			return tLabel;
 		}
 		

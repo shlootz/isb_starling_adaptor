@@ -4,6 +4,8 @@ import bridge.abstract.IAbstractImage;
 
 import flash.display.BitmapData;
 
+import starling.display.BlendMode;
+
 import starling.display.Image;
 import starling.textures.Texture;
 
@@ -17,6 +19,7 @@ import starling.textures.Texture;
 		public function EngineImage(texture:Texture) 
 		{
 			super(texture as Texture);
+            //blendMode = BlendMode.NONE;
 		}
 		
 		public function get currentTexture () : Object

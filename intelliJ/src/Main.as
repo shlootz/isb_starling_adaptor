@@ -3,7 +3,10 @@ package {
 import bridge.BridgeGraphics;
 import bridge.IBridgeGraphics;
 import bridge.abstract.AbstractPool;
+import bridge.abstract.IAbstractImage;
+import bridge.abstract.IAbstractLayer;
 import bridge.abstract.IAbstractVideo;
+import bridge.abstract.ui.IAbstractLabel;
 
 import flash.display.DisplayObject;
 
@@ -29,7 +32,7 @@ import utils.delayedFunctionCall;
 public class Main extends Sprite {
 
     private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
-            new Point(1920, 1080),
+            new Point(800, 600),
             StarlingEngine,
             starling.utils.AssetManager,
             signals.SignalsHub,
@@ -40,29 +43,61 @@ public class Main extends Sprite {
     );
 
     public function Main() {
-        var textField:TextField = new TextField();
-        textField.text = "Hello, World";
-        addChild(textField);
-
         addChild(_bridgeGraphics.engine as DisplayObject);
         (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
     }
 
-    private var flv:IAbstractVideo;
-
     private function loadAssets(event:String, obj:Object):void
     {
-        flv = _bridgeGraphics.requestVideo();
-        flv.loop = false;
-        flv.addVideoPath("assets/IntroVideoModuleOther.flv", true);
-
-        var delayedFLV:delayedFunctionCall = new delayedFunctionCall(delayedFLVFct, 2000)
-
+        (_bridgeGraphics.assetsManager as AssetManager).enqueue(
+                "assets/BackgroundModuleAssets.xml",
+                "assets/BackgroundModuleSkin.png",
+                "assets/BackgroundModuleSymbolsBackgroundLayerLayout.xml",
+                "assets/BackgroundModuleSymbolsFrameLayerLayout.xml",
+                "assets/FeaturesModuleAssets.xml",
+                "assets/FeaturesModuleAssets1.xml",
+                "assets/FeaturesModuleSkin.png",
+                "assets/FeaturesModuleSkin1.png",
+                "assets/FreeSpinsModuleFreeGamesUILayerLayout.xml",
+                "assets/GainViewerModuleGainViewerLayerLayout",
+                "assets/Image 3.png",
+                "assets/InstantBonusModuleInstantBonusLayerLayout.xml",
+                "assets/IntroFeaturesModuleIntroLayerLayout.xml",
+                "assets/LinesModuleLinesLayerLayout.xml",
+                "assets/LogoModuleLogoLayerLayout.xml",
+                "assets/MenuModuleMenuLayerLayout.xml",
+                "assets/PaytableModule Assets.xml",
+                "assets/PayTableModulePayTableLayerLayout.xml",
+                "assets/PaytableModuleSkin.png",
+                "assets/PreloadeModuleAssets.xml",
+                "assets/PreloaderModulePreloaderLayerLayout.xml",
+                "assets/PreloaderModuleSkin.png",
+                "assets/RaBonusModuleBonusLayerLayout.xml",
+                "assets/StripModuleStripLayerLayout.xml",
+                "assets/UserInterfaceModuleGameplayButtonsLayerLayout.xml",
+                "assets/WinningsAnimationsModuleAssets1.xml",
+                "assets/WinningsAnimationsModuleAssets2.xml",
+                "assets/WinningsAnimationsModuleSkin1.png",
+                "assets/WinningsAnimationsModuleSkin2.png",
+                "assets/WinStepsModuleAssets.xml",
+                "assets/WinStepsModuleSkin.png"
+        );
+        (_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void {
+            trace("Loading assets, progress:", ratio);
+            if (ratio == 1) {
+                doStuff();
+            }
+        });
     }
 
-    private function delayedFLVFct():void
+    private function doStuff():void
     {
-        _bridgeGraphics.currentContainer.addNewChild(flv);
+        var layer:IAbstractLayer = _bridgeGraphics.requestLayer("test", 1, _bridgeGraphics.getXMLFromAssetsManager("UserInterfaceModuleGameplayButtonsLayerLayout"), true);
+        var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+
+        inLayers.push(layer);
+
+        _bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers);
     }
 }
 }
