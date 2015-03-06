@@ -6,7 +6,7 @@ import bridge.abstract.filters.IAbstractGlowFilter;
 	 * ...
 	 * @author Alex Popescu
 	 */
-	public class GlowFilterVO implements IAbstractGlowFilter
+	public class GlowFilterVO extends EngineReferencedFilterAbstract implements IAbstractGlowFilter
 	{
 		
 		private var _color:uint = 0;

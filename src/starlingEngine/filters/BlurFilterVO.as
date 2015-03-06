@@ -6,7 +6,7 @@ import bridge.abstract.filters.IAbstractBlurFilter;
 	 * ...
 	 * @author Alex Popescu
 	 */
-	public class BlurFilterVO implements IAbstractBlurFilter
+	public class BlurFilterVO extends EngineReferencedFilterAbstract implements IAbstractBlurFilter
 	{
 		
 		private var _blurX:Number = 1;

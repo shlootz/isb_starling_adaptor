@@ -6,7 +6,7 @@ import bridge.abstract.filters.IAbstractDropShadowFilter;
 	 * ...
 	 * @author Alex Popescu
 	 */
-	public class DropShadowFilterVO implements IAbstractDropShadowFilter
+	public class DropShadowFilterVO extends EngineReferencedFilterAbstract implements IAbstractDropShadowFilter
 	{
 		
 		private var _distance:Number = 4;

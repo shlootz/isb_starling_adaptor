@@ -61,9 +61,11 @@ import starling.core.RenderSupport;
 import starling.core.Starling;
 import starling.display.BlendMode;
 import starling.display.DisplayObject;
+import starling.display.DisplayObjectContainer;
 import starling.display.FFParticleSystem;
 import starling.display.Image;
 import starling.display.MovieClip;
+import starling.display.Quad;
 import starling.display.Stage;
 import starling.events.Touch;
 import starling.events.TouchEvent;
@@ -97,6 +99,7 @@ import starlingEngine.events.EngineEvent;
 import starlingEngine.events.GESignalEvent;
 import starlingEngine.filters.BlurFilterVO;
 import starlingEngine.filters.DropShadowFilterVO;
+import starlingEngine.filters.EngineReferencedFilterAbstract;
 import starlingEngine.filters.GlowFilterVO;
 import starlingEngine.filters.NewsprintFilter;
 import starlingEngine.filters.PixelateFilter;
@@ -113,6 +116,8 @@ import starlingEngine.validators.LayoutMovieClipValidator;
 import starlingEngine.validators.LayoutSliderValidator;
 import starlingEngine.validators.LayoutTextFieldValidator;
 import starlingEngine.validators.LayoutToggleButtonValidator;
+
+import utils.ClassHelper;
 
 import utils.delayedFunctionCall;
 
@@ -148,6 +153,7 @@ import utils.delayedFunctionCall;
 		private var _movieClipsPool:AbstractPool;
 		private var _buttonsPool:AbstractPool;
 		private var _masksPool:AbstractPool;
+        private var _textsPool:AbstractPool;
 		private var _fragmentStandardFilterPool:AbstractPool;
 		
 		private var _floatingTexturesDictionary:Dictionary = new Dictionary(true);
@@ -224,6 +230,9 @@ import utils.delayedFunctionCall;
 
             //creates a new pool for Maks
             _masksPool = new AbstractPool("maskPool", EngineMask, 50);
+
+            //creates a new pool for textFields
+            _textsPool = new AbstractPool("textsPool", EngineTextField, 100, 10,10,"");
 
             //assigns initial state
             _currentState = requestState();
@@ -333,37 +342,20 @@ import utils.delayedFunctionCall;
          */
         public function returnToPool(obj:Object):void
         {
+            var rootClass:Class = ClassHelper.getClass(obj);
             var poolSucces:Boolean = false;
+            var disposeSucces:Boolean = false;
 
-            if (obj as EngineSprite != null)
-            {
+            if (rootClass === EngineImage) {
                 poolSucces = true;
-
-                while ((obj as EngineSprite).numChildren > 0)
-                {
-                    var c:IAbstractDisplayObject;
-                    c = (obj as EngineSprite)..removeChildAndDispose((obj as EngineSprite)..getChildAtIndex(0), true);
-                    c.removeFromParent(true);
-                    c.dispose();
-                }
-
-                (obj as EngineSprite).removeFromParent();
-
-                obj = new EngineSprite();
-
-                _spritesPool.returnToPool(obj as EngineSprite);
-            }
-
-            if (obj as EngineImage != null)
-            {
-                poolSucces = true;
-
+                (obj as EngineImage).removeEventListeners();
                 (obj as EngineImage).removeFromParent();
-
-                if ((obj as EngineImage).texture != null)
+                if((obj as Quad).filter)
                 {
-                    if (_floatingTexturesDictionary[(obj as EngineImage).name])
-                    {
+                    returnToPool((obj as DisplayObject).filter);
+                }
+                if ((obj as EngineImage).texture != null) {
+                    if (_floatingTexturesDictionary[(obj as EngineImage).name]) {
                         _assetsManager.removeTexture(_floatingTexturesDictionary[(obj as EngineImage).name]);
                         _floatingTexturesDictionary[(obj as EngineImage).name] = null;
                         delete _floatingTexturesDictionary[(obj as EngineImage).name];
@@ -371,51 +363,90 @@ import utils.delayedFunctionCall;
 
                     obj = new EngineImage(_textureFallBack);
                 }
-
                 _imagesPool.returnToPool(obj as EngineImage);
-            }
-
-            if (obj as EngineMovie != null)
-            {
+            } else if (rootClass === EngineMovie) {
                 poolSucces = true;
-
+                (obj as EngineMovie).removeEventListeners();
                 (obj as EngineMovie).removeFromParent();
-
+                if((obj as Quad).filter)
+                {
+                    returnToPool((obj as DisplayObject).filter);
+                }
                 obj = new EngineMovie(defaultFramesVector);
-
                 _movieClipsPool.returnToPool(obj as EngineMovie);
-            }
-
-            if (obj as EngineButton != null)
-            {
+            } else if (rootClass === EngineButton) {
                 poolSucces = true;
-
+                (obj as EngineButton).removeEventListeners();
                 (obj as EngineButton).removeFromParent();
-
+                if((obj as Quad).filter)
+                {
+                    returnToPool((obj as DisplayObject).filter);
+                }
                 obj = new EngineButton();
-
                 _buttonsPool.returnToPool(obj as EngineButton);
-            }
-
-            if (obj as EngineMask != null)
-            {
+            } else if (rootClass === EngineMask) {
                 poolSucces = true;
-
+                (obj as EngineMask).removeEventListeners();
                 (obj as EngineMask).removeFromParent();
-
+                if((obj as Quad).filter)
+                {
+                    returnToPool((obj as DisplayObject).filter);
+                }
                 _masksPool.returnToPool(obj as EngineMask);
                 (obj as EngineMask).dispose();
-            }
-
-            if (obj as IAbstractReferencedFilter)
-            {
+            } else if (rootClass === BlurFilter) {
+                poolSucces = true;
+                _fragmentStandardFilterPool.returnToPool((obj as BlurFilter));
+            } else if (rootClass === DisplayObjectContainer) {
+                poolSucces = true;
+                var container:DisplayObjectContainer = obj as DisplayObjectContainer;
+                if((obj as Quad).filter)
+                {
+                    returnToPool((obj as DisplayObject).filter);
+                }
+                while (container.numChildren > 0) {
+                    returnToPool(container.getChildAt(container.numChildren - 1));
+                }
+                if (obj as EngineSprite) {
+                    (obj as EngineSprite).removeFromParent();
+                    if((obj as Quad).filter)
+                    {
+                        returnToPool((obj as DisplayObject).filter);
+                    }
+                    obj = new EngineSprite();
+                    _spritesPool.returnToPool(obj as EngineSprite);
+                }
+            } else if (rootClass === EngineLayer) {
+                poolSucces = true;
+                var layer:EngineLayer = obj as EngineLayer;
+                if((obj as Quad).filter)
+                {
+                    returnToPool((obj as DisplayObject).filter);
+                }
+                while (layer.numChildren > 0) {
+                    returnToPool(layer.getChildAt(layer.numChildren - 1));
+                }
+                if (obj as EngineLayer) {
+                    (obj as EngineLayer).removeFromParent();
+                }
+                obj = new EngineSprite();
+                _spritesPool.returnToPool(obj as EngineSprite);
+            } else if (rootClass === EngineTextField) {
+                poolSucces = true;
+                _textsPool.returnToPool(obj);
+            } else if (rootClass === EngineLabel) {
+                poolSucces = false;
+                disposeSucces = true;
+                returnToPool((obj as EngineLabel).textField);
+                (obj as EngineLabel).removeFromParent(true);
+            } else if (rootClass === BlurFilterVO || rootClass === GlowFilterVO || rootClass === DropShadowFilterVO){
                 poolSucces = true;
                 _fragmentStandardFilterPool.returnToPool((obj as IAbstractReferencedFilter).reference);
             }
 
             if (!poolSucces)
             {
-                trace("AssetsManager :: cannot return to pool object " + obj + " - pool not defined for this type");
+                trace("AssetsManager :: cannot return to pool object " + obj + " - pool not defined for this type " + " autodispose success: "+disposeSucces);
             }
             else
             {
@@ -723,7 +754,18 @@ import utils.delayedFunctionCall;
                 finalH = dynamicH;
             }
 
-            var t:IAbstractTextField = new EngineTextField(width, finalH, text, fontName, fontSize, color, bold, nativeFiltersArr) as IAbstractTextField;
+            //var t:IAbstractTextField = new EngineTextField(width, finalH, text, fontName, fontSize, color, bold, nativeFiltersArr) as IAbstractTextField;
+            var t:IAbstractTextField = _textsPool.getNewObject() as IAbstractTextField;
+            t.width = width;
+            t.height = height;
+            t.text = text;
+            t.fontName = fontName;
+            t.fontSize = fontSize;
+            t.color = color;
+            t.bold = bold;
+            if(nativeFiltersArr) {
+                t.nativeFilters = nativeFiltersArr;
+            }
             t.autoScale = true;
 
             return t;

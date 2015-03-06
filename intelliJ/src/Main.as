@@ -6,7 +6,11 @@ import bridge.abstract.AbstractPool;
 import bridge.abstract.IAbstractImage;
 import bridge.abstract.IAbstractLayer;
 import bridge.abstract.IAbstractVideo;
+import bridge.abstract.filters.IAbstractBlurFilter;
 import bridge.abstract.ui.IAbstractLabel;
+
+import flash.display.Bitmap;
+import flash.display.BitmapData;
 
 import flash.display.DisplayObject;
 
@@ -26,6 +30,7 @@ import starling.animation.Juggler;
 import starling.utils.AssetManager;
 
 import starlingEngine.StarlingEngine;
+import starlingEngine.filters.BlurFilterVO;
 
 import utils.delayedFunctionCall;
 
@@ -85,19 +90,50 @@ public class Main extends Sprite {
         (_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void {
             trace("Loading assets, progress:", ratio);
             if (ratio == 1) {
-                doStuff();
+                //testLayerDispose();
+                testFiltersDispose();
             }
         });
     }
 
-    private function doStuff():void
+    private function testLayerDispose():void
     {
         var layer:IAbstractLayer = _bridgeGraphics.requestLayer("test", 1, _bridgeGraphics.getXMLFromAssetsManager("UserInterfaceModuleGameplayButtonsLayerLayout"), true);
         var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
 
+        var someImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100,100,false, 0x000000));
+        var blurF:IAbstractBlurFilter = _bridgeGraphics.requestBlurFilter();
+        blurF.blurX = 5;
+        blurF.blurY = 5;
+
+        someImage.x = 100;
+        someImage.y = 100;
+
+        layer.addNewChild(someImage);
+        _bridgeGraphics.addBlurFilter(someImage, blurF);
+
         inLayers.push(layer);
 
         _bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers);
+
+        _bridgeGraphics.returnToPool(layer);
+    }
+
+    private function testFiltersDispose():void
+    {
+        var someImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100,100,false, 0x000000));
+        var blurF:IAbstractBlurFilter = _bridgeGraphics.requestBlurFilter();
+        blurF.blurX = 5;
+        blurF.blurY = 5;
+
+        someImage.x = 100;
+        someImage.y = 100;
+
+        _bridgeGraphics.currentContainer.addNewChild(someImage);
+        _bridgeGraphics.addBlurFilter(someImage, blurF);
+
+        _bridgeGraphics.returnToPool(blurF);
+        //_bridgeGraphics.returnToPool(someImage);
     }
 }
 }
