@@ -240,7 +240,7 @@ package
 			//{
 				//testFLV();
 			//})
-			//_bridgeGraphics.engine.is3D = true;
+			_bridgeGraphics.engine.is3D = true;
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
 		}
@@ -352,7 +352,7 @@ package
 						//testAnimatedTexture();
 						//for (var i:uint = 0; i < 5; i++ )
 						//{
-							testFLV();
+							testFLVs();
 						//}
 						//testOmnes();
 						//testAnimatedButtons();
@@ -366,21 +366,40 @@ package
 				});
 		}
 		
+		private var _mask:IAbstractMask;
+		private var _imgToMask:IAbstractImage;
+		private var _imgMask:IAbstractImage;
+		private var _counterMasks:int = 0;
+		
 		private function testMask():void 
 		{
-			var imgToMask:IAbstractImage = _bridgeGraphics.requestImage("BadGuy-Walking-01");
-			var imgMask:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(50, 50, false, 0xFFFFFF));
+			_imgToMask = _bridgeGraphics.requestImage("BadGuy-Walking-01");
+			_imgMask = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(150, 150, false, 0xFFFFFF));
 			
-			//_bridgeGraphics.addChild (imgToMask);
-			//_bridgeGraphics.addChild (imgMask);
+			addMask();
 			
-			var mask:IAbstractMask = _bridgeGraphics.requestMask(imgToMask, imgMask);
-			_bridgeGraphics.addChild(mask);
+			addEventListener(Event.ENTER_FRAME, testMasksDispose);
+		}
+		
+		private function addMask():void
+		{
+			//_bridgeGraphics.signalsManager.dispatchSignal(Signals.REMOVE_AND_DISPOSE,Signals.REMOVE_AND_DISPOSE, new EngineDelayedDisposeSignalEvent(_imgMask, _mask, true));
+			_bridgeGraphics.returnToPool(_imgMask);
+			_mask = _bridgeGraphics.requestMask(_imgToMask, _imgMask);
+			_bridgeGraphics.addChild(_mask);
+			_counterMasks++
+			//trace(_counterMasks);
+		}
+		
+		private function testMasksDispose(e:Event):void
+		{
+			_bridgeGraphics.returnToPool(_mask);
+			addMask();
 		}
 		
 		private function testDoubleSize():void
 		{
-			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("BadGuy-Walking-", 10, true);
+			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("ExplodingWild", 10, true);
 			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
 			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
 			mc.addNewFrame(_bridgeGraphics.requestImage("BadGuy-Walking-01"));
@@ -677,20 +696,38 @@ package
 		private var added:Boolean = false;
 		private var imgToPixelate:IAbstractImage
 		private var pixelSize:uint = 1;
+		private var frameCount:int = 0;
+		
+		private var imgWithFilters:IAbstractImage;
 		
 		private function testFiters():void
 		{
-			 imgToPixelate = _bridgeGraphics.requestImage("Background");
-			_bridgeGraphics.addChild(imgToPixelate);
-			_bridgeGraphics.addPixelationFilter(imgToPixelate, 100);
-			
+			 //imgToPixelate = _bridgeGraphics.requestImage("Background");
+			//_bridgeGraphics.addChild(imgToPixelate);
+			//_bridgeGraphics.addPixelationFilter(imgToPixelate, 100);
+			//
 			addEventListener(Event.ENTER_FRAME, pixelate);
+			glowFilter = _bridgeGraphics.requestGlowFilter();
+			imgWithFilters = _bridgeGraphics.requestImage("Rola-Wild-Extins");
+			imgWithFilters.x = 200;
+			imgWithFilters.y = 200;
+			_bridgeGraphics.addChild(imgWithFilters);
+			_bridgeGraphics.addGlowFilter(imgWithFilters, glowFilter);
 		}
 		
 		private function pixelate(e:Event):void
 		{
-			pixelSize -= 5;
-			_bridgeGraphics.addPixelationFilter(imgToPixelate, pixelSize);
+			frameCount++
+			//pixelSize -= 5;
+			//_bridgeGraphics.addPixelationFilter(imgToPixelate, pixelSize);
+			if (frameCount % 2 == 0)
+			{
+				_bridgeGraphics.returnToPool(glowFilter);
+			}
+			else
+			{
+				_bridgeGraphics.addGlowFilter(imgWithFilters, glowFilter);
+			}
 		}
 		
 		private function onButtonHover(type:String, e:Object):void
@@ -701,9 +738,9 @@ package
 				_bridgeGraphics.addGlowFilter(btn, glowFilter);
 				added = true;
 			}
-			//_bridgeGraphics.clearFilter(btn);
-			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OUT, onButtonOut);
-			//(_bridgeGraphics.signalsManager as ISignalsHub).removeListenerFromSignal(Signals.GENERIC_BUTTON_OVER, onButtonHover)
+			_bridgeGraphics.clearFilter(btn);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OUT, onButtonOut);
+			(_bridgeGraphics.signalsManager as ISignalsHub).removeListenerFromSignal(Signals.GENERIC_BUTTON_OVER, onButtonHover)
 		}
 		
 		private function onButtonOut(type:String, e:Object):void
@@ -714,8 +751,8 @@ package
 				_bridgeGraphics.clearFilter(btn);
 				added = false;
 			}
-			//(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OVER, onButtonHover);
-			//(_bridgeGraphics.signalsManager as ISignalsHub).removeListenerFromSignal(Signals.GENERIC_BUTTON_OVER, onButtonOut);
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_BUTTON_OVER, onButtonHover);
+			(_bridgeGraphics.signalsManager as ISignalsHub).removeListenerFromSignal(Signals.GENERIC_BUTTON_OVER, onButtonOut);
 		}
 		
 		private var layer1:IAbstractLayer;
@@ -850,38 +887,31 @@ package
 			_bridgeGraphics.addChild(label);
 		}
 		
-		private var __stream:IAbstractVideo;
-		private var __holder:IAbstractSprite;
-		
-		private function testFLV():void
+		private function testFLVs():void
 		{
-			trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			//var sc3D:Scene3D = (_bridgeGraphics.scene3D as Scene3D);
-			//sc3D.visible = false;
-			__holder = _bridgeGraphics.requestSprite("holder");
-			__stream = _bridgeGraphics.requestVideo();
+			testFLV("../bin/assets/test.flv");
+			testFLV("../bin/assets/test2.flv");
 			
-			//var delay:delayedFunctionCall = new delayedFunctionCall(delayedFLV, 2000);
-			delayedFLV();
-		}
-		
-		private function delayedFLV():void
-		{
-			__stream.addVideoPath("../bin/assets/test2.flv");
-			_bridgeGraphics.addChild(__holder);
-			__holder.addNewChild(__stream);
-			__stream.loop = false;
-			
-			__holder.x = 400;
-			__holder.y = 300;
-			
-			(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.FLV_MOVIE_ENDED, function(type:String, obj:Object):void
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.FLV_MOVIE_STARTED, function(type:String, obj:Object):void
 			{
-				trace("CONTEXT : " + _bridgeGraphics.contextStatus());
-				var removeEvent:EngineDelayedDisposeSignalEvent = new EngineDelayedDisposeSignalEvent(__stream, __holder);
-				_bridgeGraphics.signalsManager.dispatchSignal(Signals.REMOVE_AND_DISPOSE, __stream.name, removeEvent);
+				trace(type + " " + obj);
 			}
 			);
+		}
+		
+		private function testFLV(path:String):void
+		{
+			var __stream:IAbstractVideo;
+			var __holder:IAbstractSprite;
+			__holder = _bridgeGraphics.requestSprite("holder");
+			__stream = _bridgeGraphics.requestVideo();
+			__stream.addVideoPath(path, false);
+			__stream.loop = false;
+			
+			_bridgeGraphics.addChild(__holder);
+			__holder.addNewChild(__stream);
+			
+			__holder.x = Math.random() * 500;
 		}
 		
 		private function onConnect(e:NetStatusEvent):void {
@@ -1186,7 +1216,7 @@ package
 			//var snd:Sound = (_bridgeGraphics.assetsManager as starling.utils.AssetManager).getSound("track");
 			//snd.play();
 			
-			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Spark", 60);
+			var mc:IAbstractMovie = _bridgeGraphics.requestMovie("BadGuy-Walking", 10);
 			_bridgeGraphics.currentContainer.addNewChild(mc);
 			mc.play();
 			mc.x = mc.y = 250;

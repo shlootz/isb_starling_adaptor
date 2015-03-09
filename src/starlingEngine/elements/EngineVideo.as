@@ -76,18 +76,15 @@ import utils.delayedFunctionCall;
 		{
 			if (_netStream.decodedFrames == 0)
 			{
-                trace("SEEKING")
 				var addedDelayedFunctionCall:delayedFunctionCall = new delayedFunctionCall(onAddedToStage, 100);
 			}
 			else
             {
-                trace("STARTING");
 				this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 				_netStream.seek(0);
 				
 				if (_netStream.decodedFrames >= 1 && !_started)
 				{
-                    trace("EMITING");
 						emitStartSignal();
 				}
 			}
@@ -114,17 +111,19 @@ import utils.delayedFunctionCall;
 					_netStream.seek(0);
 					_bufferComplete = true;
 				}
-				
-				if (_retriesCount < RETRIES_LIMIT)
-				{
-					_retriesCount++
-				}
 				else
 				{
-					_bufferComplete = true;
-					emitStopSignal(e);
-					_statsTimer.removeEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
-                    this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+					if (_retriesCount < RETRIES_LIMIT)
+					{
+						_retriesCount++
+					}
+					else
+					{
+						_bufferComplete = true;
+						emitStopSignal(e);
+						_statsTimer.removeEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
+						this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+					}
 				}
 			}
         }
