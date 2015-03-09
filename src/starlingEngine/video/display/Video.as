@@ -311,10 +311,10 @@
 				
 			if (!mVideo) return;
 			
-			mTime = getTimer();
+			//mTime = getTimer();
 			
-			fRect.width = getNextPowerOfTwo(mBitmapData.width);
-			fRect.height = getNextPowerOfTwo(mBitmapData.height);
+			//fRect.width = getNextPowerOfTwo(mBitmapData.width);
+			//fRect.height = getNextPowerOfTwo(mBitmapData.height);
 			
 			mBitmapData.fillRect(fRect, 0x000000)
 			mBitmapData.draw(mVideo, mFrameMatrix);
@@ -330,19 +330,19 @@
 				_videoImage.texture.dispose();
 				_videoTexture = Texture.fromBitmapData(mBitmapData);
 				_videoImage.texture = _videoTexture;
-				_videoImage.readjustSize();
+				//_videoImage.readjustSize();
 				mBitmapData.fillRect(mBitmapData.rect, 0x000000);
 			}
 		
-			mStatsDrawTime.unshift(getTimer() - mTime);
+			//mStatsDrawTime.unshift(getTimer() - mTime);
 			
-			while (mStatsDrawTime.length > STATS_PRECISION)
-				mStatsDrawTime.pop();
+			//while (mStatsDrawTime.length > STATS_PRECISION)
+				//mStatsDrawTime.pop();
 			
-			mNewFrameAvailable = false;
-			mLastFrame = mCurrentFrame;
-			++mStatsDrawnFrames;
-			dispatchEventWith(starlingEngine.video.events.VideoEvent.DRAW_COMPLETE);
+			//mNewFrameAvailable = false;
+			//mLastFrame = mCurrentFrame;
+			//++mStatsDrawnFrames;
+			//dispatchEventWith(starlingEngine.video.events.VideoEvent.DRAW_COMPLETE);
 		}
 		
 		private function netStatusHandler(event:NetStatusEvent):void {
