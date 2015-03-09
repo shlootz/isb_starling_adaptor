@@ -106,20 +106,20 @@ import utils.delayedFunctionCall;
 			}
 			else
 			{
-				if (_loop)
+				if (_retriesCount < RETRIES_LIMIT)
 				{
-					_netStream.seek(0);
-					_bufferComplete = true;
+					_retriesCount++
 				}
 				else
 				{
-					if (_retriesCount < RETRIES_LIMIT)
+					_bufferComplete = true;
+					
+					if (_loop)
 					{
-						_retriesCount++
+						_netStream.seek(0);
 					}
 					else
 					{
-						_bufferComplete = true;
 						emitStopSignal(e);
 						_statsTimer.removeEventListener(TimerEvent.TIMER, statsTimer_timerHandler);
 						this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
