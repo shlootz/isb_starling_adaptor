@@ -32,7 +32,7 @@ import utils.delayedFunctionCall;
         private var _netStream:NetStream;
 		private var _statsTimer:Timer = new Timer(100, 0);
 		private var _prevDecodedFrames:Number = -1;
-		private var _loop:Boolean = true;
+		private var _loop:Boolean = false;
 		private var _path:String = "";
 		private var _signalsHub:ISignalsHub;
 		private var _retriesCount:uint = 0;
