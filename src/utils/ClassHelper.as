@@ -10,6 +10,7 @@ public class ClassHelper {
 
     }
     public static function getClass(obj:Object):Class {
+
         return Class(getDefinitionByName(getQualifiedClassName(obj)));
     }
 }

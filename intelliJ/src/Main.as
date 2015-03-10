@@ -30,6 +30,7 @@ import starling.animation.Juggler;
 import starling.utils.AssetManager;
 
 import starlingEngine.StarlingEngine;
+import starlingEngine.elements.EngineVideo;
 import starlingEngine.filters.BlurFilterVO;
 
 import utils.delayedFunctionCall;
@@ -91,9 +92,19 @@ public class Main extends Sprite {
             trace("Loading assets, progress:", ratio);
             if (ratio == 1) {
                 //testLayerDispose();
-                testFiltersDispose();
+                //testFiltersDispose();
+                testVideo();
             }
         });
+    }
+
+    private function testVideo():void
+    {
+        var vd:IAbstractVideo = _bridgeGraphics.requestVideo();
+        vd.addVideoPath("assets/test2.flv", false);
+        vd.loop = false;
+
+        _bridgeGraphics.currentContainer.addNewChild(vd);
     }
 
     private function testLayerDispose():void

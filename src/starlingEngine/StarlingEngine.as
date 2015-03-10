@@ -45,6 +45,7 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Point;
 import flash.geom.Rectangle;
+import flash.system.ApplicationDomain;
 import flash.system.System;
 import flash.utils.Dictionary;
 
@@ -172,6 +173,7 @@ import utils.delayedFunctionCall;
 		 */
 		public function StarlingEngine(initCompleteCallback:Function, baseWidth:int = 800, baseHeight:int = 600, viewportMode:String = ViewportMode.FULLSCREEN, debugMode:Boolean = false):void 
 		{
+            ApplicationDomain.currentDomain.getQualifiedDefinitionNames();
 			_baseWidth = baseWidth;
 			_baseHeight = baseHeight;
 			_viewportMode = viewportMode;

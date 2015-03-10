@@ -25,7 +25,7 @@
         </dependencies>
         <compiler-options>
           <map>
-            <entry key="compiler.keep-generated-actionscript" value="true" />
+            <entry key="compiler.keep-generated-actionscript" value="false" />
           </map>
         </compiler-options>
         <packaging-air-desktop />

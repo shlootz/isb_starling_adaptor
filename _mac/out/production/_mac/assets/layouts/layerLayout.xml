@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Template auto layout-->
-<!-- Something something dark side-->
-<Layout name="UserInterface_normal_game">
-    <Element name="smth1" resource="Paytable-Background" type = "image" onStage = "true" defaultState = "n/a" x="2" y="350" width="800" height="600" depth="0" loop="false"/>
-    <Element name="smth2"  resource="Spin-Button" type = "button" upState="" overState="" pressedState="" disabledState="" onStage = "true" defaultState = "up" x="2" y="2" width="810" height="610" depth="1" fps="30" loop="false"/>
-    <Element name="smth3" resource="Reel-Highlight-2" type = "button" upState="" overState="" pressedState="" disabledState="" onStage = "false" defaultState = "up" x="2" y="200" width="800" height="600" depth="2" fps="30" loop="false"/>
-    <Element name="badass" resource="User-Interface" type = "movie" upState="" overState="" pressedState="" disabledState="" onStage = "false" defaultState = "up" x="2" y="200" width="800" height="600" depth="2" fps="30" loop="true" />
-</Layout>
