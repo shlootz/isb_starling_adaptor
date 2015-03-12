@@ -513,6 +513,7 @@ import utils.delayedFunctionCall;
         public function requestImage(texture:Object, name:String = ""):IAbstractImage
         {
             var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
+			i.touchable = true;
             if (texture == null)
             {
                 texture = _textureFallBack;

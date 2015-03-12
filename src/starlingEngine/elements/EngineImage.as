@@ -9,7 +9,7 @@ import starling.display.BlendMode;
 import starling.display.Image;
 import starling.textures.Texture;
 
-/**
+	/**
 	 * ...
 	 * @author Alex Popescu
 	 */

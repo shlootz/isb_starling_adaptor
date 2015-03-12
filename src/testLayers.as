@@ -334,7 +334,7 @@ package
 						//testDifferentSize();
 						//testMovieClipsFromFrames();
 						//showLines();
-						showMenu();
+						//showMenu();
 						//(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, function(type:String, e:Object):void {
 							//trace("@@@@@@@@@@@@@@@@@@@ LAYER_TRANSITION_IN_COMPLETE " + type);
 						//});
@@ -343,7 +343,7 @@ package
 							//trace("@@@@@@@@@@@@@@@@@@@ LAYER_TRANSITION_OUT_COMPLETE " + type);
 							//showPaytable();
 						//});
-						//showPaytable();
+						showPaytable();
 						//makeSlider();
 						//testMovieClips();
 						//testImages();
@@ -1334,7 +1334,15 @@ package
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, onToggle);
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, onTransitionInComplete);
 			
-			paytableLayer.flatten();
+			//paytableLayer.flatten();
+			
+			paytableLayer.touchable = true;
+			paytableLayer.updateMouseGestures(_bridgeGraphics.signalsManager as ISignalsHub, true, true);
+			
+			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.DISPLAY_OBJECT_TOUCHED, function(type:String, event:Object):void
+			{
+				trace("CLICK")
+			});
 		}
 		
 		private function onTransitionInComplete(type:String, data:Object ):void
