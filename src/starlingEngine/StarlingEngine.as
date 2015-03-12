@@ -1,5 +1,6 @@
 ﻿package starlingEngine
 {
+import bridge.abstract.console.IConsoleCommands;
 import bridge.IEngine;
 import bridge.abstract.AbstractPool;
 import bridge.abstract.IAbstractBlitMask;
@@ -32,6 +33,8 @@ import bridge.abstract.ui.IAbstractInputText;
 import bridge.abstract.ui.IAbstractLabel;
 import bridge.abstract.ui.IAbstractSlider;
 import bridge.abstract.ui.IAbstractToggle;
+import consoleCommand.ConsoleCommands;
+import consoleCommand.Output;
 
 import citrus.core.IState;
 import citrus.core.starling.StarlingCitrusEngine;
@@ -164,6 +167,8 @@ import utils.delayedFunctionCall;
 		private var _textureFallBack:Texture;
 		
 		private var _flareBridge:FlareBridge;
+		
+		private var _consoleCommands:ConsoleCommands;
 		/**
 		 * 
 		 * @param	initCompleteCallback
@@ -207,6 +212,8 @@ import utils.delayedFunctionCall;
         override public function handleStarlingReady():void
         {
             System.gc();
+			configureConsole();
+			
             Starling.current.addEventListener(starling.events.Event.CONTEXT3D_CREATE, onContext3DEventCreate);
             Starling.current.addEventListener(starling.events.Event.TEXTURES_RESTORED, onTexturesRestored);
 
@@ -256,14 +263,14 @@ import utils.delayedFunctionCall;
                 _signalsHub.dispatchSignal(Signals.STARLING_READY, "", { } );
             }
 
-            //TO DO
-            configureConsole();
-
             //mouse wheel listener
             stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel, false, 0 , true);
 
             //deactivate event
             stage.addEventListener(Event.DEACTIVATE, onDeactivate);
+			
+			//default verbose
+			_signalsHub.verbose = Output.verbose;
         }
 
 
@@ -448,11 +455,11 @@ import utils.delayedFunctionCall;
 
             if (!poolSucces)
             {
-                trace("AssetsManager :: cannot return to pool object " + obj + " - pool not defined for this type " + " autodispose success: "+disposeSucces);
+                Output.out("AssetsManager :: cannot return to pool object " + obj + " - pool not defined for this type " + " autodispose success: "+disposeSucces);
             }
             else
             {
-                trace("AssetsManager :: recycled " + obj + " succesfuly");
+                Output.out("AssetsManager :: recycled " + obj + " succesfuly");
             }
         }
 
@@ -998,7 +1005,7 @@ import utils.delayedFunctionCall;
 		 */
 		private function onFlareInited(type:String, obj:Object):void
 		{
-			trace("BridgeGraphics :: Flare3D :: init successful");
+			Output.out("BridgeGraphics :: Flare3D :: init successful");
 			if (!_starling)
 			{
 				_starling = new Starling(StarlingMain, stage, null, stage.stage3Ds[0]);
@@ -1012,8 +1019,12 @@ import utils.delayedFunctionCall;
 			}
 		}
 		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function starlingRootEvent( e:starling.events.Event ):void {
-            trace("BridgeGraphics :: Flare3D :: Starling force started :: succesful");
+            Output.out("BridgeGraphics :: Flare3D :: Starling force started :: succesful");
 
             var _starlingRoot:starling.display.Sprite = _starling.root as starling.display.Sprite;
             _flareBridge._starling = _starling;
@@ -1021,6 +1032,10 @@ import utils.delayedFunctionCall;
             handleStarlingReady();
         }
 		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onDeactivate(e:Event):void
 		{
 			Starling.current.start();
@@ -1028,6 +1043,10 @@ import utils.delayedFunctionCall;
 			_juggler.paused = false;
 		}
 		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onMouseWheel(e:MouseEvent):void
 		{
 			var o:GESignalEvent = new GESignalEvent();
@@ -1037,15 +1056,24 @@ import utils.delayedFunctionCall;
 			_signalsHub.dispatchSignal(Signals.MOUSE_WHEEL, "delta", o);
 		}
 		
+		/**
+		 * 
+		 */
 		private function configureConsole():void
 		{
-			console.addCommand("output", output)
-		}
-		
-		private function output(input:String):void
-		{
-			var tf:IAbstractTextField = requestTextField(500, 500, input, "Verdana", 200, 0xffffff);
-			_currentState.addNewChild(tf);
+			_consoleCommands = new ConsoleCommands(console);
+			
+			_consoleCommands.registerCommand("verbose=true", function():void
+			{
+				_signalsHub.verbose = true;
+				Output.verbose = true;
+			});
+			
+			_consoleCommands.registerCommand("verbose=false", function():void
+			{
+				_signalsHub.verbose = false;
+				Output.verbose = false;
+			});
 		}
 		
 		/**
@@ -1453,6 +1481,11 @@ import utils.delayedFunctionCall;
         {
             return _flareBridge.scene;
         }
+		
+		public function get consoleCommands():IConsoleCommands 
+		{
+			return _consoleCommands;
+		}
 
         /**
          *
@@ -1481,7 +1514,7 @@ import utils.delayedFunctionCall;
 
             super.destroy();
 
-            trace(this + " -> destroyed");
+            Output.out(this + " -> destroyed");
         }
 
         /**
@@ -1528,6 +1561,14 @@ import utils.delayedFunctionCall;
 
             return context;
         }
+		
+		/**
+		 * 
+		 */
+		public function set alwaysVerbose(val:Boolean):void
+		{
+			Output.verbose = val;
+		}
 		
 		/**
 		 * 
@@ -1596,7 +1637,7 @@ import utils.delayedFunctionCall;
 				o.params = null;
 					
 			_signalsHub.dispatchSignal(Signals.MOVIE_CLIP_ENDED, (e.currentTarget as IAbstractMovie).name, o);
-			trace("StarlingEngine :: Signals Manager :: dispatching " + Signals.MOVIE_CLIP_ENDED + " from " + (e.currentTarget as IAbstractMovie).name);
+			Output.out("StarlingEngine :: Signals Manager :: dispatching " + Signals.MOVIE_CLIP_ENDED + " from " + (e.currentTarget as IAbstractMovie).name);
 			
 		}
 		
@@ -1699,7 +1740,7 @@ import utils.delayedFunctionCall;
 		{
 			if (contextStatus())
 			{
-				trace("Sync removing: " + obj["params"]["target"] + " from " +obj["params"]["parent"]);
+				Output.out("Sync removing: " + obj["params"]["target"] + " from " +obj["params"]["parent"]);
 				if (!obj["params"]["recycle"])
 				{
 					(obj["params"]["parent"] as IAbstractDisplayObjectContainer).removeChildAndDispose(obj["params"]["target"] as IAbstractDisplayObject, true);
@@ -1720,7 +1761,7 @@ import utils.delayedFunctionCall;
 		 */
 		private function onContext3DEventCreate():void
 		{
-			trace("Context Restored");
+			Output.out("Context Restored");
 			var delayedCall:delayedFunctionCall = new delayedFunctionCall(delayedRemove, 100);
 			
 			var contextSignal:GESignalEvent = new GESignalEvent();
@@ -1751,13 +1792,13 @@ import utils.delayedFunctionCall;
 				{
 					returnToPool(target);
 				}
-				trace("Async removing: " + target.name+" from " + parent.name);
+				Output.out("Async removing: " + target.name+" from " + parent.name);
 			}
 		}
 		
 		private function onTexturesRestored():void
 		{
-			trace("Textures from AssetManager restored");
+			Output.out("Textures from AssetManager restored");
 		}
 	}
 	

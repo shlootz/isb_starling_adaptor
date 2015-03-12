@@ -36,6 +36,7 @@ package
 	import com.greensock.plugins.TweenPlugin;
 	import com.greensock.TimelineMax;
 	import com.greensock.TweenLite;
+	import consoleCommand.Output;
 	import feathers.controls.Label;
 	import feathers.controls.List;
 	import feathers.controls.renderers.DefaultListItemRenderer;
@@ -240,13 +241,20 @@ package
 			//{
 				//testFLV();
 			//})
-			_bridgeGraphics.engine.is3D = true;
+			_bridgeGraphics.engine.is3D = false;
 			addChild(_bridgeGraphics.engine as DisplayObject);
 			 (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
 		}
 
+		private function testConsole():void
+		{
+			trace("asdasdasdasdasd");
+		}
+		
 		private function loadAssets(event:String, obj:Object):void
 		{
+			_bridgeGraphics.consoleCommands.registerCommand("test", testConsole);
+			
 			(_bridgeGraphics.assetsManager as AssetManager).enqueue(
 													"../bin/assets/spritesheets/spriteSheetBackgrounds.png", 
 													"../bin/assets/spritesheets/spriteSheetBackgrounds.xml",
@@ -291,7 +299,7 @@ package
 													);
 			(_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void
 				{
-					trace("Loading assets, progress:", ratio);
+					Output.out("Loading assets, progress:"+ ratio);
 					if (ratio == 1)
 					{	 
 						//testErrorThrowing();
@@ -325,7 +333,7 @@ package
 						//testDifferentSize();
 						//testMovieClipsFromFrames();
 						//showLines();
-						//showMenu();
+						showMenu();
 						//(_bridgeGraphics.signalsManager as SignalsHub).addListenerToSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, function(type:String, e:Object):void {
 							//trace("@@@@@@@@@@@@@@@@@@@ LAYER_TRANSITION_IN_COMPLETE " + type);
 						//});
@@ -352,7 +360,7 @@ package
 						//testAnimatedTexture();
 						//for (var i:uint = 0; i < 5; i++ )
 						//{
-							testFLVs();
+							//testFLVs();
 						//}
 						//testOmnes();
 						//testAnimatedButtons();
@@ -889,8 +897,13 @@ package
 		
 		private function testFLVs():void
 		{
-			testFLV("../bin/assets/test.flv");
-			testFLV("../bin/assets/test2.flv");
+			var dflv1:delayedFunctionCall = new delayedFunctionCall(function():void {
+				testFLV("../bin/assets/test.flv");
+			}, 200);
+			
+			var dflv2:delayedFunctionCall = new delayedFunctionCall(function():void {
+				testFLV("../bin/assets/test2.flv");
+			}, 200);
 			
 			(_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.FLV_MOVIE_STARTED, function(type:String, obj:Object):void
 			{
@@ -906,12 +919,12 @@ package
 			__holder = _bridgeGraphics.requestSprite("holder");
 			__stream = _bridgeGraphics.requestVideo();
 			__stream.addVideoPath(path, false);
-			__stream.loop = false;
+			__stream.loop = true;
 			
 			_bridgeGraphics.addChild(__holder);
 			__holder.addNewChild(__stream);
 			
-			__holder.x = Math.random() * 500;
+			__holder.x =150;
 		}
 		
 		private function onConnect(e:NetStatusEvent):void {
