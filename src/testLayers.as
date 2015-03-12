@@ -228,6 +228,7 @@ package
 																		AbstractPool,
 																		starling.animation.Juggler,
 																		nape.space.Space,
+																		true,
 																		true
 																		);
 																		

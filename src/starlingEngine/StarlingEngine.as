@@ -1,6 +1,7 @@
 ﻿package starlingEngine
 {
 import bridge.abstract.console.IConsoleCommands;
+import bridge.BridgeGraphics;
 import bridge.IEngine;
 import bridge.abstract.AbstractPool;
 import bridge.abstract.IAbstractBlitMask;
@@ -1067,12 +1068,14 @@ import utils.delayedFunctionCall;
 			{
 				_signalsHub.verbose = true;
 				Output.verbose = true;
+				BridgeGraphics.isVerbose = true;
 			});
 			
 			_consoleCommands.registerCommand("verbose=false", function():void
 			{
 				_signalsHub.verbose = false;
 				Output.verbose = false;
+				BridgeGraphics.isVerbose = true;
 			});
 		}
 		
