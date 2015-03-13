@@ -24,6 +24,7 @@ import starling.core.Starling;
 		
 		private var _scene:Scene3D;
 		private var _signalsManager:ISignalsHub;
+
 		public var _starling:Starling;
 		
 		public function FlareBridge(signalsManager:ISignalsHub, target:Sprite, starling:Starling) 
@@ -43,8 +44,7 @@ import starling.core.Starling;
 			_scene.camera.lookAt( 0, 0, 0 );
 			_scene.addEventListener( Scene3D.POSTRENDER_EVENT, postRenderEvent );
 		}
-		
-		private	var _cubes:Pivot3D;
+
 		/**
 		 * 
 		 * @param	e
@@ -55,13 +55,6 @@ import starling.core.Starling;
 			// shareContext must be set to "true" so Starling won't overwrite our
 			// Context3D object
 			_signalsManager.dispatchSignal(FLARE_INITED, FLARE_INITED, new Object());
-		
-			//var cube:Cube = new Cube( "cube", 30, 30, 30 );
-			//_cubes = new Pivot3D();
-			//_cubes.addChild( cube.clone() ).setPosition( 100, 0, 0 );
-			//_cubes.addChild( cube.clone() ).setPosition( -100, 0, 0 );
-			//_cubes.addChild( cube.clone() ).setPosition( 0, 0, 100 );
-			//_cubes.addChild( cube.clone() ).setPosition( 0, 0, -100 );
 		}
 		
 		/**
@@ -71,8 +64,6 @@ import starling.core.Starling;
 		private function postRenderEvent( e:Event ):void
 		{
 			// prepare and draw the Starling frame
-			
-			//_cubes.draw(true);
 			
 			if (_starling)
 			{

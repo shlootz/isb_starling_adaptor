@@ -179,7 +179,6 @@ import utils.delayedFunctionCall;
 		 */
 		public function StarlingEngine(initCompleteCallback:Function, baseWidth:int = 800, baseHeight:int = 600, viewportMode:String = ViewportMode.FULLSCREEN, debugMode:Boolean = false):void 
 		{
-            ApplicationDomain.currentDomain.getQualifiedDefinitionNames();
 			_baseWidth = baseWidth;
 			_baseHeight = baseHeight;
 			_viewportMode = viewportMode;
@@ -398,10 +397,7 @@ import utils.delayedFunctionCall;
                 poolSucces = true;
                 (obj as EngineMask).removeEventListeners();
                 (obj as EngineMask).removeFromParent();
-                if((obj as Quad).filter)
-                {
-                    returnToPool((obj as DisplayObject).filter);
-                }
+
                 _masksPool.returnToPool(obj as EngineMask);
                 (obj as EngineMask).dispose();
             } else if (rootClass === BlurFilter) {
@@ -452,6 +448,13 @@ import utils.delayedFunctionCall;
             } else if (rootClass === BlurFilterVO || rootClass === GlowFilterVO || rootClass === DropShadowFilterVO){
                 poolSucces = true;
                 _fragmentStandardFilterPool.returnToPool((obj as IAbstractReferencedFilter).reference);
+            } else if (rootClass == EngineSprite){
+                poolSucces = true;
+                while ((obj as EngineSprite).numChildren > 0) {
+                    returnToPool(obj.getChildAt(obj.numChildren - 1));
+                }
+                (obj as EngineSprite).removeFromParent();
+                _spritesPool.returnToPool(obj as EngineSprite);
             }
 
             if (!poolSucces)
@@ -1081,7 +1084,7 @@ import utils.delayedFunctionCall;
 		}
 		
 		/**
-		 * @TODO
+		 * @TODO finish integrating Nape 2D
 		 */
 		private function initNape():void
 		{

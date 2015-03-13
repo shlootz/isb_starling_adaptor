@@ -4,7 +4,7 @@ import starling.display.Sprite;
 
 /**
 	 * ...
-	 * @author Eu
+	 * @author Alex Popescu
 	 */
 	public class StarlingMain extends Sprite
 	{
