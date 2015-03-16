@@ -453,6 +453,7 @@ import utils.delayedFunctionCall;
                 while ((obj as EngineSprite).numChildren > 0) {
                     returnToPool(obj.getChildAt(obj.numChildren - 1));
                 }
+                (obj as EngineSprite).x = (obj as EngineSprite).y = 0;
                 (obj as EngineSprite).removeFromParent();
                 _spritesPool.returnToPool(obj as EngineSprite);
             }
