@@ -32,7 +32,7 @@ import starling.core.Starling;
 			_signalsManager = signalsManager;
 			_starling = starling;
 			
-			_scene = new Viewer3D( target );
+			_scene = new Scene3D( target );
             _scene.addEventListener( Event.CONTEXT3D_CREATE, contextCreate );
 			_scene.autoResize = true;
  
