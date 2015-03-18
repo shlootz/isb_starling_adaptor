@@ -47,7 +47,7 @@ import starling.events.EventDispatcher;
 		/// Returns if there are listeners registered for a certain event type.
 		override public function hasEventListener (type:String) : Boolean
 		{
-			super.hasEventListener(type);
+			return super.hasEventListener(type);
 		}
 
 		/// Removes an event listener from the object.
@@ -62,7 +62,7 @@ import starling.events.EventDispatcher;
 		 */
 		override public function removeEventListeners (type:String = null) : void
 		{
-			super.removeEventListeners(type, listener)
+			super.removeEventListeners(type)
 		}
 		
 	}

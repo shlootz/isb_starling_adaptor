@@ -44,7 +44,8 @@ import starling.textures.Texture;
 				}
             } else {				
 				return super.hitTest ( localPoint, forTouch );
-			} 			
+			} 		
+			return null;
 		}	
 
 		override public function dispose():void 

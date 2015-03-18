@@ -16,8 +16,6 @@ package flare
 			
 		}
  
-		
- 
 		private function frameEvent( e:Event ):void
 		{
 			

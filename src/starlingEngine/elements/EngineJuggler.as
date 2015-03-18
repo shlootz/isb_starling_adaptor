@@ -8,12 +8,12 @@ import starling.animation.Juggler;
 	 * ...
 	 * @author Alex Popescu
 	 */
-	public class EngineJuggler extends Juggler implements IAbstractJuggler
+	public class EngineJuggler extends Juggler
 	{
 		
 		public function EngineJuggler() 
 		{
-			
+			super();
 		}
 		
 	}

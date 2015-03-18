@@ -49,15 +49,17 @@
   </build>
   <!-- SWC Include Libraries -->
   <includeLibraries>
-    <!-- example: <element path="..." /> -->
+    <element path="lib\Flare3D_2.8.5_Commercial.swc" />
+    <element path="lib\GraphicsBridge.swc" />
+    <element path="lib\SignalsManager.swc" />
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="lib\greensock.swc" />
     <element path="lib\GraphicsBridge.swc" />
-    <element path="lib\CEV3-1-10-ALL.swc" />
     <element path="lib\SignalsManager.swc" />
     <element path="lib\Flare3D_2.8.5_Commercial.swc" />
+    <element path="lib\CEV3-1-10-Starling-Feathers.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -77,7 +79,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\testLayers.as" />
+    <compile path="src\testInit.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

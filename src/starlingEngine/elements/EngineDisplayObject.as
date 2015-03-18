@@ -13,7 +13,7 @@ import starling.display.DisplayObject;
 		
 		public function EngineDisplayObject() 
 		{
-			
+			super();
 		}
 		
 	}

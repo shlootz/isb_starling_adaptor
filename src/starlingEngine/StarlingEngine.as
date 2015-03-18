@@ -53,7 +53,7 @@ import flash.system.ApplicationDomain;
 import flash.system.System;
 import flash.utils.Dictionary;
 
-import nape.space.Space;
+//import nape.space.Space;
 
 import org.osflash.signals.Signal;
 
@@ -147,7 +147,7 @@ import utils.delayedFunctionCall;
 		private var _initCompleteCallback:Function;
 		private var _engineStage:Stage;
 		private var _layers:Dictionary = new Dictionary(true);
-		private var _space:Space;
+		//private var _space:Space;
 		private var _currentState:IAbstractState;
 		private var _assetsManager:AssetManager;
 		private var _signalsHub:SignalsHub;
@@ -474,7 +474,7 @@ import utils.delayedFunctionCall;
          */
         public function loop(e:Event):void
         {
-            _space.step(1 / 60);
+            //_space.step(1 / 60);
         }
 
         /**
@@ -1509,7 +1509,7 @@ import utils.delayedFunctionCall;
             }
 
             _layers = null;
-            _space = null;
+            //_space = null;
             _currentState = null;
             _assetsManager = null;
             _signalsHub = null;
