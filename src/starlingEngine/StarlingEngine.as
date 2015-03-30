@@ -49,13 +49,12 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Point;
 import flash.geom.Rectangle;
-import flash.system.ApplicationDomain;
-import flash.system.System;
 import flash.utils.Dictionary;
 
-//import nape.space.Space;
 
 import org.osflash.signals.Signal;
+
+import signals.ISignalsHub;
 
 import signals.Signals;
 import signals.SignalsHub;
@@ -150,7 +149,7 @@ import utils.delayedFunctionCall;
 		//private var _space:Space;
 		private var _currentState:IAbstractState;
 		private var _assetsManager:AssetManager;
-		private var _signalsHub:SignalsHub;
+		private var _signalsHub:ISignalsHub;
 		private var _debugMode:Boolean = false;
 		
 		private var _spritesPool:AbstractPool;
@@ -160,7 +159,7 @@ import utils.delayedFunctionCall;
 		private var _masksPool:AbstractPool;
         private var _textsPool:AbstractPool;
 		private var _fragmentStandardFilterPool:AbstractPool;
-		
+
 		private var _floatingTexturesDictionary:Dictionary = new Dictionary(true);
 		
 		private var  defaultFramesVector:Vector.<Texture> = new Vector.<Texture>();
@@ -196,6 +195,7 @@ import utils.delayedFunctionCall;
             super.handleAddedToStage(e);
             Starling.handleLostContext = true;
 
+            //make the decision if the init should go through Flare of Starling
             if (is3D)
             {
                 initFlare();
@@ -211,14 +211,18 @@ import utils.delayedFunctionCall;
          */
         override public function handleStarlingReady():void
         {
-            System.gc();
+            //initial congig of the console (activate with tab)
 			configureConsole();
 			
             Starling.current.addEventListener(starling.events.Event.CONTEXT3D_CREATE, onContext3DEventCreate);
             Starling.current.addEventListener(starling.events.Event.TEXTURES_RESTORED, onTexturesRestored);
 
+            //small workaround to avoid redraw
             _starling.root.alpha = .999;
+
             _starling.supportHighResolutions = true;
+
+            //reusable texture for empty textures or missing assets without causing a fail
             _textureFallBack = Texture.fromBitmapData(_bitmapDataFallBack);
 
             //creates a new pool for sprites
@@ -228,6 +232,7 @@ import utils.delayedFunctionCall;
             _imagesPool = new AbstractPool("images", EngineImage, 1000, _textureFallBack);
 
             //creates a new pool for movieclips
+            //a movie clip must have frames. creating a default frames vector with one 2x2 black texture
             defaultFramesVector.push(Texture.fromColor(2, 2, 0x000000));
             _movieClipsPool = new AbstractPool("movieClips", EngineMovie, 100, defaultFramesVector);
 
@@ -275,7 +280,7 @@ import utils.delayedFunctionCall;
 
 
          /**
-		 * 
+		 * Receives the asset manager from outside
 		 * @param	assetsManager
 		 */
 		public function injectAssetsManager(assetsManager:Object):void
@@ -285,12 +290,12 @@ import utils.delayedFunctionCall;
 		}
 		
 		/**
-		 * 
+		 * Receives the signals manager from outside
 		 * @param	signalsHub
 		 */
 		public function injectSignalsHub(signalsHub:Object):void
 		{
-			_signalsHub = signalsHub as SignalsHub;
+			_signalsHub = signalsHub as ISignalsHub;
 			initSignals();
 		}
 		

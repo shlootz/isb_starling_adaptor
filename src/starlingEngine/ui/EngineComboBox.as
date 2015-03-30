@@ -10,7 +10,7 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 
 import signals.Signals;
-import signals.SignalsHub;
+import signals.ISignalsHub;
 
 import starling.display.Image;
 import starling.display.Sprite;
@@ -36,7 +36,7 @@ import starlingEngine.elements.EngineTextField;
 		private var _currentSelection:String = "choose";
 		private var _currentSelectedIData:Object;
 		private var _currentSelectedIndex:uint = 0;
-		private var _signalsHub:SignalsHub;
+		private var _signalsHub:ISignalsHub;
 		
 		/**
 		 * 
@@ -47,7 +47,7 @@ import starlingEngine.elements.EngineTextField;
 		 * @param	backgroundImage
 		 * @param	font
 		 */
-		public function EngineComboBox(signalsHub:SignalsHub, dataProvider:Vector.<IAbstractComboBoxItemRenderer>, width:Number, height:Number, backgroundImage:IAbstractImage, font:String) 
+		public function EngineComboBox(signalsHub:ISignalsHub, dataProvider:Vector.<IAbstractComboBoxItemRenderer>, width:Number, height:Number, backgroundImage:IAbstractImage, font:String)
 		{
 			_cb = new EngineList(signalsHub, dataProvider, width, height, backgroundImage, font);
 			_cb.y = 20;

@@ -11,8 +11,9 @@ import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
 import feathers.text.BitmapFontTextFormat;
 
+import signals.ISignalsHub;
+
 import signals.Signals;
-import signals.SignalsHub;
 
 import starling.display.Image;
 
@@ -28,9 +29,9 @@ import starlingEngine.events.GESignalEvent;
 		
 		private var _dataProvider:Vector.<IAbstractComboBoxItemRenderer> = new Vector.<IAbstractComboBoxItemRenderer>();
 		private var _list:List;
-		private var _signalsHub:SignalsHub;
+		private var _signalsHub:ISignalsHub;
 		
-		public function EngineList(signalsHub:SignalsHub, dataProvider:Vector.<IAbstractComboBoxItemRenderer>, width:Number, height:Number, backgroundImage:IAbstractImage, font:String) 
+		public function EngineList(signalsHub:ISignalsHub, dataProvider:Vector.<IAbstractComboBoxItemRenderer>, width:Number, height:Number, backgroundImage:IAbstractImage, font:String)
 		{
 			_signalsHub = signalsHub;
 			// CREATE THE LIST //
