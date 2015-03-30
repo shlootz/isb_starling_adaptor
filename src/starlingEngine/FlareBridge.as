@@ -64,7 +64,7 @@ import starling.core.Starling;
 		private function postRenderEvent( e:Event ):void
 		{
 			// prepare and draw the Starling frame
-			
+
 			if (_starling)
 			{
 				_starling.nextFrame();

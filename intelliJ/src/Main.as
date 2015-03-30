@@ -3,11 +3,18 @@ package {
 import bridge.BridgeGraphics;
 import bridge.IBridgeGraphics;
 import bridge.abstract.AbstractPool;
+import bridge.abstract.IAbstractGraphics;
 import bridge.abstract.IAbstractImage;
 import bridge.abstract.IAbstractLayer;
+import bridge.abstract.IAbstractMask;
+import bridge.abstract.IAbstractMovie;
+import bridge.abstract.IAbstractSprite;
+import bridge.abstract.IAbstractTextField;
 import bridge.abstract.IAbstractVideo;
 import bridge.abstract.filters.IAbstractBlurFilter;
 import bridge.abstract.ui.IAbstractLabel;
+
+import com.greensock.TweenLite;
 
 import flash.display.Bitmap;
 import flash.display.BitmapData;
@@ -26,10 +33,14 @@ import signals.Signals;
 import signals.SignalsHub;
 
 import starling.animation.Juggler;
+import starling.display.Quad;
 
 import starling.utils.AssetManager;
+import starling.utils.HAlign;
+import starling.utils.VAlign;
 
 import starlingEngine.StarlingEngine;
+import starlingEngine.elements.EngineSprite;
 import starlingEngine.elements.EngineVideo;
 import starlingEngine.filters.BlurFilterVO;
 
@@ -44,11 +55,12 @@ public class Main extends Sprite {
             signals.SignalsHub,
             AbstractPool,
             starling.animation.Juggler,
-            nape.space.Space,
+            true,
             true
     );
 
     public function Main() {
+        _bridgeGraphics.engine.is3D = true;
         addChild(_bridgeGraphics.engine as DisplayObject);
         (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
     }
@@ -56,95 +68,77 @@ public class Main extends Sprite {
     private function loadAssets(event:String, obj:Object):void
     {
         (_bridgeGraphics.assetsManager as AssetManager).enqueue(
-                "assets/BackgroundModuleAssets.xml",
-                "assets/BackgroundModuleSkin.png",
-                "assets/BackgroundModuleSymbolsBackgroundLayerLayout.xml",
-                "assets/BackgroundModuleSymbolsFrameLayerLayout.xml",
-                "assets/FeaturesModuleAssets.xml",
-                "assets/FeaturesModuleAssets1.xml",
-                "assets/FeaturesModuleSkin.png",
-                "assets/FeaturesModuleSkin1.png",
-                "assets/FreeSpinsModuleFreeGamesUILayerLayout.xml",
-                "assets/GainViewerModuleGainViewerLayerLayout",
-                "assets/Image 3.png",
-                "assets/InstantBonusModuleInstantBonusLayerLayout.xml",
-                "assets/IntroFeaturesModuleIntroLayerLayout.xml",
-                "assets/LinesModuleLinesLayerLayout.xml",
-                "assets/LogoModuleLogoLayerLayout.xml",
-                "assets/MenuModuleMenuLayerLayout.xml",
-                "assets/PaytableModule Assets.xml",
-                "assets/PayTableModulePayTableLayerLayout.xml",
-                "assets/PaytableModuleSkin.png",
-                "assets/PreloadeModuleAssets.xml",
-                "assets/PreloaderModulePreloaderLayerLayout.xml",
-                "assets/PreloaderModuleSkin.png",
-                "assets/RaBonusModuleBonusLayerLayout.xml",
-                "assets/StripModuleStripLayerLayout.xml",
-                "assets/UserInterfaceModuleGameplayButtonsLayerLayout.xml",
-                "assets/WinningsAnimationsModuleAssets1.xml",
-                "assets/WinningsAnimationsModuleAssets2.xml",
-                "assets/WinningsAnimationsModuleSkin1.png",
-                "assets/WinningsAnimationsModuleSkin2.png",
-                "assets/WinStepsModuleAssets.xml",
-                "assets/WinStepsModuleSkin.png"
+            "assets/BackgroundModuleAssets.png",
+            "assets/BackgroundModuleAssets.xml",
+            "assets/UserInterfaceModuleGameplayButtonsLayerLayout.xml"
         );
         (_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void {
             trace("Loading assets, progress:", ratio);
             if (ratio == 1) {
-                //testLayerDispose();
-                //testFiltersDispose();
-                testVideo();
+                //buildMenu();
+                //testTextFields();
+                testMovieClips();
             }
         });
     }
 
-    private function testVideo():void
+    private function testMovieClips():void
     {
-        var vd:IAbstractVideo = _bridgeGraphics.requestVideo();
-        vd.addVideoPath("assets/test2.flv", false);
-        vd.loop = false;
+        var frames:Vector.<IAbstractImage> = new Vector.<IAbstractImage>();
+        for (var i:uint = 0; i<100; i++)
+        {
+            frames.push(_bridgeGraphics.requestImageFromBitmapData(new BitmapData(10+Math.random()*100, 10+Math.random()*100, false, Math.random()*0xffffff)));
+        }
 
-        _bridgeGraphics.currentContainer.addNewChild(vd);
+        var mc:IAbstractMovie = _bridgeGraphics.requestMovieFromFrames(frames, 20);
+        mc.loop = true;
+
+        _bridgeGraphics.currentContainer.addNewChild(mc);
+
+        mc.play();
+        mc.x = 200;
+        mc.y = 200;
+
+        (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, function(type:String, obj:Object):void{
+            trace("movieClip Ended");
+        });
     }
 
-    private function testLayerDispose():void
+    private function testTextFields():void
     {
-        var layer:IAbstractLayer = _bridgeGraphics.requestLayer("test", 1, _bridgeGraphics.getXMLFromAssetsManager("UserInterfaceModuleGameplayButtonsLayerLayout"), true);
+        var t:IAbstractTextField = _bridgeGraphics.requestTextField(300,50, "test");
+        t.hAlign = HAlign.LEFT;
+        t.vAlign = VAlign.TOP;
+        var l:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(t);
+
+        _bridgeGraphics.currentContainer.addNewChild(l);
+
+        var q:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(t.textBounds.width, t.textBounds.height,false, 0x000000));
+
+        _bridgeGraphics.currentContainer.addNewChild(q);
+
+        l.x = 150;
+        l.y = 0;
+        q.x = 150;
+        q.y = 0;
+    }
+
+    private function buildMenu():void
+    {
+        var layout:XML = _bridgeGraphics.getXMLFromAssetsManager("BackgroundModuleAssets");
+        var layer:IAbstractLayer = _bridgeGraphics.requestLayer("UI", 1, layout, true);
         var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
+        var holder:IAbstractSprite = _bridgeGraphics.requestSprite("asd");
 
-        var someImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100,100,false, 0x000000));
-        var blurF:IAbstractBlurFilter = _bridgeGraphics.requestBlurFilter();
-        blurF.blurX = 5;
-        blurF.blurY = 5;
+        inLayers.push(layer)
 
-        someImage.x = 100;
-        someImage.y = 100;
+        _bridgeGraphics.updateLayers(holder , inLayers);
 
-        layer.addNewChild(someImage);
-        _bridgeGraphics.addBlurFilter(someImage, blurF);
+        _bridgeGraphics.addChild(holder);
 
-        inLayers.push(layer);
+        trace(holder.width)
 
-        _bridgeGraphics.updateLayers(_bridgeGraphics.currentContainer, inLayers);
-
-        _bridgeGraphics.returnToPool(layer);
-    }
-
-    private function testFiltersDispose():void
-    {
-        var someImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100,100,false, 0x000000));
-        var blurF:IAbstractBlurFilter = _bridgeGraphics.requestBlurFilter();
-        blurF.blurX = 5;
-        blurF.blurY = 5;
-
-        someImage.x = 100;
-        someImage.y = 100;
-
-        _bridgeGraphics.currentContainer.addNewChild(someImage);
-        _bridgeGraphics.addBlurFilter(someImage, blurF);
-
-        _bridgeGraphics.returnToPool(blurF);
-        //_bridgeGraphics.returnToPool(someImage);
+        holder.addNewChild(_bridgeGraphics.requestImage("5ofaKindMessage"));
     }
 }
 }

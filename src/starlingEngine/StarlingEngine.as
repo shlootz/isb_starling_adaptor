@@ -992,7 +992,8 @@ import utils.delayedFunctionCall;
 		/**
 		 * 
 		 */
-		private function initFlare():void {
+		private function
+                initFlare():void {
             //Device3D.profile = "standard";
             //FLSL.agalVersion = 2;
 
@@ -1808,6 +1809,10 @@ import utils.delayedFunctionCall;
 		{
 			Output.out("Textures from AssetManager restored");
 		}
-	}
+
+    public function get debugMode():Boolean {
+        return _debugMode;
+    }
+}
 	
 }

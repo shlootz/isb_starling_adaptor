@@ -20,6 +20,9 @@
             <entry library-name="SignalsManager" library-level="project">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-name="flexunit-4.2.0-20140410-as3_4.12.0" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK_Compiler" />
         </dependencies>
@@ -42,6 +45,7 @@
     </content>
     <content url="file://$MODULE_DIR$/../src">
       <sourceFolder url="file://$MODULE_DIR$/../src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../src/testSrc" isTestSource="true" />
     </content>
     <orderEntry type="jdk" jdkName="AIRSDK_Compiler" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -50,6 +54,7 @@
     <orderEntry type="library" exported="" name="GraphicsBridge" level="project" />
     <orderEntry type="library" exported="" name="greensock" level="project" />
     <orderEntry type="library" exported="" name="SignalsManager" level="project" />
+    <orderEntry type="library" exported="" name="flexunit-4.2.0-20140410-as3_4.12.0" level="project" />
   </component>
 </module>
 
