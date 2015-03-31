@@ -8,7 +8,7 @@ import flash.net.NetStream;
 import flash.utils.Timer;
 
 import signals.ISignalsHub;
-import signals.Signals;
+import starlingEngine.signals.Signals;
 
 import starling.events.Event;
 import starling.utils.AssetManager;

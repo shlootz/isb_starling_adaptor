@@ -9,7 +9,7 @@ import bridge.abstract.ui.IAbstractLabel;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 
-import signals.Signals;
+import starlingEngine.signals.Signals;
 import signals.ISignalsHub;
 
 import starling.display.Image;

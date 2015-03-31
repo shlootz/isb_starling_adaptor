@@ -3,7 +3,7 @@ package starlingEngine.events
 import bridge.abstract.IAbstractDisplayObject;
 import bridge.abstract.IAbstractDisplayObjectContainer;
 
-import signals.Signals;
+import starlingEngine.signals.Signals;
 
 /**
 	 * ...

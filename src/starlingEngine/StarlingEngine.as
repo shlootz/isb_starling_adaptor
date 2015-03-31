@@ -36,6 +36,7 @@ import bridge.abstract.ui.IAbstractSlider;
 import bridge.abstract.ui.IAbstractToggle;
 import consoleCommand.ConsoleCommands;
 import consoleCommand.Output;
+import starlingEngine.signals.Signals;
 
 import citrus.core.IState;
 import citrus.core.starling.StarlingCitrusEngine;
@@ -56,8 +57,7 @@ import org.osflash.signals.Signal;
 
 import signals.ISignalsHub;
 
-import signals.Signals;
-import signals.SignalsHub;
+import signals.ISignalsHub;
 
 import starling.animation.IAnimatable;
 import starling.animation.Juggler;
@@ -312,42 +312,42 @@ import utils.delayedFunctionCall;
          */
         public function initSignals():void
         {
-            (_signalsHub as SignalsHub).addSignal(Signals.STARLING_READY, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.CONTEXT_3D_RESTORED, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.REMOVE_AND_DISPOSE, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.STARLING_READY, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.CONTEXT_3D_RESTORED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.REMOVE_AND_DISPOSE, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.CHANGE_GRAPHICS_STATE, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.CHANGE_GRAPHICS_STATE, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.MOUSE_WHEEL, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.MOUSE_WHEEL, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.LAYER_TRANSITION_IN_COMPLETE, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.LAYER_TRANSITION_OUT_COMPLETE, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_OVER, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_ENDED, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.GENERIC_BUTTON_OUT, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.GENERIC_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.GENERIC_BUTTON_OVER, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.GENERIC_BUTTON_ENDED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.GENERIC_BUTTON_OUT, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.MOVIE_CLIP_ENDED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.MOVIE_CLIP_ENDED, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.DISPLAY_OBJECT_TOUCHED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.DISPLAY_OBJECT_TOUCHED, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.GENERIC_SLIDER_CHANGE, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.GENERIC_SLIDER_CHANGE, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.GENERIC_TOGGLE_BUTTON_PRESSED, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.LIST_ITEM_TOUCHED, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.LIST_ITEM_TOUCHED_INTERNAL, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.LIST_ITEM_TOUCHED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.LIST_ITEM_TOUCHED_INTERNAL, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_CHANGED, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_FOCUS_IN, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.TEXT_INPUT_FOCUS_OUT, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.TEXT_INPUT_CHANGED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.TEXT_INPUT_FOCUS_IN, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.TEXT_INPUT_FOCUS_OUT, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.PARTICLE_SYSTEM_COMPLETED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.PARTICLE_SYSTEM_COMPLETED, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addSignal(Signals.FLV_MOVIE_ENDED, new Signal(), new Vector.<Function>);
-            (_signalsHub as SignalsHub).addSignal(Signals.FLV_MOVIE_STARTED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.FLV_MOVIE_ENDED, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.FLV_MOVIE_STARTED, new Signal(), new Vector.<Function>);
 
-            (_signalsHub as SignalsHub).addListenerToSignal(Signals.REMOVE_AND_DISPOSE, tryRemove);
+            (_signalsHub as ISignalsHub).addListenerToSignal(Signals.REMOVE_AND_DISPOSE, tryRemove);
         }
 
         /**
@@ -483,7 +483,7 @@ import utils.delayedFunctionCall;
         }
 
         /**
-         *
+         * 
          * @param	newJuggler
          */
         public function addJuggler(newJuggler:Object):void
@@ -774,7 +774,6 @@ import utils.delayedFunctionCall;
                 finalH = dynamicH;
             }
 
-            //var t:IAbstractTextField = new EngineTextField(width, finalH, text, fontName, fontSize, color, bold, nativeFiltersArr) as IAbstractTextField;
             var t:IAbstractTextField = _textsPool.getNewObject() as IAbstractTextField;
             t.width = width;
             t.height = height;
@@ -1099,6 +1098,13 @@ import utils.delayedFunctionCall;
 			//addEventListener(Event.ENTER_FRAME, loop);
 		}
 		
+		/**
+		 * 
+		 * @param	mc
+		 * @param	textures
+		 * @param	fps
+		 * @return
+		 */
 		private function cleanMovieclip(mc:IAbstractMovie, textures:Vector.<Texture>, fps:uint = 24):IAbstractMovie
 		{
 			while (mc.numFrames > 1)

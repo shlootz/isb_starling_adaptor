@@ -8,8 +8,8 @@ import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.utils.Dictionary;
 
-import signals.Signals;
-import signals.SignalsHub;
+import starlingEngine.signals.Signals;
+import signals.ISignalsHub;
 
 import starling.display.DisplayObject;
 import starling.display.Sprite;
@@ -32,7 +32,7 @@ import starlingEngine.events.GESignalEvent;
 		private var _onStationary:Boolean = false;
 		private var _layers:Dictionary;
 		
-		private var _signalsHub:SignalsHub;
+		private var _signalsHub:ISignalsHub;
 		/**
 		 * 
 		 */
@@ -57,7 +57,7 @@ import starlingEngine.events.GESignalEvent;
 																		onMoved:Boolean = false, 
 																		onStationary:Boolean = false):void
 		{
-			_signalsHub = signalsManager as SignalsHub;
+			_signalsHub = signalsManager as ISignalsHub;
 			_onClick = onClick;
 			_onHover = onHover;
 			_onEnded = onEnded;

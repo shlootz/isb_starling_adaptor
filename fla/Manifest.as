@@ -63,8 +63,8 @@ package
 	import org.osflash.signals.natives.NativeSignal;
 	import org.osflash.signals.Signal;
 	import signals.ISignalsHub;
-	import signals.Signals;
-	import signals.SignalsHub;
+	import starlingEngine.signals.Signals;
+	signals.ISignalsHub
 	import starling.animation.Juggler;
 	import starling.display.Image;
 	import starling.display.MovieClip;
@@ -191,7 +191,7 @@ package
 																				new Point(0, 0),
 																				StarlingEngine,
 																				starling.utils.AssetManager,
-																				signals.SignalsHub,
+																				starlingEngine.signals.SignalsHub,
 																				AbstractPool,
 																				starling.animation.Juggler,
 																				nape.space.Space,

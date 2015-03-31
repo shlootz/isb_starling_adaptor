@@ -5,8 +5,8 @@ import bridge.abstract.IAbstractDisplayObjectContainer;
 import bridge.abstract.IAbstractSprite;
 import flash.geom.Point;
 import flash.geom.Rectangle;
-import signals.Signals;
-import signals.SignalsHub;
+import starlingEngine.signals.Signals;
+import signals.ISignalsHub
 import starling.display.DisplayObject;
 import starling.display.DisplayObjectContainer;
 import starling.events.Touch;
@@ -28,7 +28,7 @@ import flash.utils.Dictionary;
 		private var _onMoved:Boolean = false;
 		private var _onStationary:Boolean = false;
 		
-		private var _signalsHub:SignalsHub;
+		private var _signalsHub:ISignalsHub;
 		private var _layers:Dictionary;
 		
 		public function EngineDisplayObjectContainer() 
@@ -73,7 +73,7 @@ import flash.utils.Dictionary;
 																		onMoved:Boolean = false, 
 																		onStationary:Boolean = false):void
 		{
-			_signalsHub = signalsManager as SignalsHub;
+			_signalsHub = signalsManager as ISignalsHub;
 			_onClick = onClick;
 			_onHover = onHover;
 			_onEnded = onEnded;

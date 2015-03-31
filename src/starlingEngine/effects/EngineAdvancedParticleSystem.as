@@ -6,7 +6,7 @@ import bridge.abstract.effects.IAbstractParticleSystem;
 import flash.geom.Point;
 
 import signals.ISignalsHub;
-import signals.Signals;
+import starlingEngine.signals.Signals;
 
 import starling.animation.Juggler;
 import starling.display.FFParticleSystem;

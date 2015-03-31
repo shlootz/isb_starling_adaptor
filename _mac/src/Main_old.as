@@ -47,8 +47,8 @@ import flash.utils.getDefinitionByName;
 import flash.utils.getQualifiedClassName;
 import nape.space.Space;
 import signals.ISignalsHub;
-import signals.Signals;
-import signals.SignalsHub;
+import starlingEngine.signals.Signals;
+signals.ISignalsHub
 import starling.animation.IAnimatable;
 import starling.animation.Juggler;
 import starling.display.Image;
@@ -75,7 +75,7 @@ public class Main extends Sprite
             new Point(800, 600),
             StarlingEngine,
             starling.utils.AssetManager,
-            signals.SignalsHub,
+            starlingEngine.signals.SignalsHub,
             AbstractPool,
             starling.animation.Juggler,
             nape.space.Space,

@@ -13,7 +13,7 @@ import feathers.text.BitmapFontTextFormat;
 
 import signals.ISignalsHub;
 
-import signals.Signals;
+import starlingEngine.signals.Signals;
 
 import starling.display.Image;
 

@@ -28,9 +28,9 @@ import flash.text.TextField;
 import nape.space.Space;
 
 import signals.ISignalsHub;
-import signals.Signals;
+import starlingEngine.signals.Signals;
 
-import signals.SignalsHub;
+signals.ISignalsHub
 
 import starling.animation.Juggler;
 import starling.display.Quad;
@@ -52,7 +52,7 @@ public class Main extends Sprite {
             new Point(800, 600),
             StarlingEngine,
             starling.utils.AssetManager,
-            signals.SignalsHub,
+            starlingEngine.signals.SignalsHub,
             AbstractPool,
             starling.animation.Juggler,
             true,

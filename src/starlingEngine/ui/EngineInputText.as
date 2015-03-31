@@ -7,8 +7,8 @@ import feathers.events.FeathersEventType;
 
 import flash.display.Bitmap;
 
-import signals.Signals;
-import signals.SignalsHub;
+import starlingEngine.signals.Signals;
+import signals.ISignalsHub;
 
 import starling.display.Image;
 import starling.events.Event;
@@ -22,7 +22,7 @@ import starlingEngine.events.GESignalEvent;
 	public class EngineInputText extends TextInput implements IAbstractInputText
 	{
 		private var _backgroundBitmap:Bitmap;
-		private var _signalsManager:SignalsHub;
+		private var _signalsManager:ISignalsHub;
 		
 		/**
 		 * 
@@ -38,7 +38,7 @@ import starlingEngine.events.GESignalEvent;
 		{
 			super();
 			
-			_signalsManager = signalsManager as SignalsHub;
+			_signalsManager = signalsManager as ISignalsHub;
 			 
 			this.width = width;
 			this.height = height;
