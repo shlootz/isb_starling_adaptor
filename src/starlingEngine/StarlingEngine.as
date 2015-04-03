@@ -1459,9 +1459,9 @@ import utils.delayedFunctionCall;
          * @param	target
          * @param	filter
          */
-        public function addFragmentFilter(target:IAbstractDisplayObject, filter:FragmentFilter):void
+        public function addFragmentFilter(target:IAbstractDisplayObject, filter:Object):void
         {
-            (target as DisplayObject).filter = filter;
+            (target as DisplayObject).filter = filter as FragmentFilter;
         }
 
         /**
