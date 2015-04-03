@@ -36,6 +36,9 @@ import bridge.abstract.ui.IAbstractSlider;
 import bridge.abstract.ui.IAbstractToggle;
 import consoleCommand.ConsoleCommands;
 import consoleCommand.Output;
+import starling.filters.ColorMatrixFilter;
+import starling.filters.DisplacementMapFilter;
+import starling.filters.FragmentFilterMode;
 import starlingEngine.signals.Signals;
 
 import citrus.core.IState;
@@ -169,6 +172,10 @@ import utils.delayedFunctionCall;
 		private var _flareBridge:FlareBridge;
 		
 		private var _consoleCommands:ConsoleCommands;
+		
+		private var _cmf:ColorMatrixFilter;
+		private var _dmf:DisplacementMapFilter;
+		private var _fmM:FragmentFilterMode;
 		/**
 		 * 
 		 * @param	initCompleteCallback
@@ -194,7 +201,7 @@ import utils.delayedFunctionCall;
         {
             super.handleAddedToStage(e);
             Starling.handleLostContext = true;
-
+			
             //make the decision if the init should go through Flare of Starling
             if (is3D)
             {
