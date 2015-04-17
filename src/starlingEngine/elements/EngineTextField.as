@@ -208,7 +208,7 @@ import starling.text.TextField;
         }
 
         //Puts the longest word first
-        private function longest(a, b):int
+        private function longest(a:Object, b:Object):int
         {
             if (a.length > b.length)
             {
