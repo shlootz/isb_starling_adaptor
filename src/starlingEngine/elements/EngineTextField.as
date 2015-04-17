@@ -15,7 +15,7 @@ import starling.text.TextField;
 	public class EngineTextField extends TextField implements IAbstractTextField
 	{
 
-        private static const FONT_BLEED_COMPENSATION:uint = 10;
+        private static const FONT_BLEED_COMPENSATION:uint = 3;
 
         private var _initialFontSize:uint = 0;
 
@@ -195,31 +195,43 @@ import starling.text.TextField;
          */
         public function fitFont():void
         {
-            var strings:Array = text.split("\n");
-			
-			if (strings.length > 1)
-			{
-				strings.sort(longest);
+            if(!calculateFont("\n"))
+            {
+                calculateFont(" ");
+            }
+        }
 
-				var longestWord:String = strings[0];
-				var textField:TextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
-				var actualWidth:Number = textField.textBounds.width;
-				var percentage:Number = 1;
-				var newFontSize:Number = this.fontSize;
+        private function calculateFont(splitCharacter:String):Boolean
+        {
+            var strings:Array = text.split(splitCharacter);
+            var success:Boolean = false;
 
-				percentage = (this.width - FONT_BLEED_COMPENSATION)/actualWidth;
-				newFontSize = Math.floor(newFontSize * percentage);
+            if (strings.length > 1)
+            {
+                strings.sort(longest);
 
-				textField.dispose();
+                var longestWord:String = strings[0];
+                var textField:TextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
+                var actualWidth:Number = textField.textBounds.width;
+                var percentage:Number = 1;
+                var newFontSize:Number = this.fontSize;
 
-				if(newFontSize <= _initialFontSize) {
-					this.fontSize = newFontSize;
-				}
-				else
-				{
-					this.fontSize = _initialFontSize;
-				}
-			}
+                percentage = (this.width - FONT_BLEED_COMPENSATION)/actualWidth;
+                newFontSize = Math.floor(newFontSize * percentage);
+
+                textField.dispose();
+
+                if(newFontSize <= _initialFontSize) {
+                    this.fontSize = newFontSize;
+                }
+                else
+                {
+                    this.fontSize = _initialFontSize;
+                }
+                success = true;
+            }
+
+            return success;
         }
 
         //Puts the longest word first
