@@ -14,7 +14,9 @@ import starling.text.TextField;
 	 */
 	public class EngineTextField extends TextField implements IAbstractTextField
 	{
-		
+
+        private var _initialFontSize:uint = 0;
+
 		public function EngineTextField(width:int, height:int, text:String, fontName:String="Verdana", fontSize:Number=12, color:uint=0, bold:Boolean=false, nativeFiltersArr:Array = null) 
 		{
 			super(width, height, text, fontName, fontSize, color, bold);
@@ -120,6 +122,10 @@ import starling.text.TextField;
 		}
 		override public function set fontSize (value:Number) : void
 		{
+            if(_initialFontSize == 0)
+            {
+                _initialFontSize = value;
+            }
 			super.fontSize = value;
 		}
 
@@ -196,15 +202,18 @@ import starling.text.TextField;
             var percentage:Number = 1;
             var newFontSize:Number = this.fontSize;
 
-            if(actualWidth > this.width)
-            {
-                percentage = this.width/actualWidth;
-                newFontSize = Math.floor(newFontSize * percentage);
-            }
+            percentage = this.width/actualWidth;
+            newFontSize = Math.floor(newFontSize * percentage);
 
-            //textField.dispose();
-            trace(newFontSize);
-            this.fontSize = newFontSize;
+            textField.dispose();
+
+            if(newFontSize <= _initialFontSize) {
+                this.fontSize = newFontSize;
+            }
+            else
+            {
+                this.fontSize = _initialFontSize;
+            }
         }
 
         //Puts the longest word first
