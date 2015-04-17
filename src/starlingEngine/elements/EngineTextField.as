@@ -15,6 +15,8 @@ import starling.text.TextField;
 	public class EngineTextField extends TextField implements IAbstractTextField
 	{
 
+        private static const FONT_BLEED_COMPENSATION:uint = 3;
+
         private var _initialFontSize:uint = 0;
 
 		public function EngineTextField(width:int, height:int, text:String, fontName:String="Verdana", fontSize:Number=12, color:uint=0, bold:Boolean=false, nativeFiltersArr:Array = null) 
@@ -197,12 +199,12 @@ import starling.text.TextField;
             strings.sort(longest);
 
             var longestWord:String = strings[0];
-            var textField:TextField = new TextField(500, this.height, longestWord, this.fontName, this.fontSize);
+            var textField:TextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
             var actualWidth:Number = textField.textBounds.width;
             var percentage:Number = 1;
             var newFontSize:Number = this.fontSize;
 
-            percentage = this.width/actualWidth;
+            percentage = (this.width - FONT_BLEED_COMPENSATION)/actualWidth;
             newFontSize = Math.floor(newFontSize * percentage);
 
             textField.dispose();
