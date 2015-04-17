@@ -24,6 +24,7 @@ import starling.text.TextField;
 		public function updateLabel(text:String):void
 		{
 			_tField.text = text;
+            (_tField as EngineTextField).fitFont();
 		}
 		
 		public function get textField():IAbstractTextField

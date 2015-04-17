@@ -202,8 +202,8 @@ import starling.text.TextField;
                 newFontSize = Math.floor(newFontSize * percentage);
             }
 
-            textField.dispose();
-
+            //textField.dispose();
+            trace(newFontSize);
             this.fontSize = newFontSize;
         }
 
