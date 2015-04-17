@@ -141,6 +141,7 @@ import utils.delayedFunctionCall;
 		public static const ENGINE_FLV:String = "flv";
 		public static const ENGINE_BUTTON:String = "button";
 		public static const ENGINE_TOGGLE_BUTTON:String = "toggleButton";
+
 		public static const ENGINE_SLIDER:String = "slider";
 		public static const ENGINE_TEXT_FIELD:String = "textField";
 
@@ -820,6 +821,7 @@ import utils.delayedFunctionCall;
          */
         public function requestLabelFromTextfield(text:IAbstractTextField, name:String = ""):IAbstractLabel
         {
+            (text as EngineTextField).fitFont();
             var label:IAbstractLabel = new EngineLabel(text);
             label.name = name;
             label.touchable = false;

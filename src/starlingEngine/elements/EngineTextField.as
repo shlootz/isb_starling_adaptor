@@ -182,7 +182,49 @@ import starling.text.TextField;
 			super.text = value;
 		}
 
-		/// Indicates whether the text is underlined.
+        /**
+         * Forces a lower font size to fit a certain text field
+         */
+        public function fitFont():void
+        {
+            var strings:Array = text.split("\n");
+            strings.sort(longest);
+
+            var longestWord:String = strings[0];
+            var textField:TextField = new TextField(500, this.height, longestWord, this.fontName, this.fontSize);
+            var actualWidth:Number = textField.textBounds.width;
+            var percentage:Number = 1;
+            var newFontSize:Number = this.fontSize;
+
+            if(actualWidth > this.width)
+            {
+                percentage = this.width/actualWidth;
+                newFontSize = Math.floor(newFontSize * percentage);
+            }
+
+            textField.dispose();
+
+            this.fontSize = newFontSize;
+        }
+
+        //Puts the longest word first
+        private function longest(a, b):int
+        {
+            if (a.length > b.length)
+            {
+                return -1;
+            }
+            else if (a.length < b.length)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// Indicates whether the text is underlined.
 		override public function get underline () : Boolean
 		{
 			return super.underline;
