@@ -15,7 +15,7 @@ import starling.text.TextField;
 	public class EngineTextField extends TextField implements IAbstractTextField
 	{
 
-        private static const FONT_BLEED_COMPENSATION:uint = 3;
+        private static const FONT_BLEED_COMPENSATION:uint = 10;
 
         private var _initialFontSize:uint = 0;
 
@@ -196,26 +196,30 @@ import starling.text.TextField;
         public function fitFont():void
         {
             var strings:Array = text.split("\n");
-            strings.sort(longest);
+			
+			if (strings.length > 1)
+			{
+				strings.sort(longest);
 
-            var longestWord:String = strings[0];
-            var textField:TextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
-            var actualWidth:Number = textField.textBounds.width;
-            var percentage:Number = 1;
-            var newFontSize:Number = this.fontSize;
+				var longestWord:String = strings[0];
+				var textField:TextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
+				var actualWidth:Number = textField.textBounds.width;
+				var percentage:Number = 1;
+				var newFontSize:Number = this.fontSize;
 
-            percentage = (this.width - FONT_BLEED_COMPENSATION)/actualWidth;
-            newFontSize = Math.floor(newFontSize * percentage);
+				percentage = (this.width - FONT_BLEED_COMPENSATION)/actualWidth;
+				newFontSize = Math.floor(newFontSize * percentage);
 
-            textField.dispose();
+				textField.dispose();
 
-            if(newFontSize <= _initialFontSize) {
-                this.fontSize = newFontSize;
-            }
-            else
-            {
-                this.fontSize = _initialFontSize;
-            }
+				if(newFontSize <= _initialFontSize) {
+					this.fontSize = newFontSize;
+				}
+				else
+				{
+					this.fontSize = _initialFontSize;
+				}
+			}
         }
 
         //Puts the longest word first
