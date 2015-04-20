@@ -16,6 +16,8 @@ import starling.text.TextField;
 	{
 
         private static const FONT_BLEED_COMPENSATION:uint = 5;
+        private static const MIN_WIDTH:uint = 30;
+        private static const MIN_HEIGHT:uint = 30;
 
         private var _initialFontSize:uint = 0;
 
@@ -195,9 +197,10 @@ import starling.text.TextField;
          */
         public function fitFont():void
         {
-            if(!calculateFont("\n"))
-            {
-                calculateFont(" ");
+            if(this.width > MIN_WIDTH) {
+                if (!calculateFont("\n")) {
+                    calculateFont(" ");
+                }
             }
         }
 
