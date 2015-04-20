@@ -206,7 +206,7 @@ import starling.text.TextField;
             var strings:Array = text.split(splitCharacter);
             var success:Boolean = false;
 
-            if (strings.length > 1)
+            if (strings.length > 1 || splitCharacter == " ")
             {
                 strings.sort(longest);
 
