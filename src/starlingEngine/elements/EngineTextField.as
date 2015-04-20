@@ -15,7 +15,7 @@ import starling.text.TextField;
 	public class EngineTextField extends TextField implements IAbstractTextField
 	{
 
-        private static const FONT_BLEED_COMPENSATION:uint = 3;
+        private static const FONT_BLEED_COMPENSATION:uint = 5;
 
         private var _initialFontSize:uint = 0;
 
