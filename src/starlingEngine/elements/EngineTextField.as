@@ -2,11 +2,19 @@ package starlingEngine.elements
 {
 import bridge.abstract.IAbstractTextField;
 
+import flash.filters.BevelFilter;
+import flash.filters.DropShadowFilter;
+
+import flash.filters.GlowFilter;
+import flash.filters.GradientBevelFilter;
+
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
 
 import starling.display.DisplayObject;
 import starling.text.TextField;
+
+import utils.ClassHelper;
 
 /**
 	 * ...
@@ -219,7 +227,8 @@ import starling.text.TextField;
                 var percentage:Number = 1;
                 var newFontSize:Number = this.fontSize;
 
-                percentage = (this.width - FONT_BLEED_COMPENSATION)/actualWidth;
+                trace("!!!!!!!!!!!! "+calculateNativeFilterBleed());
+                percentage = (this.width - FONT_BLEED_COMPENSATION - calculateNativeFilterBleed())/actualWidth;
                 newFontSize = Math.floor(newFontSize * percentage);
 
                 textField.dispose();
@@ -235,6 +244,36 @@ import starling.text.TextField;
             }
 
             return success;
+        }
+
+        private function calculateNativeFilterBleed():Number
+        {
+            var offset:Number = 0;
+            if(nativeFilters.length > 0) {
+                for (var j:uint = 0; j < nativeFilters.length; j++) {
+                    var rootClass:Class = ClassHelper.getClass(nativeFilters[j]);
+                    if (rootClass === GlowFilter) {
+                        offset = (nativeFilters[j] as GlowFilter).blurX * 2
+                    }
+                    else {
+                        if (rootClass === BevelFilter) {
+                            offset = (nativeFilters[j] as BevelFilter).blurX * 2
+                        }
+                        else {
+                            if (rootClass === DropShadowFilter) {
+                                offset = (nativeFilters[j] as DropShadowFilter).blurX * 2
+                            }
+                            else {
+                                if (rootClass === GradientBevelFilter) {
+                                    offset = (nativeFilters[j] as GradientBevelFilter).blurX * 2
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return offset
         }
 
         //Puts the longest word first
