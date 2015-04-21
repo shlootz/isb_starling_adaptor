@@ -206,7 +206,7 @@ import utils.ClassHelper;
         public function fitFont():void
         {
             if(this.width > MIN_WIDTH) {
-                if (!calculateFont("\n")) {
+               if (!calculateFont("\n")) {
                     calculateFont(" ");
                 }
             }

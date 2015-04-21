@@ -55,7 +55,7 @@ import starlingEngine.elements.EngineTextField;
 			_signalsHub = signalsHub;
 			// MAKE BACKGROUND
 			var bkSprite:Sprite = new Sprite();
-			var bkBmpData:BitmapData = new BitmapData(width, 20, false, 0x000000);
+			var bkBmpData:BitmapData = new BitmapData(width, 20, false, 0xFFFFFF);
 			var bkBitmap:Bitmap = new Bitmap(bkBmpData);
 			var bgImg:Image = Image.fromBitmap(bkBitmap);
 			bkSprite.addChild(bgImg);
@@ -73,6 +73,7 @@ import starlingEngine.elements.EngineTextField;
 			
 			//MAKE INITIAL SELECTION
 			_label.updateLabel(dataProvider[0].text);
+            _label.textField.fontSize = 15;
 			_currentSelection = dataProvider[0].text;
 			_currentSelectedIData = dataProvider[0].data;
 			_currentSelectedIndex =  0;
