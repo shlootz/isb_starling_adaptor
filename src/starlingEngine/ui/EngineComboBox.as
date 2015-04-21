@@ -55,7 +55,7 @@ import starlingEngine.elements.EngineTextField;
 			_signalsHub = signalsHub;
 			// MAKE BACKGROUND
 			var bkSprite:Sprite = new Sprite();
-			var bkBmpData:BitmapData = new BitmapData(width, 20, false, 0xFFFFFF);
+			var bkBmpData:BitmapData = new BitmapData(width, 20, false, 0x000000);
 			var bkBitmap:Bitmap = new Bitmap(bkBmpData);
 			var bgImg:Image = Image.fromBitmap(bkBitmap);
 			bkSprite.addChild(bgImg);
