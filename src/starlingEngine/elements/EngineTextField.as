@@ -227,7 +227,6 @@ import utils.ClassHelper;
                 var percentage:Number = 1;
                 var newFontSize:Number = this.fontSize;
 
-                trace("!!!!!!!!!!!! "+calculateNativeFilterBleed());
                 percentage = (this.width - FONT_BLEED_COMPENSATION - calculateNativeFilterBleed())/actualWidth;
                 newFontSize = Math.floor(newFontSize * percentage);
 
@@ -253,21 +252,27 @@ import utils.ClassHelper;
                 for (var j:uint = 0; j < nativeFilters.length; j++) {
                     var rootClass:Class = ClassHelper.getClass(nativeFilters[j]);
                     if (rootClass === GlowFilter) {
-                        offset = (nativeFilters[j] as GlowFilter).blurX * 2
+                        if((nativeFilters[j] as GlowFilter).blurX * 2 > offset)
+                        {
+                            offset = (nativeFilters[j] as GlowFilter).blurX * 2
+                        }
                     }
-                    else {
-                        if (rootClass === BevelFilter) {
+                    if (rootClass === BevelFilter) {
+                        if((nativeFilters[j] as BevelFilter).blurX * 2 > offset)
+                        {
                             offset = (nativeFilters[j] as BevelFilter).blurX * 2
                         }
-                        else {
-                            if (rootClass === DropShadowFilter) {
-                                offset = (nativeFilters[j] as DropShadowFilter).blurX * 2
-                            }
-                            else {
-                                if (rootClass === GradientBevelFilter) {
-                                    offset = (nativeFilters[j] as GradientBevelFilter).blurX * 2
-                                }
-                            }
+                    }
+                    if (rootClass === DropShadowFilter) {
+                        if((nativeFilters[j] as DropShadowFilter).blurX * 2 > offset)
+                        {
+                            offset = (nativeFilters[j] as DropShadowFilter).blurX * 2
+                        }
+                    }
+                    if (rootClass === GradientBevelFilter) {
+                        if((nativeFilters[j] as GradientBevelFilter).blurX * 2 > offset)
+                        {
+                            offset = (nativeFilters[j] as GradientBevelFilter).blurX * 2
                         }
                     }
                 }
