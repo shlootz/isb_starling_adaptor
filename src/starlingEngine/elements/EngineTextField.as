@@ -249,7 +249,7 @@ import utils.ClassHelper;
         private function calculateNativeFilterBleed():Number
         {
             var offset:Number = 0;
-            if(nativeFilters.length > 0) {
+            if(nativeFilters != null) {
                 for (var j:uint = 0; j < nativeFilters.length; j++) {
                     var rootClass:Class = ClassHelper.getClass(nativeFilters[j]);
                     if (rootClass === GlowFilter) {
