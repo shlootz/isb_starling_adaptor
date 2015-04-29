@@ -23,6 +23,9 @@
             <entry library-name="flexunit-4.2.0-20140410-as3_4.12.0" library-level="project">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-name="CEV3-1-10-Starling-Feathers" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK_Compiler" />
         </dependencies>
@@ -55,6 +58,7 @@
     <orderEntry type="library" exported="" name="greensock" level="project" />
     <orderEntry type="library" exported="" name="SignalsManager" level="project" />
     <orderEntry type="library" exported="" name="flexunit-4.2.0-20140410-as3_4.12.0" level="project" />
+    <orderEntry type="library" exported="" name="CEV3-1-10-Starling-Feathers" level="project" />
   </component>
 </module>
 

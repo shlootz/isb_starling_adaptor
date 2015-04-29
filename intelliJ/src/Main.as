@@ -3,6 +3,7 @@ package {
 import bridge.BridgeGraphics;
 import bridge.IBridgeGraphics;
 import bridge.abstract.AbstractPool;
+import bridge.abstract.IAbstractDisplayObject;
 import bridge.abstract.IAbstractGraphics;
 import bridge.abstract.IAbstractImage;
 import bridge.abstract.IAbstractLayer;
@@ -12,7 +13,12 @@ import bridge.abstract.IAbstractSprite;
 import bridge.abstract.IAbstractTextField;
 import bridge.abstract.IAbstractVideo;
 import bridge.abstract.filters.IAbstractBlurFilter;
+import bridge.abstract.ui.IAbstractButton;
+import bridge.abstract.ui.IAbstractComboBox;
+import bridge.abstract.ui.IAbstractComboBoxItemRenderer;
 import bridge.abstract.ui.IAbstractLabel;
+
+import citrus.core.State;
 
 import com.greensock.TweenLite;
 
@@ -22,13 +28,30 @@ import flash.display.BitmapData;
 import flash.display.DisplayObject;
 
 import flash.display.Sprite;
+import flash.events.Event;
+import flash.filters.DropShadowFilter;
+import flash.filters.GlowFilter;
 import flash.geom.Point;
 import flash.text.TextField;
 
-import nape.space.Space;
-
 import signals.ISignalsHub;
+import signals.SignalsHub;
+
+import starling.display.Image;
+
+import starling.filters.ColorMatrixFilter;
+import starling.text.TextField;
+import starling.text.TextFieldAutoSize;
+
+import starlingEngine.elements.EngineDisplayObject;
+import starlingEngine.elements.EngineDisplayObjectContainer;
+import starlingEngine.elements.EngineLabel;
+import starlingEngine.elements.EngineTextField;
+
 import starlingEngine.signals.Signals;
+import starlingEngine.ui.EngineComboBoxItemRenderer;
+
+import utils.ATFSupport.TextureFromATF;
 
 signals.ISignalsHub
 
@@ -52,7 +75,7 @@ public class Main extends Sprite {
             new Point(800, 600),
             StarlingEngine,
             starling.utils.AssetManager,
-            starlingEngine.signals.SignalsHub,
+            SignalsHub,
             AbstractPool,
             starling.animation.Juggler,
             true,
@@ -68,18 +91,77 @@ public class Main extends Sprite {
     private function loadAssets(event:String, obj:Object):void
     {
         (_bridgeGraphics.assetsManager as AssetManager).enqueue(
-            "assets/BackgroundModuleAssets.png",
-            "assets/BackgroundModuleAssets.xml",
+            "assets/atf/BackgroundModuleAssets.atf",
+            "assets/atf/BackgroundModuleAssets.xml",
             "assets/UserInterfaceModuleGameplayButtonsLayerLayout.xml"
         );
         (_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void {
             trace("Loading assets, progress:", ratio);
             if (ratio == 1) {
-                //buildMenu();
+                buildMenu();
                 //testTextFields();
-                testMovieClips();
+                //testMovieClips();
+                //testAutoSize();
+                //testComboBox();
+                //testATF();
             }
         });
+    }
+
+    private function testATF():void
+    {
+        var bmpData:BitmapData = new BitmapData(256,256,false, 0x000000);
+        var img:Image = new Image(TextureFromATF.CreateTextureFromByteArray(TextureFromATF.CreateATFData(bmpData)));
+
+        _bridgeGraphics.addChild(img);
+    }
+
+    private function testComboBox():void
+    {
+        var dp:Vector.<IAbstractComboBoxItemRenderer> = new Vector.<IAbstractComboBoxItemRenderer>();
+        var bkImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(200,30, false, 0xff0000));
+        for (var i:uint = 0; i<10; i++)
+        {
+            dp.push(new EngineComboBoxItemRenderer(String(Math.random()*9999)));
+        }
+        var cb:IAbstractComboBox = _bridgeGraphics.requestComboBox(dp, 200,30, bkImage, "Verdana");
+
+        _bridgeGraphics.currentContainer.addNewChild(cb);
+        cb.x = 200;
+        cb.y = 200;
+    }
+
+    private var al:IAbstractLabel;
+    private function testAutoSize():void
+    {
+       //var theText:String = "ARRÊTER AUTO SPIN ARRÊTER AUTO SPIN ARRÊTER AUTO SPIN ARRÊTER AUTO SPIN ARRÊTER AUTO SPIN ARRÊTER AUTO SPIN ARRÊTER AUTO SPIN ARRÊTER AUTO SPIN ARRÊTER AUTO SPIN ARRÊTER AUTO SPIN ";
+       //var theText:String = "APUESTA MAX.";
+       //var theText:String = "SCROLLS OF RA BONUS SYMBOLS ON REELS 1, 3 AND 5 AT THE SAME TIME WILL ACTIVATE THE INSTANT BONUS";
+       var theText:String = "PUNTATA MASSIMA";
+       //var theText:String = "10";
+
+        var tf:IAbstractTextField = _bridgeGraphics.requestTextField(59.92, 76.09, theText,"CreditRiver-Regular", 20);
+        tf.nativeFilters = new Array((new DropShadowFilter(1, 45, 0xFF0000, 1, 3 , 3)));
+        //var tf:IAbstractTextField = _bridgeGraphics.requestTextField(60.95, 77.75, theText,"Verdana", 20);
+        tf.autoScale = true;
+
+        al = _bridgeGraphics.requestLabelFromTextfield(tf);
+        al.x = 200;
+        al.y = 200;
+
+        _bridgeGraphics.currentContainer.addNewChild(al);
+
+        //addEventListener(Event.ENTER_FRAME, onEnterFrame);
+
+        //al.updateLabel("PARAR AS\nVOLTAS\nAUTOMÁTICAS");
+
+        //var btn:IAbstractButton = _bridgeGraphics.requestButton("test");
+        //btn.addCustomLabel(al);
+
+        //btn.x = 200;
+        //btn.y = 200;
+
+        //_bridgeGraphics.currentContainer.addNewChild(btn);
     }
 
     private function testMovieClips():void
@@ -123,6 +205,10 @@ public class Main extends Sprite {
         q.y = 0;
     }
 
+    private var _filter:ColorMatrixFilter;
+    private var _val:Number = 0;
+    private var _reverse:Boolean = false;
+
     private function buildMenu():void
     {
         var layout:XML = _bridgeGraphics.getXMLFromAssetsManager("BackgroundModuleAssets");
@@ -139,6 +225,20 @@ public class Main extends Sprite {
         trace(holder.width)
 
         holder.addNewChild(_bridgeGraphics.requestImage("5ofaKindMessage"));
+
+        _filter = new ColorMatrixFilter();
+
+
+        //addEventListener(Event.ENTER_FRAME, onEnterFrame);
+
+        _bridgeGraphics.addFragmentFilter(holder, _filter);
+    }
+
+    private var increment:Number = 0;
+    private function onEnterFrame(e:Event):void
+    {
+        increment += 100;
+        al.updateLabel(String((increment).toFixed()));
     }
 }
 }

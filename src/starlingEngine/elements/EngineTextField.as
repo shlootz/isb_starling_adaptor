@@ -212,6 +212,13 @@ import utils.ClassHelper;
             }
         }
 
+    private var _bufferedTextField:TextField;
+
+    /**
+     *
+     * @param splitCharacter
+     * @return
+     */
         private function calculateFont(splitCharacter:String):Boolean
         {
             var strings:Array = text.split(splitCharacter);
@@ -222,15 +229,26 @@ import utils.ClassHelper;
                 strings.sort(longest);
 
                 var longestWord:String = strings[0];
-                var textField:TextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
-                var actualWidth:Number = textField.textBounds.width;
+               // var textField:TextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
+
+                if(!_bufferedTextField)
+                {
+                    _bufferedTextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
+                }
+                else
+                {
+                    _bufferedTextField.text = longestWord;
+                    _bufferedTextField.fontName = this.fontName;
+                    _bufferedTextField.fontSize = this.fontSize;
+                }
+                var actualWidth:Number = _bufferedTextField.textBounds.width;
                 var percentage:Number = 1;
                 var newFontSize:Number = this.fontSize;
 
                 percentage = (this.width - FONT_BLEED_COMPENSATION - calculateNativeFilterBleed())/actualWidth;
                 newFontSize = Math.floor(newFontSize * percentage);
 
-                textField.dispose();
+                _bufferedTextField.dispose();
 
                 if(newFontSize <= _initialFontSize) {
                     this.fontSize = newFontSize;

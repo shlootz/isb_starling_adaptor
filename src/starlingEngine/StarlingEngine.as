@@ -39,6 +39,8 @@ import consoleCommand.Output;
 import starling.filters.ColorMatrixFilter;
 import starling.filters.DisplacementMapFilter;
 import starling.filters.FragmentFilterMode;
+import starling.textures.SubTexture;
+
 import starlingEngine.signals.Signals;
 
 import citrus.core.IState;
@@ -124,6 +126,10 @@ import starlingEngine.validators.LayoutSliderValidator;
 import starlingEngine.validators.LayoutTextFieldValidator;
 import starlingEngine.validators.LayoutToggleButtonValidator;
 
+import statsDebug.StatsDebug;
+
+import utils.ATFSupport.TextureFromATF;
+
 import utils.ClassHelper;
 
 import utils.delayedFunctionCall;
@@ -173,7 +179,9 @@ import utils.delayedFunctionCall;
 		private var _flareBridge:FlareBridge;
 		
 		private var _consoleCommands:ConsoleCommands;
-		
+        private var _statsDebug:StatsDebug;
+        private var _texturesUsed:uint = 0;
+
 		private var _cmf:ColorMatrixFilter;
 		private var _dmf:DisplacementMapFilter;
 		private var _fmM:FragmentFilterMode;
@@ -379,6 +387,10 @@ import utils.delayedFunctionCall;
                 if ((obj as EngineImage).texture != null) {
                     if (_floatingTexturesDictionary[(obj as EngineImage).name]) {
                         _assetsManager.removeTexture(_floatingTexturesDictionary[(obj as EngineImage).name]);
+                        _floatingTexturesDictionary[(obj as EngineImage).name].dispose();
+                        if ( _floatingTexturesDictionary[(obj as EngineImage).name] is SubTexture ) {
+                            (_floatingTexturesDictionary[(obj as EngineImage).name] as SubTexture).parent.dispose();
+                        }
                         _floatingTexturesDictionary[(obj as EngineImage).name] = null;
                         delete _floatingTexturesDictionary[(obj as EngineImage).name];
                     }
@@ -519,6 +531,7 @@ import utils.delayedFunctionCall;
             var t:IAbstractTexture = new EngineTexture() as IAbstractTexture;
             t = _assetsManager.getTexture(name) as IAbstractTexture;
             return t as IAbstractTexture;
+            updateCustomDebug();
         }
 
         /**
@@ -543,6 +556,8 @@ import utils.delayedFunctionCall;
             {
                 i.name = name;
             }
+
+            updateCustomDebug();
 
             return i;
         }
@@ -575,6 +590,8 @@ import utils.delayedFunctionCall;
             scroller.tilesPivotX = centerX;
             scroller.tilesPivotY = centerY;
 
+            updateCustomDebug()
+
             return scroller as IAbstractBlitMask;
         }
 
@@ -593,6 +610,8 @@ import utils.delayedFunctionCall;
             i.name = storageName;
 
             _floatingTexturesDictionary[storageName] = _assetsManager.getTexture(storageName);
+
+            updateCustomDebug()
 
             return i;
         }
@@ -619,7 +638,7 @@ import utils.delayedFunctionCall;
                 n.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
                 n.stop();
             }
-
+            updateCustomDebug()
             return n;
         }
 
@@ -636,6 +655,7 @@ import utils.delayedFunctionCall;
             for (i = 0; i < frames.length; i++ )
             {
                 textures.push(frames[i].currentTexture as Texture);
+                updateCustomDebug();
             }
 
             var n:IAbstractMovie = _movieClipsPool.getNewObject() as IAbstractMovie;
@@ -672,6 +692,7 @@ import utils.delayedFunctionCall;
         public function requestGraphics(target:IAbstractDisplayObjectContainer):IAbstractGraphics
         {
             var g:IAbstractGraphics = new EngineGraphics(target);
+            updateCustomDebug()
             return g;
         }
 
@@ -794,7 +815,7 @@ import utils.delayedFunctionCall;
                 t.nativeFilters = nativeFiltersArr;
             }
             t.autoScale = true;
-
+            updateCustomDebug()
             return t;
         }
 
@@ -810,6 +831,7 @@ import utils.delayedFunctionCall;
          */
         public function requestInputTextField(signalsManager:Object, width:int, height:int, text:String = "", fontName:String = "Verdana", fontSize:Number = 12, color:uint = 0):IAbstractInputText
         {
+            updateCustomDebug()
             return new EngineInputText(signalsManager, width, height, text, fontName, fontSize, color);
         }
 
@@ -846,6 +868,8 @@ import utils.delayedFunctionCall;
             mM.touchable = false;
 
             return (mM as IAbstractMask);
+
+            updateCustomDebug()
         }
 
         /**
@@ -876,7 +900,7 @@ import utils.delayedFunctionCall;
             {
                 fontName_ = TextField.registerBitmapFont(bitmapFont);
             }
-
+            updateCustomDebug()
             return fontName_
         }
 
@@ -1096,6 +1120,12 @@ import utils.delayedFunctionCall;
 				Output.verbose = false;
 				BridgeGraphics.isVerbose = true;
 			});
+
+            _consoleCommands.registerCommand("toggleCustomStats", function():void
+            {
+                _statsDebug = new StatsDebug();
+                nativeDisplay.addChild(_statsDebug);
+            });
 		}
 		
 		/**
@@ -1335,9 +1365,27 @@ import utils.delayedFunctionCall;
          */
         public function addTextureAtlas(name:String, atlasXml:XML, atlasPng:Class):void
         {
-            var atlasBitmapData:BitmapData = new atlasPng();
-            var atlasBitmap:Bitmap = new Bitmap(atlasBitmapData);
-            var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(atlasBitmap), atlasXml);
+            if(name.indexOf("ATF") == 0) {
+                var atlasBitmapData:BitmapData = new atlasPng();
+                var atlasBitmap:Bitmap = new Bitmap(atlasBitmapData);
+                var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(atlasBitmap), atlasXml);
+                _assetsManager.addTextureAtlas(name, atlas);
+            }
+            else
+            {
+                addATFAtlas(name, atlasXml, atlasPng);
+            }
+        }
+
+    /**
+     *
+     * @param name
+     * @param atlasXml
+     * @param atlasATF
+     */
+        public function  addATFAtlas(name:String, atlasXml:XML, atlasATF:Class):void
+        {
+            var atlas:TextureAtlas = new TextureAtlas(TextureFromATF.CreateTextureFromATF(atlasATF), atlasXml);
             _assetsManager.addTextureAtlas(name, atlas);
         }
 
@@ -1832,6 +1880,12 @@ import utils.delayedFunctionCall;
 
     public function get debugMode():Boolean {
         return _debugMode;
+    }
+
+    private function updateCustomDebug():void
+    {
+        //_texturesUsed ++;
+        //_statsDebug.tf1.text = "textures used "+_texturesUsed;
     }
 }
 	
