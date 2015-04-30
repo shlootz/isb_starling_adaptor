@@ -1371,6 +1371,10 @@ import utils.delayedFunctionCall;
                 var atlasBitmap:Bitmap = new Bitmap(atlasBitmapData);
                 var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(atlasBitmap), atlasXml);
                 _assetsManager.addTextureAtlas(name, atlas);
+
+                atlasBitmapData.dispose();
+                atlasBitmapData = null;
+                atlasBitmap = null;
             }
             else
             {
