@@ -36,6 +36,9 @@ import bridge.abstract.ui.IAbstractSlider;
 import bridge.abstract.ui.IAbstractToggle;
 import consoleCommand.ConsoleCommands;
 import consoleCommand.Output;
+
+import flash.display.StageQuality;
+
 import starling.filters.ColorMatrixFilter;
 import starling.filters.DisplacementMapFilter;
 import starling.filters.FragmentFilterMode;
@@ -194,6 +197,8 @@ import utils.delayedFunctionCall;
 		 */
 		public function StarlingEngine(initCompleteCallback:Function, baseWidth:int = 800, baseHeight:int = 600, viewportMode:String = ViewportMode.FULLSCREEN, debugMode:Boolean = false):void 
 		{
+            stage.quality = StageQuality.LOW;
+
 			_baseWidth = baseWidth;
 			_baseHeight = baseHeight;
 			_viewportMode = viewportMode;
@@ -590,7 +595,7 @@ import utils.delayedFunctionCall;
             scroller.tilesPivotX = centerX;
             scroller.tilesPivotY = centerY;
 
-            updateCustomDebug()
+            updateCustomDebug();
 
             return scroller as IAbstractBlitMask;
         }
@@ -618,7 +623,7 @@ import utils.delayedFunctionCall;
 
             _floatingTexturesDictionary[storageName] = _assetsManager.getTexture(storageName);
 
-            updateCustomDebug()
+            updateCustomDebug();
 
             return i;
         }
