@@ -23,7 +23,7 @@ import utils.ClassHelper;
 	public class EngineTextField extends TextField implements IAbstractTextField
 	{
 
-        private static const FONT_BLEED_COMPENSATION:uint = 5;
+        private static const FONT_BLEED_COMPENSATION:uint = 7;
         private static const MIN_WIDTH:uint = 30;
         private static const MIN_HEIGHT:uint = 30;
 
