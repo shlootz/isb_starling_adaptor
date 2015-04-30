@@ -604,7 +604,8 @@ import utils.delayedFunctionCall;
         {
             var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
             var storageName:String = "ImageFromBitmapData" + Math.random() * 999999;
-            _assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData));
+            //_assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData));
+            _assetsManager.addTexture(storageName, TextureFromATF.CreateTextureFromByteArray(TextureFromATF.CreateATFData(bitmapData)));
             i.newTexture = _assetsManager.getTexture(storageName);
             i.readjustSize();
             i.name = storageName;
