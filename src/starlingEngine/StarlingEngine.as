@@ -604,8 +604,14 @@ import utils.delayedFunctionCall;
         {
             var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
             var storageName:String = "ImageFromBitmapData" + Math.random() * 999999;
-            //_assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData));
-            _assetsManager.addTexture(storageName, TextureFromATF.CreateTextureFromByteArray(TextureFromATF.CreateATFData(bitmapData)));
+			if (bitmapData.width != bitmapData.height)
+			{
+				_assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData));
+			}
+			else
+			{
+				_assetsManager.addTexture(storageName, TextureFromATF.CreateTextureFromByteArray(TextureFromATF.CreateATFData(bitmapData)));
+			}
             i.newTexture = _assetsManager.getTexture(storageName);
             i.readjustSize();
             i.name = storageName;
@@ -1366,13 +1372,12 @@ import utils.delayedFunctionCall;
          */
         public function addTextureAtlas(name:String, atlasXml:XML, atlasPng:Class):void
         {
-            if(name.indexOf("ATF") == 0) {
+            if(name.search("ATF") == -1) {
                 var atlasBitmapData:BitmapData = new atlasPng();
                 var atlasBitmap:Bitmap = new Bitmap(atlasBitmapData);
                 var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(atlasBitmap), atlasXml);
                 _assetsManager.addTextureAtlas(name, atlas);
-
-                atlasBitmapData.dispose();
+				atlasBitmapData.dispose();
                 atlasBitmapData = null;
                 atlasBitmap = null;
             }
