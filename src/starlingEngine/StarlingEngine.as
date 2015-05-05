@@ -36,6 +36,7 @@ import bridge.abstract.ui.IAbstractSlider;
 import bridge.abstract.ui.IAbstractToggle;
 import consoleCommand.ConsoleCommands;
 import consoleCommand.Output;
+import flash.utils.ByteArray;
 
 import flash.display.StageQuality;
 
@@ -197,8 +198,6 @@ import utils.delayedFunctionCall;
 		 */
 		public function StarlingEngine(initCompleteCallback:Function, baseWidth:int = 800, baseHeight:int = 600, viewportMode:String = ViewportMode.FULLSCREEN, debugMode:Boolean = false):void 
 		{
-            stage.quality = StageQuality.LOW;
-
 			_baseWidth = baseWidth;
 			_baseHeight = baseHeight;
 			_viewportMode = viewportMode;
@@ -615,7 +614,8 @@ import utils.delayedFunctionCall;
 			}
 			else
 			{
-				_assetsManager.addTexture(storageName, TextureFromATF.CreateTextureFromByteArray(TextureFromATF.CreateATFData(bitmapData)));
+				_assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData));
+				//_assetsManager.addTexture(storageName, TextureFromATF.CreateTextureFromByteArray(TextureFromATF.CreateATFData(bitmapData)));
 			}
             i.newTexture = _assetsManager.getTexture(storageName);
             i.readjustSize();
@@ -1403,6 +1403,18 @@ import utils.delayedFunctionCall;
             var atlas:TextureAtlas = new TextureAtlas(TextureFromATF.CreateTextureFromATF(atlasATF), atlasXml);
             _assetsManager.addTextureAtlas(name, atlas);
         }
+		
+		/**
+		 * 
+		 * @param	name
+		 * @param	atlasXml
+		 * @param	atlasByteArray
+		 */
+		public function addATFAtlasByteArray(name:String, atlasXml:XML, ATFByteArray:ByteArray):void
+		{
+			var atlas:TextureAtlas = new TextureAtlas(TextureFromATF.CreateTextureFromByteArray(ATFByteArray), atlasXml);
+            _assetsManager.addTextureAtlas(name, atlas);
+		}
 
         /**
          *

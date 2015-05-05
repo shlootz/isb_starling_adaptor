@@ -23,13 +23,11 @@ public class TextureFromATF {
 
         return texture;
     }
-
-    public static function CreateTextureFromByteArray(compressedData:ByteArray):Texture
-    {
-        var texture:Texture = Texture.fromAtfData(compressedData);
-
-        return texture;
-    }
+	
+	public static function CreateTextureFromByteArray(bArray:ByteArray):Texture
+	{
+		return Texture.fromAtfData(bArray);
+	}
 
     public static function CreateATFData(bmp:BitmapData):ByteArray
     {
