@@ -21,10 +21,13 @@ import starling.text.TextField;
 			addNewChild(_tField as TextField);
 		}
 		
-		public function updateLabel(text:String):void
+		public function updateLabel(text:String, autoFit:Boolean = true):void
 		{
 			_tField.text = text;
-            (_tField as EngineTextField).fitFont();
+			if (autoFit)
+			{
+				(_tField as EngineTextField).fitFont();
+			}
 		}
 		
 		public function get textField():IAbstractTextField
