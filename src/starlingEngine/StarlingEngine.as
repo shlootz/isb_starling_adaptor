@@ -340,6 +340,8 @@ import utils.delayedFunctionCall;
             (_signalsHub as ISignalsHub).addSignal(Signals.REMOVE_AND_DISPOSE, new Signal(), new Vector.<Function>);
 
             (_signalsHub as ISignalsHub).addSignal(Signals.CHANGE_GRAPHICS_STATE, new Signal(), new Vector.<Function>);
+			
+            (_signalsHub as ISignalsHub).addSignal(Signals.ATLAS_ADDED, new Signal(), new Vector.<Function>);
 
             (_signalsHub as ISignalsHub).addSignal(Signals.MOUSE_WHEEL, new Signal(), new Vector.<Function>);
 
@@ -1393,6 +1395,11 @@ import utils.delayedFunctionCall;
             {
                 addATFAtlas(name, atlasXml, atlasPng);
             }
+			
+			var delayedCall:delayedFunctionCall = new delayedFunctionCall(function():void {
+				_signalsHub.dispatchSignal(Signals.ATLAS_ADDED, Signals.ATLAS_ADDED);
+			},
+			10);
         }
 
     /**
@@ -1405,6 +1412,11 @@ import utils.delayedFunctionCall;
         {
             var atlas:TextureAtlas = new TextureAtlas(TextureFromATF.CreateTextureFromATF(atlasATF), atlasXml);
             _assetsManager.addTextureAtlas(name, atlas);
+			
+			var delayedCall:delayedFunctionCall = new delayedFunctionCall(function():void {
+				_signalsHub.dispatchSignal(Signals.ATLAS_ADDED, Signals.ATLAS_ADDED);
+			},
+			10);
         }
 		
 		/**
@@ -1417,6 +1429,11 @@ import utils.delayedFunctionCall;
 		{
 			var atlas:TextureAtlas = new TextureAtlas(TextureFromATF.CreateTextureFromByteArray(ATFByteArray), atlasXml);
             _assetsManager.addTextureAtlas(name, atlas);
+			
+			var delayedCall:delayedFunctionCall = new delayedFunctionCall(function():void {
+				_signalsHub.dispatchSignal(Signals.ATLAS_ADDED, Signals.ATLAS_ADDED);
+			},
+			10);
 		}
 
         /**

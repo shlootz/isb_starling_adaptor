@@ -17,6 +17,9 @@ package starlingEngine.signals
 		public static const CHANGE_GRAPHICS_STATE:String = "GEchangeGraphicsState"
 		public static const REMOVE_AND_DISPOSE:String = "GERemoveAndDispose"
 		
+		//Atlas store signals
+		public static const ATLAS_ADDED:String = "GEAtlasAdded";
+		
 		//Layer tranzition in complete
 		public static const LAYER_TRANSITION_IN_COMPLETE:String = "GElayerTransitionInComplete"
 		
