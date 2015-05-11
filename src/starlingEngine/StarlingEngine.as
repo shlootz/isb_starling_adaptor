@@ -1396,10 +1396,7 @@ import utils.delayedFunctionCall;
                 addATFAtlas(name, atlasXml, atlasPng);
             }
 			
-			var delayedCall:delayedFunctionCall = new delayedFunctionCall(function():void {
-				_signalsHub.dispatchSignal(Signals.ATLAS_ADDED, Signals.ATLAS_ADDED);
-			},
-			10);
+			var delayedCall:delayedFunctionCall = new delayedFunctionCall(confirmAtlasAdded, 10 );
         }
 
     /**
@@ -1413,10 +1410,7 @@ import utils.delayedFunctionCall;
             var atlas:TextureAtlas = new TextureAtlas(TextureFromATF.CreateTextureFromATF(atlasATF), atlasXml);
             _assetsManager.addTextureAtlas(name, atlas);
 			
-			var delayedCall:delayedFunctionCall = new delayedFunctionCall(function():void {
-				_signalsHub.dispatchSignal(Signals.ATLAS_ADDED, Signals.ATLAS_ADDED);
-			},
-			10);
+			var delayedCall:delayedFunctionCall = new delayedFunctionCall(confirmAtlasAdded, 10 );
         }
 		
 		/**
@@ -1430,10 +1424,12 @@ import utils.delayedFunctionCall;
 			var atlas:TextureAtlas = new TextureAtlas(TextureFromATF.CreateTextureFromByteArray(ATFByteArray), atlasXml);
             _assetsManager.addTextureAtlas(name, atlas);
 			
-			var delayedCall:delayedFunctionCall = new delayedFunctionCall(function():void {
-				_signalsHub.dispatchSignal(Signals.ATLAS_ADDED, Signals.ATLAS_ADDED);
-			},
-			10);
+			var delayedCall:delayedFunctionCall = new delayedFunctionCall(confirmAtlasAdded, 10 );
+		}
+		
+		private function confirmAtlasAdded():void
+		{
+			_signalsHub.dispatchSignal(Signals.ATLAS_ADDED, Signals.ATLAS_ADDED, {});
 		}
 
         /**
