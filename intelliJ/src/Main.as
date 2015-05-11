@@ -42,6 +42,7 @@ import starling.display.Image;
 import starling.filters.ColorMatrixFilter;
 import starling.text.TextField;
 import starling.text.TextFieldAutoSize;
+import starling.utils.getNextPowerOfTwo;
 
 import starlingEngine.elements.EngineDisplayObject;
 import starlingEngine.elements.EngineDisplayObjectContainer;
@@ -71,6 +72,8 @@ import utils.delayedFunctionCall;
 
 public class Main extends Sprite {
 
+    [SWF(frameRate="60", width="800", height="600",backgroundColor="0x333333")]
+
     private var _bridgeGraphics:IBridgeGraphics = new BridgeGraphics(
             new Point(800, 600),
             StarlingEngine,
@@ -83,7 +86,7 @@ public class Main extends Sprite {
     );
 
     public function Main() {
-        _bridgeGraphics.engine.is3D = true;
+        _bridgeGraphics.engine.is3D = false;
         addChild(_bridgeGraphics.engine as DisplayObject);
         (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
     }
@@ -91,29 +94,58 @@ public class Main extends Sprite {
     private function loadAssets(event:String, obj:Object):void
     {
         (_bridgeGraphics.assetsManager as AssetManager).enqueue(
-            "assets/atf/BackgroundModuleAssets.atf",
-            "assets/atf/BackgroundModuleAssets.xml",
-            "assets/UserInterfaceModuleGameplayButtonsLayerLayout.xml"
+            "assets/atf/PaytableModuleAssets.xml",
+            "assets/atf/PaytableModuleSkin.atf"
+            //"assets/UserInterfaceModuleGameplayButtonsLayerLayout.xml"
         );
         (_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void {
             trace("Loading assets, progress:", ratio);
             if (ratio == 1) {
-                buildMenu();
+                //buildMenu();
                 //testTextFields();
                 //testMovieClips();
                 //testAutoSize();
                 //testComboBox();
                 //testATF();
+               // testMovieClipFlip();
             }
         });
     }
 
+    private function testMovieClipFlip():void
+    {
+        var btn:IAbstractButton = _bridgeGraphics.requestButton("asa");
+
+        var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Paytable-Line-");
+        var mc2:IAbstractMovie = _bridgeGraphics.requestMovie("Paytable-Line-");
+
+        mc.play();
+        mc2.play();
+
+        btn.upSkin_ = mc;
+        btn.hoverSkin_ = mc2;
+
+        btn.x = 0;
+        btn.y = 0;
+
+        btn.pivotX = btn.width/2;
+        btn.pivotY = btn.height/2;
+        btn.scaleX = -1;
+
+        _bridgeGraphics.currentContainer.addNewChild(btn);
+    }
+
     private function testATF():void
     {
-        var bmpData:BitmapData = new BitmapData(256,256,false, 0x000000);
-        var img:Image = new Image(TextureFromATF.CreateTextureFromByteArray(TextureFromATF.CreateATFData(bmpData)));
+        //var bmpData:BitmapData = new BitmapData(256,256,false, 0x000000);
+        //var img:Image = new Image(TextureFromATF.CreateTextureFromByteArray(TextureFromATF.CreateATFData(bmpData)));
 
-        _bridgeGraphics.addChild(img);
+        var newImg:IAbstractImage = _bridgeGraphics.requestImage("Paytable-ScrollBonus-Prew");
+        newImg.x = 200;
+        newImg.y = 200;
+        _bridgeGraphics.addChild(newImg);
+
+        addEventListener(Event.ENTER_FRAME, onEnterFrame);
     }
 
     private function testComboBox():void
@@ -211,6 +243,7 @@ public class Main extends Sprite {
 
     private function buildMenu():void
     {
+
         var layout:XML = _bridgeGraphics.getXMLFromAssetsManager("BackgroundModuleAssets");
         var layer:IAbstractLayer = _bridgeGraphics.requestLayer("UI", 1, layout, true);
         var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
@@ -224,7 +257,7 @@ public class Main extends Sprite {
 
         trace(holder.width)
 
-        holder.addNewChild(_bridgeGraphics.requestImage("5ofaKindMessage"));
+        holder.addNewChild(_bridgeGraphics.requestImage("Page-Option-Down"));
 
         _filter = new ColorMatrixFilter();
 
@@ -235,10 +268,20 @@ public class Main extends Sprite {
     }
 
     private var increment:Number = 0;
+    var images:Array = ["Next-Button-Disable", "Next-Button-Down", "Next-Button-Over", "Next-Button-Up", "Page-Option-Down", "Page-Option-Over", "Page-Option-Up", "Paytable-Line-1", "Paytable-Line-2", "Paytable-Line-3", "Paytable-Line-4", "Paytable-Line-5", "Paytable-Line-6", "Paytable-Line-7", "Paytable-Line-8", "Paytable-Line-9", "Paytable-Line-10", "Paytable-Line-11", "Paytable-Line-12", "Paytable-Line-13", "Paytable-Line-14", "Paytable-Line-15", "Paytable-Line-16", "Paytable-Line-17", "Paytable-Line-18", "Paytable-Line-19"]
     private function onEnterFrame(e:Event):void
     {
-        increment += 100;
-        al.updateLabel(String((increment).toFixed()));
+        //var size:uint = getNextPowerOfTwo(Math.random()*11);
+        //var bmpData:BitmapData = new BitmapData(size,size,false, Math.random()*0xffffff);
+        //var img:Image = new Image(TextureFromATF.CreateTextureFromByteArray(TextureFromATF.CreateATFData(bmpData)));
+
+        var img:IAbstractImage = _bridgeGraphics.requestImage(images[Math.floor(Math.random()*images.length)]);
+
+        img.x = Math.random()*800;
+        img.y = Math.random()*600;
+
+        _bridgeGraphics.currentContainer.addNewChild(img);
+        //bmpData.dispose();
     }
 }
 }

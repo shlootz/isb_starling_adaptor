@@ -231,6 +231,9 @@ import utils.delayedFunctionCall;
          */
         override public function handleStarlingReady():void
         {
+            //initial FPS setup
+            Starling.current.nativeStage.frameRate = 60;
+
             //initial congig of the console (activate with tab)
 			configureConsole();
 			
@@ -1093,9 +1096,9 @@ import utils.delayedFunctionCall;
 		 * @param	e
 		 */
 		private function onDeactivate(e:Event):void
-		{
-			Starling.current.start();
+        {
 			Starling.current.nativeStage.frameRate = 60;
+            Starling.current.start();
 			_juggler.paused = false;
 		}
 		
