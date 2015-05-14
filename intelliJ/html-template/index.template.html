@@ -42,11 +42,11 @@
             var xiSwfUrlStr = "playerProductInstall.swf";
             var flashvars = {};
             var params = {};
+            params.wmode = "direct";
             params.quality = "high";
             params.bgcolor = "${bgcolor}";
             params.allowscriptaccess = "sameDomain";
             params.allowfullscreen = "true";
-            params.wmode = "direct";
             var attributes = {};
             attributes.id = "${application}";
             attributes.name = "${application}";
@@ -84,6 +84,7 @@
                 <param name="bgcolor" value="${bgcolor}" />
                 <param name="allowScriptAccess" value="sameDomain" />
                 <param name="allowFullScreen" value="true" />
+                <param name="wmode" value="direct" />
                 <!--[if !IE]>-->
                 <object type="application/x-shockwave-flash" data="${swf}.swf" width="${width}" height="${height}">
                     <param name="quality" value="high" />

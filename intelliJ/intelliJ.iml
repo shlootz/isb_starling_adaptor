@@ -3,11 +3,8 @@
   <component name="FlexBuildConfigurationManager" active="intelliJ">
     <configurations>
       <configuration name="intelliJ" pure-as="true" main-class="Main" output-file="Main.swf" output-folder="$MODULE_DIR$/../../isb_starling_adaptor_IntelliJ/out/production/intelliJ" use-html-wrapper="true" wrapper-template-path="$MODULE_DIR$/html-template">
-        <dependencies target-player="14.0">
+        <dependencies target-player="18.0">
           <entries>
-            <entry library-name="CEV3-1-10-ALL" library-level="project">
-              <dependency linkage="Merged" />
-            </entry>
             <entry library-name="Flare3D_2.8.5_Commercial" library-level="project">
               <dependency linkage="Merged" />
             </entry>
@@ -23,11 +20,11 @@
             <entry library-name="flexunit-4.2.0-20140410-as3_4.12.0" library-level="project">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="CEV3-1-10-Starling-Feathers" library-level="project">
+            <entry library-id="d66349db-99d4-4472-8781-151b9cab5356">
               <dependency linkage="Merged" />
             </entry>
           </entries>
-          <sdk name="AIRSDK_Compiler" />
+          <sdk name="air18_sdk_mac" />
         </dependencies>
         <compiler-options>
           <map>
@@ -50,7 +47,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../src/testSrc" isTestSource="true" />
     </content>
-    <orderEntry type="jdk" jdkName="AIRSDK_Compiler" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="air18_sdk_mac" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="CEV3-1-10-ALL" level="project" />
     <orderEntry type="library" exported="" name="Flare3D_2.8.5_Commercial" level="project" />
@@ -58,7 +55,16 @@
     <orderEntry type="library" exported="" name="greensock" level="project" />
     <orderEntry type="library" exported="" name="SignalsManager" level="project" />
     <orderEntry type="library" exported="" name="flexunit-4.2.0-20140410-as3_4.12.0" level="project" />
-    <orderEntry type="library" exported="" name="CEV3-1-10-Starling-Feathers" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="d66349db-99d4-4472-8781-151b9cab5356" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../lib/CEV3-1-10-Starling-Feathers.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

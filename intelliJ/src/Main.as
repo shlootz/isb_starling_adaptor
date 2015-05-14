@@ -28,20 +28,31 @@ import flash.display.BitmapData;
 import flash.display.DisplayObject;
 
 import flash.display.Sprite;
+import flash.display.Stage3D;
+import flash.display3D.Context3D;
+import flash.display3D.Context3DTextureFormat;
+import flash.display3D.textures.VideoTexture;
 import flash.events.Event;
+import flash.events.VideoTextureEvent;
 import flash.filters.DropShadowFilter;
 import flash.filters.GlowFilter;
 import flash.geom.Point;
+import flash.net.NetConnection;
+import flash.net.NetStream;
 import flash.text.TextField;
+import flash.utils.ByteArray;
 
 import signals.ISignalsHub;
 import signals.SignalsHub;
+
+import starling.core.Starling;
 
 import starling.display.Image;
 
 import starling.filters.ColorMatrixFilter;
 import starling.text.TextField;
 import starling.text.TextFieldAutoSize;
+import starling.textures.ConcreteTexture;
 import starling.utils.getNextPowerOfTwo;
 
 import starlingEngine.elements.EngineDisplayObject;
@@ -86,7 +97,7 @@ public class Main extends Sprite {
     );
 
     public function Main() {
-        _bridgeGraphics.engine.is3D = false;
+//        _bridgeGraphics.engine.is3D = true;
         addChild(_bridgeGraphics.engine as DisplayObject);
         (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
     }
@@ -106,10 +117,59 @@ public class Main extends Sprite {
                 //testMovieClips();
                 //testAutoSize();
                 //testComboBox();
-                //testATF();
+                testATF();
                // testMovieClipFlip();
+                //testAtlas();
+                //testSprite3D();
             }
         });
+    }
+
+    private var vidClient:Object;
+    private var cTexture:ConcreteTexture;
+    private var vTexture:VideoTexture;
+    private var nc:NetConnection;
+    private var ns:NetStream;
+    private var image:Image;
+    private var context3D:Context3D;
+    private function testSprite3D():void
+    {
+        trace( this, "supports video texture", Context3D.supportsVideoTexture );
+        context3D = Starling.context;
+
+        vidClient = new Object();
+        vidClient.onMetaData = onMetaData;
+
+        nc = new NetConnection();
+        nc.connect(null);
+
+        ns = new NetStream(nc);
+        ns.client = vidClient;
+        ns.play("assets/test.mp4");
+
+        vTexture = context3D.createVideoTexture();
+        vTexture.attachNetStream(ns);
+        vTexture.addEventListener(VideoTextureEvent.RENDER_STATE, renderFrame);
+
+        cTexture = new ConcreteTexture(vTexture, Context3DTextureFormat.BGRA, 800, 600, false, true, true);
+
+        image = new Image(cTexture);
+        _bridgeGraphics.addChild(image);
+    }
+
+    private function renderFrame(e:VideoTextureEvent):void
+    {
+        //
+    }
+
+    private function onMetaData(metadata:Object):void
+    {
+        //
+    }
+
+    private function testAtlas():void
+    {
+        _bridgeGraphics.storeAtlasATF("asd", _bridgeGraphics.getXMLFromAssetsManager("PaytableModuleAssets"), new ByteArray());
     }
 
     private function testMovieClipFlip():void

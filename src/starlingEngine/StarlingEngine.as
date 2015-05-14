@@ -36,6 +36,13 @@ import bridge.abstract.ui.IAbstractSlider;
 import bridge.abstract.ui.IAbstractToggle;
 import consoleCommand.ConsoleCommands;
 import consoleCommand.Output;
+
+import flash.display3D.Context3DTextureFormat;
+
+import flash.display3D.textures.VideoTexture;
+import flash.events.VideoTextureEvent;
+
+import flash.net.NetStream;
 import flash.utils.ByteArray;
 
 import flash.display.StageQuality;
@@ -43,6 +50,7 @@ import flash.display.StageQuality;
 import starling.filters.ColorMatrixFilter;
 import starling.filters.DisplacementMapFilter;
 import starling.filters.FragmentFilterMode;
+import starling.textures.ConcreteTexture;
 import starling.textures.SubTexture;
 
 import starlingEngine.signals.Signals;
@@ -949,6 +957,39 @@ import utils.delayedFunctionCall;
         {
             var video:IAbstractVideo = new EngineVideo(_signalsHub, _assetsManager);
             return video
+        }
+
+    /**
+     *
+     * @param name
+     * @param netStream
+     * @return
+     */
+        public function requestDirect3DVideo(name:String, netStream:NetStream, width:Number, height:Number):IAbstractImage
+        {
+            var image:Image;
+            var cTexture:ConcreteTexture;
+            var vTexture:VideoTexture;
+            var context3D:Context3D;
+
+            if(Context3D.supportsVideoTexture) {
+                vTexture = context3D.createVideoTexture();
+                vTexture.attachNetStream(netStream);
+                vTexture.addEventListener(VideoTextureEvent.RENDER_STATE, function (e:VideoTextureEvent):void {
+                    //
+                });
+
+                cTexture = new ConcreteTexture(vTexture, Context3DTextureFormat.BGRA, width, height, false, true, true);
+
+                image = new Image(cTexture);
+            }
+            else
+            {
+                image = new Image(_textureFallBack);
+            }
+
+            trace( this, "supports video texture", Context3D.supportsVideoTexture );
+            return image as IAbstractImage
         }
 
         /**
