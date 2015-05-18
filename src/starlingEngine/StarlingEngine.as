@@ -183,6 +183,7 @@ import utils.delayedFunctionCall;
 		private var _fragmentStandardFilterPool:AbstractPool;
 
 		private var _floatingTexturesDictionary:Dictionary = new Dictionary(true);
+        private var _bitmapTextureIndex:uint = 0;
 		
 		private var  defaultFramesVector:Vector.<Texture> = new Vector.<Texture>();
 		private var _bitmapDataFallBack:BitmapData = new BitmapData(100, 100, true, 0x000000);
@@ -194,9 +195,6 @@ import utils.delayedFunctionCall;
         private var _statsDebug:StatsDebug;
         private var _texturesUsed:uint = 0;
 
-		private var _cmf:ColorMatrixFilter;
-		private var _dmf:DisplacementMapFilter;
-		private var _fmM:FragmentFilterMode;
 		/**
 		 * 
 		 * @param	initCompleteCallback
@@ -242,7 +240,7 @@ import utils.delayedFunctionCall;
             //initial FPS setup
             Starling.current.nativeStage.frameRate = 60;
 
-            //initial congig of the console (activate with tab)
+            //initial config of the console (activate with tab)
 			configureConsole();
 			
             Starling.current.addEventListener(starling.events.Event.CONTEXT3D_CREATE, onContext3DEventCreate);
@@ -256,6 +254,7 @@ import utils.delayedFunctionCall;
             //reusable texture for empty textures or missing assets without causing a fail
             _textureFallBack = Texture.fromBitmapData(_bitmapDataFallBack);
 
+            //CREATE POOLS
             //creates a new pool for sprites
             _spritesPool = new AbstractPool("sprites", EngineSprite, 500);
 
@@ -299,7 +298,7 @@ import utils.delayedFunctionCall;
                 _signalsHub.dispatchSignal(Signals.STARLING_READY, "", { } );
             }
 
-            //mouse wheel listener
+            //mouse wheel listener - custom behaviour
             stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel, false, 0 , true);
 
             //deactivate event
@@ -619,8 +618,9 @@ import utils.delayedFunctionCall;
          */
         public function requestImageFromBitmapData(bitmapData:BitmapData):IAbstractImage
         {
+            _bitmapTextureIndex ++;
             var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
-            var storageName:String = "ImageFromBitmapData" + Math.random() * 999999;
+            var storageName:String = "ImageFromBitmapData" + _bitmapTextureIndex;
 			if (bitmapData.width != bitmapData.height)
 			{
 				_assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData));

@@ -224,12 +224,11 @@ import utils.ClassHelper;
             var strings:Array = text.split(splitCharacter);
             var success:Boolean = false;
 
-            if (strings.length > 1 || splitCharacter == " ")
+            if (strings.length > 1)
             {
                 strings.sort(longest);
 
                 var longestWord:String = strings[0];
-               // var textField:TextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
 
                 if(!_bufferedTextField)
                 {
