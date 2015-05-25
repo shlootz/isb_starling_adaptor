@@ -876,6 +876,35 @@ import utils.delayedFunctionCall;
             return label;
         }
 
+    /**
+     *
+     * @param labels
+     * @return
+     */
+        public function createGroupOfLabels(labels:Array):uint
+        {
+            var minSize:uint = (labels[0] as IAbstractLabel).textField.fontSize;
+
+            for(var i:uint = 1; i<labels.length; i++)
+            {
+                (labels[i] as IAbstractLabel).textField.autoScale = false;
+                if(minSize <  (labels[i] as IAbstractLabel).textField.fontSize) {
+                    (labels[i] as IAbstractLabel).textField.fontSize = minSize;
+                }
+                else
+                {
+                    minSize = (labels[i] as IAbstractLabel).textField.fontSize;
+                }
+            }
+
+            for(var j:uint = 1; j<labels.length; j++)
+            {
+                (labels[j] as IAbstractLabel).textField.fontSize = minSize;
+            }
+
+            return minSize;
+        }
+
         /**
          *
          * @param	maskedObject

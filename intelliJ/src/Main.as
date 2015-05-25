@@ -48,6 +48,7 @@ import signals.SignalsHub;
 import starling.core.Starling;
 
 import starling.display.Image;
+import starling.display.Sprite3D;
 
 import starling.filters.ColorMatrixFilter;
 import starling.text.TextField;
@@ -58,6 +59,7 @@ import starling.utils.getNextPowerOfTwo;
 import starlingEngine.elements.EngineDisplayObject;
 import starlingEngine.elements.EngineDisplayObjectContainer;
 import starlingEngine.elements.EngineLabel;
+import starlingEngine.elements.EngineLayer;
 import starlingEngine.elements.EngineTextField;
 
 import starlingEngine.signals.Signals;
@@ -106,8 +108,9 @@ public class Main extends Sprite {
     {
         (_bridgeGraphics.assetsManager as AssetManager).enqueue(
             "assets/atf/PaytableModuleAssets.xml",
-            "assets/atf/PaytableModuleSkin.atf"
-            //"assets/UserInterfaceModuleGameplayButtonsLayerLayout.xml"
+            "assets/atf/PaytableModuleSkin.atf",
+            "assets/UserInterfaceModuleGameplayButtonsLayerLayout.xml",
+            "assets/StripModuleStripLayerLayout.xml"
         );
         (_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void {
             trace("Loading assets, progress:", ratio);
@@ -117,12 +120,24 @@ public class Main extends Sprite {
                 //testMovieClips();
                 //testAutoSize();
                 //testComboBox();
-                testATF();
+                //testATF();
                // testMovieClipFlip();
                 //testAtlas();
-                //testSprite3D();
+                //testVideoTexture();
+//              //testSprite3D();
+                testFilters();
             }
         });
+    }
+
+    private function testFilters():void
+    {
+        var cmf:ColorMatrixFilter = new ColorMatrixFilter();
+    }
+
+    private function testSprite3D():void
+    {
+//        var spr:Sprite3D = new Sprite3D;
     }
 
     private var vidClient:Object;
@@ -132,7 +147,7 @@ public class Main extends Sprite {
     private var ns:NetStream;
     private var image:Image;
     private var context3D:Context3D;
-    private function testSprite3D():void
+    private function testVideoTexture():void
     {
         trace( this, "supports video texture", Context3D.supportsVideoTexture );
         context3D = Starling.context;
@@ -280,21 +295,22 @@ public class Main extends Sprite {
 
     private function testTextFields():void
     {
-        var t:IAbstractTextField = _bridgeGraphics.requestTextField(300,50, "test");
+        var t:IAbstractTextField = _bridgeGraphics.requestTextField(300,50, "1234567890", "Verdana", 12, 0xFFFFFF);
         t.hAlign = HAlign.LEFT;
         t.vAlign = VAlign.TOP;
         var l:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(t);
 
-        _bridgeGraphics.currentContainer.addNewChild(l);
-
         var q:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(t.textBounds.width, t.textBounds.height,false, 0x000000));
 
         _bridgeGraphics.currentContainer.addNewChild(q);
+        _bridgeGraphics.currentContainer.addNewChild(l);
 
         l.x = 150;
-        l.y = 0;
+        l.y = 150;
         q.x = 150;
-        q.y = 0;
+        q.y = 150;
+
+        l.updateLabel("0987654321",true);
     }
 
     private var _filter:ColorMatrixFilter;
@@ -304,7 +320,7 @@ public class Main extends Sprite {
     private function buildMenu():void
     {
 
-        var layout:XML = _bridgeGraphics.getXMLFromAssetsManager("BackgroundModuleAssets");
+        var layout:XML = _bridgeGraphics.getXMLFromAssetsManager("StripModuleStripLayerLayout");
         var layer:IAbstractLayer = _bridgeGraphics.requestLayer("UI", 1, layout, true);
         var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
         var holder:IAbstractSprite = _bridgeGraphics.requestSprite("asd");
@@ -315,14 +331,20 @@ public class Main extends Sprite {
 
         _bridgeGraphics.addChild(holder);
 
-        trace(holder.width)
-
-        holder.addNewChild(_bridgeGraphics.requestImage("Page-Option-Down"));
-
         _filter = new ColorMatrixFilter();
 
+        var textFields:Array = new Array();
 
-        //addEventListener(Event.ENTER_FRAME, onEnterFrame);
+        textFields.push(layer.getElement("stripBalanceLabel"));
+        textFields.push(layer.getElement("stripWinLabel"));
+        textFields.push(layer.getElement("stripTotalBetLabel"));
+        textFields.push(layer.getElement("stripWinValueLabel"));
+        textFields.push(layer.getElement("stripBalanceValueLabel"));
+        textFields.push(layer.getElement("stripTotalBetValueLabel"));
+        textFields.push(layer.getElement("stripCreditLabel"));
+        textFields.push(layer.getElement("stripCreditValueLabel"));
+
+        trace((_bridgeGraphics.engine as StarlingEngine).createGroupOfLabels(textFields));
 
         _bridgeGraphics.addFragmentFilter(holder, _filter);
     }
