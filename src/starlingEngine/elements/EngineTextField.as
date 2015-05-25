@@ -207,7 +207,10 @@ import utils.ClassHelper;
         {
             if(this.width > MIN_WIDTH) {
                if (!calculateFont("\n")) {
-                    calculateFont(" ");
+                    if(!calculateFont(" "))
+                    {
+                        calculateFont(this.text);
+                    };
                 }
             }
         }
@@ -227,8 +230,8 @@ import utils.ClassHelper;
             if (strings.length > 1)
             {
                 strings.sort(longest);
-
-                var longestWord:String = strings[0];
+                //var longestWord:String = strings[0];
+                var longestWord:String = strings[0] != "" ? strings[0] : this.text;
 
                 if(!_bufferedTextField)
                 {

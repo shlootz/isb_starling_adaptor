@@ -116,7 +116,7 @@ public class Main extends Sprite {
             trace("Loading assets, progress:", ratio);
             if (ratio == 1) {
                 //buildMenu();
-                //testTextFields();
+                testTextFields();
                 //testMovieClips();
                 //testAutoSize();
                 //testComboBox();
@@ -125,7 +125,7 @@ public class Main extends Sprite {
                 //testAtlas();
                 //testVideoTexture();
 //              //testSprite3D();
-                testFilters();
+                //testFilters();
             }
         });
     }
@@ -295,22 +295,22 @@ public class Main extends Sprite {
 
     private function testTextFields():void
     {
-        var t:IAbstractTextField = _bridgeGraphics.requestTextField(300,50, "1234567890", "Verdana", 12, 0xFFFFFF);
+        var t:IAbstractTextField = _bridgeGraphics.requestTextField(50,100, "1234567890", "Verdana", 100, 0x000000);
         t.hAlign = HAlign.LEFT;
         t.vAlign = VAlign.TOP;
         var l:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(t);
 
-        var q:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(t.textBounds.width, t.textBounds.height,false, 0x000000));
+        //var q:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(t.textBounds.width, t.textBounds.height,false, 0x000000));
 
-        _bridgeGraphics.currentContainer.addNewChild(q);
+        //_bridgeGraphics.currentContainer.addNewChild(q);
         _bridgeGraphics.currentContainer.addNewChild(l);
 
         l.x = 150;
         l.y = 150;
-        q.x = 150;
-        q.y = 150;
+        //q.x = 150;
+        //q.y = 150;
 
-        l.updateLabel("0987654321",true);
+        l.updateLabel("12345 67890",true);
     }
 
     private var _filter:ColorMatrixFilter;
