@@ -20,7 +20,7 @@
             <entry library-name="flexunit-4.2.0-20140410-as3_4.12.0" library-level="project">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="d66349db-99d4-4472-8781-151b9cab5356">
+            <entry library-id="0b02f16b-5afc-45c3-bd20-6d37be57cf37">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -57,9 +57,9 @@
     <orderEntry type="library" exported="" name="flexunit-4.2.0-20140410-as3_4.12.0" level="project" />
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="d66349db-99d4-4472-8781-151b9cab5356" />
+        <properties id="0b02f16b-5afc-45c3-bd20-6d37be57cf37" />
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/CEV3-1-10-Starling-Feathers.swc!/" />
+          <root url="jar://$USER_HOME$/Citrus-Engine/bin/CEV3-1-10-Starling-Feathers-Nape.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
