@@ -1556,6 +1556,15 @@ import utils.delayedFunctionCall;
         {
             return new BlurFilterVO();
         }
+		
+		/**
+		 * 
+		 * @return
+		 */
+		public function requestColorMatrixFilter():ColorMatrixFilter
+		{
+			return new ColorMatrixFilter();
+		}
 
         /**
          *
