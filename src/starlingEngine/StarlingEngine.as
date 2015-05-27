@@ -1969,6 +1969,8 @@ import utils.delayedFunctionCall;
 			contextSignal.eventName = "Restore";
 			contextSignal.params = { };
 			_signalsHub.dispatchSignal(Signals.CONTEXT_3D_RESTORED, Signals.CONTEXT_3D_RESTORED, contextSignal);
+			
+			resumeRender();
 		}
 		
 		/**
