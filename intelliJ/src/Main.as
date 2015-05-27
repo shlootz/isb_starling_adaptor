@@ -48,7 +48,7 @@ import signals.SignalsHub;
 import starling.core.Starling;
 
 import starling.display.Image;
-import starling.display.Sprite3D;
+//import starling.display.Sprite3D;
 
 import starling.filters.ColorMatrixFilter;
 import starling.text.TextField;
@@ -99,7 +99,7 @@ public class Main extends Sprite {
     );
 
     public function Main() {
-//        _bridgeGraphics.engine.is3D = true;
+// _bridgeGraphics.engine.is3D = true;
         addChild(_bridgeGraphics.engine as DisplayObject);
         (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
     }
@@ -117,8 +117,8 @@ public class Main extends Sprite {
             if (ratio == 1) {
                 //buildMenu();
                 //testTextFields();
-                testMovieClips();
-                //testAutoSize();
+                //testMovieClips();
+                testAutoSize();
                 //testComboBox();
                 //testATF();
                // testMovieClipFlip();
@@ -245,9 +245,10 @@ public class Main extends Sprite {
        //var theText:String = "APUESTA MAX.";
        //var theText:String = "SCROLLS OF RA BONUS SYMBOLS ON REELS 1, 3 AND 5 AT THE SAME TIME WILL ACTIVATE THE INSTANT BONUS";
        var theText:String = "PUNTATA MASSIMA";
+       var val:uint = 0;
        //var theText:String = "10";
 
-        var tf:IAbstractTextField = _bridgeGraphics.requestTextField(59.92, 76.09, theText,"CreditRiver-Regular", 20);
+        var tf:IAbstractTextField = _bridgeGraphics.requestTextField(59.92, 76.09, theText,"0", 30);
         tf.nativeFilters = new Array((new DropShadowFilter(1, 45, 0xFF0000, 1, 3 , 3)));
         //var tf:IAbstractTextField = _bridgeGraphics.requestTextField(60.95, 77.75, theText,"Verdana", 20);
         tf.autoScale = true;
@@ -258,7 +259,10 @@ public class Main extends Sprite {
 
         _bridgeGraphics.currentContainer.addNewChild(al);
 
-        //addEventListener(Event.ENTER_FRAME, onEnterFrame);
+        addEventListener(Event.ENTER_FRAME, function (e:Event){
+            val += 10;
+            al.updateLabel(String(val));
+        });
 
         //al.updateLabel("PARAR AS\nVOLTAS\nAUTOMÁTICAS");
 
@@ -288,11 +292,21 @@ public class Main extends Sprite {
         mc.x = 200;
         mc.y = 200;
 
-        (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, function(type:String, obj:Object):void{
-            trace("movieClip Ended");
-        });
+        _bridgeGraphics.pauseRender();
 
-        (_bridgeGraphics.engine as StarlingEngine).pauseRender();
+        addEventListener(Event.ENTER_FRAME, checkRender);
+    }
+
+    private function checkRender(e:Event):void
+    {
+        if(!_bridgeGraphics.contextStatus())
+        {
+            _bridgeGraphics.pauseRender();
+        }
+        else
+        {
+            _bridgeGraphics.resumeRender();
+        }
     }
 
     private function testTextFields():void

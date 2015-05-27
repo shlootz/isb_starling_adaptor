@@ -11,6 +11,8 @@ import flash.filters.GradientBevelFilter;
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
 
+import starling.core.Starling;
+
 import starling.display.DisplayObject;
 import starling.text.TextField;
 
@@ -205,12 +207,20 @@ import utils.ClassHelper;
          */
         public function fitFont():void
         {
-            if(this.width > MIN_WIDTH) {
-               if (!calculateFont("\n")) {
-                    if(!calculateFont(" "))
-                    {
-                        calculateFont(this.text);
-                    };
+            var context:Boolean = true;
+            if (!Starling.current.context || Starling.current.context.driverInfo == "Disposed")
+            {
+                context =  false;
+            }
+
+            if(context) {
+                if (this.width > MIN_WIDTH) {
+                    if (!calculateFont("\n")) {
+                        if (!calculateFont(" ")) {
+                            calculateFont(this.text);
+                        }
+                        ;
+                    }
                 }
             }
         }
