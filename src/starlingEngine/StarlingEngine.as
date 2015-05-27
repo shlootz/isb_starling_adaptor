@@ -2001,6 +2001,22 @@ import utils.delayedFunctionCall;
 			Output.out("Textures from AssetManager restored");
 		}
 
+    /**
+     *
+     */
+    public function pauseRender():void
+    {
+        starling.stop(true);
+    }
+
+    /**
+     *
+     */
+    public function resumeRender():void
+    {
+        starling.start();
+    }
+
     public function get debugMode():Boolean {
         return _debugMode;
     }

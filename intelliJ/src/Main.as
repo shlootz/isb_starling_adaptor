@@ -116,8 +116,8 @@ public class Main extends Sprite {
             trace("Loading assets, progress:", ratio);
             if (ratio == 1) {
                 //buildMenu();
-                testTextFields();
-                //testMovieClips();
+                //testTextFields();
+                testMovieClips();
                 //testAutoSize();
                 //testComboBox();
                 //testATF();
@@ -291,6 +291,8 @@ public class Main extends Sprite {
         (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.MOVIE_CLIP_ENDED, function(type:String, obj:Object):void{
             trace("movieClip Ended");
         });
+
+        (_bridgeGraphics.engine as StarlingEngine).pauseRender();
     }
 
     private function testTextFields():void
