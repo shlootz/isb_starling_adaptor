@@ -245,7 +245,7 @@ public class Main extends Sprite {
        //var theText:String = "APUESTA MAX.";
        //var theText:String = "SCROLLS OF RA BONUS SYMBOLS ON REELS 1, 3 AND 5 AT THE SAME TIME WILL ACTIVATE THE INSTANT BONUS";
        var theText:String = "PUNTATA MASSIMA";
-       var val:uint = 0;
+       var val:Number = 1;
        //var theText:String = "10";
 
         var tf:IAbstractTextField = _bridgeGraphics.requestTextField(59.92, 76.09, theText,"0", 30);
@@ -260,7 +260,7 @@ public class Main extends Sprite {
         _bridgeGraphics.currentContainer.addNewChild(al);
 
         addEventListener(Event.ENTER_FRAME, function (e:Event){
-            val += 10;
+            val = val*10;
             al.updateLabel(String(val));
         });
 

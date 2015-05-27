@@ -28,6 +28,7 @@ import utils.ClassHelper;
         private static const FONT_BLEED_COMPENSATION:uint = 7;
         private static const MIN_WIDTH:uint = 30;
         private static const MIN_HEIGHT:uint = 30;
+        private static const MIN_FONT_SIZE:uint = 5;
 
         private var _initialFontSize:uint = 0;
 
@@ -263,12 +264,17 @@ import utils.ClassHelper;
                 _bufferedTextField.dispose();
 
                 if(newFontSize <= _initialFontSize) {
-                    this.fontSize = newFontSize;
+                    if(newFontSize > MIN_FONT_SIZE) {
+                        this.fontSize = newFontSize;
+                    }else{
+                        this.fontSize = MIN_FONT_SIZE;
+                    }
                 }
                 else
                 {
                     this.fontSize = _initialFontSize;
                 }
+
                 success = true;
             }
 
