@@ -89,6 +89,12 @@ import starlingEngine.elements.EngineLayerLayoutElementVo;
 				btn.hoverIcon_ = icon;
 				btn.downIcon_ = icon;
 				btn.disabledIcon_ = icon;
+
+                btn.upIcon_.name = icon.name;
+                btn.hoverIcon_.name = icon.name;
+                btn.downIcon_.name = icon.name;
+                btn.disabledIcon_.name = icon.name;
+
 				btn.iconOffsetX = Math.round(element.iconOffsetX);
 				btn.iconOffsetY = Math.round(element.iconOffsetY);
 			}
