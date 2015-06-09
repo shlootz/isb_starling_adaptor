@@ -65,7 +65,12 @@ import starlingEngine.elements.EngineLayerLayoutElementVo;
 			btn.hoverSkin_ = overStateSkin;
 			btn.downSkin_ = pressedStateSkin;
 			btn.disabledSkin_ = disabledStateSkin;
-						
+
+            btn.upSkin_.name =  upSkin.name;
+            btn.hoverSkin_.name =  overStateSkin.name;
+            btn.downSkin_.name =  pressedStateSkin.name;
+            btn.disabledSkin_.name =  disabledStateSkin.name;
+
 			btn.x = Math.round(Number(element.x));
 			btn.y = Math.round(Number(element.y));
 					
