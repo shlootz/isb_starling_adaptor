@@ -82,7 +82,7 @@ import starlingEngine.elements.EngineLayerLayoutElementVo;
 			if (element.icon != "")
 			{
 				hasIcon = true;
-				icon = engine.requestImage(assetsManager.getTexture(element.icon));
+				icon = engine.requestImage(assetsManager.getTexture(element.icon), element.icon);
 				icon.width = Math.round(element.iconWidth);
 				icon.height = Math.round(element.iconHeight);
 				btn.upIcon_ = icon;
