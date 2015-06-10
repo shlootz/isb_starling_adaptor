@@ -387,7 +387,14 @@ import utils.ClassHelper;
 		 */
 		override public function redraw () : void
 		{
-			super.redraw();
+            var context:Boolean = true;
+
+            if (!Starling.current.context || Starling.current.context.driverInfo == "Disposed")
+            {
+                context =  false;
+            }
+
+			if(context) super.redraw();
 		}
 	}
 
