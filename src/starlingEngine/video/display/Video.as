@@ -686,7 +686,14 @@
 		/** @inheritDoc */
 		public override function render(support:RenderSupport, parentAlpha:Number):void
 		{
-			if(mTexture)support.batchQuad(this, parentAlpha, mTexture, mSmoothing);
+            var context:Boolean = true;
+
+            if (!Starling.current.context || Starling.current.context.driverInfo == "Disposed")
+            {
+                context =  false;
+            }
+
+			if(mTexture && context)support.batchQuad(this, parentAlpha, mTexture, mSmoothing);
 		}
 		
 		/**
