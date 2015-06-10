@@ -149,20 +149,28 @@ public class PixelMaskDisplayObject extends DisplayObjectContainer
 		
 		public override function render(support:RenderSupport, parentAlpha:Number):void
 		{
-			if (_isAnimated || (!_isAnimated && !_maskRendered)) {
-				if (_superRenderFlag || !_mask) {
-					super.render(support, parentAlpha);
-				} else {			
-					if (_mask) {					 
-						_maskRenderTexture.draw(_mask);
-						_renderTexture.drawBundled(drawRenderTextures);				
-						_image.render(support, parentAlpha);
-						_maskRendered = true;
-					}
-				}
-			} else {
-				_image.render(support, parentAlpha);
-			}
+            var context:Boolean = true;
+
+            if (!Starling.current.context || Starling.current.context.driverInfo == "Disposed")
+            {
+                context =  false;
+            }
+            if(context) {
+                if (_isAnimated || (!_isAnimated && !_maskRendered)) {
+                    if (_superRenderFlag || !_mask) {
+                        super.render(support, parentAlpha);
+                    } else {
+                        if (_mask) {
+                            _maskRenderTexture.draw(_mask);
+                            _renderTexture.drawBundled(drawRenderTextures);
+                            _image.render(support, parentAlpha);
+                            _maskRendered = true;
+                        }
+                    }
+                } else {
+                    _image.render(support, parentAlpha);
+                }
+            }
 		}
 		
 		private static var _a:Number;
