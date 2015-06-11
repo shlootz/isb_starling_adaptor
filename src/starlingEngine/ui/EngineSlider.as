@@ -29,7 +29,7 @@ import starlingEngine.elements.EngineSprite;
 														trackUpSkin:IAbstractImage, 
 														trackDownSkin:IAbstractImage,
 														backgroundSkin:IAbstractImage,
-														label:IAbstractLabel) 
+														label:IAbstractLabel = null)
 		{
 			 slider = new Slider();
 			 slider.minimum = 0;
@@ -58,7 +58,9 @@ import starlingEngine.elements.EngineSprite;
 			
 			this.addNewChild(backgroundSkin);
 			this.addNewChild( slider );
-			this.addNewChild(label)
+            if(label) {
+                this.addNewChild(label)
+            }
 		}
 		
 		public function get sliderComponentX():uint
