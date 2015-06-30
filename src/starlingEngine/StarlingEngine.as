@@ -252,7 +252,7 @@ import utils.delayedFunctionCall;
             _starling.supportHighResolutions = true;
 
             //reusable texture for empty textures or missing assets without causing a fail
-            _textureFallBack = Texture.fromBitmapData(_bitmapDataFallBack);
+            _textureFallBack = Texture.fromBitmapData(_bitmapDataFallBack, false);
 
             //CREATE POOLS
             //creates a new pool for sprites
@@ -623,11 +623,11 @@ import utils.delayedFunctionCall;
             var storageName:String = "ImageFromBitmapData" + _bitmapTextureIndex;
 			if (bitmapData.width != bitmapData.height)
 			{
-				_assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData));
+				_assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData, false));
 			}
 			else
 			{
-				_assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData));
+				_assetsManager.addTexture(storageName, Texture.fromBitmapData(bitmapData, false));
 				//_assetsManager.addTexture(storageName, TextureFromATF.CreateTextureFromByteArray(TextureFromATF.CreateATFData(bitmapData)));
 			}
             i.newTexture = _assetsManager.getTexture(storageName);
@@ -942,7 +942,7 @@ import utils.delayedFunctionCall;
          */
         public function registerBitmapFont(textureBitmap:Bitmap, xml:XML, fontName:String = ""):String
         {
-            var fontTexture:Texture = Texture.fromBitmap(textureBitmap);
+            var fontTexture:Texture = Texture.fromBitmap(textureBitmap, false);
             var bitmapFont:BitmapFont = new BitmapFont(fontTexture, xml);
             var fontName_:String;
 
@@ -1456,7 +1456,7 @@ import utils.delayedFunctionCall;
             if(name.search("ATF") == -1) {
                 var atlasBitmapData:BitmapData = new atlasPng();
                 var atlasBitmap:Bitmap = new Bitmap(atlasBitmapData);
-                var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(atlasBitmap), atlasXml);
+                var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(atlasBitmap, false), atlasXml);
                 _assetsManager.addTextureAtlas(name, atlas);
 				atlasBitmapData.dispose();
                 atlasBitmapData = null;
