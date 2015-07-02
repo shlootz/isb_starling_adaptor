@@ -7,9 +7,12 @@ import bridge.abstract.IAbstractMovie;
 import flash.display.BitmapData;
 import flash.media.Sound;
 
+import starling.display.BlendMode;
+
 import starling.display.Image;
 import starling.display.MovieClip;
 import starling.textures.Texture;
+import starling.textures.TextureSmoothing;
 
 /**
 	 * ...
@@ -28,6 +31,8 @@ import starling.textures.Texture;
 		{
 			_frames = vector;
 			super(vector, fps);
+            smoothing = TextureSmoothing.NONE;
+            blendMode = BlendMode.NONE;
 		}
 		/**
 		 * 

@@ -11,10 +11,8 @@ public class FPSManager extends Sprite{
 
     private static var _instance:FPSManager;
 
-    private var _intervarls:Vector.<uint> = new <uint>[25,25,30,40,50,60,60,60];
+    private var _intervarls:Vector.<uint> = new <uint>[25,25,30,40,45,50,60,60];
     private var _step:uint = 4;
-    private var frameCount:int = 0;
-    private var totalTime:Number = 0;
 
     public var currentFPS:int = 60;
 
@@ -33,6 +31,8 @@ public class FPSManager extends Sprite{
         addEventListener(Event.ENTER_FRAME, calculateFPS);
     }
 
+    private var frameCount:int = 0;
+    private var totalTime:Number = 0;
     public function calculateFPS(e:EnterFrameEvent):void
     {
         totalTime += e.passedTime;
@@ -47,8 +47,8 @@ public class FPSManager extends Sprite{
     public function changeFPS():void
     {
         _step = Math.floor(currentFPS/10);
-        Starling.current.nativeStage.frameRate = _intervarls[_step-1];
-//        trace(_step+" "+_intervarls[_step]+" for "+currentFPS);
+        Starling.current.nativeStage.frameRate = _intervarls[_step];
+        //trace(_step+" "+_intervarls[_step]+" for "+currentFPS);
     }
 }
 }
