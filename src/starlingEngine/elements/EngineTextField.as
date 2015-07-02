@@ -15,6 +15,9 @@ import starling.core.Starling;
 
 import starling.display.DisplayObject;
 import starling.text.TextField;
+import starling.text.TextFieldAutoSize;
+
+import staticPools.StaticPools;
 
 import utils.ClassHelper;
 
@@ -226,7 +229,7 @@ import utils.ClassHelper;
             }
         }
 
-    private var _bufferedTextField:TextField;
+//    private var _bufferedTextField:TextField;
 
     /**
      *
@@ -241,27 +244,27 @@ import utils.ClassHelper;
             if (strings.length > 1)
             {
                 strings.sort(longest);
-                //var longestWord:String = strings[0];
                 var longestWord:String = strings[0] != "" ? strings[0] : this.text;
 
-                if(!_bufferedTextField)
+                if(!StaticPools.bufferedTextField)
                 {
-                    _bufferedTextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
+                    StaticPools.bufferedTextField = new TextField(500, 500, longestWord, this.fontName, this.fontSize);
                 }
                 else
                 {
-                    _bufferedTextField.text = longestWord;
-                    _bufferedTextField.fontName = this.fontName;
-                    _bufferedTextField.fontSize = this.fontSize;
+                    StaticPools.bufferedTextField.text = longestWord;
+                    StaticPools.bufferedTextField.fontName = this.fontName;
+                    StaticPools.bufferedTextField.fontSize = this.fontSize;
                 }
-                var actualWidth:Number = _bufferedTextField.textBounds.width;
+
+                var actualWidth:Number = StaticPools.bufferedTextField.textBounds.width;
                 var percentage:Number = 1;
                 var newFontSize:Number = this.fontSize;
 
                 percentage = (this.width - FONT_BLEED_COMPENSATION - calculateNativeFilterBleed())/actualWidth;
                 newFontSize = Math.floor(newFontSize * percentage);
 
-                _bufferedTextField.dispose();
+//               StaticPools.bufferedTextField.dispose();
 
                 if(newFontSize <= _initialFontSize) {
                     if(newFontSize > MIN_FONT_SIZE) {

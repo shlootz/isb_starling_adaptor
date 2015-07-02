@@ -39,6 +39,8 @@ import consoleCommand.Output;
 
 import flash.display3D.Context3DTextureFormat;
 
+import fpsManager.FPSManager;
+
 //import flash.display3D.textures.VideoTexture;
 //import flash.events.VideoTextureEvent;
 
@@ -237,6 +239,7 @@ import utils.delayedFunctionCall;
          */
         override public function handleStarlingReady():void
         {
+//            this.scaleX = this.scaleY = .5;
             //initial FPS setup
             Starling.current.nativeStage.frameRate = 60;
 
@@ -245,6 +248,8 @@ import utils.delayedFunctionCall;
 			
             Starling.current.addEventListener(starling.events.Event.CONTEXT3D_CREATE, onContext3DEventCreate);
             Starling.current.addEventListener(starling.events.Event.TEXTURES_RESTORED, onTexturesRestored);
+
+            _starling.enableErrorChecking = false;
 
             //small workaround to avoid redraw
             _starling.root.alpha = .999;
@@ -281,6 +286,9 @@ import utils.delayedFunctionCall;
             //assigns initial state
             _currentState = requestState();
             state = _currentState as IState;
+            _currentState.addNewChild(FPSManager.instance);
+            FPSManager.instance.init();
+//            _currentState.scaleX = _currentState.scaleY = .5;
 
             //alert bridge that init is complete
             _initCompleteCallback.call();
@@ -1117,8 +1125,7 @@ import utils.delayedFunctionCall;
 		/**
 		 * 
 		 */
-		private function
-                initFlare():void {
+		private function initFlare():void {
             //Device3D.profile = "standard";
             //FLSL.agalVersion = 2;
 
@@ -1170,7 +1177,7 @@ import utils.delayedFunctionCall;
 		 */
 		private function onDeactivate(e:Event):void
         {
-			Starling.current.nativeStage.frameRate = 60;
+//			Starling.current.nativeStage.frameRate = 30;
             Starling.current.start();
 			_juggler.paused = false;
 		}
