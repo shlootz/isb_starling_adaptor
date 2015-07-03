@@ -31,8 +31,8 @@ import starling.textures.TextureSmoothing;
 		{
 			_frames = vector;
 			super(vector, fps);
-            smoothing = TextureSmoothing.NONE;
-            blendMode = BlendMode.NONE;
+//            smoothing = TextureSmoothing.NONE;
+//            blendMode = BlendMode.NONE;
 		}
 		/**
 		 * 

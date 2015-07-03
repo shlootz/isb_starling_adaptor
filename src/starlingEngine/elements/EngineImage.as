@@ -20,8 +20,8 @@ import starling.textures.TextureSmoothing;
 		public function EngineImage(texture:Texture) 
 		{
 			super(texture as Texture);
-            blendMode = BlendMode.NONE;
-            smoothing = TextureSmoothing.NONE;
+//            blendMode = BlendMode.NONE;
+//            smoothing = TextureSmoothing.NONE;
 		}
 		
 		public function get currentTexture () : Object
