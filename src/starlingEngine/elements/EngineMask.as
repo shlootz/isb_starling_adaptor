@@ -139,7 +139,7 @@ import starlingEngine.extensions.pixelmask.PixelMaskDisplayObject;
 		
 		public function set newMask(newMask:IAbstractDisplayObject):void
 		{
-			super.mask = newMask as DisplayObject;
+			super.pixelMask = newMask as DisplayObject;
 		}
 		
 		/**

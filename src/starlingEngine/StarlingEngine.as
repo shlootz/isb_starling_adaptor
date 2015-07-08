@@ -1544,7 +1544,7 @@ import utils.delayedFunctionCall;
 
             rs.clear(stage.color, 1.0);
             rs.scaleMatrix(scale, scale);
-            rs.setOrthographicProjection(rect.x, rect.y, rect.width, rect.height);
+            rs.setProjectionMatrix(rect.x, rect.y, rect.width, rect.height);
 
             stage.render(rs, 1.0);
             rs.finishQuadBatch();
