@@ -9,6 +9,9 @@ import starling.events.Event;
 
 public class FPSManager extends Sprite{
 
+    private static var OPTIMISTICAL_OFFSET:int = 10;
+    private static var BALANCED_OFFSET:int = 5;
+    private static var NON_OPTIMISTICAL_OFFSET:int = -10;
     private static var _instance:FPSManager;
 
     private var _intervarls:Vector.<uint> = new <uint>[25,25,30,40,45,50,60,60];
@@ -47,8 +50,8 @@ public class FPSManager extends Sprite{
     public function changeFPS():void
     {
         _step = Math.floor(currentFPS/10);
-        Starling.current.nativeStage.frameRate = _intervarls[_step];
-        //trace(_step+" "+_intervarls[_step]+" for "+currentFPS);
+        Starling.current.nativeStage.frameRate = _intervarls[_step]+FPSManager.NON_OPTIMISTICAL_OFFSET;
+       // trace(_step+" "+_intervarls[_step]+" for "+currentFPS);
     }
 }
 }
