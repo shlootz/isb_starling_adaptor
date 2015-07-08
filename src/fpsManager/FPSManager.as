@@ -50,7 +50,7 @@ public class FPSManager extends Sprite{
     public function changeFPS():void
     {
         _step = Math.floor(currentFPS/10);
-        Starling.current.nativeStage.frameRate = _intervarls[_step]+FPSManager.NON_OPTIMISTICAL_OFFSET;
+        Starling.current.nativeStage.frameRate = _intervarls[_step]+FPSManager.OPTIMISTICAL_OFFSET;
        // trace(_step+" "+_intervarls[_step]+" for "+currentFPS);
     }
 }
