@@ -411,6 +411,7 @@ import utils.delayedFunctionCall;
             var disposeSucces:Boolean = false;
 
             if (rootClass === EngineImage) {
+                _texturesUsedIndex--
                 poolSucces = true;
                 (obj as EngineImage).removeEventListeners();
                 (obj as EngineImage).removeFromParent();
@@ -437,9 +438,11 @@ import utils.delayedFunctionCall;
                 poolSucces = true;
                 (obj as EngineMovie).removeEventListeners();
                 (obj as EngineMovie).removeFromParent();
+                _texturesUsedIndex -= (obj as EngineMovie).numFrames;
                 if((obj as Quad).filter)
                 {
                     returnToPool((obj as DisplayObject).filter);
+                    _filtersUsedIndex --;
                 }
                 obj = new EngineMovie(defaultFramesVector);
                 _movieClipsPool.returnToPool(obj as EngineMovie);
@@ -463,12 +466,14 @@ import utils.delayedFunctionCall;
             } else if (rootClass === BlurFilter) {
                 poolSucces = true;
                 _fragmentStandardFilterPool.returnToPool((obj as BlurFilter));
+                _filtersUsedIndex --;
             } else if (rootClass === DisplayObjectContainer) {
                 poolSucces = true;
                 var container:DisplayObjectContainer = obj as DisplayObjectContainer;
                 if((obj as Quad).filter)
                 {
                     returnToPool((obj as DisplayObject).filter);
+                    _filtersUsedIndex --;
                 }
                 while (container.numChildren > 0) {
                     returnToPool(container.getChildAt(container.numChildren - 1));
@@ -478,6 +483,7 @@ import utils.delayedFunctionCall;
                     if((obj as Quad).filter)
                     {
                         returnToPool((obj as DisplayObject).filter);
+                        _filtersUsedIndex --;
                     }
                     obj = new EngineSprite();
                     _spritesPool.returnToPool(obj as EngineSprite);
@@ -592,6 +598,18 @@ import utils.delayedFunctionCall;
                 i.name = name;
             }
 
+            if(name.indexOf("x@2_")>=0)
+            {
+                i.scaleX = i.scaleY = 2;
+            }
+            else
+            {
+                if(name.indexOf("x@0.5_")>=0)
+                {
+                    i.scaleX = i.scaleY = 0.5;
+                }
+            }
+
             return i;
         }
 
@@ -633,6 +651,7 @@ import utils.delayedFunctionCall;
          */
         public function requestImageFromBitmapData(bitmapData:BitmapData):IAbstractImage
         {
+
             _bitmapTextureIndex ++;
             var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
             var storageName:String = "ImageFromBitmapData" + _bitmapTextureIndex;
@@ -650,7 +669,6 @@ import utils.delayedFunctionCall;
             i.name = storageName;
 
             _floatingTexturesDictionary[storageName] = _assetsManager.getTexture(storageName);
-
 
             return i;
         }
@@ -676,6 +694,18 @@ import utils.delayedFunctionCall;
 
                 n.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
                 n.stop();
+            }
+
+            if(prefix.indexOf("x@2_")>=0)
+            {
+                n.scaleX = n.scaleY = 2;
+            }
+            else
+            {
+                if(prefix.indexOf("x@0.5_")>=0)
+                {
+                    n.scaleX = n.scaleY = 0.5;
+                }
             }
 
             return n;
