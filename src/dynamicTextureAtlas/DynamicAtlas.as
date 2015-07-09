@@ -398,7 +398,7 @@ package dynamicTextureAtlas
 				{
 					if (selected is MovieClip)
 						MovieClip(selected).gotoAndStop(m);
-					drawItem(selected, selected.name + "_" + appendIntToString(m - 1, 5), selected.name, selectedColorTransform, frameBounds);
+					drawItem(selected, selected.name, selected.name, selectedColorTransform, frameBounds);
 				}
 			}
 			

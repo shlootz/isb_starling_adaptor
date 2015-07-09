@@ -37,11 +37,11 @@ import bridge.abstract.ui.IAbstractToggle;
 import consoleCommand.ConsoleCommands;
 import consoleCommand.Output;
 
+import dynamicTextureAtlas.DynamicAtlas;
+
 import flash.display3D.Context3DTextureFormat;
 
 import fpsManager.FPSManager;
-
-import starling.extensions.textureAtlas.DynamicAtlas;
 
 //import flash.display3D.textures.VideoTexture;
 //import flash.events.VideoTextureEvent;
@@ -680,18 +680,19 @@ import utils.delayedFunctionCall;
      * @param vec
      * @param atlasName
      */
-        public function batchBitmapData(vec:Vector.<BitmapData>, atlasName:String):void
+        public function batchBitmapData(vec:Vector.<BitmapData>, names:Vector.<String>,atlasName:String):void
         {
             var mc:flash.display.MovieClip = new flash.display.MovieClip();
 
             for(var i:uint = 0; i<vec.length; i++)
             {
                 var bmp:Bitmap = new Bitmap(vec[i]);
-                bmp.name = "customBMP"+i+"@"+atlasName+"::";
+                bmp.name = names[i];
                 mc.addChild(bmp);
             }
 
             _assetsManager.addTextureAtlas(atlasName, DynamicAtlas.fromMovieClipContainer(mc));
+            trace(_assetsManager.getTextureAtlas(atlasName).getNames());
         }
 
         /**
