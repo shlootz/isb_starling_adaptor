@@ -14,8 +14,11 @@ public class FPSManager extends Sprite{
     private static var NON_OPTIMISTICAL_OFFSET:int = -10;
     private static var _instance:FPSManager;
 
+    public var alertCallback:Function;
+
     private var _intervarls:Vector.<uint> = new <uint>[25,25,30,40,45,50,60,60];
     private var _step:uint = 4;
+    private var _currentCap:uint;
 
     public var currentFPS:int = 60;
 
@@ -49,9 +52,16 @@ public class FPSManager extends Sprite{
 
     public function changeFPS():void
     {
+        alertCallback.call();
         _step = Math.floor(currentFPS/10);
-        Starling.current.nativeStage.frameRate = _intervarls[_step]+FPSManager.OPTIMISTICAL_OFFSET;
-       // trace(_step+" "+_intervarls[_step]+" for "+currentFPS);
+        Starling.current.nativeStage.frameRate = _intervarls[_step]+FPSManager.BALANCED_OFFSET;
+        _currentCap = _intervarls[_step];
+        //trace(_step+" "+_intervarls[_step]+" for "+currentFPS);
+    }
+
+    public function get currentCap():uint
+    {
+        return _currentCap;
     }
 }
 }

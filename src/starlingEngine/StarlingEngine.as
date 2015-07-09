@@ -185,7 +185,6 @@ import utils.delayedFunctionCall;
 		private var _fragmentStandardFilterPool:AbstractPool;
 
 		private var _floatingTexturesDictionary:Dictionary = new Dictionary(true);
-        private var _bitmapTextureIndex:uint = 0;
 		
 		private var  defaultFramesVector:Vector.<Texture> = new Vector.<Texture>();
 		private var _bitmapDataFallBack:BitmapData = new BitmapData(100, 100, true, 0x000000);
@@ -195,7 +194,11 @@ import utils.delayedFunctionCall;
 		
 		private var _consoleCommands:ConsoleCommands;
         private var _statsDebug:StatsDebug;
-        private var _texturesUsed:uint = 0;
+
+        private var _texturesUsedIndex:uint = 0;
+        private var _bitmapTextureIndex:uint = 0;
+        private var _filtersUsedIndex:uint = 0;
+        private var _textFieldsUsed:uint = 0;
 
 		/**
 		 * 
@@ -287,6 +290,7 @@ import utils.delayedFunctionCall;
             _currentState = requestState();
             state = _currentState as IState;
             _currentState.addNewChild(FPSManager.instance);
+            FPSManager.instance.alertCallback = fpsAlert;
             FPSManager.instance.init();
 //            _currentState.scaleX = _currentState.scaleY = .5;
 
@@ -314,6 +318,11 @@ import utils.delayedFunctionCall;
 			
 			//default verbose
 			_signalsHub.verbose = Output.verbose;
+        }
+
+        private function fpsAlert():void
+        {
+            _signalsHub.dispatchSignal(Signals.FPS_CAP_CHANGED, Signals.FPS_CAP_CHANGED, {newCap:FPSManager.instance.currentCap});
         }
 
 
@@ -351,6 +360,7 @@ import utils.delayedFunctionCall;
         public function initSignals():void
         {
             (_signalsHub as ISignalsHub).addSignal(Signals.STARLING_READY, new Signal(), new Vector.<Function>);
+            (_signalsHub as ISignalsHub).addSignal(Signals.FPS_CAP_CHANGED, new Signal(), new Vector.<Function>);
             (_signalsHub as ISignalsHub).addSignal(Signals.CONTEXT_3D_RESTORED, new Signal(), new Vector.<Function>);
             (_signalsHub as ISignalsHub).addSignal(Signals.REMOVE_AND_DISPOSE, new Signal(), new Vector.<Function>);
 
@@ -410,6 +420,7 @@ import utils.delayedFunctionCall;
                 }
                 if ((obj as EngineImage).texture != null) {
                     if (_floatingTexturesDictionary[(obj as EngineImage).name]) {
+                        _bitmapTextureIndex--
                         _assetsManager.removeTexture(_floatingTexturesDictionary[(obj as EngineImage).name]);
                         _floatingTexturesDictionary[(obj as EngineImage).name].dispose();
                         if ( _floatingTexturesDictionary[(obj as EngineImage).name] is SubTexture ) {
@@ -555,7 +566,6 @@ import utils.delayedFunctionCall;
             var t:IAbstractTexture = new EngineTexture() as IAbstractTexture;
             t = _assetsManager.getTexture(name) as IAbstractTexture;
             return t as IAbstractTexture;
-            updateCustomDebug();
         }
 
         /**
@@ -566,6 +576,7 @@ import utils.delayedFunctionCall;
          */
         public function requestImage(texture:Object, name:String = ""):IAbstractImage
         {
+            _texturesUsedIndex ++
             var i:IAbstractImage = _imagesPool.getNewObject() as IAbstractImage;
 			i.touchable = true;
             if (texture == null)
@@ -580,8 +591,6 @@ import utils.delayedFunctionCall;
             {
                 i.name = name;
             }
-
-            updateCustomDebug();
 
             return i;
         }
@@ -614,8 +623,6 @@ import utils.delayedFunctionCall;
             scroller.tilesPivotX = centerX;
             scroller.tilesPivotY = centerY;
 
-            updateCustomDebug();
-
             return scroller as IAbstractBlitMask;
         }
 
@@ -644,7 +651,6 @@ import utils.delayedFunctionCall;
 
             _floatingTexturesDictionary[storageName] = _assetsManager.getTexture(storageName);
 
-            updateCustomDebug();
 
             return i;
         }
@@ -659,7 +665,7 @@ import utils.delayedFunctionCall;
         {
             var n:IAbstractMovie = null;
             var textures:Vector.<Texture> =  _assetsManager.getTextures(prefix);
-
+            _texturesUsedIndex += textures.length;
             if (textures.length != 0)
             {
                 n = _movieClipsPool.getNewObject() as IAbstractMovie;
@@ -671,7 +677,7 @@ import utils.delayedFunctionCall;
                 n.addEventListener(EngineEvent.COMPLETE, movieClip_Completed);
                 n.stop();
             }
-            updateCustomDebug()
+
             return n;
         }
 
@@ -688,7 +694,6 @@ import utils.delayedFunctionCall;
             for (i = 0; i < frames.length; i++ )
             {
                 textures.push(frames[i].currentTexture as Texture);
-                updateCustomDebug();
             }
 
             var n:IAbstractMovie = _movieClipsPool.getNewObject() as IAbstractMovie;
@@ -725,7 +730,6 @@ import utils.delayedFunctionCall;
         public function requestGraphics(target:IAbstractDisplayObjectContainer):IAbstractGraphics
         {
             var g:IAbstractGraphics = new EngineGraphics(target);
-            updateCustomDebug()
             return g;
         }
 
@@ -820,6 +824,7 @@ import utils.delayedFunctionCall;
          */
         public function requestTextField(width:int, height:int, text:String, fontName:String="Verdana", fontSize:Number=12, color:uint=0, bold:Boolean=false, nativeFiltersArr:Array = null):IAbstractTextField
         {
+            _textFieldsUsed ++
             while (text.indexOf("\\n") != -1)
             {
                 text = text.replace("\\n", "\n");
@@ -848,7 +853,7 @@ import utils.delayedFunctionCall;
                 t.nativeFilters = nativeFiltersArr;
             }
             t.autoScale = true;
-            updateCustomDebug()
+
             return t;
         }
 
@@ -864,7 +869,6 @@ import utils.delayedFunctionCall;
          */
         public function requestInputTextField(signalsManager:Object, width:int, height:int, text:String = "", fontName:String = "Verdana", fontSize:Number = 12, color:uint = 0):IAbstractInputText
         {
-            updateCustomDebug()
             return new EngineInputText(signalsManager, width, height, text, fontName, fontSize, color);
         }
 
@@ -931,7 +935,6 @@ import utils.delayedFunctionCall;
 
             return (mM as IAbstractMask);
 
-            updateCustomDebug()
         }
 
         /**
@@ -962,7 +965,6 @@ import utils.delayedFunctionCall;
             {
                 fontName_ = TextField.registerBitmapFont(bitmapFont);
             }
-            updateCustomDebug()
             return fontName_
         }
 
@@ -1216,10 +1218,15 @@ import utils.delayedFunctionCall;
 				BridgeGraphics.isVerbose = true;
 			});
 
-            _consoleCommands.registerCommand("toggleCustomStats", function():void
+            _consoleCommands.registerCommand("tcs", function():void
             {
                 _statsDebug = new StatsDebug();
+                _statsDebug.init();
                 nativeDisplay.addChild(_statsDebug);
+
+                addEventListener(Event.ENTER_FRAME, function(e:Event):void{
+                    updateCustomDebug();
+                })
             });
 		}
 		
@@ -1611,6 +1618,8 @@ import utils.delayedFunctionCall;
             blurFilter = BlurFilter.createDropShadow(vo.distance, vo.angle, vo.color, vo.alpha, vo.blur, vo.resolution);
             (target as DisplayObject).filter = blurFilter;
             vo.reference = blurFilter;
+
+            _filtersUsedIndex++
         }
 
         /**
@@ -1624,6 +1633,8 @@ import utils.delayedFunctionCall;
             blurFilter = BlurFilter.createGlow(vo.color, vo.alpha, vo.blur, vo.resolution);
             (target as DisplayObject).filter = blurFilter;
             vo.reference = blurFilter;
+
+            _filtersUsedIndex++
         }
 
         /**
@@ -1639,6 +1650,8 @@ import utils.delayedFunctionCall;
             blurFilter.resolution = vo.resolution;
             (target as DisplayObject).filter = blurFilter;
             vo.reference = blurFilter;
+
+            _filtersUsedIndex++
         }
 
         /**
@@ -1649,6 +1662,7 @@ import utils.delayedFunctionCall;
         public function addFragmentFilter(target:IAbstractDisplayObject, filter:Object):void
         {
             (target as DisplayObject).filter = filter as FragmentFilter;
+            _filtersUsedIndex++
         }
 
         /**
@@ -1662,6 +1676,7 @@ import utils.delayedFunctionCall;
                 (target as DisplayObject).filter.dispose();
                 (target as DisplayObject).filter = null;
             }
+            _filtersUsedIndex--
         }
 
         public function get currentContainer():IAbstractState
@@ -2032,8 +2047,10 @@ import utils.delayedFunctionCall;
 
     private function updateCustomDebug():void
     {
-        //_texturesUsed ++;
-        //_statsDebug.tf1.text = "textures used "+_texturesUsed;
+        _statsDebug.tf1.text = "Custom: "+_bitmapTextureIndex+"\n";
+        _statsDebug.tf1.text += "Filters: "+_filtersUsedIndex+"\n";
+        _statsDebug.tf1.text += "Textures: "+_texturesUsedIndex+"\n";
+        _statsDebug.tf1.text += "TextFields: "+_textFieldsUsed;
     }
 }
 	

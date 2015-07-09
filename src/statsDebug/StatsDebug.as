@@ -6,15 +6,15 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Sprite;
 import flash.text.TextField;
+import flash.text.TextFormat;
 
 public class StatsDebug extends Sprite{
 
     public static const enabled:Boolean = false;
 
     private var _tf1:TextField = new TextField();
-    private var _tf2:TextField = new TextField();
-    private var _tf3:TextField = new TextField();
-    private var _tf4:TextField = new TextField();
+
+    private var _textFieldFormat:TextFormat = new TextFormat();
 
     public function StatsDebug() {
 
@@ -22,15 +22,14 @@ public class StatsDebug extends Sprite{
 
     public function init():void
     {
-        addChild(new Bitmap(new BitmapData(200,200,true,0x000000)));
-        addChild(_tf1);
-        addChild(_tf2);
-        addChild(_tf3);
-        addChild(_tf4);
+        _textFieldFormat.color = 0xFFFFFF;
+        _textFieldFormat.font = "Verdana";
+        _textFieldFormat.size = 12;
+        addChild(new Bitmap(new BitmapData(200,200,false,0xFFFFFF)));
 
-        _tf2.y = _tf1.y + _tf1.height;
-        _tf3.y = _tf2.y + _tf2.height;
-        _tf4.y = _tf3.y + _tf3.height;
+        _tf1.setTextFormat(_textFieldFormat);
+
+        addChild(_tf1);
 
         this.y = 100;
     }
@@ -41,30 +40,6 @@ public class StatsDebug extends Sprite{
 
     public function set tf1(value:TextField):void {
         _tf1 = value;
-    }
-
-    public function get tf2():TextField {
-        return _tf2;
-    }
-
-    public function set tf2(value:TextField):void {
-        _tf2 = value;
-    }
-
-    public function get tf3():TextField {
-        return _tf3;
-    }
-
-    public function set tf3(value:TextField):void {
-        _tf3 = value;
-    }
-
-    public function get tf4():TextField {
-        return _tf4;
-    }
-
-    public function set tf4(value:TextField):void {
-        _tf4 = value;
     }
 }
 }

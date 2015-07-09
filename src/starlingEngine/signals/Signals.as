@@ -12,6 +12,9 @@ package starlingEngine.signals
 	{
 		//Context signals
 		public static const CONTEXT_3D_RESTORED:String = "GEContext3DRestored";
+
+        //Performance signals
+        public static const FPS_CAP_CHANGED:String = "GEFpsCapChanged";
 		
 		//General signals
 		public static const CHANGE_GRAPHICS_STATE:String = "GEchangeGraphicsState"
