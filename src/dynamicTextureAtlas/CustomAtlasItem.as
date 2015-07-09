@@ -7,8 +7,9 @@ import flash.display.BitmapData;
 import flash.display.Sprite;
 
 public class CustomAtlasItem extends Sprite{
-    public function CustomAtlasItem() {
-        this.addChild(new Bitmap(new BitmapData(100,100, false,0x000000)));
+    public function CustomAtlasItem(width:Number, height:Number) {
+       this.width = width;
+       this.height = height;
     }
 }
 }
