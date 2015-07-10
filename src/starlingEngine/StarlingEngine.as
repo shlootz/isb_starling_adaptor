@@ -677,6 +677,21 @@ import utils.delayedFunctionCall;
 
     /**
      *
+     * @param characters
+     * @param font
+     * @param fontSize
+     * @param bold
+     * @param italic
+     * @param charMarginX
+     * @param fontCustomID
+     */
+    public function batchFont(characters:String="", font:String = "Verdana", fontSize:uint = 12, bold:Boolean = false, italic:Boolean = false, charMarginX:uint = 0, fontCustomID:String = ""):void
+    {
+        DynamicAtlas.bitmapFontFromString(characters, font, fontSize, bold, italic, charMarginX, fontCustomID);
+    }
+
+    /**
+     *
      * @param vec
      * @param atlasName
      */
@@ -921,6 +936,7 @@ import utils.delayedFunctionCall;
          */
         public function requestInputTextField(signalsManager:Object, width:int, height:int, text:String = "", fontName:String = "Verdana", fontSize:Number = 12, color:uint = 0):IAbstractInputText
         {
+//            DynamicAtlas.bitmapFontFromString(text, fontName, fontSize);
             return new EngineInputText(signalsManager, width, height, text, fontName, fontSize, color);
         }
 
