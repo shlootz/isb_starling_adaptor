@@ -23,6 +23,12 @@
             <entry library-name="GraphicsBridge" library-level="project">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-name="src" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="starling" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="air18_sdk_mac" />
         </dependencies>
@@ -65,6 +71,8 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="GraphicsBridge" level="project" />
+    <orderEntry type="library" exported="" name="src" level="project" />
+    <orderEntry type="library" exported="" name="starling" level="project" />
   </component>
 </module>
 

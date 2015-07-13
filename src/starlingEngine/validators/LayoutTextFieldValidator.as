@@ -9,6 +9,12 @@ import flash.filters.BitmapFilterQuality;
 import flash.filters.DropShadowFilter;
 import flash.filters.GlowFilter;
 import flash.filters.GradientBevelFilter;
+import flash.text.TextField;
+import flash.text.TextFormat;
+
+import fontManager.FontManager;
+
+import starling.extensions.textureAtlas.DynamicAtlas;
 
 import starling.utils.AssetManager;
 
@@ -28,8 +34,8 @@ import starlingEngine.elements.EngineLayerLayoutElementVo;
 		
 		public static function validate(engine:IEngine, assetsManager:AssetManager, element:EngineLayerLayoutElementVo):IAbstractLabel
 		{
-			var tField:IAbstractTextField = engine.requestTextField(element.width, element.height, element.label, element.font, element.labelFontSize, element.labelFontColor);
-			var tLabel:IAbstractLabel = engine.requestLabelFromTextfield(tField, element.name);
+            var tField:IAbstractTextField = engine.requestTextField(element.width, element.height, element.label, element.font, element.labelFontSize, element.labelFontColor);
+            var tLabel:IAbstractLabel = engine.requestLabelFromTextfield(tField, element.name);
 
 			tLabel.x = Math.round(element.x);
 			tLabel.y = Math.round(element.y);

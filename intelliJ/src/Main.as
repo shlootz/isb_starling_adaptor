@@ -25,6 +25,12 @@ import com.greensock.easing.Cubic;
 import com.greensock.easing.Elastic;
 import com.greensock.easing.Linear;
 
+import dynamicTextureAtlas.CustomAtlasItem;
+import dynamicTextureAtlas.CustomAtlasItem2;
+import dynamicTextureAtlas.CustomBitmapData;
+
+import feathers.controls.Label;
+
 import feathers.controls.TextArea;
 import feathers.controls.text.TextFieldTextRenderer;
 
@@ -32,6 +38,7 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 
 import flash.display.DisplayObject;
+import flash.display.MovieClip;
 
 import flash.display.Sprite;
 import flash.display.Stage3D;
@@ -47,8 +54,10 @@ import flash.net.NetConnection;
 import flash.net.NetStream;
 import flash.text.GridFitType;
 import flash.text.TextField;
+import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.utils.ByteArray;
+import flash.utils.getDefinitionByName;
 
 import nape.geom.Mat23;
 
@@ -60,7 +69,9 @@ import starling.core.Starling;
 import starling.display.Image;
 import starling.display.MovieClip;
 import starling.display.Sprite3D;
+import starling.extensions.textureAtlas.DynamicAtlas;
 import starling.filters.WarpFilter;
+import starling.textures.TextureAtlas;
 
 //import starling.display.Sprite3D;
 
@@ -131,8 +142,12 @@ public class Main extends Sprite {
         (_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void {
             trace("Loading assets, progress:", ratio);
             if (ratio == 1) {
-  //              buildMenu();
-                buildSymbols();
+        //          testDynamicFonts();
+//                testNewScale();
+//                buildCustomAtlas();
+//                buildCustomAtlasMC();
+               buildMenu();
+//                buildSymbols();
                 //testTextFields();
                 //testMovieClips();
 //                for(var i:uint = 0; i<20; i++)
@@ -155,23 +170,110 @@ public class Main extends Sprite {
         });
     }
 
+    private var _alphabet:Array = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", "a","b","c","d","e","f","g","h","i","j","k","l","m","b","o","p","q","r","s","t","u","v","w","x","y","z"];
+    private function testDynamicFonts():void
+    {
+        _bridgeGraphics.batchFont("QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm1234567890", "Verdana", 12);
+        var counter:uint = 0;
+        var labels:Vector.<IAbstractLabel> = new Vector.<IAbstractLabel>();
+        for(var i:uint = 0; i<20; i++){
+            var tf:IAbstractTextField = _bridgeGraphics.requestTextField(200,50,"QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm1234567890", "Verdana", 16);
+            var lb:IAbstractLabel = _bridgeGraphics.requestLabelFromTextfield(tf);
+            _bridgeGraphics.currentContainer.addNewChild(lb);
+            lb.x = Math.random()*800;
+            lb.y = Math.random()*600;
+
+            labels.push(lb);
+        }
+
+        addEventListener(Event.ENTER_FRAME, function(e:Event):void{
+            counter++;
+            for(var i:uint = 0; i<labels.length; i++){
+                var str:String = "";
+                var len:int = 1+Math.random()*10;
+                var chars:int = _alphabet.length-1;
+                var pos:int = 0;
+                for(var j:uint = 0; j<len; j++){
+                    pos = Math.random()*chars;
+                    str += _alphabet[pos];
+                }
+                labels[i].updateLabel(str);
+            }
+        });
+    }
+
+    private function testNewScale():void
+    {
+        var img:IAbstractImage = _bridgeGraphics.requestImage("x@0.5_5ofaKindMessage");
+        _bridgeGraphics.currentContainer.addNewChild(img);
+
+        var mc:IAbstractMovie = _bridgeGraphics.requestMovie("x@0.5_Constellation");
+        mc.y = 200;
+        mc.play();
+        _bridgeGraphics.currentContainer.addNewChild(mc);
+    }
+
+    private function buildCustomAtlasMC():void
+    {
+        var vec:Vector.<BitmapData> = new Vector.<BitmapData>();
+        var names:Vector.<String> = new Vector.<String>();
+
+        for(var i:uint = 0; i<100; i++)
+        {
+            vec.push(new BitmapData(100,100,false,Math.random()*0xFFFFFF));
+            names.push("custom Name "+i);
+        }
+
+        _bridgeGraphics.batchBitmapData(vec, names, "CUSTOM_ATLAS");
+
+        addEventListener(Event.ENTER_FRAME, function(e:Event):void{
+            var name:String = "custom Name "+Math.floor(Math.random()*100);
+            var img:IAbstractImage = _bridgeGraphics.requestImage(name);
+            img.x = Math.random()*800;
+            img.y = Math.random()*600;
+            _bridgeGraphics.currentContainer.addNewChild(img);
+
+            trace(name);
+        })
+    }
+
+    private function buildCustomAtlas():void
+    {
+        var vec:Vector.<Class> = new Vector.<Class>();
+
+        var c1:Class = CustomBitmapData;
+        var c2:Class = CustomAtlasItem;
+
+        vec.push(c1);
+        vec.push(c2);
+        _bridgeGraphics.assetsManager.addTextureAtlas("customAtlas", DynamicAtlas.fromClassVector(vec));
+        var atl:TextureAtlas = (_bridgeGraphics.assetsManager as AssetManager).getTextureAtlas("customAtlas");
+        trace(atl);
+
+        var img:IAbstractImage = _bridgeGraphics.requestImage("dynamicTextureAtlas::CustomBitmapData_00000");
+        trace(atl.getNames());
+        _bridgeGraphics.currentContainer.addNewChild(img);
+    }
+
     private function buildSymbols():void
     {
         var spr:Sprite3D = new Sprite3D();
-        for(var i:uint = 0; i<200; i++)
-        {
-            var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Symbol");
-            mc.x = Math.random()*800;
-            mc.y = Math.random()*600;
-            mc.play();
-            spr.addChild(mc as starling.display.DisplayObject);
-
-        }
-
         spr.rotationX = .3;
         spr.rotationY = .3;
-
         _bridgeGraphics.currentContainer.addNewChild(spr);
+        addEventListener(Event.ENTER_FRAME, function(e:Event):void{
+
+//            for(var i:uint = 0; i<200; i++)
+//            {
+                var mc:IAbstractMovie = _bridgeGraphics.requestMovie("Symbol");
+                mc.x = Math.random()*800;
+                mc.y = Math.random()*600;
+                mc.play();
+                spr.addChild(mc as starling.display.DisplayObject);
+
+//            }
+    })
+
     }
 
     private var warpFilter:WarpFilter;
@@ -413,7 +515,7 @@ public class Main extends Sprite {
         textRenderer.width = 10+Math.round(Math.random()*100);
         textRenderer.wordWrap = true;
 
-        addEventListener(Event.ENTER_FRAME, function (e:Event){
+        addEventListener(Event.ENTER_FRAME, function (e:Event):void{
             val = val+10;
             //textRenderer.text = (String(val));
         });
@@ -495,8 +597,20 @@ public class Main extends Sprite {
 
     private function buildMenu():void
     {
+        _bridgeGraphics.batchFont("QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm1234567890", "Credit Valley", 16)
 
-        var layout:XML = _bridgeGraphics.getXMLFromAssetsManager("StripModuleStripLayerLayout");
+//        var nativeTF:flash.text.TextField = new flash.text.TextField();
+//        nativeTF.text = "QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm1234567890";
+//        nativeTF.filters = [new DropShadowFilter()];
+//
+//        var nativeTFFormat:TextFormat = new TextFormat();
+//        nativeTFFormat.font = "Credit Valley";
+//        nativeTFFormat.size = 60;
+//        nativeTF.defaultTextFormat = nativeTFFormat;
+
+//        DynamicAtlas.bitmapFontFromString("QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm1234567890", "Credit Valley", 30, false, false, -2);
+//        DynamicAtlas.bitmapFontFromTextField(nativeTF);
+        var layout:XML = _bridgeGraphics.getXMLFromAssetsManager("UserInterfaceModuleGameplayButtonsLayerLayout");
         var layer:IAbstractLayer = _bridgeGraphics.requestLayer("UI", 1, layout, true);
         var inLayers:Vector.<IAbstractLayer> = new Vector.<IAbstractLayer>();
         var holder:IAbstractSprite = _bridgeGraphics.requestSprite("asd");
@@ -507,22 +621,22 @@ public class Main extends Sprite {
 
         _bridgeGraphics.addChild(holder);
 
-        _filter = new ColorMatrixFilter();
-
-        var textFields:Array = new Array();
-
-        textFields.push(layer.getElement("stripBalanceLabel"));
-        textFields.push(layer.getElement("stripWinLabel"));
-        textFields.push(layer.getElement("stripTotalBetLabel"));
-        textFields.push(layer.getElement("stripWinValueLabel"));
-        textFields.push(layer.getElement("stripBalanceValueLabel"));
-        textFields.push(layer.getElement("stripTotalBetValueLabel"));
-        textFields.push(layer.getElement("stripCreditLabel"));
-        textFields.push(layer.getElement("stripCreditValueLabel"));
-
-        trace((_bridgeGraphics.engine as StarlingEngine).createGroupOfLabels(textFields));
-
-        _bridgeGraphics.addFragmentFilter(holder, _filter);
+//        _filter = new ColorMatrixFilter();
+//
+//        var textFields:Array = new Array();
+//
+//        textFields.push(layer.getElement("stripBalanceLabel"));
+//        textFields.push(layer.getElement("stripWinLabel"));
+//        textFields.push(layer.getElement("stripTotalBetLabel"));
+//        textFields.push(layer.getElement("stripWinValueLabel"));
+//        textFields.push(layer.getElement("stripBalanceValueLabel"));
+//        textFields.push(layer.getElement("stripTotalBetValueLabel"));
+//        textFields.push(layer.getElement("stripCreditLabel"));
+//        textFields.push(layer.getElement("stripCreditValueLabel"));
+//
+//        trace((_bridgeGraphics.engine as StarlingEngine).createGroupOfLabels(textFields));
+//
+//        _bridgeGraphics.addFragmentFilter(holder, _filter);
     }
 
     private var increment:Number = 0;

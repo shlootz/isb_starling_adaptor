@@ -707,7 +707,6 @@ import utils.delayedFunctionCall;
             }
 
             _assetsManager.addTextureAtlas(atlasName, DynamicAtlas.fromMovieClipContainer(mc));
-            trace(_assetsManager.getTextureAtlas(atlasName).getNames());
         }
 
         /**
