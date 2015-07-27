@@ -26,7 +26,6 @@ import com.greensock.easing.Elastic;
 import com.greensock.easing.Linear;
 
 import dynamicTextureAtlas.CustomAtlasItem;
-import dynamicTextureAtlas.CustomAtlasItem2;
 import dynamicTextureAtlas.CustomBitmapData;
 
 import feathers.controls.Label;
@@ -65,10 +64,12 @@ import signals.ISignalsHub;
 import signals.SignalsHub;
 
 import starling.core.Starling;
+import starling.display.DisplayObject;
 
 import starling.display.Image;
 import starling.display.MovieClip;
 import starling.display.Sprite3D;
+import starling.events.TouchEvent;
 import starling.extensions.textureAtlas.DynamicAtlas;
 import starling.filters.WarpFilter;
 import starling.textures.TextureAtlas;
@@ -125,7 +126,7 @@ public class Main extends Sprite {
 
     public function Main() {
     // _bridgeGraphics.engine.is3D = true;
-        addChild(_bridgeGraphics.engine as DisplayObject);
+        addChild(_bridgeGraphics.engine as flash.display.DisplayObject);
         (_bridgeGraphics.signalsManager as ISignalsHub).addListenerToSignal(Signals.STARLING_READY, loadAssets);
     }
 
@@ -142,11 +143,12 @@ public class Main extends Sprite {
         (_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void {
             trace("Loading assets, progress:", ratio);
             if (ratio == 1) {
+//                testStencilMask();
         //          testDynamicFonts();
 //                testNewScale();
 //                buildCustomAtlas();
 //                buildCustomAtlasMC();
-               buildMenu();
+//               buildMenu();
 //                buildSymbols();
                 //testTextFields();
                 //testMovieClips();
@@ -160,14 +162,24 @@ public class Main extends Sprite {
                 //testATF();
                 //testMovieClipFlip();
                 //testAtlas();
-                //testVideoTexture();
-//              //testSprite3D();
+//                testVideoTexture();
+//              testSprite3D();
                 //testFilters();
                 //testButtons();
 //                initImages();
 //                testWarpEffect("close");
             }
         });
+    }
+
+    private function testStencilMask():void
+    {
+        var img:IAbstractImage =_bridgeGraphics.requestImage("Generic-Page");
+        var mask:IAbstractImage = _bridgeGraphics.requestImage("Next-Button-Disable");
+        _bridgeGraphics.currentContainer.addNewChild(img);
+
+//        (img as starling.display.DisplayObject).
+        var disO:starling.display.DisplayObject = new starling.display.DisplayObject();
     }
 
     private var _alphabet:Array = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", "a","b","c","d","e","f","g","h","i","j","k","l","m","b","o","p","q","r","s","t","u","v","w","x","y","z"];
@@ -621,6 +633,14 @@ public class Main extends Sprite {
 
         _bridgeGraphics.addChild(holder);
 
+//        var testBtn:IAbstractButton = holder.layers
+        var btn:IAbstractButton = (holder.layers["UI"] as IAbstractLayer).getElement("uiSpinButton") as IAbstractButton;
+
+            btn.addEventListener(TouchEvent.TOUCH,function(e:TouchEvent):void{
+            trace("ASD");
+
+            })
+
 //        _filter = new ColorMatrixFilter();
 //
 //        var textFields:Array = new Array();
@@ -640,7 +660,7 @@ public class Main extends Sprite {
     }
 
     private var increment:Number = 0;
-    var images:Array = ["Next-Button-Disable", "Next-Button-Down", "Next-Button-Over", "Next-Button-Up", "Page-Option-Down", "Page-Option-Over", "Page-Option-Up", "Paytable-Line-1", "Paytable-Line-2", "Paytable-Line-3", "Paytable-Line-4", "Paytable-Line-5", "Paytable-Line-6", "Paytable-Line-7", "Paytable-Line-8", "Paytable-Line-9", "Paytable-Line-10", "Paytable-Line-11", "Paytable-Line-12", "Paytable-Line-13", "Paytable-Line-14", "Paytable-Line-15", "Paytable-Line-16", "Paytable-Line-17", "Paytable-Line-18", "Paytable-Line-19"]
+    private var images:Array = ["Next-Button-Disable", "Next-Button-Down", "Next-Button-Over", "Next-Button-Up", "Page-Option-Down", "Page-Option-Over", "Page-Option-Up", "Paytable-Line-1", "Paytable-Line-2", "Paytable-Line-3", "Paytable-Line-4", "Paytable-Line-5", "Paytable-Line-6", "Paytable-Line-7", "Paytable-Line-8", "Paytable-Line-9", "Paytable-Line-10", "Paytable-Line-11", "Paytable-Line-12", "Paytable-Line-13", "Paytable-Line-14", "Paytable-Line-15", "Paytable-Line-16", "Paytable-Line-17", "Paytable-Line-18", "Paytable-Line-19"]
 
     private function onEnterFrame(e:Event):void
     {

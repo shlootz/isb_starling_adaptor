@@ -34,12 +34,15 @@ import bridge.abstract.ui.IAbstractInputText;
 import bridge.abstract.ui.IAbstractLabel;
 import bridge.abstract.ui.IAbstractSlider;
 import bridge.abstract.ui.IAbstractToggle;
+import bridge.abstract.events.BridgeEvents;
 import consoleCommand.ConsoleCommands;
 import consoleCommand.Output;
 
 import dynamicTextureAtlas.DynamicAtlas;
 
 import flash.display3D.Context3DTextureFormat;
+import flash.display3D.textures.VideoTexture;
+import flash.events.VideoTextureEvent;
 
 import fpsManager.FPSManager;
 
@@ -697,7 +700,7 @@ import utils.delayedFunctionCall;
      */
         public function batchBitmapData(vec:Vector.<BitmapData>, names:Vector.<String>,atlasName:String):void
         {
-            var mc:flash.display.MovieClip = new flash.display.MovieClip();
+            var mc:flash.display.MovieClip = new flash.display.MovieClip()
 
             for(var i:uint = 0; i<vec.length; i++)
             {
@@ -1001,7 +1004,6 @@ import utils.delayedFunctionCall;
             mM.touchable = false;
 
             return (mM as IAbstractMask);
-
         }
 
         /**
@@ -1073,29 +1075,29 @@ import utils.delayedFunctionCall;
      */
         public function requestDirect3DVideo(name:String, netStream:NetStream, width:Number, height:Number):IAbstractImage
         {
-            //var image:Image;
-            //var cTexture:ConcreteTexture;
-            //var vTexture:VideoTexture;
-            //var context3D:Context3D;
+            var image:Image;
+            var cTexture:ConcreteTexture;
+            var vTexture:VideoTexture;
+            var context3D:Context3D;
 
-            //if(Context3D.supportsVideoTexture) {
-                //vTexture = context3D.createVideoTexture();
-                //vTexture.attachNetStream(netStream);
-                //vTexture.addEventListener(VideoTextureEvent.RENDER_STATE, function (e:VideoTextureEvent):void {
-                    //
-                //});
+            if(Context3D.supportsVideoTexture) {
+                vTexture = context3D.createVideoTexture();
+                vTexture.attachNetStream(netStream);
+                vTexture.addEventListener(VideoTextureEvent.RENDER_STATE, function (e:VideoTextureEvent):void {
 
-                //cTexture = new ConcreteTexture(vTexture, Context3DTextureFormat.BGRA, width, height, false, true, true);
+                });
 
-                //image = new Image(cTexture);
-            //}
-            //else
-            //{
-                //image = new Image(_textureFallBack);
-            //}
+                cTexture = new ConcreteTexture(vTexture, Context3DTextureFormat.BGRA, width, height, false, true, true);
 
-            //trace( this, "supports video texture", Context3D.supportsVideoTexture );
-            //return image as IAbstractImage
+                image = new Image(cTexture);
+            }
+            else
+            {
+                image = new Image(_textureFallBack);
+            }
+
+            trace( this, "supports video texture", Context3D.supportsVideoTexture );
+            return image as IAbstractImage
 			return null
         }
 
