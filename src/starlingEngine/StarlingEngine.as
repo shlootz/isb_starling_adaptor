@@ -34,7 +34,6 @@ import bridge.abstract.ui.IAbstractInputText;
 import bridge.abstract.ui.IAbstractLabel;
 import bridge.abstract.ui.IAbstractSlider;
 import bridge.abstract.ui.IAbstractToggle;
-import bridge.abstract.events.BridgeEvents;
 import consoleCommand.ConsoleCommands;
 import consoleCommand.Output;
 
@@ -204,8 +203,6 @@ import utils.delayedFunctionCall;
         private var _bitmapTextureIndex:uint = 0;
         private var _filtersUsedIndex:uint = 0;
         private var _textFieldsUsed:uint = 0;
-		
-		private var _bridgeEvents:BridgeEvents;
 
 		/**
 		 * 
