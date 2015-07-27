@@ -204,6 +204,8 @@ import utils.delayedFunctionCall;
         private var _bitmapTextureIndex:uint = 0;
         private var _filtersUsedIndex:uint = 0;
         private var _textFieldsUsed:uint = 0;
+		
+		private var _bridgeEvents:BridgeEvents;
 
 		/**
 		 * 
