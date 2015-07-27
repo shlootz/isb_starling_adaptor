@@ -49,14 +49,14 @@ import starling.events.Event;
 			return upSkin_.height;
 		}
 		
-		override public function get autoFlatten () : Boolean
-		{
-			return super.autoFlatten;
-		}
-		override public function set autoFlatten (value:Boolean) : void
-		{
-			super.autoFlatten = value;
-		}
+		//override public function get autoFlatten () : Boolean
+		//{
+			//return super.autoFlatten;
+		//}
+		//override public function set autoFlatten (value:Boolean) : void
+		//{
+			//super.autoFlatten = value;
+		//}
 
 		public function get currentState_ () : String
 		{
@@ -85,32 +85,32 @@ import starling.events.Event;
 			super.defaultLabelProperties = value;
 		}
 
-		public function get defaultSelectedIcon_ () : IAbstractDisplayObject
-		{
-			return super.defaultSelectedIcon  as IAbstractDisplayObject;
-		}
-		public function set defaultSelectedIcon_ (value:IAbstractDisplayObject) : void
-		{
-			super.defaultSelectedIcon = value as DisplayObject;
-		}
+		//public function get defaultSelectedIcon_ () : IAbstractDisplayObject
+		//{
+			//return super.defaultSelectedIcon  as IAbstractDisplayObject;
+		//}
+		//public function set defaultSelectedIcon_ (value:IAbstractDisplayObject) : void
+		//{
+			//super.defaultSelectedIcon = value as DisplayObject;
+		//}
 
-		override public function get defaultSelectedLabelProperties () : Object
-		{
-			return super.defaultSelectedLabelProperties;
-		}
-		override public function set defaultSelectedLabelProperties (value:Object) : void
-		{
-			super.defaultSelectedLabelProperties = value;
-		}
+		//override public function get defaultSelectedLabelProperties () : Object
+		//{
+			//return super.defaultSelectedLabelProperties;
+		//}
+		//override public function set defaultSelectedLabelProperties (value:Object) : void
+		//{
+			//super.defaultSelectedLabelProperties = value;
+		//}
 
-		public function get defaultSelectedSkin_ () : IAbstractDisplayObject
-		{
-			return super.defaultSelectedSkin as IAbstractDisplayObject;
-		}
-		public function set defaultSelectedSkin_ (value:IAbstractDisplayObject) : void
-		{
-			super.defaultSelectedSkin = value as DisplayObject;
-		}
+		//public function get defaultSelectedSkin_ () : IAbstractDisplayObject
+		//{
+			//return super.defaultSelectedSkin as IAbstractDisplayObject;
+		//}
+		//public function set defaultSelectedSkin_ (value:IAbstractDisplayObject) : void
+		//{
+			//super.defaultSelectedSkin = value as DisplayObject;
+		//}
 
 		public function get defaultSkin_ () : IAbstractDisplayObject
 		{
@@ -262,23 +262,23 @@ import starling.events.Event;
 			super.isLongPressEnabled = value;
 		}
 
-		override public function get isSelected () : Boolean
-		{
-			return super.isSelected;
-		}
-		override public function set isSelected (value:Boolean) : void
-		{
-			super.isSelected = value;
-		}
+		//override public function get isSelected () : Boolean
+		//{
+			//return super.isSelected;
+		//}
+		//override public function set isSelected (value:Boolean) : void
+		//{
+			//super.isSelected = value;
+		//}
 
-		override public function get isToggle () : Boolean
-		{
-			return super.isToggle;
-		}
-		override public function set isToggle (value:Boolean) : void
-		{
-			super.isToggle = value;
-		}
+		//override public function get isToggle () : Boolean
+		//{
+			//return super.isToggle;
+		//}
+		//override public function set isToggle (value:Boolean) : void
+		//{
+			//super.isToggle = value;
+		//}
 
 		override public function get label () : String
 		{
@@ -370,23 +370,23 @@ import starling.events.Event;
 			super.paddingTop = value;
 		}
 
-		public function get selectedDisabledIcon_ () : IAbstractDisplayObject
-		{
-			return super.selectedDisabledIcon as IAbstractDisplayObject;
-		}
-		public function set selectedDisabledIcon_ (value:IAbstractDisplayObject) : void
-		{
-			super.selectedDisabledIcon = value as DisplayObject;
-		}
+		//public function get selectedDisabledIcon_ () : IAbstractDisplayObject
+		//{
+			//return super.selectedDisabledIcon as IAbstractDisplayObject;
+		//}
+		//public function set selectedDisabledIcon_ (value:IAbstractDisplayObject) : void
+		//{
+			//super.selectedDisabledIcon = value as DisplayObject;
+		//}
 
-		override public function get selectedDisabledLabelProperties () : Object
-		{
-			return super.selectedDisabledLabelProperties;
-		}
-		override public function set selectedDisabledLabelProperties (value:Object) : void
-		{
-			super.selectedDisabledLabelProperties = value;
-		}
+		//override public function get selectedDisabledLabelProperties () : Object
+		//{
+			//return super.selectedDisabledLabelProperties;
+		//}
+		//override public function set selectedDisabledLabelProperties (value:Object) : void
+		//{
+			//super.selectedDisabledLabelProperties = value;
+		//}
 
 		public function get selectedDisabledSkin_ () : IAbstractDisplayObject
 		{
@@ -397,23 +397,23 @@ import starling.events.Event;
 			super.selectedDisabledSkin = value as DisplayObject;
 		}
 
-		public function get selectedDownIcon_ () : IAbstractDisplayObject
-		{
-			return super.selectedDownIcon as IAbstractDisplayObject;
-		}
-		public function set selectedDownIcon_ (value:IAbstractDisplayObject) : void
-		{
-			super.selectedDownIcon = value as DisplayObject;
-		}
+		//public function get selectedDownIcon_ () : IAbstractDisplayObject
+		//{
+			//return super.selectedDownIcon as IAbstractDisplayObject;
+		//}
+		//public function set selectedDownIcon_ (value:IAbstractDisplayObject) : void
+		//{
+			//super.selectedDownIcon = value as DisplayObject;
+		//}
 
-		override public function get selectedDownLabelProperties () : Object
-		{
-			return super.selectedDownLabelProperties;
-		}
-		override public function set selectedDownLabelProperties (value:Object) : void
-		{
-			super.selectedDownLabelProperties = value;
-		}
+		//override public function get selectedDownLabelProperties () : Object
+		//{
+			//return super.selectedDownLabelProperties;
+		//}
+		//override public function set selectedDownLabelProperties (value:Object) : void
+		//{
+			//super.selectedDownLabelProperties = value;
+		//}
 
 		public function get selectedDownSkin_ () : IAbstractDisplayObject
 		{
@@ -433,23 +433,23 @@ import starling.events.Event;
 			super.selectedHoverIcon = value as DisplayObject;
 		}
 
-		override public function get selectedHoverLabelProperties () : Object
-		{
-			return super.selectedHoverLabelProperties;
-		}
-		override public function set selectedHoverLabelProperties (value:Object) : void
-		{
-			super.selectedHoverLabelProperties = value;
-		}
+		//override public function get selectedHoverLabelProperties () : Object
+		//{
+			//return super.selectedHoverLabelProperties;
+		//}
+		//override public function set selectedHoverLabelProperties (value:Object) : void
+		//{
+			//super.selectedHoverLabelProperties = value;
+		//}
 
-		public function get selectedHoverSkin_ () : IAbstractDisplayObject
-		{
-			return super.selectedHoverSkin as IAbstractDisplayObject;
-		}
-		public function set selectedHoverSkin_ (value:IAbstractDisplayObject) : void
-		{
-			super.selectedHoverSkin = value as DisplayObject;
-		}
+		//public function get selectedHoverSkin_ () : IAbstractDisplayObject
+		//{
+			//return super.selectedHoverSkin as IAbstractDisplayObject;
+		//}
+		//public function set selectedHoverSkin_ (value:IAbstractDisplayObject) : void
+		//{
+			//super.selectedHoverSkin = value as DisplayObject;
+		//}
 
 		public function get selectedUpIcon_ () : IAbstractDisplayObject
 		{
@@ -460,14 +460,14 @@ import starling.events.Event;
 			super.selectedUpIcon = value as DisplayObject;
 		}
 
-		override public function get selectedUpLabelProperties () : Object
-		{
-			return super.selectedUpLabelProperties;
-		}
-		override public function set selectedUpLabelProperties (value:Object) : void
-		{
-			super.selectedUpLabelProperties = value;
-		}
+		//override public function get selectedUpLabelProperties () : Object
+		//{
+			//return super.selectedUpLabelProperties;
+		//}
+		//override public function set selectedUpLabelProperties (value:Object) : void
+		//{
+			//super.selectedUpLabelProperties = value;
+		//}
 
 		public function get selectedUpSkin_ () : IAbstractDisplayObject
 		{

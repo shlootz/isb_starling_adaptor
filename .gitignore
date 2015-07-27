@@ -219,3 +219,4 @@ _mac/.idea/workspace.xml
 *.xml
 
 intelliJ/src/Main.as
+*.as3proj

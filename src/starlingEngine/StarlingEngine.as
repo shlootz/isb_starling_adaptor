@@ -36,6 +36,7 @@ import bridge.abstract.ui.IAbstractSlider;
 import bridge.abstract.ui.IAbstractToggle;
 import consoleCommand.ConsoleCommands;
 import consoleCommand.Output;
+import starling.textures.ConcreteVideoTexture;
 
 import dynamicTextureAtlas.DynamicAtlas;
 
@@ -1076,13 +1077,13 @@ import utils.delayedFunctionCall;
         {
             var image:Image;
             var cTexture:ConcreteTexture;
-            var vTexture:VideoTexture;
+            var vTexture:ConcreteVideoTexture;
             var context3D:Context3D;
 
             if(Context3D.supportsVideoTexture) {
                 vTexture = context3D.createVideoTexture();
                 vTexture.attachNetStream(netStream);
-                vTexture.addEventListener(VideoTextureEvent.RENDER_STATE, function (e:VideoTextureEvent):void {
+                vTexture.addEventListener(VideoTextureEvent.RENDER_STATE, function (e:Object):void {
 
                 });
 
