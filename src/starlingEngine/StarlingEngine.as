@@ -1006,6 +1006,16 @@ import utils.delayedFunctionCall;
             return (mM as IAbstractMask);
         }
 
+    /**
+     *
+     * @param displayObject
+     * @param mask
+     */
+        public function applyStencilMask(displayObject:IAbstractDisplayObject, mask:IAbstractDisplayObject):void
+        {
+            (displayObject as DisplayObject).mask = mask as DisplayObject;
+        }
+
         /**
          *
          * @return IAbstractEngineLayerVO
@@ -1075,29 +1085,29 @@ import utils.delayedFunctionCall;
      */
         public function requestDirect3DVideo(name:String, netStream:NetStream, width:Number, height:Number):IAbstractImage
         {
-            var image:Image;
-            var cTexture:ConcreteTexture;
-            var vTexture:ConcreteVideoTexture;
-            var context3D:Context3D;
-
-            if(Context3D.supportsVideoTexture) {
-                vTexture = context3D.createVideoTexture();
-                vTexture.attachNetStream(netStream);
-                vTexture.addEventListener(VideoTextureEvent.RENDER_STATE, function (e:Object):void {
-
-                });
-
-                cTexture = new ConcreteTexture(vTexture, Context3DTextureFormat.BGRA, width, height, false, true, true);
-
-                image = new Image(cTexture);
-            }
-            else
-            {
-                image = new Image(_textureFallBack);
-            }
-
-            trace( this, "supports video texture", Context3D.supportsVideoTexture );
-            return image as IAbstractImage
+//            var image:Image;
+//            var cTexture:ConcreteTexture;
+//            var vTexture:ConcreteVideoTexture;
+//            var context3D:Context3D;
+//
+//            if(Context3D.supportsVideoTexture) {
+//                vTexture = context3D.createVideoTexture();
+//                vTexture.attachNetStream(netStream);
+//                vTexture.addEventListener(VideoTextureEvent.RENDER_STATE, function (e:Object):void {
+//
+//                });
+//
+//                cTexture = new ConcreteTexture(vTexture, Context3DTextureFormat.BGRA, width, height, false, true, true);
+//
+//                image = new Image(cTexture);
+//            }
+//            else
+//            {
+//                image = new Image(_textureFallBack);
+//            }
+//
+//            trace( this, "supports video texture", Context3D.supportsVideoTexture );
+//            return image as IAbstractImage
 			return null
         }
 

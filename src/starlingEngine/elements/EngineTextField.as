@@ -37,6 +37,7 @@ import utils.ClassHelper;
 
 		public function EngineTextField(width:int, height:int, text:String, fontName:String="Verdana", fontSize:Number=12, color:uint=0, bold:Boolean=false, nativeFiltersArr:Array = null) 
 		{
+            trace(text);
 			super(width, height, text, fontName, fontSize, color, bold);
 			if (nativeFiltersArr)
 			{

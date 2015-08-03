@@ -9,16 +9,19 @@ import starling.events.Event;
 
 public class FPSManager extends Sprite{
 
-    private static var OPTIMISTICAL_OFFSET:int = 10;
     private static var BALANCED_OFFSET:int = 5;
     private static var NON_OPTIMISTICAL_OFFSET:int = -10;
+    private static var AUTOMATIC:int = 0;
+
     private static var _instance:FPSManager;
 
     public var alertCallback:Function;
+    public var level:int = FPSManager.AUTOMATIC;
 
-    private var _intervarls:Vector.<uint> = new <uint>[25,25,30,40,45,50,60,60];
+    private var _intervarls:Vector.<uint> = new <uint>[10,20,30,40,50,60];
     private var _step:uint = 4;
     private var _currentCap:uint;
+    private var _currentLevel:uint = 5;
 
     public var currentFPS:int = 60;
 
@@ -45,18 +48,28 @@ public class FPSManager extends Sprite{
         if (++frameCount % 60 == 0)
         {
             currentFPS = frameCount / totalTime
-            changeFPS();
             frameCount = totalTime = 0;
+
+            if(currentFPS == _intervarls[_currentLevel])
+            {
+                _currentLevel++
+                if(_currentLevel < 6) {
+                    currentFPS = _intervarls[_currentLevel];
+                }
+            }
+
+            changeFPS();
         }
     }
 
     public function changeFPS():void
     {
         alertCallback.call();
-        _step = Math.floor(currentFPS/10);
-        Starling.current.nativeStage.frameRate = _intervarls[_step]+FPSManager.BALANCED_OFFSET;
+        _step = Math.floor((currentFPS-1)/10);
+
+        Starling.current.nativeStage.frameRate = _intervarls[_step]+level;
         _currentCap = _intervarls[_step];
-        //trace(_step+" "+_intervarls[_step]+" for "+currentFPS);
+        _currentLevel = _step;
     }
 
     public function get currentCap():uint
