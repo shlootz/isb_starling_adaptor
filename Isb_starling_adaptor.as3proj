@@ -59,7 +59,7 @@
     <element path="lib\GraphicsBridge.swc" />
     <element path="lib\SignalsManager.swc" />
     <element path="lib\Flare3D_2.8.5_Commercial.swc" />
-    <element path="lib\CEV3-1-10-Starling-Feathers.swc" />
+    <element path="lib\CEV3-1-11-Starling-Feathers.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

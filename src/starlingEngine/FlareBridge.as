@@ -37,7 +37,7 @@ import starling.core.Starling;
 			_scene.autoResize = true;
  
 			_scene.antialias = 2;
-			_scene.clearColor = new Vector3D( 1, 1, 1 );
+			_scene.clearColor = new Vector3D( 0, 0, 0 );
  
 			_scene.camera = new Camera3D();
 			_scene.camera.setPosition( 10, 100, -200 );

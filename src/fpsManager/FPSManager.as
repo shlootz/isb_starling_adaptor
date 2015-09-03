@@ -18,7 +18,7 @@ public class FPSManager extends Sprite{
     public var alertCallback:Function;
     public var level:int = FPSManager.AUTOMATIC;
 
-    private var _intervarls:Vector.<uint> = new <uint>[10,20,30,40,50,60];
+    private var _intervarls:Vector.<uint> = new <uint>[10,20,30,40,50,60,60];
     private var _step:uint = 4;
     private var _currentCap:uint;
     private var _currentLevel:uint = 5;
@@ -66,8 +66,10 @@ public class FPSManager extends Sprite{
     {
         alertCallback.call();
         _step = Math.floor((currentFPS-1)/10);
-
-        Starling.current.nativeStage.frameRate = _intervarls[_step]+level;
+		if (_step < _intervarls.length)
+		{
+			Starling.current.nativeStage.frameRate = _intervarls[_step] + level;
+		}
         _currentCap = _intervarls[_step];
         _currentLevel = _step;
     }

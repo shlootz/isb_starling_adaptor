@@ -41,8 +41,8 @@ import starling.textures.ConcreteVideoTexture;
 import dynamicTextureAtlas.DynamicAtlas;
 
 import flash.display3D.Context3DTextureFormat;
-import flash.display3D.textures.VideoTexture;
-import flash.events.VideoTextureEvent;
+//import flash.display3D.textures.VideoTexture;
+//import flash.events.VideoTextureEvent;
 
 import fpsManager.FPSManager;
 
@@ -216,12 +216,12 @@ import utils.delayedFunctionCall;
 		{
 			_baseWidth = baseWidth;
 			_baseHeight = baseHeight;
-			_viewportMode = viewportMode;
+			_viewportMode = ViewportMode.LETTERBOX;
 			_assetSizes = [1, 1.5, 2];
 			_debugMode = debugMode;
 			_initCompleteCallback = initCompleteCallback;
 		}
-
+		
         /**
          *
          * @param	e
@@ -296,7 +296,7 @@ import utils.delayedFunctionCall;
             state = _currentState as IState;
             _currentState.addNewChild(FPSManager.instance);
             FPSManager.instance.alertCallback = fpsAlert;
-            FPSManager.instance.init();
+            //FPSManager.instance.init();
 //            _currentState.scaleX = _currentState.scaleY = .5;
 
             //alert bridge that init is complete
