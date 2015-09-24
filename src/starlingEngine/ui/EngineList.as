@@ -3,6 +3,7 @@ package starlingEngine.ui
 import bridge.abstract.IAbstractImage;
 import bridge.abstract.IAbstractSprite;
 import bridge.abstract.ui.IAbstractComboBoxItemRenderer;
+import feathers.core.FeathersControl;
 
 import feathers.controls.List;
 import feathers.controls.renderers.DefaultListItemRenderer;
@@ -28,7 +29,7 @@ import starlingEngine.events.GESignalEvent;
 	{
 		
 		private var _dataProvider:Vector.<IAbstractComboBoxItemRenderer> = new Vector.<IAbstractComboBoxItemRenderer>();
-		private var _list:List;
+		private var _list:EngineCustomList;
 		private var _signalsHub:ISignalsHub;
 		
 		public function EngineList(signalsHub:ISignalsHub, dataProvider:Vector.<IAbstractComboBoxItemRenderer>, width:Number, height:Number, backgroundImage:IAbstractImage, font:String)
@@ -37,7 +38,7 @@ import starlingEngine.events.GESignalEvent;
 			// CREATE THE LIST //
 			_dataProvider = dataProvider;
 			
-			_list = new List();
+			_list = new EngineCustomList();
 			_list.width = width;
 			_list.height = height;
 			
@@ -77,7 +78,6 @@ import starlingEngine.events.GESignalEvent;
 			_list.itemRendererProperties.accessorySourceField = "accessory";
 			
 			_list.addEventListener( "change", list_changeHandler );
-			
 			addChild(_list);
 		}
 		
