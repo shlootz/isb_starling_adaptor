@@ -17,6 +17,7 @@ package consoleCommand {
 		public function ConsoleCommands(console:Console) 
 		{
 			_console = console;
+            _console.enabled = false;
 		}
 		
 		/**

@@ -16,6 +16,7 @@ import bridge.abstract.filters.IAbstractBlurFilter;
 import bridge.abstract.ui.IAbstractButton;
 import bridge.abstract.ui.IAbstractComboBox;
 import bridge.abstract.ui.IAbstractComboBoxItemRenderer;
+import bridge.abstract.ui.IAbstractInputText;
 import bridge.abstract.ui.IAbstractLabel;
 
 import citrus.core.State;
@@ -28,10 +29,12 @@ import com.greensock.easing.Linear;
 import dynamicTextureAtlas.CustomAtlasItem;
 import dynamicTextureAtlas.CustomBitmapData;
 
-import feathers.controls.Label;
-
-import feathers.controls.TextArea;
-import feathers.controls.text.TextFieldTextRenderer;
+//import feathers.FEATHERS_VERSION;
+//
+//import feathers.controls.Label;
+//
+//import feathers.controls.TextArea;
+//import feathers.controls.text.TextFieldTextRenderer;
 
 import flash.display.Bitmap;
 import flash.display.BitmapData;
@@ -58,12 +61,11 @@ import flash.text.TextFormat;
 import flash.utils.ByteArray;
 import flash.utils.getDefinitionByName;
 
-import nape.geom.Mat23;
-
 import signals.ISignalsHub;
 import signals.SignalsHub;
 
 import starling.core.Starling;
+//import starling.display.Canvas;
 import starling.display.DisplayObject;
 
 import starling.display.Image;
@@ -138,53 +140,85 @@ public class Main extends Sprite {
             "assets/UserInterfaceModuleGameplayButtonsLayerLayout.xml",
             "assets/StripModuleStripLayerLayout.xml",
             "assets/BackgroundModuleAssets.png",
-            "assets/BackgroundModuleAssets.xml"
+            "assets/BackgroundModuleAssets.xml",
+            "assets/Debug.png",
+            "assets/Debug.fnt"
         );
         (_bridgeGraphics.assetsManager).loadQueue(function(ratio:Number):void {
             trace("Loading assets, progress:", ratio);
             if (ratio == 1) {
+                  testComboBox();
+//                testInputTexts();
 //                testStencilMask();
-        //          testDynamicFonts();
+//                testDynamicFonts();
 //                testNewScale();
 //                buildCustomAtlas();
 //                buildCustomAtlasMC();
-//               buildMenu();
+//                buildMenu();
 //                buildSymbols();
-                //testTextFields();
-                //testMovieClips();
+//                testTextFields();
+//                testMovieClips();
 //                for(var i:uint = 0; i<20; i++)
 //                {
 //                    testAutoSize();
 //                    testFeathersText();
 //                }
-
-                //testComboBox();
-                //testATF();
-                //testMovieClipFlip();
-                //testAtlas();
+//
+//                testComboBox();
+//                testATF();
+//                testMovieClipFlip();
+//                testAtlas();
 //                testVideoTexture();
-//              testSprite3D();
-                //testFilters();
-                //testButtons();
+//                testSprite3D();
+//                testFilters();
+//                testButtons();
 //                initImages();
 //                testWarpEffect("close");
             }
         });
     }
 
+    private function testInputTexts():void
+    {
+        var backgr:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(300,50,false,0xFF0000))
+        backgr.x = 200;
+        backgr.y = 200;
+        _bridgeGraphics.currentContainer.addNewChild(backgr)
+
+        var input:IAbstractInputText = _bridgeGraphics.requestInputTextField(300,50);
+        input.x = 200;
+        input.y = 200;
+        _bridgeGraphics.currentContainer.addNewChild(input)
+    }
+
     private function testStencilMask():void
     {
         var img:IAbstractImage =_bridgeGraphics.requestImage("Generic-Page");
-        var mask:IAbstractImage = _bridgeGraphics.requestImage("Next-Button-Disable");
-        _bridgeGraphics.currentContainer.addNewChild(img);
+//        var mask:IAbstractImage = _bridgeGraphics.requestImage("Next-Button-Disable");
+//        _bridgeGraphics.currentContainer.addNewChild(img);
 
 //        (img as starling.display.DisplayObject).
-        var disO:starling.display.DisplayObject = new starling.display.DisplayObject();
+//        var disO:starling.display.DisplayObject = new starling.display.DisplayObject();
+
+//        var mask:Canvas = new Canvas();
+//        mask.drawCircle(0, 0, 120);
+
+//        var myContent:starling.display.DisplayObject =  _bridgeGraphics.requestImage("Paytable-ScrollBonus-Prew") as starling.display.DisplayObject;
+//        myContent.mask = mask;
+
+//        _bridgeGraphics.currentContainer.addNewChild(myContent);
+
+//        (_bridgeGraphics.engine as StarlingEngine).applyStencilMask(myContent as IAbstractDisplayObject, img as IAbstractDisplayObject)
+
+//        myContent.x = 200;
+//        myContent.y = 200;
+
     }
 
     private var _alphabet:Array = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", "a","b","c","d","e","f","g","h","i","j","k","l","m","b","o","p","q","r","s","t","u","v","w","x","y","z"];
     private function testDynamicFonts():void
     {
+
         _bridgeGraphics.batchFont("QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm1234567890", "Verdana", 12);
         var counter:uint = 0;
         var labels:Vector.<IAbstractLabel> = new Vector.<IAbstractLabel>();
@@ -446,8 +480,6 @@ public class Main extends Sprite {
         btn.scaleX = -1;
 
         _bridgeGraphics.currentContainer.addNewChild(btn);
-
-        trace("!!!!!!!!!! "+mc.isPlaying);
     }
 
     private function testATF():void
@@ -463,19 +495,82 @@ public class Main extends Sprite {
         addEventListener(Event.ENTER_FRAME, onEnterFrame);
     }
 
+    private var _combinationsComboBox:IAbstractComboBox;
+    private var _combinationsComboBox2:IAbstractComboBox;
+    private var _combinationsComboBox3:IAbstractComboBox;
+    private var _combinationsComboBox4:IAbstractComboBox;
+
     private function testComboBox():void
     {
-        var dp:Vector.<IAbstractComboBoxItemRenderer> = new Vector.<IAbstractComboBoxItemRenderer>();
-        var bkImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(200,30, false, 0xff0000));
-        for (var i:uint = 0; i<10; i++)
-        {
-            dp.push(new EngineComboBoxItemRenderer(String(Math.random()*9999)));
-        }
-        var cb:IAbstractComboBox = _bridgeGraphics.requestComboBox(dp, 200,30, bkImage, "Verdana");
+        trace("TEST COMBOOOOOOOO BOX");
+//        _bridgeGraphics.consoleCommands.registerCommand("test", function(a:String, b:String){
+//            trace(a+' '+b);
+//        })
 
-        _bridgeGraphics.currentContainer.addNewChild(cb);
-        cb.x = 200;
-        cb.y = 200;
+//        _bridgeGraphics.registerBitmapFont()
+
+        var bk:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(800,600, false, 0x333333));
+        _bridgeGraphics.currentContainer.addNewChild(bk);
+
+        var dataProvider:Vector.<IAbstractComboBoxItemRenderer> = new Vector.<IAbstractComboBoxItemRenderer>;
+        var debugCombinations:Vector.<String> = new Vector.<String>();
+        debugCombinations.push("1asdfsadf");
+        debugCombinations.push("2sdgfdga");
+        debugCombinations.push("3sdfg4sdfg");
+        debugCombinations.push("4sdfg3g");
+        debugCombinations.push("5sdfgdsfg4");
+
+        for (var i:uint = 0; i<debugCombinations.length; i++)
+        {
+            var item:IAbstractComboBoxItemRenderer = new EngineComboBoxItemRenderer(debugCombinations[i], null);
+            item.data = debugCombinations[i];
+            dataProvider.push(item);
+        }
+
+        var backgroundImage:IAbstractImage = _bridgeGraphics.requestImageFromBitmapData(new BitmapData(100,30,false,0x00000));
+
+        _combinationsComboBox = _bridgeGraphics.requestComboBox(dataProvider, 120, 100, backgroundImage, "Debug");
+        _combinationsComboBox2 = _bridgeGraphics.requestComboBox(dataProvider, 120, 100, backgroundImage, "Debug");
+        _combinationsComboBox3 = _bridgeGraphics.requestComboBox(dataProvider, 120, 100, backgroundImage, "Debug");
+        _combinationsComboBox4 = _bridgeGraphics.requestComboBox(dataProvider, 120, 100, backgroundImage, "Debug");
+        _combinationsComboBox.name = "combinationsComboBox";
+
+
+        _combinationsComboBox.x = 50;
+        _combinationsComboBox.y = 200;
+
+        _combinationsComboBox2.x = 150;
+        _combinationsComboBox2.y = 200;
+
+        _combinationsComboBox3.x = 250;
+        _combinationsComboBox3.y = 200;
+
+        _combinationsComboBox4.x = 350;
+        _combinationsComboBox4.y = 200;
+
+        _bridgeGraphics.currentContainer.addNewChild(_combinationsComboBox);
+        _bridgeGraphics.currentContainer.addNewChild(_combinationsComboBox2);
+        _bridgeGraphics.currentContainer.addNewChild(_combinationsComboBox3);
+        _bridgeGraphics.currentContainer.addNewChild(_combinationsComboBox4);
+    }
+
+    /*
+     * The FGM combinations checkbox current item changed:
+     * Display current symbols
+     * @param type-current selection
+     */
+    private function onSelectCombination(type:String, event:Object):void
+    {
+        //symbols values as server id
+        var symbolsValues:Array = [];
+
+        var combination:Array = (event["params"]["data"] as String).split(",");
+
+        for (var i:int = 0; i < combination.length; i++)
+        {
+            symbolsValues.push(combination[i]);
+        }
+        trace(symbolsValues);
     }
 
     private function testAutoSize():void
@@ -517,25 +612,25 @@ public class Main extends Sprite {
 
     private function testFeathersText():void
     {
-        var val:Number = Math.round(Math.random()*999);
-        var textRenderer:TextFieldTextRenderer = new TextFieldTextRenderer();
-        textRenderer.text = "About binomial theorem I'm teeming with a lot o' news";
-
-        textRenderer.textFormat = new TextFormat( "Arial", 20, 0x000000 );
-        textRenderer.embedFonts = false;
-
-        textRenderer.width = 10+Math.round(Math.random()*100);
-        textRenderer.wordWrap = true;
-
-        addEventListener(Event.ENTER_FRAME, function (e:Event):void{
-            val = val+10;
-            //textRenderer.text = (String(val));
-        });
-
-        textRenderer.x = Math.random()*800;
-        textRenderer.y = Math.random()*600;
-
-        _bridgeGraphics.currentContainer.addNewChild(textRenderer);
+//        var val:Number = Math.round(Math.random()*999);
+//        var textRenderer:TextFieldTextRenderer = new TextFieldTextRenderer();
+//        textRenderer.text = "About binomial theorem I'm teeming with a lot o' news";
+//
+//        textRenderer.textFormat = new TextFormat( "Arial", 20, 0x000000 );
+//        textRenderer.embedFonts = false;
+//
+//        textRenderer.width = 10+Math.round(Math.random()*100);
+//        textRenderer.wordWrap = true;
+//
+//        addEventListener(Event.ENTER_FRAME, function (e:Event):void{
+//            val = val+10;
+//            //textRenderer.text = (String(val));
+//        });
+//
+//        textRenderer.x = Math.random()*800;
+//        textRenderer.y = Math.random()*600;
+//
+//        _bridgeGraphics.currentContainer.addNewChild(textRenderer);
     }
 
     private function testMovieClips():void

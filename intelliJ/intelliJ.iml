@@ -20,16 +20,16 @@
             <entry library-id="0b02f16b-5afc-45c3-bd20-6d37be57cf37">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="GraphicsBridge" library-level="project">
-              <dependency linkage="Merged" />
-            </entry>
             <entry library-name="src" library-level="project">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="starling" library-level="project">
+            <entry library-name="CEV3-1-11-Core" library-level="project">
               <dependency linkage="Merged" />
             </entry>
             <entry library-name="CEV3-1-11-Starling-Feathers" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="GraphicsBridge" library-level="project">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -77,6 +77,8 @@
     <orderEntry type="library" exported="" name="src" level="project" />
     <orderEntry type="library" exported="" name="starling" level="project" />
     <orderEntry type="library" exported="" name="CEV3-1-11-Starling-Feathers" level="project" />
+    <orderEntry type="library" exported="" name="CEV3-1-11-Core" level="project" />
+    <orderEntry type="library" exported="" name="BridgeGraphics" level="project" />
   </component>
 </module>
 
